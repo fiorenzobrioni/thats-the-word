@@ -26,6 +26,9 @@ android {
     // into a screen that is otherwise in one of the three.
     androidResources {
         localeFilters += listOf("en", "it", "es")
+        // The words' files are mapped from the APK where they lie (PLANNING.md §6.6, §9): stored
+        // uncompressed, never inflated or copied into storage.
+        noCompress += "bin"
     }
 
     signingConfigs {
@@ -100,6 +103,7 @@ android {
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:designsystem"))
+    implementation(project(":core:words"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

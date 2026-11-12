@@ -1,7 +1,7 @@
 import gzip
 import unittest
 
-from pipeline import folding, frequency, lexicon, pack
+from pipeline import build, folding, frequency, lexicon, pack
 
 
 class PackTest(unittest.TestCase):
@@ -88,6 +88,27 @@ class FrequencyTest(unittest.TestCase):
         self.assertEqual(end, len(body))
         self.assertEqual(value[0], {"format": "cB", "version": 1})
         self.assertEqual(value[1:], [["the"], [], ["cat", "dog"]])
+
+
+class FormsRecordsTest(unittest.TestCase):
+    def words(self, displays, solutions, lemma_of=None):
+        return lexicon.LanguageWords(
+            "it", 5, set(displays), displays, lemma_of or {}, set(), solutions, {}, {}, {}, set(displays)
+        )
+
+    def test_a_solutions_own_written_form_comes_first(self):
+        # *citta* and *città* are both lemmas of the key citta; the solution is the more frequent.
+        lw = self.words(
+            {"citta": ["citta", "città"], "gatto": ["gatto", "gattò"]},
+            [lexicon.Solution("citta", "città", 5.4, "noun"), lexicon.Solution("gatto", "gatto", 4.6, "noun")],
+        )
+        records = build.forms_records(lw)
+        self.assertEqual(records["citta"], [["città"], ["citta"]])
+        self.assertEqual(records["gatto"], [["gatto"], ["gattò"]])
+
+    def test_a_key_that_is_no_solution_keeps_its_forms_in_order(self):
+        lw = self.words({"bacio": ["bacio", "baciò"]}, [], {"baciò": ["baciare"]})
+        self.assertEqual(build.forms_records(lw)["bacio"], [["bacio"], ["baciò", "baciare"]])
 
 
 if __name__ == "__main__":

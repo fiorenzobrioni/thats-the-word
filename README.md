@@ -20,8 +20,8 @@ internet at all.
 
 </div>
 
-> **Status: in the making.** The foundations are laid (Phase 0) and the words are made (Phase 1);
-> the game engine comes next. There is nothing to install yet: see [Roadmap](#roadmap).
+> **Status: in the making.** The foundations are laid (Phase 0), the words are made (Phase 1)
+> and the game's rules are written and tested (Phase 2); the game screen comes next. There is nothing to install yet: see [Roadmap](#roadmap).
 
 ## What That's The Word is
 
@@ -110,7 +110,7 @@ closed periods in [docs/planning](./docs/planning/README.md)):
 - **Phase 0**, foundations: the build, the design system, CI, the keys, the mark. *Done.*
 - **Phase 1**, the words: three languages, their levels, meanings and translations, from free
   sources, measured before anything is drawn. *Done ([the report](./docs/words/README.md)).*
-- **Phase 2**, the game engine: every rule, every edge case tested.
+- **Phase 2**, the game engine: every rule, every edge case tested. *Done.*
 - **Phase 3**, the game screen: the grid, the keyboard, the motion.
 - **Phase 4**, the start page, the daily word, the archive and free play.
 - **Phase 5**, practising a language: hints, meanings and the notebook.

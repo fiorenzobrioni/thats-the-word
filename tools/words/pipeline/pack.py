@@ -26,6 +26,9 @@ longer length never changes them; a reader takes it from the header's length.
   `count + 1` offsets (four bytes each, from the start of the text block), then the text block.
   A record is UTF-8 fields separated by U+001F; its first field is its key; a field holding a
   list separates its items by U+001E.
+  A forms record holds a field a written form (the form, then its lemmas), a solution's own
+  written form first; a glossary record holds the translations, the meaning and the word the
+  meaning was read through.
 """
 
 import hashlib

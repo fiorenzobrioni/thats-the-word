@@ -48,6 +48,37 @@ class PackTest(unittest.TestCase):
             pack.table("forms", "it", 5, {"bad": ["a\u001fb"]})
 
 
+class LongerWordsTest(unittest.TestCase):
+    def test_four_bytes_up_to_six_letters_eight_from_seven_to_twelve(self):
+        self.assertEqual([pack.word_width(n) for n in (4, 5, 6)], [4, 4, 4])
+        self.assertEqual([pack.word_width(n) for n in (7, 9, 12)], [8, 8, 8])
+        for n in (0, 13):
+            with self.assertRaises(ValueError):
+                pack.word_width(n)
+
+    def test_a_solution_of_six_and_of_twelve_letters_keeps_its_level(self):
+        for word in ("zzzzzz", "zzzzzzzzzzzz"):
+            sols = [lexicon.Solution(word, word, 1.0, "noun", 3)]
+            data = pack.solutions("en", len(word), sols)
+            self.assertEqual(len(data), 16 + pack.word_width(len(word)))
+            (value,) = pack.read_words(data)
+            self.assertEqual((folding.unpack(value >> 2, len(word), "en"), value & 3), (word, 3))
+
+    def test_seven_letter_files_sort_and_read_back(self):
+        words = ["giraffa", "abbaino", "zampone", "cammino"]
+        values = pack.read_words(pack.accepted("it", 7, words))
+        self.assertEqual([folding.unpack(v, 7, "it") for v in values], sorted(words))
+        daily = pack.daily("es", 7, ["caminar", "señores"])
+        self.assertEqual(len(daily), 16 + 2 * 8)
+        self.assertEqual(pack.read_daily(daily, "es"), ["caminar", "señores"])
+
+    def test_the_five_letter_files_are_unchanged_by_longer_lengths(self):
+        # The four-byte mask is the first four bytes of the eight-byte one: the files already
+        # written keep their bytes.
+        self.assertEqual(pack.daily_mask("it", 9, 8) >> 32, pack.daily_mask("it", 9, 4))
+        self.assertEqual(len(pack.daily("it", 5, ["gatto"])), 16 + 4)
+
+
 class FrequencyTest(unittest.TestCase):
     def test_a_cbpack_file_decodes_to_zipf_values(self):
         # [{"format": "cB", "version": 1}, ["the"], [], ["cat", "dog"]] as MessagePack.

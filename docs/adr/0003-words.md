@@ -53,8 +53,10 @@ Phase 1 builds them before anything is drawn, and measures them (`docs/words/REA
    `accepted-5.bin`, `solutions-5.bin`, `daily.bin`, `forms-5.bin`, `gloss-<interface>.bin`. Every
    file has a sixteen-byte header (magic `TTW` and its kind, version, language, length, interface,
    count) and big-endian numbers. A word is packed five bits a letter, first letter highest, in four
-   bytes (up to six letters; 1.2's seven will need eight), so sorted integers are sorted words, found
-   by binary search with no decoding. Solutions keep their level in the two low bits. The daily XORs
+   bytes up to six letters and in eight from seven to twelve (the width follows from the header's
+   length: decided now, PLANNING §15, 12 Nov 2026, so 1.1's and 1.2's lengths need no new format
+   and leave the five-letter files as they are), so sorted integers are sorted words, found by
+   binary search with no decoding. Solutions keep their level in the two low bits. The daily XORs
    each word with the first four bytes of SHA-256("ttw-daily/<language>/<number>"): no plain text,
    and any day decoded alone. Forms and glossaries are text records (UTF-8, fields by U+001F, list
    items by U+001E) behind an offset table, sorted by their key's bytes. A form's record gives its

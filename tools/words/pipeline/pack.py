@@ -10,12 +10,18 @@ Every file starts with the same sixteen-byte header, then its payload; every num
     8  count     the number of entries
     12 reserved  0
 
-- **A, accepted**: `count` words, sorted, four bytes each: five bits a letter, the first highest.
-- **S, solutions**: `count` words, sorted, four bytes each: the packed word shifted left by two,
-  its level (0 Base to 3 Complete) in the two low bits.
-- **D, daily**: `count` words in the schedule's order, four bytes each: the packed word XORed with
-  the first four bytes of SHA-256("ttw-daily/<language>/<number>"), so a glance spoils nothing
-  and any day is read alone.
+A word is packed five bits a letter, the first letter highest, in a slot whose width follows from
+the file's length alone (`word_width`): **four bytes up to six letters, eight bytes from seven to
+twelve**. Six letters are 30 bits, plus a solution's two level bits, 32; twelve are 60, plus two, 62.
+The width is chosen per length, not once for all, so the five-letter files stay half the size and a
+longer length never changes them; a reader takes it from the header's length.
+
+- **A, accepted**: `count` words, sorted, one slot each.
+- **S, solutions**: `count` words, sorted, one slot each: the packed word shifted left by two, its
+  level (0 Base to 3 Complete) in the two low bits.
+- **D, daily**: `count` words in the schedule's order, one slot each: the packed word XORed with
+  the first bytes (as many as the slot) of SHA-256("ttw-daily/<language>/<number>"), so a glance
+  spoils nothing and any day is read alone.
 - **F, forms** and **G, glossary**: a table of text records sorted by their key's UTF-8 bytes:
   `count + 1` offsets (four bytes each, from the start of the text block), then the text block.
   A record is UTF-8 fields separated by U+001F; its first field is its key; a field holding a
@@ -26,6 +32,20 @@ import hashlib
 import struct
 
 from . import folding
+
+MAX_LENGTH = 12
+
+
+def word_width(length: int) -> int:
+    """The bytes a packed word takes in a file of words of this length."""
+    if not 1 <= length <= MAX_LENGTH:
+        raise ValueError(f"no word file for {length} letters")
+    return 4 if length * folding.BITS_PER_LETTER + 2 <= 32 else 8
+
+
+def _slot(value: int, width: int) -> bytes:
+    return value.to_bytes(width, "big")
+
 
 KINDS = {"accepted": b"A", "solutions": b"S", "daily": b"D", "forms": b"F", "glossary": b"G"}
 VERSION = 1
@@ -49,7 +69,8 @@ def read_header(data: bytes) -> dict:
 
 
 def words(kind: str, language: str, length: int, values: list[int]) -> bytes:
-    return header(kind, language, length, len(values)) + b"".join(struct.pack(">I", v) for v in values)
+    width = word_width(length)
+    return header(kind, language, length, len(values)) + b"".join(_slot(v, width) for v in values)
 
 
 def accepted(language: str, length: int, keys) -> bytes:
@@ -61,28 +82,30 @@ def solutions(language: str, length: int, solutions) -> bytes:
     return words("solutions", language, length, values)
 
 
-def daily_mask(language: str, number: int) -> int:
+def daily_mask(language: str, number: int, width: int = 4) -> int:
     digest = hashlib.sha256(f"ttw-daily/{language}/{number}".encode()).digest()
-    return struct.unpack(">I", digest[:4])[0]
+    return int.from_bytes(digest[:width], "big")
 
 
 def daily(language: str, length: int, keys: list[str]) -> bytes:
-    values = [folding.pack(k, language) ^ daily_mask(language, i + 1) for i, k in enumerate(keys)]
+    width = word_width(length)
+    values = [folding.pack(k, language) ^ daily_mask(language, i + 1, width) for i, k in enumerate(keys)]
     return words("daily", language, length, values)
 
 
 def read_daily(data: bytes, language: str) -> list[str]:
     h = read_header(data)
-    out = []
-    for i in range(h["count"]):
-        (value,) = struct.unpack(">I", data[16 + 4 * i : 20 + 4 * i])
-        out.append(folding.unpack(value ^ daily_mask(language, i + 1), h["length"], language))
-    return out
+    width = word_width(h["length"])
+    return [
+        folding.unpack(value ^ daily_mask(language, i + 1, width), h["length"], language)
+        for i, value in enumerate(read_words(data))
+    ]
 
 
 def read_words(data: bytes) -> list[int]:
     h = read_header(data)
-    return [struct.unpack(">I", data[16 + 4 * i : 20 + 4 * i])[0] for i in range(h["count"])]
+    width = word_width(h["length"])
+    return [int.from_bytes(data[16 + width * i : 16 + width * (i + 1)], "big") for i in range(h["count"])]
 
 
 def table(kind: str, language: str, length: int, records: dict, extra: int = 0) -> bytes:

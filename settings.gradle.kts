@@ -30,5 +30,7 @@ rootProject.name = "thats-the-word"
 // A module joins here in the phase that brings its first code.
 include(":app")
 include(":core:model")
+include(":core:domain")
+include(":core:words")
 include(":core:designsystem")
 include(":core:testing")

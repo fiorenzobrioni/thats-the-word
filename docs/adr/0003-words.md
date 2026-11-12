@@ -60,7 +60,8 @@ Phase 1 builds them before anything is drawn, and measures them (`docs/words/REA
    each word with the first four bytes of SHA-256("ttw-daily/<language>/<number>"): no plain text,
    and any day decoded alone. Forms and glossaries are text records (UTF-8, fields by U+001F, list
    items by U+001E) behind an offset table, sorted by their key's bytes. A form's record gives its
-   written forms and their lemmas; a lemma's glossary record its translations, its meaning and the
+   written forms and their lemmas, a solution's own written form first (*città* before *citta*:
+   PLANNING §15, 12 Nov 2026, «Phase 2: the game engine»); a lemma's glossary record its translations, its meaning and the
    word the meaning was read through.
 9. **Uncompressed.** The files are stored uncompressed in the APK (`noCompress`, Phase 2) and read
    in place: 3.3 MB for the three languages (VISION Q5). Compressing the glossaries would save about

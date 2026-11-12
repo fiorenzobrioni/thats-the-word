@@ -19,7 +19,8 @@
 - **Released**: nothing yet.
 - **Done**: Phase 0, the foundations (12 Nov 2026): the vision reviewed and answered, the build, the design system, CI green on GitHub, the debug key and the release key (rehearsed and pinned), the start page in three languages, the mark.
 - **Done**: Phase 1, the words (12 Nov 2026): the pipeline (`tools/words/`), the accepted sets, the solutions and their levels, the glossaries of the nine pairs, the daily schedules, the files and their report (`docs/words/README.md`); the owner's go on the meanings, the deny lists and the daily pool.
-- **Next**: Phase 2, the game engine. What is still open (§15) is needed by the phases it names.
+- **Done**: Phase 2, the game engine (12 Nov 2026): `:core:model`, `:core:domain` (the folding, the marks, `Game` with Hard and the hints, the daily's dates and numbers, free play's draw, streaks, statistics, milestones, the share text, the words' decoder) and `:core:words` (the assets, mapped), every §4.9 case named in a test; the owner's answers to Open 8, 9, 11 and 12.
+- **Next**: Phase 3, the game screen. What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -168,8 +169,8 @@ So a guess with two E against a solution with one E marks one of them, the right
 ### 4.3 A game
 
 - `GameSetup`: language, mode (`Daily(date)`, `Free(level)`, `Guided`; 1.1 and 1.2 add theirs), length, attempts (5 and 6 in 1.0), Hard on or off, the solution's key form, the interface language at the start (which decides whether hints exist: VISION §5).
-- `Game`: the setup, the guesses, the hints taken, and what follows from them: the marks (computed, never stored), the attempts left (`attempts − guesses − hints`), the state (`Playing`, `Won`, `Lost`).
-- `submit(guess)` answers `Accepted(marks)` or `Refused(reason)`: too short; not a word (§6's accepted set, by key form); Hard's rule not kept (§4.4), naming the first requirement missed. A refused guess costs nothing.
+- `Game`: the setup and its **moves**, the guesses and the hints in the order they were made, and what follows from them: the marks (computed, never stored), the letter a hint revealed, the attempts left (`attempts − guesses − hints`), the state (`Playing`, `Won`, `Lost`). A game is taken up by replaying its moves (`Game.restore`).
+- `submit(guess)` answers `Accepted(marks)` or `Refused(reason)`: too short; not a word (§6's accepted set, by key form); Hard's rule not kept (§4.4), naming the first requirement missed (the positions left to right, then the letters). A refused guess costs nothing.
 - Won when every letter is in its right place; lost when no attempt is left. A finished game takes nothing more.
 - A game is saved after every guess and every hint (Room, §5), and taken up where it was left, on any page, after any restart.
 
@@ -179,26 +180,26 @@ Every clue found must be used (VISION §8): a letter found in its right place st
 
 ### 4.5 Hints and what they cost
 
-Only in a game whose language is not the interface's (VISION §5, §9). Three kinds, each once a game: **translation** (the solution's translation in the interface language), **definition** (a definition in the interface language), **letter** (the leftmost position not yet found, revealed in its right place: the same letter for every player of a daily). Each costs one attempt: the grid's last empty row is spent, and drawn as the hint's row, so the cost is in sight. No hint when one attempt is left: it would end the game. A word with no translation or definition offers no such hint. Games with hints count for the streak, and are marked in the statistics (VISION §9).
+Only in a game whose language is not the interface's (VISION §5, §9); as proposed, confirmed by the owner (§15, 12 Nov 2026, «Phase 2: the game engine», Open 11). Three kinds, each once a game: **translation** (the solution's translation in the interface language), **definition** (a definition in the interface language), **letter** (the leftmost position no guess has yet found in its right place, at the moment the hint is taken, revealed there: the same letter for every player of a daily at the same point; not offered when every position has been found, though not in one guess). Each costs one attempt: the grid's last empty row is spent, and drawn as the hint's row, so the cost is in sight. No hint when one attempt is left: it would end the game. A word with no translation or definition offers no such hint. Games with hints count for the streak, and are marked in the statistics (VISION §9).
 
 ### 4.6 The daily word and the archive
 
 - **The epoch** is the date of daily number 1 (§15, Open: proposed, the 1.0 release's date). The daily of a local date `d` is number `d − epoch + 1`, and its word is the language's frozen schedule at that number (§6.5): the same for every player, from the local date alone, with no server (VISION §8). It changes at local midnight.
 - A daily game belongs to the **date it was started on**: one started at 23:58 and finished at 00:03 is the earlier day's, for the calendar and the streak.
 - **The archive**: every date from the epoch to today, per language, marked solved, missed or not played; future dates are not playable (a phone's clock set ahead is not checked against anything, and needs not be: nobody is competing).
-- **A day's result is its first finished game** (§15, Open: proposed). A day already finished can be played again as practice: not counted, not in the calendar, not in the notebook's marks.
+- **A day's result is its first finished game** (the owner, §15, 12 Nov 2026, «Phase 2: the game engine», Open 9). A day already finished can be played again as practice: not counted, not in the calendar, not in the notebook's marks.
 - The schedule must outlast the app: the script writes at least ten years from the epoch, and a test fails when fewer than three years are left from the build's date.
 
 ### 4.7 Free play and the levels
 
-- Four **levels** by frequency (VISION §9), cumulative: Base ⊂ Intermediate ⊂ Advanced ⊂ Complete (§15, Open: proposed). The level is the game language's own (an Italian player can be at Complete in Italian and at Base in Spanish); in a foreign language it starts at Base.
-- **Free play** draws a solution at the level, never one of the language's last 200 free games nor one solved in free play before, until the level runs out (then the oldest come back). The daily draws from Base and Intermediate only, because it is the same for everyone (VISION §9).
+- Four **levels** by frequency (VISION §9), cumulative: Base ⊂ Intermediate ⊂ Advanced ⊂ Complete (the owner, §15, 12 Nov 2026, «Phase 2: the game engine», Open 12). The level is the game language's own (an Italian player can be at Complete in Italian and at Base in Spanish); in a foreign language it starts at Base.
+- **Free play** draws a solution at the level, never one of the language's last 200 free games nor one solved in free play before, until the level runs out (then the oldest come back: the word whose last free game is the longest ago). The daily draws from Base and Intermediate only, because it is the same for everyone (VISION §9).
 
 ### 4.8 Streaks, statistics and milestones
 
 - **Streak**, per language: the run of consecutive dates, ending today or yesterday, whose daily was won on its own date (§4.6), hints or not. A daily won from the archive counts in the statistics and the calendar, never in the streak (VISION §11). The longest streak is kept as the statistics' answer, computed, not stored.
-- **Statistics**, per language and mode: games, the share won, the distribution of guesses for the games won, the games with hints, the games with Hard. Computed from the games table by query, never kept as counters that could drift.
-- **Milestones** (VISION §11): a closed list in the domain, each a predicate over the facts (the games, the notebook) and a sentence in the three languages; checked after every finished game and every notebook change, unlocked once with its date, never taken back. The first list, from the vision: seven dailies in a row; a first win in a foreign language; 100 words in the notebook; a day's daily won in all three languages. Recognition, never a key (VISION §11).
+- **Statistics**, per language and mode: games, the share won, the distribution of the games won by the attempts they used (a hint is one, §4.5: the number a result shares, «4/6»), the games with hints, the games with Hard. Computed from the games table by query, never kept as counters that could drift.
+- **Milestones** (VISION §11): a closed list in the domain, each a predicate over the facts (the games, the notebook) and a sentence in the three languages; checked after every finished game and every notebook change, unlocked once with its date, never taken back. The first list, from the vision: seven dailies in a row (a streak of seven, in one language); a first win in a foreign language (a counted game of any mode); 100 words in the notebook; a day's daily won in all three languages (the date's counted result, from the archive too). Recognition, never a key (VISION §11).
 
 ### 4.9 Edge cases (all need unit tests)
 
@@ -240,8 +241,8 @@ Only in a game whose language is not the interface's (VISION §5, §9). Three ki
 |---|---|---|
 | `games` | `id`, `language`, `mode`, `daily_date` (epoch day, for a daily), `level` (for free play), `solution` (key form), `length`, `attempts`, `hard`, `ui_language`, `status`, `started_at`, `finished_at`, `practice` | A daily's counted game unique per `(language, daily_date)` when not practice. The marks are never stored: they follow from the solution and the guesses |
 | `guesses` | `game_id`, `position`, `word` (key form) | Cascade on the game's delete |
-| `hints` | `game_id`, `kind`, `position` | The order they were taken in |
-| `notebook` | `language`, `word` (key form), `first_met`, `last_met`, `times_met`, `solved`, `missed`, `with_hints`, `saved_by_hand` | One row per word and language; the meanings are read from `:core:words`, never copied. 1.1's review adds its columns by a tested migration |
+| `hints` | `game_id`, `kind`, `position` | One `position` sequence with the guesses: a game is its moves in order (§4.3), and the letter a hint revealed follows from the guesses before it |
+| `notebook` | `language`, `word` (key form), `first_met`, `last_met`, `times_met`, `solved`, `missed`, `with_hints`, `saved_by_hand` | One row per word and language: the solutions by themselves, a guessed word when the player adds it from the end card (the owner, Open 8); the meanings are read from `:core:words`, never copied. 1.1's review adds its columns by a tested migration |
 | `milestones` | `id`, `unlocked_at` | |
 
 Never `fallbackToDestructiveMigration`; the schema is exported to `core/data/schemas/` and committed; every migration has a test, and the upgrade from the first release's schema is tested.
@@ -298,7 +299,7 @@ Per language, the list of the dailies' words in order, written by the script fro
 
 ### 6.6 What ships, and how it is read
 
-Per language, a few files in `:core:words`'s assets, uncompressed in the APK so they can be mapped, not copied: the accepted key forms, sorted and packed (five bits a letter: a five-letter word in four bytes, up to six letters, and eight bytes from seven to twelve), found by binary search; the solutions with their levels; the daily schedule; per interface language, the glossary (display forms, meanings, translations, part of speech), in blocks with an index. The decoder is pure Kotlin in `:core:domain`, tested on the JVM against small files the tests write; `:core:words` maps the assets and hands their bytes over. The sizes are measured in Phase 1 (VISION Q5), the formats chosen then, in `docs/adr/0003-words.md`.
+Per language, a few files in `:core:words`'s assets, uncompressed in the APK so they can be mapped, not copied: the accepted key forms, sorted and packed (five bits a letter: a five-letter word in four bytes, up to six letters, and eight bytes from seven to twelve), found by binary search; the solutions with their levels; the daily schedule; the written forms of each key form (a solution's own first: §15, 12 Nov 2026, «Phase 2: the game engine»); per interface language, the glossary (meanings, translations), in blocks with an index. The decoder is pure Kotlin in `:core:domain`, tested on the JVM against small files the tests write; `:core:words` maps the assets and hands their bytes over. The sizes are measured in Phase 1 (VISION Q5), the formats chosen then, in `docs/adr/0003-words.md`.
 
 ### 6.7 Reproducibility and credit
 
@@ -445,12 +446,12 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 ### Phase 2 — The game engine
 
-- [ ] `core:model`: §5's classes
-- [ ] `core:domain`, test first, every case of §4.9: alphabets and folding, the feedback, `Game` (submit, refusals, Hard, hints, the end), the daily's number and word, free play's draw, streaks, statistics, milestones' predicates, the share text
-- [ ] The words' decoder (pure) and `:core:words` (the assets, mapped); a word found among 30,000 in under a millisecond on a mid-range phone
+- [x] `core:model`: §5's classes (12 Nov 2026)
+- [x] `core:domain`, test first, every case of §4.9: alphabets and folding, the feedback, `Game` (submit, refusals, Hard, hints, the end), the daily's number and word, free play's draw, streaks, statistics, milestones' predicates, the share text (12 Nov 2026)
+- [x] The words' decoder (pure) and `:core:words` (the assets, mapped); a word found among 30,000 in under a millisecond on a mid-range phone (12 Nov 2026: a few microseconds on the JVM, the bound held by a test; the phone's own measure with the profiler in Phase 3)
 
 **Acceptance:**
-- [ ] Every §4.9 case named in a test, green.
+- [x] Every §4.9 case named in a test, green (12 Nov 2026: 94 tests in `:core:domain`, 8 on the real files in `:core:words`).
 
 ### Phase 3 — The game screen
 
@@ -480,7 +481,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 - [ ] The hints (§4.5) with their cost drawn
 - [ ] The end card's meanings: for the solution and each guess, the meaning, the translation in the interface language, the written form with its accents (VISION §9)
-- [ ] `:feature:notebook`: the words met (§15, Open: which), with translation, language and date, solved, missed or with hints, searchable as a small dictionary
+- [ ] `:feature:notebook`: the words met (the solutions, and a guessed word the player adds from the end card: the owner, §15, Open 8), with translation, language and date, solved, missed or with hints, searchable as a small dictionary
 - [ ] Milestones' first list (§4.8)
 
 ### Phase 6 — Progress and your data
@@ -569,7 +570,7 @@ As the family's: the same key, the store listing, the data safety form ("no data
 
 ### Open
 
-What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1, 2, 3 and 5 on 12 Nov 2026; 4 is open, and 6 to 17 are needed by the phases they name.
+What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11 and 12 on 12 Nov 2026; 10 and 13 to 17 are needed by the phases they name.
 
 From this review (§15, 12 Nov 2026, «The repository, the vision's review and this plan»), each with a proposal:
 
@@ -580,11 +581,11 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 - [x] **5. The feedback's colours and shapes** (§7.2). The proposal accepted, with the owner's condition that every solution be a premium app's (the same entry): drawn on a board in Phase 3, with its motion, before it is built.
 - [x] **6. Italian's keyboard and its foreign letters.** Proposed: the keyboard has all 26 letters (*taxi*, *jeans*, *yacht* are words a player types); the solutions keep to the Italian alphabet's 21. Closed by the owner (§15, 12 Nov 2026, «Open 6 answered»): the proposal confirmed.
 - [x] **7. Bridge needs several lengths before 1.2.** VISION puts Bridge in 1.1 and variable length in 1.2 because each length costs its lists, but *gatto / cat / gato* already has three lengths. Proposed: the accepted sets of every length come with 1.1 (they are cheap: filtered expansions); what 1.2 adds per length is the solutions, their levels and meanings. And Bridge plays the player's chosen languages, two or three, not always all three: a learner of one foreign language should not need the third. Closed by the owner (§15, 12 Nov 2026, «Open 7 answered; longer words' slots»): the proposal confirmed.
-- [ ] **8. What the notebook gathers.** "The words met" could mean every guess: six a game, mostly words the player knows. Proposed: the solutions by themselves; a guessed word by a touch on the end card ("Add to the notebook").
-- [ ] **9. A day played twice.** Proposed: a day's result is its first finished game; a finished day can be played again as practice, not counted (§4.6); a daily belongs to the date it was started on.
+- [x] **8. What the notebook gathers.** "The words met" could mean every guess: six a game, mostly words the player knows. Proposed: the solutions by themselves; a guessed word by a touch on the end card ("Add to the notebook"). Closed by the owner (§15, 12 Nov 2026, «Phase 2: the game engine»): the proposal confirmed.
+- [x] **9. A day played twice.** Proposed: a day's result is its first finished game; a finished day can be played again as practice, not counted (§4.6); a daily belongs to the date it was started on. Closed by the owner (the same entry): the proposal confirmed.
 - [ ] **10. The epoch** (daily number 1). Proposed: the day 1.0 is released; until then a provisional epoch for development, fixed in Phase 9.
-- [ ] **11. Hints' details** (§4.5): each kind once a game; the cost drawn as the last row spent; none with one attempt left; the letter is the leftmost not yet found, the same for every player. Proposed as written.
-- [ ] **12. The levels are cumulative** (Base inside Intermediate, …, Complete everything) and each game language has its own. Proposed as written (§4.7).
+- [x] **11. Hints' details** (§4.5): each kind once a game; the cost drawn as the last row spent; none with one attempt left; the letter is the leftmost not yet found, the same for every player. Proposed as written. Closed by the owner (the same entry): confirmed as written.
+- [x] **12. The levels are cumulative** (Base inside Intermediate, …, Complete everything) and each game language has its own. Proposed as written (§4.7). Closed by the owner (the same entry): confirmed as written.
 - [ ] **13. Sound and haptics' defaults.** Proposed: both on; sound silent whenever the phone is on silent or vibrate; haptics following the phone's own touch-feedback setting; the in-app switches of VISION §12 turn each off.
 - [ ] **14. Settings, two additions.** Proposed: Appearance as the family's (theme, dress, typeface, wallpaper colours; VISION speaks of light and dark only), and the interface language through Android's per-app picker, which Settings opens (the family's way), rather than a list of the app's own.
 - [ ] **15. A daily reminder and a home-screen card**, not in VISION. Every sister has its cards, and a daily game is the kind of app a quiet reminder serves. Proposed: the reminder in 1.0 (one inexact alarm, silent on a day already played: the family's code), the card in 1.1; or neither.
@@ -718,3 +719,24 @@ Nothing in the words changes, so nothing is rebuilt. Phase 1 is done, its boxes 
 ### 12 Nov 2026 — Open 6 answered (owner: "Confermo la regola delle 21 lettere")
 
 Open 6 closed as proposed, after the numbers were shown: the Italian keyboard has all 26 letters, and a word with *j*, *k*, *w*, *x* or *y* is accepted as a guess (*taxi*, *jeans*, *yacht*); a solution keeps to the Italian alphabet's 21 letters. Of the 1,834 Italian solution candidates the rule keeps out 143, 30 of them common enough for the daily (*tweet*, *check*, *water*, *jeans*, *yacht*, *karma*...): mostly English words used in Italian, which a daily in Italian should not ask for. The middle way weighed (those words in free play's Advanced and Complete only) was not taken: one more rule for little. The pipeline already applies it, so nothing is rebuilt; §4.1 and §6.2 now cite this answer.
+
+### 12 Nov 2026 — Phase 2: the game engine (owner: "Procedi con la fase 2")
+
+The four open questions the engine touches were asked first, each with its proposal, and **the owner confirmed all four**: Open 8 (the notebook gathers the solutions by themselves, a guessed word only by a touch on the end card), Open 9 (a day's result is its first finished game; a finished day replays as practice, not counted; a daily belongs to the date it was started on), Open 11 (the hints as §4.5 wrote them) and Open 12 (the levels cumulative, one a game language). §4.5 to §4.8 and §5 now cite the answers. Then the phase was built, test first:
+
+- **`:core:model`**: `Language` (its header code and tag, the files'), `Letter` (an index among the keys), `Word` (a key form as indices, equal by its letters), `Mark` and `Guess`, `GameMode` (`Daily(date, number)`, `Free(level)`, `Guided`), `GameSetup`, `GameState`, `Level` (cumulative, its two bits in the files), `HintKind`, `NotebookEntry`, `Milestone`, `UserSettings`. `UserSettings` writes **no default**: sound's, haptics' and the appearance's are Open 13 and 14, for the phases that build them.
+- **`:core:domain`** (pure, 94 tests): `Alphabet` (the keys, the folding as `tools/words/pipeline/folding.py` does it, the packing); `Feedback` (the two passes, the keyboard's best mark); `Game` (immutable, the setup and its moves; submit, the refusals, Hard, the hints, the end; `restore` replays the moves); `FreePlay`; `DailyCalendar` (an injected clock and zone, the provisional epoch of Open 10, the archive) and `Dailies` (a day's result, its status, whether a new game is practice); `Streaks`, `Statistics`, `Milestones` over `GameRecord`, the games as a table gives them; `ShareText`; the decoder (`WordsFile`, `AcceptedWords`, `Solutions`, `DailySchedule`, `TextTable`, `Forms`, `Glossary`, `Lexicon`), tested on small files the tests write as `pack.py` does. Every §4.9 case is a test named after it.
+- **`:core:words`** maps the assets in place (`AssetWordFiles`; the APK stores `*.bin` uncompressed, `noCompress` in `:app`, checked in the debug APK: *Stored*), and reads them whole only where a packaging compressed them (a test's). Its 8 Robolectric tests read the committed files through the decoder: the report's counts, *città* and *árbol* written right, every one of the 3,654 dailies a language a solution of the daily's levels (the mask read as it was written), three years of schedule left, a lookup among the English 22,919 in microseconds on the JVM (the bound a millisecond, the phone's; the phone's own measure with the profiler in Phase 3). No daily's word is written in a test. `:app` depends on it now, so the APK carries the words (3.3 MB).
+
+What was decided, and why:
+
+- **A game is its moves.** The guesses and the hints in one sequence, so the letter a hint reveals (the leftmost position no guess had found when it was taken) follows from the guesses before it, and is never stored. So the `guesses` and `hints` tables of Phase 3 share one `position` sequence (§5).
+- **The solution's written form, written into the forms file.** The files had a key's written forms in alphabetical order, and no way to tell which was the solution's when several lemmas share a key: read first-come, 89 solutions would have ended written wrong (15 Italian, 6 English, 68 Spanish: *citta* for *città*, *caffe*, *arbol*, *adios*, *saute*). The pipeline now writes a solution's own written form first in its record (`forms_records`, two Python tests), and the decoder reads it there. The sources still matched their pins, so the words were rebuilt here: **only the three `forms-5.bin` changed**, the same size, the same keys, those 89 records' forms in another order; every other file, the schedules and the report kept their bytes, and a second run wrote the same bytes. ADR 0003, decision 8, says so.
+- **The statistics' distribution counts attempts, not guesses**: a hint costs an attempt (§4.5), so a game won on the third guess after a hint is a 4, the same number its shared result says («4/6»). §4.8 now says so.
+- **The share text** draws a row a guess and says a hint's row ("Hard · 1 hint") instead of drawing it; a lost game scores X. The symbols are §7.6's proposal; the words around them (the language, «Hard», the hints' plural) come from the interface's resources, so the domain only orders them.
+- **Hard's refusal** names the first requirement missed: a position held first, left to right, then a letter's count, as many as one guess found of it (two E found, two E needed). A hint's letter counts as found in its place.
+- **Free play's oldest come back**: when the level has no word left that was neither among the last 200 nor solved, the word whose last free game is the longest ago is drawn.
+- **The milestones' readings**: seven dailies in a row is a streak of seven in one language; a first foreign win is any counted game won (not practice) in a language not the interface's; a day's daily won in three languages counts that date's results, from the archive too. Each a predicate over the games and the notebook's size, unlocked once.
+- **Robolectric at SDK 35** for `:core:words` too, as `:app` and `:core:designsystem` pin it: the newest SDK's sandbox fails under Java 21 on a reflection into `java.base`.
+
+Checked here: `spotlessCheck`, `checkForbiddenPermissions`, `test` (every module), `:app:lintDebug` (no issue), `:app:assembleDebug`; the words' Python tests (53) and `build.py --check` (the same bytes).

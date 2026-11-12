@@ -46,10 +46,18 @@ def glossary_words(lw: lexicon.LanguageWords) -> list[str]:
 
 def forms_records(lw: lexicon.LanguageWords) -> dict:
     """Per accepted key, its written forms and the lemmas each is a form of, where that says more
-    than the key itself (a lemma written as its key needs no record: its glossary is by key)."""
+    than the key itself (a lemma written as its key needs no record: its glossary is by key).
+
+    A solution's own written form comes first in its record, the others after it in their order:
+    the app reads a solution's display form there (PLANNING.md §4.1), and several lemmas can share
+    a key (*citta* and *città*, *gatto* and *gattò*), the most frequent being the solution's."""
+    solution_display = {s.key: s.display for s in lw.solutions}
     records = {}
     for key in sorted(lw.accepted):
         displays = lw.displays.get(key, [key])
+        own = solution_display.get(key)
+        if own is not None:
+            displays = [own] + [d for d in displays if d != own]
         items = []
         informative = displays != [key]
         for d in displays:

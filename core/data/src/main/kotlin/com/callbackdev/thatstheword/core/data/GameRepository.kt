@@ -7,6 +7,7 @@ import com.callbackdev.thatstheword.core.data.db.GuessEntity
 import com.callbackdev.thatstheword.core.data.db.HintEntity
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
+import com.callbackdev.thatstheword.core.domain.game.FreePlay
 import com.callbackdev.thatstheword.core.domain.game.Game
 import com.callbackdev.thatstheword.core.domain.game.Move
 import com.callbackdev.thatstheword.core.domain.progress.GameRecord
@@ -26,6 +27,7 @@ import java.time.Instant
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlin.random.Random
 
 /** A game as it is kept: its row's id, the game replayed from its moves, and the date it was started on. */
 data class SavedGame(val id: Long, val game: Game, val startedOn: LocalDate, val practice: Boolean)
@@ -50,37 +52,120 @@ class GameRepository @Inject constructor(
     /**
      * The id of [language]'s counted daily of [date], started now if it was not (the owner,
      * PLANNING §15, Open 9: a daily belongs to the date it was started on, and a day has one
-     * counted game). [hard] and [interfaceLanguage] are read at the start and hold for the game.
+     * counted game). [hard] and [interfaceLanguage] are read at the start and hold for the game;
+     * a game taken up before its first move takes the Hard chosen since (PLANNING.md §4.4).
      */
     suspend fun dailyGame(language: Language, date: LocalDate, interfaceLanguage: Language, hard: Boolean): Long =
         database.withTransaction {
-            dao.countedDaily(language.tag, date.toEpochDay())?.id ?: run {
-                val calendar = calendar()
-                val lexicon = lexicons.of(language)
-                val number = calendar.number(date)
-                require(calendar.isPlayable(date, lexicon.daily.size)) { "the daily of $date is not playable" }
-                val solution = lexicon.daily.word(number)
-                val now = clock.get()
-                dao.insertGame(
-                    GameEntity(
-                        language = language.tag,
-                        mode = MODE_DAILY,
-                        dailyDate = date.toEpochDay(),
-                        level = null,
-                        solution = Alphabet.of(language).keyForm(solution),
-                        length = solution.length,
-                        attempts = GameSetup.ATTEMPTS,
-                        hard = hard,
-                        uiLanguage = interfaceLanguage.tag,
-                        status = STATUS_PLAYING,
-                        startedAt = Instant.now(now).toEpochMilli(),
-                        startedOn = LocalDate.now(now).toEpochDay(),
-                        finishedAt = null,
-                        practice = 0,
-                    ),
-                )
-            }
+            dao.countedDaily(language.tag, date.toEpochDay())?.let { takeUp(it, hard) }
+                ?: insertDaily(language, date, interfaceLanguage, hard, practice = 0)
         }
+
+    /**
+     * The id of a replay of [language]'s daily of [date] as practice (PLANNING.md §4.6): not
+     * counted, not in the calendar. A replay left unfinished is taken up; otherwise a new one is
+     * started, numbered after the day's others. Only a day already finished is replayed.
+     */
+    suspend fun practiceGame(language: Language, date: LocalDate, interfaceLanguage: Language, hard: Boolean): Long =
+        database.withTransaction {
+            val counted = dao.countedDaily(language.tag, date.toEpochDay())
+            require(counted != null && counted.status != STATUS_PLAYING) {
+                "the daily of $date has no result to replay"
+            }
+            val replays = dao.practiceDailies(language.tag, date.toEpochDay())
+            replays.lastOrNull { it.status == STATUS_PLAYING }?.let { takeUp(it, hard) }
+                ?: insertDaily(
+                    language,
+                    date,
+                    interfaceLanguage,
+                    hard,
+                    practice =
+                    (replays.maxOfOrNull { it.practice } ?: 0) + 1,
+                )
+        }
+
+    /**
+     * The id of a free game in [language] (PLANNING.md §4.7): the one left unfinished, taken up
+     * wherever it was, whatever its level; otherwise a new word drawn at [level], never one of the
+     * language's last 200 free games nor one solved in free play, until the level runs out. One
+     * free game a language is under way at a time, so a word is never left behind unseen.
+     */
+    suspend fun freeGame(
+        language: Language,
+        level: Level,
+        interfaceLanguage: Language,
+        hard: Boolean,
+        random: Random = Random.Default,
+    ): Long = database.withTransaction {
+        val history = dao.freeGames(language.tag)
+        history.lastOrNull { it.status == STATUS_PLAYING }?.let { return@withTransaction takeUp(it, hard) }
+        val alphabet = Alphabet.of(language)
+        val played = history.map { FreePlay.Played(alphabet.parseStored(it.solution), it.status == STATUS_WON) }
+        val solution = FreePlay.draw(lexicons.of(language).solutions.at(level), played, random)
+        val now = clock.get()
+        dao.insertGame(
+            GameEntity(
+                language = language.tag,
+                mode = MODE_FREE,
+                dailyDate = null,
+                level = level.code,
+                solution = alphabet.keyForm(solution),
+                length = solution.length,
+                attempts = GameSetup.ATTEMPTS,
+                hard = hard,
+                uiLanguage = interfaceLanguage.tag,
+                status = STATUS_PLAYING,
+                startedAt = Instant.now(now).toEpochMilli(),
+                startedOn = LocalDate.now(now).toEpochDay(),
+                finishedAt = null,
+                practice = 0,
+            ),
+        )
+    }
+
+    /** A game taken up: before its first move it takes the Hard chosen now; after, it keeps its own. */
+    private suspend fun takeUp(game: GameEntity, hard: Boolean): Long {
+        if (game.status == STATUS_PLAYING && game.hard != hard && dao.moveCount(game.id) == 0) {
+            dao.updateHard(game.id, hard)
+        }
+        return game.id
+    }
+
+    private suspend fun insertDaily(
+        language: Language,
+        date: LocalDate,
+        interfaceLanguage: Language,
+        hard: Boolean,
+        practice: Int,
+    ): Long {
+        val calendar = calendar()
+        val lexicon = lexicons.of(language)
+        val number = calendar.number(date)
+        require(calendar.isPlayable(date, lexicon.daily.size)) { "the daily of $date is not playable" }
+        val solution = lexicon.daily.word(number)
+        val now = clock.get()
+        return dao.insertGame(
+            GameEntity(
+                language = language.tag,
+                mode = MODE_DAILY,
+                dailyDate = date.toEpochDay(),
+                level = null,
+                solution = Alphabet.of(language).keyForm(solution),
+                length = solution.length,
+                attempts = GameSetup.ATTEMPTS,
+                hard = hard,
+                uiLanguage = interfaceLanguage.tag,
+                status = STATUS_PLAYING,
+                startedAt = Instant.now(now).toEpochMilli(),
+                startedOn = LocalDate.now(now).toEpochDay(),
+                finishedAt = null,
+                practice = practice,
+            ),
+        )
+    }
+
+    /** How many dailies [language]'s schedule holds: the archive's last date (PLANNING.md §4.6). */
+    fun scheduleLength(language: Language): Int = lexicons.of(language).daily.size
 
     /** A game, replayed from its moves; null once it is gone. */
     fun game(id: Long): Flow<SavedGame?> = dao.observeGame(id)

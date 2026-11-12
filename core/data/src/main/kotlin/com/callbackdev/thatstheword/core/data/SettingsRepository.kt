@@ -37,6 +37,8 @@ class SettingsRepository @Inject constructor(
 
     suspend fun current(): UserSettings = settings.first()
 
+    // The setters return nothing: the file's own types stay inside this module.
+
     private fun settingsOf(p: Preferences) = UserSettings(
         gameLanguage = p[GAME_LANGUAGE]?.let(Language::ofTag) ?: interfaceLanguage.current(),
         levels = Language.entries.mapNotNull { language ->
@@ -54,32 +56,54 @@ class SettingsRepository @Inject constructor(
         tipsSeen = p[TIPS_SEEN] ?: false,
     )
 
-    suspend fun setGameLanguage(language: Language) = store.edit { it[GAME_LANGUAGE] = language.tag }
-
-    suspend fun setLevel(language: Language, level: Level) = store.edit { it[levelKey(language)] = level.code }
-
-    suspend fun setHard(hard: Boolean) = store.edit { it[HARD] = hard }
-
-    suspend fun setSound(on: Boolean) = store.edit { it[SOUND] = on }
-
-    suspend fun setHaptics(on: Boolean) = store.edit { it[HAPTICS] = on }
-
-    /** Null follows the system's setting again. */
-    suspend fun setReducedMotion(reduced: Boolean?) = store.edit {
-        if (reduced == null) it.remove(REDUCED_MOTION) else it[REDUCED_MOTION] = reduced
+    suspend fun setGameLanguage(language: Language) {
+        store.edit { it[GAME_LANGUAGE] = language.tag }
     }
 
-    suspend fun setThemeMode(mode: ThemeMode) = store.edit { it[THEME] = mode.name }
+    suspend fun setLevel(language: Language, level: Level) {
+        store.edit { it[levelKey(language)] = level.code }
+    }
 
-    suspend fun setPalette(palette: AppPalette) = store.edit { it[PALETTE] = palette.name }
+    suspend fun setHard(hard: Boolean) {
+        store.edit { it[HARD] = hard }
+    }
 
-    suspend fun setFont(font: AppFont) = store.edit { it[FONT] = font.name }
+    suspend fun setSound(on: Boolean) {
+        store.edit { it[SOUND] = on }
+    }
 
-    suspend fun setWallpaperColors(on: Boolean) = store.edit { it[WALLPAPER_COLORS] = on }
+    suspend fun setHaptics(on: Boolean) {
+        store.edit { it[HAPTICS] = on }
+    }
 
-    suspend fun setFirstRunDone() = store.edit { it[FIRST_RUN_DONE] = true }
+    /** Null follows the system's setting again. */
+    suspend fun setReducedMotion(reduced: Boolean?) {
+        store.edit { if (reduced == null) it.remove(REDUCED_MOTION) else it[REDUCED_MOTION] = reduced }
+    }
 
-    suspend fun setTipsSeen() = store.edit { it[TIPS_SEEN] = true }
+    suspend fun setThemeMode(mode: ThemeMode) {
+        store.edit { it[THEME] = mode.name }
+    }
+
+    suspend fun setPalette(palette: AppPalette) {
+        store.edit { it[PALETTE] = palette.name }
+    }
+
+    suspend fun setFont(font: AppFont) {
+        store.edit { it[FONT] = font.name }
+    }
+
+    suspend fun setWallpaperColors(on: Boolean) {
+        store.edit { it[WALLPAPER_COLORS] = on }
+    }
+
+    suspend fun setFirstRunDone() {
+        store.edit { it[FIRST_RUN_DONE] = true }
+    }
+
+    suspend fun setTipsSeen() {
+        store.edit { it[TIPS_SEEN] = true }
+    }
 
     private companion object {
         // The keys are the file's format, read back after an update and from a backup: never renamed.

@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,11 +44,12 @@ import com.callbackdev.thatstheword.core.model.GameState
 /**
  * The end of a game (PLANNING.md §7.4, VISION §9): the line the name stands for («That's the
  * word.») or the line for a word not found, then the card: the word as it is written, with its
- * accents (*città*), how it was found, the words tried, and the result to share. The meanings and
- * the notebook join it in Phase 5.
+ * accents (*città*), how it was found, the words tried, the result to share, and what comes next:
+ * the day again as practice, or another free word (PLANNING.md §4.6, §4.7). A replay's result is
+ * not shared: it is no day's result. The meanings and the notebook join it in Phase 5.
  */
 @Composable
-internal fun EndCard(state: GameUiState, onShare: () -> Unit, modifier: Modifier = Modifier) {
+internal fun EndCard(state: GameUiState, onShare: () -> Unit, onNext: () -> Unit, modifier: Modifier = Modifier) {
     val locale = LocalConfiguration.current.locales[0]
     val won = state.state == GameState.WON
     Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -84,6 +88,14 @@ internal fun EndCard(state: GameUiState, onShare: () -> Unit, modifier: Modifier
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+            if (state.practice) {
+                Text(
+                    text = stringResource(R.string.end_practice),
+                    style = MaterialTheme.typography.bodyMedium.balanced(),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
             if (state.guessesWritten.isNotEmpty()) {
                 HorizontalDivider(Modifier.padding(vertical = 14.dp), color = MaterialTheme.colorScheme.outlineVariant)
                 val yours = stringResource(R.string.end_your_words)
@@ -98,12 +110,38 @@ internal fun EndCard(state: GameUiState, onShare: () -> Unit, modifier: Modifier
                 }
             }
             Spacer(Modifier.height(14.dp))
-            // Outlined: a filled button would take the dress's colour, and its amber or blue would
-            // sit beside the marks' own.
-            OutlinedButton(onClick = onShare) {
-                Icon(GameIcons.Share, contentDescription = null, modifier = Modifier.size(18.dp))
-                Spacer(Modifier.size(8.dp))
-                Text(stringResource(R.string.end_share))
+            state.next?.let { next ->
+                // In the dress's ink, not its primary: the Vivid dress's azure would sit beside
+                // the marks' ink blue and amber.
+                Button(
+                    onClick = onNext,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.inverseSurface,
+                        contentColor = MaterialTheme.colorScheme.inverseOnSurface,
+                    ),
+                    modifier = Modifier
+                        .heightIn(min = 48.dp)
+                        .testTag(GameTags.NEXT),
+                ) {
+                    Text(
+                        text = stringResource(
+                            when (next) {
+                                NextGame.PRACTICE -> R.string.end_play_again
+                                NextGame.ANOTHER_WORD -> R.string.end_another_word
+                            },
+                        ),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+            if (state.shareable) {
+                // Outlined: a filled button would take the dress's colour, and its amber or blue
+                // would sit beside the marks' own.
+                OutlinedButton(onClick = onShare) {
+                    Icon(GameIcons.Share, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.size(8.dp))
+                    Text(stringResource(R.string.end_share))
+                }
             }
         }
     }

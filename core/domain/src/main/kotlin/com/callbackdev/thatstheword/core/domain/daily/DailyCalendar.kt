@@ -1,6 +1,7 @@
 package com.callbackdev.thatstheword.core.domain.daily
 
 import java.time.Clock
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -32,6 +33,18 @@ class DailyCalendar(private val clock: Clock, val epoch: LocalDate = PROVISIONAL
      */
     fun isPlayable(date: LocalDate, scheduleLength: Int): Boolean =
         !date.isBefore(epoch) && !date.isAfter(today()) && number(date) <= scheduleLength
+
+    /**
+     * How long until the next local date begins: the start page's ticker waits this long, while it
+     * is on screen, to show the new day's word (PLANNING.md §9). A day of a change of the clocks is
+     * 23 or 25 hours long, and a zone whose clocks change at midnight starts its day at 01:00: the
+     * zone's own start of the next day, never `now + 24h`.
+     */
+    fun untilNextDay(): Duration {
+        val now = Instant.now(clock)
+        val next = today().plusDays(1).atStartOfDay(clock.zone).toInstant()
+        return Duration.between(now, next)
+    }
 
     /** Every playable date, from the epoch to today: the archive (PLANNING.md §4.6). */
     fun archive(scheduleLength: Int): List<LocalDate> {

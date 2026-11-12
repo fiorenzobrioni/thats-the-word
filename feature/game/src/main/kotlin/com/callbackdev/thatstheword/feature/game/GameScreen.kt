@@ -98,6 +98,7 @@ fun GameScreen(
     onEnter: () -> Unit,
     onShare: () -> Unit,
     modifier: Modifier = Modifier,
+    onNext: () -> Unit = {},
     haptics: Boolean = true,
     onHardwareChar: (Char) -> Boolean = { false },
 ) {
@@ -199,7 +200,7 @@ fun GameScreen(
                                 slideInVertically(ThatsTheWordMotion.playful()) { it / 3 }
                         },
                     ) {
-                        EndCard(state, onShare, Modifier.padding(top = 8.dp, bottom = 24.dp))
+                        EndCard(state, onShare, onNext, Modifier.padding(top = 8.dp, bottom = 24.dp))
                     }
                 }
             }
@@ -243,7 +244,11 @@ private fun TopBar(state: GameUiState, onBack: () -> Unit) {
     val locale = LocalConfiguration.current.locales[0]
     val language = stringResource(languageName(state.language))
     val (eyebrow, title) = when (val mode = state.mode) {
-        is GameMode.Daily -> stringResource(R.string.game_daily_eyebrow, language, mode.number) to
+        is GameMode.Daily -> stringResource(
+            if (state.practice) R.string.game_practice_eyebrow else R.string.game_daily_eyebrow,
+            language,
+            mode.number,
+        ) to
             DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale).format(mode.date)
 
         is GameMode.Free -> language to stringResource(R.string.game_free)
@@ -394,6 +399,7 @@ object GameTags {
     const val PAGE = "game_page"
     const val REFUSAL = "game_refusal"
     const val END_CARD = "game_end_card"
+    const val NEXT = "game_next"
 }
 
 private val MAX_TILE = 56.dp

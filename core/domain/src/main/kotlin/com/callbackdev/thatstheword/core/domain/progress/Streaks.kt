@@ -17,9 +17,14 @@ object Streaks {
 
     /**
      * The streak running [today]: it ends today or yesterday, so a streak whose today is not yet
-     * played still runs; a day missed or not played before that ends it.
+     * played, or still under way, still runs; a day missed or not played before that ends it, and
+     * so does today's word missed: the run cannot go on past it.
      */
     fun current(records: List<GameRecord>, language: Language, today: LocalDate): Int {
+        val missedToday = records.any {
+            it.language == language && it.counted && it.daily?.date == today && it.state == GameState.LOST
+        }
+        if (missedToday) return 0
         val won = wonDates(records, language)
         var day = if (today in won) today else today.minusDays(1)
         var run = 0

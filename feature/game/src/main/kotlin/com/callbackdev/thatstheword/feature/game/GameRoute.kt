@@ -14,10 +14,11 @@ import com.callbackdev.thatstheword.core.model.GameMode
 
 /**
  * The game of [gameId], on screen: its view model, and the share sheet for its result (no
- * permission: the text goes through the system's chooser, PLANNING.md §10).
+ * permission: the text goes through the system's chooser, PLANNING.md §10). [onOpenGame] takes
+ * the id of the game the end card offers next, which stands in this one's place.
  */
 @Composable
-fun GameRoute(gameId: Long, onBack: () -> Unit, modifier: Modifier = Modifier) {
+fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<GameViewModel, GameViewModel.Factory>(
         key = "game-$gameId",
         creationCallback = { it.create(gameId) },
@@ -42,6 +43,7 @@ fun GameRoute(gameId: Long, onBack: () -> Unit, modifier: Modifier = Modifier) {
         onDelete = viewModel::delete,
         onEnter = viewModel::submit,
         onHardwareChar = viewModel::typeChar,
+        onNext = { viewModel.next(onOpenGame) },
         onShare = {
             val text = viewModel.shareText(labels) ?: return@GameScreen
             val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)

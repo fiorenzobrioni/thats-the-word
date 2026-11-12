@@ -64,7 +64,7 @@ What 1.0 will do ([VISION.md](./VISION.md) has the full scope):
 - 💾 **Your data**: a backup file of your games, notebook and milestones, to keep or to move.
 - ✨ **Made to feel good**: every key moment has its movement, discreet haptics and sounds, each
   with its own switch; light and dark, the family's dresses and typefaces.
-- ♿ **For every player**: shapes as well as colours, TalkBack throughout, text at twice its size,
+- 🤝 **For every player**: shapes as well as colours, TalkBack throughout, text at twice its size,
   less motion on request, a centred column on an open foldable.
 
 ## Principles
@@ -113,7 +113,8 @@ closed periods in [docs/planning](./docs/planning/README.md)):
 - **Phase 2**, the game engine: every rule, every edge case tested. *Done.*
 - **Phase 3**, the game screen: the grid, the keyboard, the motion. *Built; to be looked at on a
   phone.*
-- **Phase 4**, the start page, the daily word, the archive and free play.
+- **Phase 4**, the start page, the daily word, the archive and free play. *Built; to be looked
+  at on a phone.*
 - **Phase 5**, practising a language: hints, meanings and the notebook.
 - **Phase 6**, progress, milestones, sharing and your data.
 - **Phase 7**, the first run (a guided first game), settings and sound.

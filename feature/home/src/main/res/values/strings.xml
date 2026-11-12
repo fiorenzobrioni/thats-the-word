@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The start page (PLANNING.md §11 Phase 4). Short, calm, a little theatrical; no exclamation
+         marks. Sentence case: the page draws its capitals. -->
+    <string name="home_name" translatable="false">That’s The Word</string>
+    <string name="home_tagline">One word a day. Three languages.</string>
+
+    <!-- The game languages, as the interface names them: the quick switch's three choices. -->
+    <string name="home_language_it">Italian</string>
+    <string name="home_language_en">English</string>
+    <string name="home_language_es">Spanish</string>
+
+    <!-- Under each language: how its word of today stands, in two or three words. -->
+    <string name="home_status_waiting">Waiting</string>
+    <string name="home_status_under_way">Under way</string>
+    <string name="home_status_found">Found in %1$d</string>
+    <string name="home_status_missed">Missed</string>
+    <!-- The same, for TalkBack: "Italian: found in 4 attempts". -->
+    <string name="home_language_description">%1$s: %2$s</string>
+    <plurals name="home_status_found_description">
+        <item quantity="one">found in %d attempt</item>
+        <item quantity="other">found in %d attempts</item>
+    </plurals>
+
+    <!-- Today's word: above its date, the daily's number. -->
+    <string name="home_today_eyebrow">Today’s word · #%1$d</string>
+    <string name="home_today_waiting">A new word is waiting for you.</string>
+    <string name="home_today_opened">Opened, and waiting for a first word.</string>
+    <plurals name="home_today_under_way">
+        <item quantity="one">Under way, %1$d attempt of %2$d used.</item>
+        <item quantity="other">Under way, %1$d attempts of %2$d used.</item>
+    </plurals>
+    <plurals name="home_today_found">
+        <item quantity="one">Found in %1$d attempt of %2$d.</item>
+        <item quantity="other">Found in %1$d attempts of %2$d.</item>
+    </plurals>
+    <string name="home_today_missed">Not this time. Tomorrow brings another.</string>
+    <string name="home_play">Play today’s word</string>
+    <string name="home_take_up">Take up today’s word</string>
+    <string name="home_see">See how it went</string>
+
+    <!-- The streak (PLANNING.md §4.8): the one number of the page, with the line that says it. -->
+    <string name="home_streak_eyebrow">Your streak</string>
+    <plurals name="home_streak_line">
+        <item quantity="one">day in a row, the word found on its own day.</item>
+        <item quantity="other">days in a row, each word found on its own day.</item>
+    </plurals>
+    <string name="home_streak_keep">Find today’s word to keep it going.</string>
+    <string name="home_streak_none">No streak running. Find a word on its own day, and one begins.</string>
+    <!-- The same, for TalkBack: "A streak of 4 days". -->
+    <plurals name="home_streak_description">
+        <item quantity="one">A streak of %d day</item>
+        <item quantity="other">A streak of %d days</item>
+    </plurals>
+
+    <!-- The calendar of the dailies, the archive (VISION §8). -->
+    <string name="home_calendar_eyebrow">The calendar</string>
+    <string name="home_calendar_previous">Previous month</string>
+    <string name="home_calendar_next">Next month</string>
+    <plurals name="home_month_found">
+        <item quantity="one">%d word found</item>
+        <item quantity="other">%d words found</item>
+    </plurals>
+    <plurals name="home_month_missed">
+        <item quantity="one">%d missed</item>
+        <item quantity="other">%d missed</item>
+    </plurals>
+    <!-- "12 words found, 2 missed." -->
+    <string name="home_month_both">%1$s, %2$s.</string>
+    <string name="home_month_one">%1$s.</string>
+    <plurals name="home_month_caught_up">
+        <item quantity="one">%d of them caught up later.</item>
+        <item quantity="other">%d of them caught up later.</item>
+    </plurals>
+    <string name="home_month_none">No word played this month yet.</string>
+    <!-- A day of the calendar, for TalkBack: "Friday 20 November, found". -->
+    <string name="home_day">%1$s, %2$s</string>
+    <string name="home_day_today">%1$s, today, %2$s</string>
+    <string name="home_day_found">found</string>
+    <string name="home_day_found_later">found later, from the archive</string>
+    <string name="home_day_missed">missed</string>
+    <string name="home_day_missed_later">missed later, from the archive</string>
+    <string name="home_day_under_way">under way</string>
+    <string name="home_day_not_played">not played</string>
+    <string name="home_day_not_yet">not yet</string>
+    <string name="home_day_before">before the first word</string>
+    <!-- What a touch on a day does, for TalkBack. -->
+    <string name="home_day_play">Play</string>
+    <string name="home_day_take_up">Take up</string>
+    <string name="home_day_see">See</string>
+    <!-- The calendar's key. -->
+    <string name="home_key_found">Found</string>
+    <string name="home_key_missed">Missed</string>
+    <string name="home_key_under_way">Under way</string>
+    <string name="home_key_not_played">Not played</string>
+    <string name="home_key_later">Caught up later</string>
+
+    <!-- Free play (VISION §8) and its levels (VISION §9). -->
+    <string name="home_free_eyebrow">Free play</string>
+    <string name="home_free_line">As many words as you like, at the level you choose.</string>
+    <string name="home_level_base">Base</string>
+    <string name="home_level_base_line">The words of every day.</string>
+    <string name="home_level_intermediate">Intermediate</string>
+    <string name="home_level_intermediate_line">Common words, a step further.</string>
+    <string name="home_level_advanced">Advanced</string>
+    <string name="home_level_advanced_line">Rarer words, for a practised ear.</string>
+    <string name="home_level_complete">Complete</string>
+    <string name="home_level_complete_line">Every word the game knows.</string>
+    <string name="home_free_under_way">A word is under way, at %1$s.</string>
+    <string name="home_free_play">Play a word</string>
+    <string name="home_free_take_up">Take up your word</string>
+
+    <!-- The Hard option (PLANNING.md §4.4). -->
+    <string name="home_hard">Hard</string>
+    <string name="home_hard_line">Every clue found must be used in the words that follow. From the next game.</string>
+</resources>

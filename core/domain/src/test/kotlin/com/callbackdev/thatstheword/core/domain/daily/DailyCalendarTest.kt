@@ -3,6 +3,7 @@ package com.callbackdev.thatstheword.core.domain.daily
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import java.time.Clock
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -96,5 +97,18 @@ class DailyCalendarTest {
         assertThat(calendar.archive(3654))
             .containsExactly(epoch, LocalDate.of(2026, 11, 13), LocalDate.of(2026, 11, 14)).inOrder()
         assertThat(calendarAt(at("2026-11-11T08:00")).archive(3654)).isEmpty()
+    }
+
+    @Test
+    fun `the next day begins at the zone's own midnight`() {
+        assertThat(calendarAt(at("2026-12-10T23:58")).untilNextDay()).isEqualTo(Duration.ofMinutes(2))
+        assertThat(calendarAt(at("2026-12-10T00:00")).untilNextDay()).isEqualTo(Duration.ofHours(24))
+        // The night the clocks go forward: 22:00 to midnight is still two hours, the day itself 23.
+        assertThat(calendarAt(at("2027-03-27T22:00")).untilNextDay()).isEqualTo(Duration.ofHours(2))
+        assertThat(calendarAt(at("2027-03-28T00:00")).untilNextDay()).isEqualTo(Duration.ofHours(23))
+        assertThat(calendarAt(at("2027-10-31T00:00")).untilNextDay()).isEqualTo(Duration.ofHours(25))
+        // Santiago's clocks go from 24:00 to 01:00: its day begins at one, an hour after 23:00.
+        val santiago = ZoneId.of("America/Santiago")
+        assertThat(calendarAt(at("2026-09-05T23:00", santiago)).untilNextDay()).isEqualTo(Duration.ofHours(1))
     }
 }

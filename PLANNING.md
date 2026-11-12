@@ -21,7 +21,8 @@
 - **Done**: Phase 1, the words (12 Nov 2026): the pipeline (`tools/words/`), the accepted sets, the solutions and their levels, the glossaries of the nine pairs, the daily schedules, the files and their report (`docs/words/README.md`); the owner's go on the meanings, the deny lists and the daily pool.
 - **Done**: Phase 2, the game engine (12 Nov 2026): `:core:model`, `:core:domain` (the folding, the marks, `Game` with Hard and the hints, the daily's dates and numbers, free play's draw, streaks, statistics, milestones, the share text, the words' decoder) and `:core:words` (the assets, mapped), every §4.9 case named in a test; the owner's answers to Open 8, 9, 11 and 12.
 - **Built**: Phase 3, the game screen (12 Nov 2026): the feedback chosen by the owner (ink and amber), `:core:data` (Room version 1, the settings), the shell on Navigation 3, `:feature:game` (the grid, the keyboard, the refusals, the end card, the motion, the haptics), today's daily from a provisional start page. Its acceptance on a phone (the reveal at the phone's refresh rate with the profiler, TalkBack through a game) is still to be looked at.
-- **Next**: Phase 4, the start page, the daily, the archive and free play. What is still open (§15) is needed by the phases it names.
+- **Built**: Phase 4, the start page (12 Nov 2026): `:feature:home` (today's word in each language with the quick switch, the streak, the calendar of the dailies with the archive's games, free play at a level, Hard), practice replays and another free word from the end card, the change of day seen live, the launcher's shortcuts. Its look on a phone is still to be had, with Phase 3's.
+- **Next**: Phase 5, practising a language: hints, meanings, the notebook. What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -177,7 +178,7 @@ So a guess with two E against a solution with one E marks one of them, the right
 
 ### 4.4 The Hard option
 
-Every clue found must be used (VISION §8): a letter found in its right place stays there; a letter found elsewhere is in every later guess, as many times as it was marked (two E marked, two E needed). A letter revealed by a hint counts as found in its right place. Hard is chosen before a game's first guess and holds for that game; the setting applies to the next game. The statistics count a game with Hard apart, and its share text says so.
+Every clue found must be used (VISION §8): a letter found in its right place stays there; a letter found elsewhere is in every later guess, as many times as it was marked (two E marked, two E needed). A letter revealed by a hint counts as found in its right place. Hard is chosen before a game's first guess and holds for that game; the setting applies to the next game, and to a game opened and not yet tried, which takes the Hard chosen since when it is taken up (§15, 12 Nov 2026, «Phase 4»). The statistics count a game with Hard apart, and its share text says so.
 
 ### 4.5 Hints and what they cost
 
@@ -188,17 +189,18 @@ Only in a game whose language is not the interface's (VISION §5, §9); as propo
 - **The epoch** is the date of daily number 1 (§15, Open: proposed, the 1.0 release's date). The daily of a local date `d` is number `d − epoch + 1`, and its word is the language's frozen schedule at that number (§6.5): the same for every player, from the local date alone, with no server (VISION §8). It changes at local midnight.
 - A daily game belongs to the **date it was started on**: one started at 23:58 and finished at 00:03 is the earlier day's, for the calendar and the streak.
 - **The archive**: every date from the epoch to today, per language, marked solved, missed or not played; future dates are not playable (a phone's clock set ahead is not checked against anything, and needs not be: nobody is competing).
-- **A day's result is its first finished game** (the owner, §15, 12 Nov 2026, «Phase 2: the game engine», Open 9). A day already finished can be played again as practice: not counted, not in the calendar, not in the notebook's marks.
+- **The calendar** (`ArchiveMonth`, `:feature:home`): a month of a language at a time, from the epoch's to today's; each day found, missed, under way or not played, drawn as the game draws a letter (the right place's ink square, the absent tile sunk, elsewhere's amber round, the empty tile), a day caught up later from the archive with a dot; the days ahead and those before the epoch faint, not playable. A past day is touched to play it, take it up or see it.
+- **A day's result is its first finished game** (the owner, §15, 12 Nov 2026, «Phase 2: the game engine», Open 9). A day already finished can be played again as practice: not counted, not in the calendar, not in the notebook's marks. It is offered on the end card of the day's game ("Play it again, as practice"); a replay left unfinished is taken up, and its result is not shared.
 - The schedule must outlast the app: the script writes at least ten years from the epoch, and a test fails when fewer than three years are left from the build's date.
 
 ### 4.7 Free play and the levels
 
 - Four **levels** by frequency (VISION §9), cumulative: Base ⊂ Intermediate ⊂ Advanced ⊂ Complete (the owner, §15, 12 Nov 2026, «Phase 2: the game engine», Open 12). The level is the game language's own (an Italian player can be at Complete in Italian and at Base in Spanish); in a foreign language it starts at Base.
-- **Free play** draws a solution at the level, never one of the language's last 200 free games nor one solved in free play before, until the level runs out (then the oldest come back: the word whose last free game is the longest ago). The daily draws from Base and Intermediate only, because it is the same for everyone (VISION §9).
+- **Free play** keeps one game under way a language: it is taken up, whatever its level, before a new word is drawn, so no word is left behind unseen; the end card offers another word at the language's level. It draws a solution at the level, never one of the language's last 200 free games nor one solved in free play before, until the level runs out (then the oldest come back: the word whose last free game is the longest ago). The daily draws from Base and Intermediate only, because it is the same for everyone (VISION §9).
 
 ### 4.8 Streaks, statistics and milestones
 
-- **Streak**, per language: the run of consecutive dates, ending today or yesterday, whose daily was won on its own date (§4.6), hints or not. A daily won from the archive counts in the statistics and the calendar, never in the streak (VISION §11). The longest streak is kept as the statistics' answer, computed, not stored.
+- **Streak**, per language: the run of consecutive dates, ending today or yesterday, whose daily was won on its own date (§4.6), hints or not. Today's word missed ends it at once, not at midnight (§15, 12 Nov 2026, «Phase 4», Open 22). A daily won from the archive counts in the statistics and the calendar, never in the streak (VISION §11). The longest streak is kept as the statistics' answer, computed, not stored.
 - **Statistics**, per language and mode: games, the share won, the distribution of the games won by the attempts they used (a hint is one, §4.5: the number a result shares, «4/6»), the games with hints, the games with Hard. Computed from the games table by query, never kept as counters that could drift.
 - **Milestones** (VISION §11): a closed list in the domain, each a predicate over the facts (the games, the notebook) and a sentence in the three languages; checked after every finished game and every notebook change, unlocked once with its date, never taken back. The first list, from the vision: seven dailies in a row (a streak of seven, in one language); a first win in a foreign language (a counted game of any mode); 100 words in the notebook; a day's daily won in all three languages (the date's counted result, from the archive too). Recognition, never a key (VISION §11).
 
@@ -224,6 +226,7 @@ Only in a game whose language is not the interface's (VISION §5, §9); as propo
 | Daylight saving's change at night | One date, one word |
 | The streak with yesterday's daily won and today's not yet played | Still running |
 | The streak with yesterday missed | Ended; today's win starts at 1 |
+| The streak with today's word missed | Ended at once (Open 22) |
 | An archive win for a missed day | Calendar solved, statistics counted, streak untouched |
 | Free play at a level where every word was played | The oldest come back |
 | The schedule shorter than three years from the build date | A test fails |
@@ -363,7 +366,7 @@ TalkBack reads a row as one sentence ("Row 2: C, elsewhere; A, right place; …"
 ## 8. Notifications and system surfaces
 
 - **None in 1.0** as the vision stands. Two proposals are in §15's Open list: a **daily reminder** (one quiet notification at the player's hour, only if today's daily is not played, gone at midnight: one inexact alarm, the family's evening reminder), and a **home-screen card** (today's word per language, solved or waiting, and the streak, on the family's card). Neither is built without the owner's answer.
-- **Launcher shortcuts** (static, no permission): "Today's word" per game language, opening the daily directly (Phase 4).
+- **Launcher shortcuts** (no permission): "Today's word" per game language, opening the daily directly, the game language first (Phase 4). Published by code (`TodayShortcuts`), not declared in XML: a static shortcut names its package, and the debug build's is another (`.debug`), as the family's.
 - **Predictive back** everywhere (`enableOnBackInvokedCallback`), edge to edge.
 
 ---
@@ -470,13 +473,13 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 ### Phase 4 — Start, the daily, the archive and free play
 
-- [ ] `:feature:home`: today's word per language (waiting, in progress, solved in n, missed), the quick switch of the game language, the streak, the calendar of the dailies (solved, missed, not played) with the archive's games, free play with its level
-- [ ] The Hard option (§4.4), from the start page and the settings
-- [ ] Practice replays (§4.6); the launcher's static shortcuts
-- [ ] The live change of day while the start page is on screen
+- [x] `:feature:home`: today's word per language (waiting, in progress, solved in n, missed), the quick switch of the game language, the streak, the calendar of the dailies (solved, missed, not played) with the archive's games, free play with its level (12 Nov 2026)
+- [x] The Hard option (§4.4), from the start page (12 Nov 2026); from the settings with the settings page, in Phase 7
+- [x] Practice replays (§4.6); the launcher's shortcuts, published by code (§8) (12 Nov 2026)
+- [x] The live change of day while the start page is on screen (`DayTicker`, 12 Nov 2026)
 
 **Acceptance:**
-- [ ] The calendar of a month with solved, missed, unplayed and archive days reads right in the three languages.
+- [x] The calendar of a month with solved, missed, unplayed and archive days reads right in the three languages (12 Nov 2026: `ArchiveMonthTest`, and `HomeScreenTest` reading each day's sentence in English, Italian and Spanish; the screenshots looked at). On a phone, with Phase 3's look.
 
 ### Phase 5 — Practising a language: hints, meanings, the notebook
 
@@ -571,7 +574,7 @@ As the family's: the same key, the store listing, the data safety form ("no data
 
 ### Open
 
-What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 10, 14 to 17 and 21 are needed by the phases they name.
+What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 10, 14 to 17, 21 and 22 are needed by the phases they name.
 
 From this review (§15, 12 Nov 2026, «The repository, the vision's review and this plan»), each with a proposal:
 
@@ -610,6 +613,10 @@ From Phase 1 (§15, 12 Nov 2026, «Phase 1: the words»):
 From Phase 3 (§15, 12 Nov 2026, «Phase 3: the game screen»):
 
 - [ ] **21. The share text's right-place symbol** (§7.6). It was proposed as 🟪 to match the berry; the right place is now ink blue. Proposed: 🟦, the blue square, beside 🟠 for elsewhere and ▫️ for absent (the shapes still say it: square, round, small). The genre's well-known squares are green and yellow; a high-contrast variant of it uses blue and orange *squares*, which a round 🟠 keeps apart. Or keep 🟪. Not changed until answered (`ShareText.RIGHT_PLACE`).
+
+From Phase 4 (§15, 12 Nov 2026, «Phase 4: the start page»):
+
+- [ ] **22. Today's word missed ends the streak at once.** §4.8 said the run ends "today or yesterday", written for a today not yet played; it left open a today already missed, which read literally kept the run until midnight (the start page would have said "3 days in a row" under "Not this time"). Proposed, and built so, one line to undo (`Streaks.current`): a miss today ends it at once; the longest streak keeps the run it was. Or keep the run until midnight.
 
 From Phase 0:
 
@@ -763,3 +770,23 @@ Open 13 was asked first, the phase's haptics touching it, and **the owner confir
 - **The provisional start page**: Phase 0's page, with today's daily in the game language under the victory line (play it, take it up, see it), its language and number. The game language is the interface's until the first run asks (Phase 7).
 - **The tests**: `:core:data` 10 (a daily saved and taken up, one counted daily a day, the date before midnight, a hint replayed, the cascade, a future date refused, the stored forms; the schema; the settings' defaults and choices), `:feature:game` 14 (the page from states in the three languages, dark, a small phone, twice the text size, an open foldable, each with `assertAccessible()`; the end played while the page is open; the view model playing a daily to its end across two pages, and a hardware keyboard's Ñ), the start page's 3 more, `ContrastTest`'s feedback pairs. The screenshots were looked at: the share button was first tonal, in the dress's peach beside the amber marks, and is outlined now; the grid stood at the top of a tall phone, and is centred now.
 - **Not done here, a phone's to say**: the reveal's frames with the profiler, TalkBack through a whole game, the haptics' feel. Phase 3's acceptance boxes stay open for them.
+
+### 12 Nov 2026 — Phase 4: the start page (owner: "Procedi con la fase 4 di thats-the-word")
+
+None of the open questions touches the phase (10, the epoch, stays provisional; 14 and 17 are Settings', Phase 7). The phase was built, the domain first:
+
+- **The domain**: `ArchiveMonth` (a month of a language's dailies: each day found, missed, under way or not played, caught up later or not, playable, today, ahead; the counts its sentence says; the months from the epoch's to today's, a month asked for outside them brought back) and `DailyCalendar.untilNextDay` (the zone's own start of the next day: 23 and 25 hours on the nights the clocks change, 01:00 where midnight does not exist). Seven tests and two more on the streak (below).
+- **The data**: `GameRepository.practiceGame` (a finished day's replay, numbered after the day's others, an unfinished one taken up; refused for a day with no result), `freeGame` (the language's free game under way taken up, whatever its level, else a word drawn by `FreePlay` at the level from the language's free history), `scheduleLength`; a game taken up before its first move takes the Hard chosen since (§4.4). `DayTicker`: today's date, then one wait until the next midnight and the new date, a flow that runs only while collected. `SettingsRepository`'s setters return nothing now: the DataStore's `Preferences` they returned leaked a type the feature modules cannot see. Six tests.
+- **`:feature:home`** joins the build, and replaces Phase 3's provisional start page in `:app` (its tests go with it). From the top: the name and its line; the three languages, each with a small tile of its word of today (the calendar's look) and two words ("Found in 4"), the game language framed, one touch to play in another; the game language's word of today with its number and date, five tiles without letters (the right place's ink filling them one by one for a word found, sunk for one missed, empty for one to find), a sentence and its button; the streak, the page's one number under its line; the calendar; free play, the four levels with a line each, the button that plays or takes up; Hard, a switch for the next game. The sections arrive one after another the first time the page is drawn (a fade under reduced motion), not at every return from a game. The page's buttons wear the dress's ink (`inverseSurface`), not its primary: the Vivid dress's azure would stand beside the marks' ink blue and amber, as the share button taught in Phase 3; the end card's new button too.
+- **The calendar** draws each day as the game draws a letter, colour and shape together (§4.6); its key under it; its cells a seventh of the column, marked as dense targets like the keyboard's keys (`DENSE_TARGETS_TAG`: under 48dp on a 360dp phone), each a labelled node: "Sunday 15 November, found later, from the archive". The weeks start on the locale's first day; the month's name and the dates are the locale's patterns. The month shown is kept in the page's saved state.
+- **The streak and today's word missed** (Open 22): read literally, a run ended "yesterday" survived a miss today until midnight. Built as proposed, the miss ends it at once; to be confirmed by the owner.
+- **The end card** offers what comes next: a day's word again as practice ("Play it again, as practice"), or another free word at the language's level; the new game takes the finished one's place on the back stack, so Back lands on the start page. A replay says "practice" above its date and on its card, and is not shared: its result is no day's.
+- **The launcher's shortcuts**: one a language, the game language first, opening its daily of today over the start page (the language becoming the game language). Published by code, as the family's are, because a static shortcut names its package and the debug build's is another; §8 now says so. Their icon is the app's mark, the language in their words. `reportShortcutUsed` on each touch, as lint asks.
+- **Phase 0's composed word** (*Table*, *Sedia*, *Silla*, then the victory line) leaves the start page with the provisional page: the start page proper is for the day's word. `LetterTile` stays in the design system for the welcome of the first run (Phase 7).
+- **Checked**: `spotlessCheck`, `checkForbiddenPermissions`, `test` (172: `:core:domain` 103, `:core:data` 15, `:core:words` 8, `:core:designsystem` 7, `:feature:game` 18, `:feature:home` 18, `:app` 3), `:app:lintDebug` (no issue: the Italian and Spanish plurals have their `many`), the debug APK. The screenshots looked at: the language cards stood at three heights at twice the text size, and share the tallest's now; the practice line stood under the words tried, and is under the result now.
+- **Not done here, a phone's to say**: the page's arrival and the tiles' fill at the phone's refresh rate, TalkBack across the calendar, the shortcuts on a launcher, midnight passing with the page open.
+
+
+### 12 Nov 2026 — The README's accessibility line (owner: "sostituisci l'emoji ♿ dal README.md con un emoji più adatta che non indichi invalidità. Se presente in altre parti del repo sostituisci anche lì")
+
+The README's «For every player» line wore the wheelchair symbol; it wears 🤝 now: a game made to be played by everyone, not a sign of disability. It appeared nowhere else in the repository. The sisters' READMEs (Passo's and Tetto's «For every reader») carry the same symbol: theirs to change in their repositories.

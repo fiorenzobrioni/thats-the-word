@@ -28,3 +28,16 @@ All notable changes to That's The Word are documented here. The format follows
   where you left it.
 - TalkBack reads each row as one sentence and each key with its mark; with animations off every
   movement is a short fade.
+- The start page: today's word in each of the three languages, how each stands (waiting, under
+  way, found in so many, missed), and one touch to play in another.
+- Your streak in the game language, the days in a row with the word found on its own day.
+- The calendar of the dailies: every day from the first word to today, found, missed, under way
+  or not played, each drawn as the game draws a letter; touch a past day to play it from the
+  archive. Days caught up later carry a dot, and count everywhere but in the streak.
+- Free play, at the level you choose: Base, Intermediate, Advanced or Complete, each language its
+  own. A word left halfway is waiting for you when you come back.
+- Hard, from the start page, for the next game.
+- When a day's word is over, play it again as practice: the day keeps its first result. When a
+  free word is over, another one.
+- The start page sees midnight come while it is open, and shows the new day's word.
+- Long-press the icon for today's word in each language, straight to its game.

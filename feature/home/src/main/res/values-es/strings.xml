@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_tagline">Una palabra al día. Tres idiomas.</string>
+
+    <string name="home_language_it">Italiano</string>
+    <string name="home_language_en">Inglés</string>
+    <string name="home_language_es">Español</string>
+
+    <string name="home_status_waiting">Te espera</string>
+    <string name="home_status_under_way">En curso</string>
+    <string name="home_status_found">Hallada en %1$d</string>
+    <string name="home_status_missed">Se escapó</string>
+    <string name="home_language_description">%1$s: %2$s</string>
+    <plurals name="home_status_found_description">
+        <item quantity="one">encontrada en %d intento</item>
+        <item quantity="many">encontrada en %d intentos</item>
+        <item quantity="other">encontrada en %d intentos</item>
+    </plurals>
+
+    <string name="home_today_eyebrow">La palabra de hoy · #%1$d</string>
+    <string name="home_today_waiting">Una palabra nueva te espera.</string>
+    <string name="home_today_opened">Abierta, espera la primera palabra.</string>
+    <plurals name="home_today_under_way">
+        <item quantity="one">En curso, %1$d intento de %2$d.</item>
+        <item quantity="many">En curso, %1$d intentos de %2$d.</item>
+        <item quantity="other">En curso, %1$d intentos de %2$d.</item>
+    </plurals>
+    <plurals name="home_today_found">
+        <item quantity="one">Encontrada en %1$d intento de %2$d.</item>
+        <item quantity="many">Encontrada en %1$d intentos de %2$d.</item>
+        <item quantity="other">Encontrada en %1$d intentos de %2$d.</item>
+    </plurals>
+    <string name="home_today_missed">Esta vez no. Mañana llega otra.</string>
+    <string name="home_play">Juega la palabra de hoy</string>
+    <string name="home_take_up">Sigue con la palabra de hoy</string>
+    <string name="home_see">Mira cómo fue</string>
+
+    <string name="home_streak_eyebrow">Tu racha</string>
+    <plurals name="home_streak_line">
+        <item quantity="one">día seguido, la palabra encontrada en su día.</item>
+        <item quantity="many">días seguidos, cada palabra encontrada en su día.</item>
+        <item quantity="other">días seguidos, cada palabra encontrada en su día.</item>
+    </plurals>
+    <string name="home_streak_keep">Encuentra la palabra de hoy para no cortarla.</string>
+    <string name="home_streak_none">Ninguna racha en curso. Encuentra una palabra en su día, y empieza.</string>
+    <plurals name="home_streak_description">
+        <item quantity="one">Una racha de %d día</item>
+        <item quantity="many">Una racha de %d días</item>
+        <item quantity="other">Una racha de %d días</item>
+    </plurals>
+
+    <string name="home_calendar_eyebrow">El calendario</string>
+    <string name="home_calendar_previous">Mes anterior</string>
+    <string name="home_calendar_next">Mes siguiente</string>
+    <plurals name="home_month_found">
+        <item quantity="one">%d palabra encontrada</item>
+        <item quantity="many">%d palabras encontradas</item>
+        <item quantity="other">%d palabras encontradas</item>
+    </plurals>
+    <plurals name="home_month_missed">
+        <item quantity="one">%d se escapó</item>
+        <item quantity="many">%d se escaparon</item>
+        <item quantity="other">%d se escaparon</item>
+    </plurals>
+    <string name="home_month_both">%1$s, %2$s.</string>
+    <string name="home_month_one">%1$s.</string>
+    <plurals name="home_month_caught_up">
+        <item quantity="one">%d recuperada después.</item>
+        <item quantity="many">%d recuperadas después.</item>
+        <item quantity="other">%d recuperadas después.</item>
+    </plurals>
+    <string name="home_month_none">Ninguna palabra jugada este mes, por ahora.</string>
+    <string name="home_day">%1$s, %2$s</string>
+    <string name="home_day_today">%1$s, hoy, %2$s</string>
+    <string name="home_day_found">encontrada</string>
+    <string name="home_day_found_later">encontrada después, desde el archivo</string>
+    <string name="home_day_missed">se escapó</string>
+    <string name="home_day_missed_later">se escapó después, desde el archivo</string>
+    <string name="home_day_under_way">en curso</string>
+    <string name="home_day_not_played">sin jugar</string>
+    <string name="home_day_not_yet">todavía no</string>
+    <string name="home_day_before">antes de la primera palabra</string>
+    <string name="home_day_play">Jugar</string>
+    <string name="home_day_take_up">Seguir</string>
+    <string name="home_day_see">Mirar</string>
+    <string name="home_key_found">Encontrada</string>
+    <string name="home_key_missed">Se escapó</string>
+    <string name="home_key_under_way">En curso</string>
+    <string name="home_key_not_played">Sin jugar</string>
+    <string name="home_key_later">Recuperada después</string>
+
+    <string name="home_free_eyebrow">Juego libre</string>
+    <string name="home_free_line">Todas las palabras que quieras, al nivel que elijas.</string>
+    <string name="home_level_base">Básico</string>
+    <string name="home_level_base_line">Las palabras de cada día.</string>
+    <string name="home_level_intermediate">Intermedio</string>
+    <string name="home_level_intermediate_line">Palabras comunes, un paso más allá.</string>
+    <string name="home_level_advanced">Avanzado</string>
+    <string name="home_level_advanced_line">Palabras más raras, para un oído entrenado.</string>
+    <string name="home_level_complete">Completo</string>
+    <string name="home_level_complete_line">Todas las palabras que el juego conoce.</string>
+    <string name="home_free_under_way">Hay una palabra en curso, en el nivel %1$s.</string>
+    <string name="home_free_play">Juega una palabra</string>
+    <string name="home_free_take_up">Sigue con tu palabra</string>
+
+    <string name="home_hard">Difícil</string>
+    <string name="home_hard_line">Cada pista encontrada debe usarse en las palabras que siguen. Desde la próxima partida.</string>
+</resources>

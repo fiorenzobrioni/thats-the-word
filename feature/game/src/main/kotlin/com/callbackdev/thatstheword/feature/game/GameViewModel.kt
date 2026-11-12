@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.callbackdev.thatstheword.core.data.GameRepository
+import com.callbackdev.thatstheword.core.data.InterfaceLanguage
 import com.callbackdev.thatstheword.core.data.Lexicons
 import com.callbackdev.thatstheword.core.data.SavedGame
 import com.callbackdev.thatstheword.core.data.SettingsRepository
@@ -11,12 +12,14 @@ import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
+import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.Letter
 import com.callbackdev.thatstheword.core.model.Word
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -41,7 +44,8 @@ class GameViewModel @AssistedInject constructor(
     private val savedState: SavedStateHandle,
     private val games: GameRepository,
     private val lexicons: Lexicons,
-    settings: SettingsRepository,
+    private val settings: SettingsRepository,
+    private val interfaceLanguage: InterfaceLanguage,
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -55,7 +59,7 @@ class GameViewModel @AssistedInject constructor(
     private val saving = Mutex()
 
     val state: StateFlow<GameUiState?> = combine(saved, typed, refusal) { saved, typed, refusal ->
-        saved?.let { GameUiState.of(it.game, typed, refusal, lexicons.of(it.game.setup.language).forms) }
+        saved?.let { GameUiState.of(it.game, typed, refusal, lexicons.of(it.game.setup.language).forms, it.practice) }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     /** Haptics on or off (the owner, PLANNING §15, Open 13: on, the phone's own setting followed). */
@@ -108,9 +112,38 @@ class GameViewModel @AssistedInject constructor(
         }
     }
 
+    private var opening: Job? = null
+
+    /**
+     * What the end card offers next, started or taken up, its id handed to [onOpened]: the day
+     * again as practice (PLANNING.md §4.6), or another free word at the game language's level
+     * (PLANNING.md §4.7). Hard and the interface are read now, for the new game.
+     */
+    fun next(onOpened: (Long) -> Unit) {
+        val game = saved.value?.game?.takeIf { it.state.finished } ?: return
+        if (opening?.isActive == true) return
+        opening = viewModelScope.launch {
+            val current = settings.current()
+            val language = game.setup.language
+            val id = when (val mode = game.setup.mode) {
+                is GameMode.Daily -> games.practiceGame(language, mode.date, interfaceLanguage.current(), current.hard)
+
+                is GameMode.Free -> games.freeGame(
+                    language,
+                    current.levelOf(language),
+                    interfaceLanguage.current(),
+                    current.hard,
+                )
+
+                GameMode.Guided -> return@launch
+            }
+            onOpened(id)
+        }
+    }
+
     /** The result as text, without the word (PLANNING.md §7.6), once the game is over. */
     fun shareText(labels: ShareText.Labels): String? =
-        saved.value?.game?.takeIf { it.state.finished }?.let { ShareText.of(it, labels) }
+        saved.value?.takeIf { it.game.state.finished && !it.practice }?.let { ShareText.of(it.game, labels) }
 
     private fun refusalOf(reason: Refusal, current: SavedGame): RefusalUi {
         val letter = when (reason) {

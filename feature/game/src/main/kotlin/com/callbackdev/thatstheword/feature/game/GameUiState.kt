@@ -25,10 +25,19 @@ data class KeyUi(val char: Char, val letter: Letter)
 @Immutable
 data class RefusalUi(val reason: Refusal, val letter: Char?, val id: Int)
 
+/** What the end card offers next (PLANNING.md §4.6, §4.7): the day again as practice, or another free word. */
+enum class NextGame {
+    PRACTICE,
+    ANOTHER_WORD,
+}
+
 /**
  * The game page, all of it, from one game (PLANNING.md §7.3): drawn from this alone, so a test
  * draws any moment of a game without a database.
  *
+ * @property practice a replay of a day already finished: not counted, its result not shared
+ *   (PLANNING.md §4.6).
+ * @property next what the end card offers once the game is over.
  * @property finishedHere whether the game ended while the page was open, so its end is played
  *   (the reveal, the wave, the line, the card rising); a game taken up already finished is drawn
  *   at rest.
@@ -54,7 +63,17 @@ data class GameUiState(
     val solutionWritten: String,
     /** Each guess's written forms ("pero, però"), for the end card. */
     val guessesWritten: List<String>,
+    val practice: Boolean = false,
 ) {
+    val next: NextGame?
+        get() = when (mode) {
+            is GameMode.Daily -> NextGame.PRACTICE
+            is GameMode.Free -> NextGame.ANOTHER_WORD
+            GameMode.Guided -> null
+        }
+
+    /** A day's result is shared, a replay's is not: it is no day's result. */
+    val shareable: Boolean get() = !practice
     val finished: Boolean get() = state.finished
 
     companion object {
@@ -76,7 +95,13 @@ data class GameUiState(
             return word.letters.map { alphabet.keyChar(it).toString().uppercase(locale).single() }
         }
 
-        fun of(game: Game, typed: List<Letter>, refusal: RefusalUi?, forms: Forms): GameUiState {
+        fun of(
+            game: Game,
+            typed: List<Letter>,
+            refusal: RefusalUi?,
+            forms: Forms,
+            practice: Boolean = false,
+        ): GameUiState {
             val language = game.setup.language
             val alphabet = Alphabet.of(language)
             val locale = Locale.forLanguageTag(language.tag)
@@ -99,6 +124,7 @@ data class GameUiState(
                 solution = capitals(game.setup.solution, language).joinToString(""),
                 solutionWritten = forms.solutionDisplay(game.setup.solution),
                 guessesWritten = game.guesses.map { guess -> forms.of(guess.word).joinToString(", ") { it.display } },
+                practice = practice,
             )
         }
     }

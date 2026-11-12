@@ -17,6 +17,14 @@ internal fun languageName(language: Language): Int = when (language) {
     Language.SPANISH -> R.string.language_es
 }
 
+/** A mark's name in the key under the grid: a word or two, capitalised as a label. */
+@StringRes
+internal fun keyName(mark: Mark): Int = when (mark) {
+    Mark.RIGHT_PLACE -> R.string.key_right_place
+    Mark.ELSEWHERE -> R.string.key_elsewhere
+    Mark.ABSENT -> R.string.key_absent
+}
+
 @StringRes
 internal fun markName(mark: Mark): Int = when (mark) {
     Mark.RIGHT_PLACE -> R.string.mark_right_place

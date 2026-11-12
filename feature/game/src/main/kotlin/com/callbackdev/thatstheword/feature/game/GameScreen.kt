@@ -8,11 +8,13 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -25,6 +27,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -70,12 +74,14 @@ import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
 import com.callbackdev.thatstheword.core.designsystem.theme.balanced
+import com.callbackdev.thatstheword.core.designsystem.theme.markStyle
 import com.callbackdev.thatstheword.core.designsystem.theme.padding
 import com.callbackdev.thatstheword.core.designsystem.theme.pageGutter
 import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
 import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameState
 import com.callbackdev.thatstheword.core.model.Letter
+import com.callbackdev.thatstheword.core.model.Mark
 import kotlinx.coroutines.delay
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -98,6 +104,7 @@ fun GameScreen(
     onEnter: () -> Unit,
     onShare: () -> Unit,
     modifier: Modifier = Modifier,
+    onNext: () -> Unit = {},
     haptics: Boolean = true,
     onHardwareChar: (Char) -> Boolean = { false },
 ) {
@@ -165,7 +172,8 @@ fun GameScreen(
                 // height is counted whether it is there or not, so the grid keeps its size when
                 // the keyboard leaves.
                 val keyboard = if (ending) KEYBOARD_HEIGHT else 0.dp
-                val tile = tileSize(maxWidth, maxHeight - keyboard - REFUSAL_LINE, state.length, state.attempts)
+                val tile =
+                    tileSize(maxWidth, maxHeight - keyboard - REFUSAL_LINE - MARKS_KEY, state.length, state.attempts)
                 // While the game is played the grid stands in the middle of the room above the
                 // keyboard; once it is over, the end card follows it down the page.
                 val viewport = maxHeight
@@ -181,6 +189,7 @@ fun GameScreen(
                     verticalArrangement = if (ending) Arrangement.Top else Arrangement.Center,
                 ) {
                     Grid(state, tile, rowsAtStart, endedHere, revealMillis, reduced)
+                    MarksKey(visible = !ending)
                     RefusalLine(state)
                     Box(
                         Modifier
@@ -199,7 +208,7 @@ fun GameScreen(
                                 slideInVertically(ThatsTheWordMotion.playful()) { it / 3 }
                         },
                     ) {
-                        EndCard(state, onShare, Modifier.padding(top = 8.dp, bottom = 24.dp))
+                        EndCard(state, onShare, onNext, Modifier.padding(top = 8.dp, bottom = 24.dp))
                     }
                 }
             }
@@ -242,14 +251,20 @@ fun GameScreen(
 private fun TopBar(state: GameUiState, onBack: () -> Unit) {
     val locale = LocalConfiguration.current.locales[0]
     val language = stringResource(languageName(state.language))
-    val (eyebrow, title) = when (val mode = state.mode) {
-        is GameMode.Daily -> stringResource(R.string.game_daily_eyebrow, language, mode.number) to
+    val (eyebrowOfMode, title) = when (val mode = state.mode) {
+        is GameMode.Daily -> stringResource(
+            if (state.practice) R.string.game_practice_eyebrow else R.string.game_daily_eyebrow,
+            language,
+            mode.number,
+        ) to
             DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale).format(mode.date)
 
         is GameMode.Free -> language to stringResource(R.string.game_free)
 
         GameMode.Guided -> language to stringResource(R.string.game_guided)
     }
+    // A game in Hard says so above its title: the rule it keeps is the player's to remember.
+    val eyebrow = if (state.hard) stringResource(R.string.game_eyebrow_hard, eyebrowOfMode) else eyebrowOfMode
     Row(
         Modifier
             .fillMaxWidth()
@@ -361,8 +376,66 @@ private fun TypingRow(state: GameUiState, row: Int, tile: Dp, reduced: Boolean) 
             .graphicsLayer { translationX = shake.value }
             .clearAndSetSemantics { if (sentence.isNotEmpty()) contentDescription = sentence },
     ) {
-        repeat(state.length) { i -> GameTile(letter = state.typed.getOrNull(i), mark = null, size = tile) }
+        repeat(state.length) { i ->
+            GameTile(letter = state.typed.getOrNull(i), mark = null, size = tile, active = i == state.typed.size)
+        }
     }
+}
+
+/**
+ * The three marks in a line under the grid, while the game is played: the tile of each, in small,
+ * with its words, so a player who has not met the game yet, or comes back to it, reads the grid
+ * without a page of rules (VISION §12). Quiet: the dress's quiet ink, the size of a note. TalkBack
+ * reads each row's marks in words already, so the key is a line of text to it.
+ */
+@Composable
+private fun MarksKey(visible: Boolean) {
+    val reduced = reducedMotion()
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(ThatsTheWordMotion.effects(reduced)),
+        exit = fadeOut(ThatsTheWordMotion.effects(reduced)),
+    ) {
+        // A line on a phone; at a larger text size it wraps rather than cutting a word.
+        FlowRow(
+            Modifier
+                .fillMaxWidth()
+                .heightIn(min = MARKS_KEY)
+                .padding(top = 4.dp)
+                .testTag(GameTags.MARKS_KEY),
+            horizontalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterHorizontally),
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
+            itemVerticalAlignment = Alignment.CenterVertically,
+        ) {
+            listOf(Mark.RIGHT_PLACE, Mark.ELSEWHERE, Mark.ABSENT).forEach { mark ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    MarkSample(mark)
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        text = stringResource(keyName(mark)),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** A mark's tile in small: its ground and its shape, nothing to read. */
+@Composable
+private fun MarkSample(mark: Mark) {
+    val style = markStyle(mark)
+    Box(
+        Modifier
+            .size(MARK_SAMPLE)
+            .graphicsLayer {
+                scaleX = style.scale
+                scaleY = style.scale
+            }
+            .background(style.ground, RoundedCornerShape(CornerSize(style.cornerPercent.toInt())))
+            .clearAndSetSemantics {},
+    )
 }
 
 /** Why the last word was refused, in one line above the keyboard, never a toast (PLANNING.md §7.3). */
@@ -394,12 +467,16 @@ object GameTags {
     const val PAGE = "game_page"
     const val REFUSAL = "game_refusal"
     const val END_CARD = "game_end_card"
+    const val NEXT = "game_next"
+    const val MARKS_KEY = "game_marks_key"
 }
 
 private val MAX_TILE = 56.dp
 private val MIN_TILE = 44.dp
 internal val TILE_GAP = 6.dp
 private val REFUSAL_LINE = 40.dp
+private val MARKS_KEY = 32.dp
+private val MARK_SAMPLE = 12.dp
 private val SHAKE_VELOCITY = 900.dp
 private const val SPENT_ALPHA = 0.4f
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 /**
  * The few icons the game draws, on Material's 24 grid, in rounded strokes like the family's: drawn
- * here rather than pulled from an icon library for four shapes. Tinted by their caller.
+ * here rather than pulled from an icon library for six shapes. Tinted by their caller.
  */
 object GameIcons {
     private fun icon(name: String, block: androidx.compose.ui.graphics.vector.PathBuilder.() -> Unit): ImageVector =
@@ -82,6 +82,24 @@ object GameIcons {
             moveTo(21f, 19f)
             arcTo(3f, 3f, 0f, isMoreThanHalf = true, isPositiveArc = true, x1 = 15f, y1 = 19f)
             arcTo(3f, 3f, 0f, isMoreThanHalf = true, isPositiveArc = true, x1 = 21f, y1 = 19f)
+        }
+    }
+
+    /** The month before, in the calendar: a chevron. */
+    val Previous: ImageVector by lazy {
+        icon("Previous") {
+            moveTo(15f, 6f)
+            lineTo(9f, 12f)
+            lineTo(15f, 18f)
+        }
+    }
+
+    /** The month after, in the calendar. */
+    val Next: ImageVector by lazy {
+        icon("Next") {
+            moveTo(9f, 6f)
+            lineTo(15f, 12f)
+            lineTo(9f, 18f)
         }
     }
 }

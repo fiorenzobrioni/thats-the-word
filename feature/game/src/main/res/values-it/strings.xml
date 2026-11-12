@@ -6,8 +6,13 @@
 
     <string name="game_daily_eyebrow">%1$s · #%2$d</string>
     <string name="game_free">Gioco libero</string>
+    <string name="game_practice_eyebrow">%1$s · #%2$d · esercizio</string>
     <string name="game_guided">Prima partita</string>
     <string name="game_back">Indietro</string>
+    <string name="game_eyebrow_hard">%1$s · difficile</string>
+    <string name="key_right_place">Al posto giusto</string>
+    <string name="key_elsewhere">Altrove</string>
+    <string name="key_absent">Non c’è</string>
 
     <string name="key_enter">Invio</string>
     <string name="key_delete">Cancella</string>
@@ -58,6 +63,9 @@
     </plurals>
     <string name="end_your_words">Le tue parole</string>
     <string name="end_share">Condividi il risultato</string>
+    <string name="end_play_again">Rigiocala, per esercizio</string>
+    <string name="end_another_word">Un’altra parola</string>
+    <string name="end_practice">Esercizio: il giorno tiene il suo primo risultato.</string>
 
     <string name="share_hard">Difficile</string>
     <plurals name="share_hints">

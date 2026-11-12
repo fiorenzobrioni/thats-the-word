@@ -48,6 +48,8 @@ import kotlin.math.hypot
  *
  * The tile draws only: its row says it to TalkBack, as one sentence.
  *
+ * @param active the row's next empty tile, where the next letter goes: its frame is the typed
+ *   tile's, so the eye finds its place without a cursor that blinks.
  * @param revealDelayMillis when set, the mark is revealed that long after the tile is first drawn
  *   with it; when null, a mark is drawn at rest (a game taken up).
  */
@@ -59,6 +61,7 @@ fun GameTile(
     size: Dp = 56.dp,
     revealDelayMillis: Long? = null,
     celebrateDelayMillis: Long? = null,
+    active: Boolean = false,
 ) {
     val reduced = reducedMotion()
     val colors = MaterialTheme.colorScheme
@@ -92,7 +95,7 @@ fun GameTile(
     }
 
     val ground = if (typed) colors.surfaceContainerHigh else colors.surfaceContainerLow
-    val outline = if (typed) colors.outline else colors.outlineVariant
+    val outline = if (typed || active) colors.outline else colors.outlineVariant
     val beforeInk = colors.onSurface
     val currentStyle by rememberUpdatedState(style)
     Box(

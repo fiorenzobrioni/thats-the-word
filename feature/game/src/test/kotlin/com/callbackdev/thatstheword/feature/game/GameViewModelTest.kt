@@ -77,7 +77,9 @@ class GameViewModelTest {
 
     private fun games() = GameRepository(database, lexicons) { clock }
 
-    private fun viewModel(id: Long) = GameViewModel(id, SavedStateHandle(), games(), lexicons, settings)
+    private fun viewModel(id: Long) = GameViewModel(id, SavedStateHandle(), games(), lexicons, settings) {
+        Language.ENGLISH
+    }
 
     /** The model's state once it is loaded and [until] holds: its flows are fed from Room's threads too. */
     private fun GameViewModel.awaitState(until: (GameUiState) -> Boolean = { true }) =
@@ -129,7 +131,7 @@ class GameViewModelTest {
         assertThat(viewModel(id).awaitState().state).isEqualTo(GameState.WON)
 
         val text = second.shareText(ShareText.Labels("That’s The Word", "English", "Free play", "Hard") { "$it hints" })
-        assertThat(text).startsWith("That’s The Word · #9 · English · 2/6")
+        assertThat(text).startsWith("That’s The Word · #20 · English · 2/6")
         assertThat(text).doesNotContain(Alphabet.of(Language.ENGLISH).keyForm(solution).uppercase())
     }
 
@@ -142,5 +144,74 @@ class GameViewModelTest {
         assertThat(model.typeChar('Ñ')).isTrue()
         assertThat(model.typeChar('1')).isFalse()
         assertThat(model.awaitState { it.typed.size == 2 }.typed).containsExactly('Ñ', 'Ñ').inOrder()
+    }
+
+    /** The id the end card's next game opened, once it is. */
+    private fun GameViewModel.awaitNext(): Long {
+        var opened: Long? = null
+        next { opened = it }
+        return runBlocking {
+            withTimeout(10_000) {
+                while (opened == null) kotlinx.coroutines.delay(10)
+                checkNotNull(opened)
+            }
+        }
+    }
+
+    @Test
+    fun `a finished daily is played again as practice, not counted and not shared`() {
+        val id = runBlocking { games().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = false) }
+        val solution = lexicons.of(Language.ENGLISH).daily.word(DailyCalendar(clock).number(today))
+        val first = viewModel(id)
+        assertThat(first.awaitState().next).isEqualTo(NextGame.PRACTICE)
+        first.type(solution)
+        first.submit()
+        first.awaitState { it.finished }
+        settle(id, 1)
+        assertThat(first.awaitState().shareable).isTrue()
+
+        val replay = first.awaitNext()
+        assertThat(replay).isNotEqualTo(id)
+        val practice = viewModel(replay)
+        val state = practice.awaitState()
+        assertThat(state.practice).isTrue()
+        assertThat(state.shareable).isFalse()
+        assertThat(state.finished).isFalse()
+        practice.type(solution)
+        practice.submit()
+        practice.awaitState { it.finished }
+        assertThat(
+            practice.shareText(
+                ShareText.Labels("That’s The Word", "English", "Free play", "Hard") {
+                    "$it hints"
+                },
+            ),
+        ).isNull()
+    }
+
+    @Test
+    fun `a finished free game offers another word at the language's level`() {
+        val id = runBlocking {
+            games().freeGame(
+                Language.SPANISH,
+                com.callbackdev.thatstheword.core.model.Level.BASE,
+                Language.ENGLISH,
+                hard = false,
+            )
+        }
+        val model = viewModel(id)
+        val solution = runBlocking { games().load(id)!!.game.setup.solution }
+        assertThat(model.awaitState().next).isEqualTo(NextGame.ANOTHER_WORD)
+        // Nothing next while the game is played.
+        var early: Long? = null
+        model.next { early = it }
+        assertThat(early).isNull()
+        model.type(solution)
+        model.submit()
+        model.awaitState { it.finished }
+        settle(id, 1)
+        val another = model.awaitNext()
+        assertThat(another).isNotEqualTo(id)
+        assertThat(runBlocking { games().load(another)!!.game.setup.solution }).isNotEqualTo(solution)
     }
 }

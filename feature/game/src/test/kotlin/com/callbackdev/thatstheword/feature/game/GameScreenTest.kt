@@ -74,13 +74,20 @@ class GameScreenTest {
         return game
     }
 
-    private fun state(game: Game, typed: String = "", refusal: Refusal? = null, letter: Char? = null): GameUiState {
+    private fun state(
+        game: Game,
+        typed: String = "",
+        refusal: Refusal? = null,
+        letter: Char? = null,
+        practice: Boolean = false,
+    ): GameUiState {
         val alphabet = Alphabet.of(game.setup.language)
         return GameUiState.of(
             game,
             typed.map { alphabet.letterOf(it)!! },
             refusal?.let { RefusalUi(it, letter, 1) },
             Lexicon(files, game.setup.language).forms,
+            practice,
         )
     }
 
@@ -110,6 +117,10 @@ class GameScreenTest {
             "Row 1: S, absent; T, elsewhere; E, absent; A, elsewhere; M, absent",
         ).assertIsDisplayed()
         compose.onNodeWithContentDescription("Row 2, typing: P L").assertIsDisplayed()
+        // The marks' key under the grid, while the game is played.
+        compose.onNodeWithText("Right place").assertIsDisplayed()
+        compose.onNodeWithText("Elsewhere").assertIsDisplayed()
+        compose.onNodeWithText("Not in the word").assertIsDisplayed()
         compose.onNodeWithContentDescription("T, elsewhere").assertIsDisplayed()
         compose.onNodeWithContentDescription("S, absent").assertIsDisplayed()
         compose.onNodeWithContentDescription("Q").performClick()
@@ -133,6 +144,8 @@ class GameScreenTest {
         val game = game(Language.ITALIAN, "pasta", "salto", hard = true)
         draw(state(game, typed = "torta", refusal = Refusal.MustBeAt(1, Letter(0)), letter = 'A'))
         compose.onNodeWithText("La seconda lettera dev’essere A.").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Italiano · #9 · difficile", useUnmergedTree = true).assertExists()
+        compose.onNodeWithText("Al posto giusto").assertIsDisplayed()
         compose.onNodeWithContentDescription(
             "Riga 1: S, altrove; A, al posto giusto; L, assente; T, al posto giusto; O, assente",
         )
@@ -148,6 +161,36 @@ class GameScreenTest {
         compose.onNodeWithText("città").assertExists()
         compose.onNodeWithText("Trovata in 2 tentativi su 6.").assertExists()
         compose.walkPage(hasTestTag(GameTags.PAGE), "game-won-it")
+    }
+
+    @Test
+    fun `a day replayed as practice says so, offers it again and shares nothing`() {
+        draw(state(game(Language.ENGLISH, "train", "steam", "train"), practice = true))
+        compose.onNodeWithContentDescription("English · #9 · practice", useUnmergedTree = true).assertExists()
+        compose.onNodeWithText("Practice: the day keeps its first result.").assertExists()
+        compose.onNodeWithText("Play it again, as practice").assertExists()
+        compose.onNodeWithText("Share the result").assertDoesNotExist()
+        compose.onNodeWithText("Right place").assertDoesNotExist()
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-practice")
+    }
+
+    @Test
+    @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
+    fun `a free word found offers another, in Spanish`() {
+        val alphabet = Alphabet.of(Language.SPANISH)
+        var game = Game.start(
+            GameSetup(
+                language = Language.SPANISH,
+                mode = GameMode.Free(com.callbackdev.thatstheword.core.model.Level.BASE),
+                solution = alphabet.parse("arbol")!!,
+                interfaceLanguage = Language.SPANISH,
+            ),
+        )
+        game = (game.submit(alphabet.parse("arbol")!!, anyWord) as Submission.Accepted).game
+        draw(state(game))
+        compose.onNodeWithText("Otra palabra").assertExists()
+        compose.onNodeWithText("Compartir el resultado").assertExists()
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-free-es")
     }
 
     @Test

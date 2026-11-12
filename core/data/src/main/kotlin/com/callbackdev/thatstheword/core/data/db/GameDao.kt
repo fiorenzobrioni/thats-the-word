@@ -32,6 +32,22 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE language = :language AND daily_date = :date AND practice = 0")
     suspend fun countedDaily(language: String, date: Long): GameEntity?
 
+    /** A day's replays as practice, in the order they were started (PLANNING.md §4.6). */
+    @Query("SELECT * FROM games WHERE language = :language AND daily_date = :date AND practice > 0 ORDER BY practice")
+    suspend fun practiceDailies(language: String, date: Long): List<GameEntity>
+
+    /** A language's free games, oldest first: free play's history (PLANNING.md §4.7). */
+    @Query("SELECT * FROM games WHERE language = :language AND mode = 'free' ORDER BY id")
+    suspend fun freeGames(language: String): List<GameEntity>
+
+    @Query(
+        "SELECT (SELECT COUNT(*) FROM guesses WHERE game_id = :id) + (SELECT COUNT(*) FROM hints WHERE game_id = :id)",
+    )
+    suspend fun moveCount(id: Long): Int
+
+    @Query("UPDATE games SET hard = :hard WHERE id = :id")
+    suspend fun updateHard(id: Long, hard: Boolean)
+
     @Query("UPDATE games SET status = :status, finished_at = :finishedAt WHERE id = :id")
     suspend fun updateStatus(id: Long, status: String, finishedAt: Long?)
 

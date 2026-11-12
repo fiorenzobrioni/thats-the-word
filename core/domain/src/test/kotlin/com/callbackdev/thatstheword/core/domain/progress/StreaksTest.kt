@@ -31,6 +31,20 @@ class StreaksTest {
     }
 
     @Test
+    fun `today's word missed - ended at once, not tomorrow`() {
+        val records = wonOn(1, 2, 3) + daily(today, GameState.LOST)
+        assertThat(Streaks.current(records, it, today)).isEqualTo(0)
+        // A replay won as practice does not mend it, and the longest keeps the run it was.
+        assertThat(Streaks.current(records + daily(today, GameState.WON, practice = true), it, today)).isEqualTo(0)
+        assertThat(Streaks.longest(records, it)).isEqualTo(3)
+    }
+
+    @Test
+    fun `today's word under way - still running`() {
+        assertThat(Streaks.current(wonOn(1, 2) + daily(today, GameState.PLAYING), it, today)).isEqualTo(2)
+    }
+
+    @Test
     fun `a day not played ends it too`() {
         assertThat(Streaks.current(wonOn(2, 3, 4), it, today)).isEqualTo(0)
     }

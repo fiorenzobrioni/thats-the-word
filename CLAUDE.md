@@ -18,16 +18,18 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (12 Nov 2026): Phases 0, 1 and 2 are done, Phase 3 is built**: the words (`tools/words/`,
+**State (12 Nov 2026): Phases 0, 1 and 2 are done, Phases 3 and 4 are built**: the words (`tools/words/`,
 their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) have the
 owner's go; the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
-case tested; the game screen (`:feature:game`) plays today's daily from a provisional start page,
-saved in Room (`:core:data`) after every move, its feedback the owner's choice (ink and amber).
-Phase 3 waits for a look on a phone (the reveal with the profiler, TalkBack); Phase 4 (the start
-page, the archive, free play) is next. The modules in the build are `:app`, `:core:model`,
-`:core:domain`, `:core:words`, `:core:data`, `:core:designsystem`, `:core:testing` and
-`:feature:game`. The owner answered the review's questions 1 to 9 and 11 to 13 on 12 Nov 2026;
-**six smaller questions are still open** (PLANNING §15, Open: 10, 14 to 17 and 21): read them
+case tested; the game screen (`:feature:game`) plays a daily, a replay or a free word,
+saved in Room (`:core:data`) after every move, its feedback the owner's choice (ink and amber); the
+start page (`:feature:home`) shows today's word in each language, the streak, the calendar of the
+dailies with the archive, free play at a level and Hard, and sees midnight come. Phases 3 and 4
+wait for a look on a phone (the reveal with the profiler, TalkBack); Phase 5 (hints, meanings, the
+notebook) is next. The modules in the build are `:app`, `:core:model`, `:core:domain`,
+`:core:words`, `:core:data`, `:core:designsystem`, `:core:testing`, `:feature:game` and
+`:feature:home`. The owner answered the review's questions 1 to 9 and 11 to 13 on 12 Nov 2026;
+**four smaller questions are still open** (PLANNING §15, Open: 14 to 17): read them
 before building anything they touch.
 
 Source of truth:
@@ -102,13 +104,13 @@ that does not match it.
 | Module | Kind | Holds |
 |---|---|---|
 | `:core:model` | pure Kotlin/JVM | data classes shared by everything: the appearance's enums (Phase 0); `Language`, `Letter`, `Word`, `Mark`, `Guess`, `GameMode`, `GameSetup`, `GameState`, `Level`, `HintKind`, `NotebookEntry`, `Milestone`, `UserSettings` (Phase 2) |
-| `:core:domain` | pure Kotlin/JVM (Phase 2) | the game engine: alphabets and folding, the feedback, `Game` (guesses, refusals, Hard, hints, the end), the daily's number and word, free play's draw, streaks, statistics, milestones, the share text, the words' decoder, `BackupCodec` |
+| `:core:domain` | pure Kotlin/JVM (Phase 2) | the game engine: alphabets and folding, the feedback, `Game` (guesses, refusals, Hard, hints, the end), the daily's number and word, the calendar's month (`ArchiveMonth`), free play's draw, streaks, statistics, milestones, the share text, the words' decoder, `BackupCodec` |
 | `:core:words` | Android library (Phase 2) | the word files in assets, written by `tools/words/`, mapped (`AssetWordFiles`, stored uncompressed: `noCompress` in `:app`) and handed to the decoder |
-| `:core:data` | Android library (Phase 3) | Room (`ThatsTheWordDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories |
+| `:core:data` | Android library (Phase 3) | Room (`ThatsTheWordDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories (a daily, its practice replays, free play's game), `DayTicker` (the change of day, while a page collects it) |
 | `:core:designsystem` | Android library | M3 theme (Chiaro's dresses through the sisters), typography with the game's roles (`wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), shapes, motion (the family's springs and the game's `playful` one), page gutter (`PageWidth.kt`), the feedback (`FeedbackColors`, `markStyle`), `LetterTile`, `GameTile`, the keyboard's keys (`GameKey`), the game's few icons (`GameIcons`); later the sounds |
 | `:core:testing` | Android library, test-only | `assertAccessible()` (labels, 48dp touch targets) and `walkPage()`, shared by the UI tests as `testImplementation` |
-| `:feature:*` | Android library (from Phase 3) | `game` (Phase 3: the grid, the keyboard, the refusals, the end card); later `home`, `notebook`, `progress`, `onboarding`, `settings` |
-| `:app` | application | `Application`, `MainActivity`, the shell (the start page in Phase 0; Navigation 3 from Phase 3), DI entry points; wires everything |
+| `:feature:*` | Android library (from Phase 3) | `game` (Phase 3: the grid, the keyboard, the refusals, the end card with what comes next); `home` (Phase 4: the start page, the calendar, free play, Hard); later `notebook`, `progress`, `onboarding`, `settings` |
+| `:app` | application | `Application`, `MainActivity`, the shell (Navigation 3: the start page and the game), the launcher's shortcuts (`TodayShortcuts`), DI entry points; wires everything |
 
 Rules: `:core:model` and `:core:domain` stay pure Kotlin/JVM; if a class there needs a `Context`
 or a `Resources`, it is in the wrong module. Feature modules depend on `core:*`, never on each
@@ -140,7 +142,8 @@ phase that brings its first code.
   it without its tests for every edge case in PLANNING.md §4.9. Marks are computed from the
   solution and the guesses, never stored.
 - **Dates are local dates** from an injected clock and zone; a daily belongs to the date it was
-  started on; its word is the frozen schedule's at `date − epoch + 1`.
+  started on; its word is the frozen schedule's at `date − epoch + 1`. The epoch is 1 November
+  2026 (`DailyCalendar.EPOCH`, the owner's): never moved.
 - **The words are generated, never hand-edited** (PLANNING §6): `tools/words/` writes every file
   from pinned, free, credited sources, the same bytes on a second run. **The daily schedule is
   append-only**: no entry already published is ever changed. Every source's licence is

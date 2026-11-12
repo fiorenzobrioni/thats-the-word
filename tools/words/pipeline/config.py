@@ -44,10 +44,11 @@ def level_of(language: str, zipf: float) -> int:
 
 
 # The daily schedule (§6.5): drawn from Base and Intermediate, shuffled with this seed, at least
-# ten years long from the epoch. The epoch is provisional until the 1.0 release (§15 Open 10).
+# ten years long from the epoch: daily number 1, fixed by the owner on 12 Nov 2026 (§15 Open 10)
+# and never moved again. The schedule's entries are by number, so it chose no word.
 DAILY_LEVELS = (0, 1)
 DAILY_SEED = "thats-the-word daily schedule, 12 Nov 2026"
-PROVISIONAL_EPOCH = datetime.date(2026, 11, 12)
+EPOCH = datetime.date(2026, 11, 1)
 SCHEDULE_YEARS = 10
 # How long a meaning may be, in characters: the end card shows a line or two.
 MEANING_MAX = 160

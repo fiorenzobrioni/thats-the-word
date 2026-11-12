@@ -1,6 +1,7 @@
 package com.callbackdev.thatstheword.core.domain.daily
 
 import java.time.Clock
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -14,7 +15,7 @@ import java.time.temporal.ChronoUnit
  * at local midnight. A daily belongs to the date it was started on (the owner, PLANNING §15, Open 9):
  * the caller keeps the date of [today] at the start, and the game never moves.
  */
-class DailyCalendar(private val clock: Clock, val epoch: LocalDate = PROVISIONAL_EPOCH) {
+class DailyCalendar(private val clock: Clock, val epoch: LocalDate = EPOCH) {
     fun today(): LocalDate = LocalDate.now(clock)
 
     /** The local date of an [instant], in the clock's zone. */
@@ -33,6 +34,18 @@ class DailyCalendar(private val clock: Clock, val epoch: LocalDate = PROVISIONAL
     fun isPlayable(date: LocalDate, scheduleLength: Int): Boolean =
         !date.isBefore(epoch) && !date.isAfter(today()) && number(date) <= scheduleLength
 
+    /**
+     * How long until the next local date begins: the start page's ticker waits this long, while it
+     * is on screen, to show the new day's word (PLANNING.md §9). A day of a change of the clocks is
+     * 23 or 25 hours long, and a zone whose clocks change at midnight starts its day at 01:00: the
+     * zone's own start of the next day, never `now + 24h`.
+     */
+    fun untilNextDay(): Duration {
+        val now = Instant.now(clock)
+        val next = today().plusDays(1).atStartOfDay(clock.zone).toInstant()
+        return Duration.between(now, next)
+    }
+
     /** Every playable date, from the epoch to today: the archive (PLANNING.md §4.6). */
     fun archive(scheduleLength: Int): List<LocalDate> {
         val last = minOf(today(), dateOf(scheduleLength))
@@ -42,9 +55,11 @@ class DailyCalendar(private val clock: Clock, val epoch: LocalDate = PROVISIONAL
 
     companion object {
         /**
-         * Daily number 1, provisional until the 1.0 release fixes it (PLANNING §15, Open 10): the
-         * date `tools/words/` wrote the schedules from (`PROVISIONAL_EPOCH` in its config).
+         * Daily number 1 (PLANNING.md §4.6), fixed by the owner on 12 Nov 2026 (PLANNING §15, Open
+         * 10) and never moved again: before the release, so the archive already holds days to play
+         * whenever 1.0 comes. `EPOCH` in `tools/words/`'s config is the same date; the schedules'
+         * entries are by number, so the date chose no word.
          */
-        val PROVISIONAL_EPOCH: LocalDate = LocalDate.of(2026, 11, 12)
+        val EPOCH: LocalDate = LocalDate.of(2026, 11, 1)
     }
 }

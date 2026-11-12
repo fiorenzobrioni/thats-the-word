@@ -18,13 +18,12 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (12 Nov 2026): Phase 0 is done; Phase 1 (the words) is built, at its gate**: the
-pipeline (`tools/words/`), the word files (`core/words/src/main/assets/words/`, read from Phase 2)
-and their report (`docs/words/README.md`) are in place; the phase closes on the owner's go on the
-meanings and the deny lists read (PLANNING §15 Open 18 and 19). Phase 2 (the engine) is next. The vision is approved and
+**State (12 Nov 2026): Phases 0 and 1 are done**: the words (`tools/words/`, their files in
+`core/words/src/main/assets/words/`, read from Phase 2, and their report `docs/words/README.md`)
+have the owner's go. Phase 2 (the engine) is next. The vision is approved and
 reviewed; the build, the design system, CI, the keys and the mark are in place; the modules in the build are `:app`, `:core:model`,
 `:core:designsystem` and `:core:testing`. The owner answered the first questions of the review on
-12 Nov 2026 (VISION, «The owner's answers»); **fifteen smaller questions are still open**
+12 Nov 2026 (VISION, «The owner's answers»); **twelve smaller questions are still open**
 (PLANNING §15, Open): read them before building anything they touch.
 
 Source of truth:

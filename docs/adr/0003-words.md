@@ -1,6 +1,6 @@
 # ADR 0003: The words, their sources and their files (Phase 1)
 
-- Status: accepted for the build; the meanings' quality awaits the owner's go (VISION Q4)
+- Status: accepted (the owner's go on the meanings, the deny lists and the daily pool, 12 Nov 2026)
 - Date: 2026-11-12
 
 ## Context
@@ -69,5 +69,6 @@ Phase 1 builds them before anything is drawn, and measures them (`docs/words/REA
 
 - `:core:words` (Phase 2) maps the assets and hands their bytes to the decoder in `:core:domain`,
   pure Kotlin, tested on the JVM against files its tests write.
-- The owner's go on the meanings' quality (the samples in `docs/words/samples/`), the deny lists
-  read by a person, and the questions this phase raised (PLANNING §15) gate the end of Phase 1.
+- The owner read the samples and the deny lists and gave the go (PLANNING §15, 12 Nov 2026,
+  «Phase 1 closed»): the single-table translations stay, the seven denied words stay out, the
+  daily pool stays Base and Intermediate.

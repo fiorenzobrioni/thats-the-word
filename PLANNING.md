@@ -18,8 +18,8 @@
 
 - **Released**: nothing yet.
 - **Done**: Phase 0, the foundations (12 Nov 2026): the vision reviewed and answered, the build, the design system, CI green on GitHub, the debug key and the release key (rehearsed and pinned), the start page in three languages, the mark.
-- **Built, at its gate**: Phase 1, the words (12 Nov 2026): the pipeline (`tools/words/`), the accepted sets, the solutions and their levels, the glossaries of the nine pairs, the daily schedules, the files and their report (`docs/words/README.md`). It closes on the owner's go on the meanings (§15 Open 18) and the deny lists read (Open 19).
-- **Next**: Phase 2, the game engine, once Phase 1 has its go. What is still open (§15) is needed by the phases it names.
+- **Done**: Phase 1, the words (12 Nov 2026): the pipeline (`tools/words/`), the accepted sets, the solutions and their levels, the glossaries of the nine pairs, the daily schedules, the files and their report (`docs/words/README.md`); the owner's go on the meanings, the deny lists and the daily pool.
+- **Next**: Phase 2, the game engine. What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -433,14 +433,14 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 - [x] `tools/words/`: the pipeline in Python (standard library only), its sources pinned with their checksums and fetched into a cache outside the repository, its own tests (`python3 -m unittest discover -s tools/words/tests -t tools/words`, in CI), one command to rebuild everything (`python3 tools/words/build.py`), the same bytes on a second run (`--check`) (12 Nov 2026)
 - [x] The licences of the exact releases checked and recorded (VISION Q3), each source in `licenses/README.md` (12 Nov 2026)
 - [x] The accepted sets per language at five letters, with their counts (Italian 8,314, English 22,919, Spanish 13,281); 200 common words per language, all accepted (12 Nov 2026)
-- [ ] The solutions per language: lemmas, no proper nouns, abbreviations, offensive or vulgar words (Wiktionary's tags, the deny lists read by a person), the English double spellings and the Italian foreign letters out; the four levels' thresholds and counts. Built (12 Nov 2026: 1,691, 3,612 and 2,484); the deny lists wait for the owner's read (§15 Open 19)
-- [ ] Meanings and translations: the coverage of the nine pairs on the solutions (§6.4); a sample of 50 words per pair read by a person; **the owner's go** on their quality (VISION Q4). Measured and sampled (12 Nov 2026, `docs/words/samples/`); the go is Open 18
+- [x] The solutions per language: lemmas, no proper nouns, abbreviations, offensive or vulgar words (Wiktionary's tags, the deny lists read by a person), the English double spellings and the Italian foreign letters out; the four levels' thresholds and counts. Built (12 Nov 2026: 1,691, 3,612 and 2,484); the deny lists read and confirmed by the owner (§15, 12 Nov 2026, «Phase 1 closed»)
+- [x] Meanings and translations: the coverage of the nine pairs on the solutions (§6.4); a sample of 50 words per pair read by a person; **the owner's go** on their quality (VISION Q4). Measured and sampled (12 Nov 2026, `docs/words/samples/`); the owner's go (§15, 12 Nov 2026, «Phase 1 closed»)
 - [x] The daily schedules, ten years per language, append-only, not plain text, with the test of §4.6 (12 Nov 2026; provisional epoch, Open 10)
 - [x] The files' formats and their sizes in the APK measured (VISION Q5: 3.3 MB for the three languages); `docs/adr/0003-words.md` (12 Nov 2026)
 - [x] The report: `docs/words/README.md` (12 Nov 2026)
 
 **Acceptance:**
-- [ ] The report answers VISION's questions 3, 4 and 5 with numbers, and the owner has said go. The numbers are there (12 Nov 2026); the go is Open 18.
+- [x] The report answers VISION's questions 3, 4 and 5 with numbers, and the owner has said go (§15, 12 Nov 2026, «Phase 1 closed»).
 - [x] A second run of the script writes the same bytes (12 Nov 2026).
 
 ### Phase 2 — The game engine
@@ -596,14 +596,14 @@ From VISION §16, still open:
 - [ ] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9); a close name exists, «What's The Word» (VISION §16). Also to look at then: how the launchers show a fifteen-character name under the icon (some cut it to «That's The W…»).
 - [ ] **VISION Q2: the modes' names** in the three interface languages (with the strings of each phase).
 - [x] **VISION Q3: the licences** of the Spanish and English sources and of Wiktionary's data. Closed (§15, 12 Nov 2026, «Phase 1: the words»): RLA-ES tri-licensed, used under GPL-3.0-or-later; SCOWL's permissive notice; Wiktionary CC BY-SA 4.0 (and GFDL), used under CC BY-SA 4.0; wordfreq's data CC BY-SA 4.0.
-- [ ] **VISION Q4: the definitions' quality** in the three interface languages (Phase 1, its gate): measured and sampled; the owner's go is Open 18.
+- [x] **VISION Q4: the definitions' quality** in the three interface languages. Closed by the owner's go on the samples (§15, 12 Nov 2026, «Phase 1 closed»).
 - [x] **VISION Q5: the app's size**. Closed (the same entry): 3.3 MB of word files for the three languages, uncompressed in the APK.
 
 From Phase 1 (§15, 12 Nov 2026, «Phase 1: the words»):
 
-- [ ] **18. The owner's go on the meanings** (VISION Q4): read `docs/words/samples/` (50 words for each of the nine pairs, 35 of them from the daily pool) and say go, or what to change. With it, whether a translation that one table alone gives (marked *single* in the samples; about a third of the shown translations between Italian, Spanish and English's foreign pairs) stays shown, or only translations two sources agree on (the coverage would drop to the "agreed" column of the report).
-- [ ] **19. The deny lists read by a person**: `tools/words/lists/deny_*.txt` (seeded with seven words: *porca*; *gypsy*, *prick*, *lewis*; *coger*, *polla*, *verga*) and the candidates in `docs/words/review/` (every solution with an offensive or vulgar sense somewhere, and what each filter kept out). A daily is everyone's.
-- [ ] **20. The daily pool's size.** The dailies draw from Base and Intermediate (Zipf 3.5 and over): 776 Italian words, 1,302 English, 909 Spanish, so a word returns after about 2.1, 3.6 and 2.5 years. Proposed: keep it (a word every two years is not noticed, and a lower bound brings rarer words); or lower Intermediate to 3.2 for about a third more words.
+- [x] **18. The owner's go on the meanings** (VISION Q4): read `docs/words/samples/` (50 words for each of the nine pairs, 35 of them from the daily pool) and say go, or what to change. With it, whether a translation that one table alone gives (marked *single* in the samples; about a third of the shown translations between Italian, Spanish and English's foreign pairs) stays shown, or only translations two sources agree on (the coverage would drop to the "agreed" column of the report). Closed (§15, 12 Nov 2026, «Phase 1 closed»): go, the samples read; the single-table translations stay, as built.
+- [x] **19. The deny lists read by a person**: `tools/words/lists/deny_*.txt` (seeded with seven words: *porca*; *gypsy*, *prick*, *lewis*; *coger*, *polla*, *verga*) and the candidates in `docs/words/review/` (every solution with an offensive or vulgar sense somewhere, and what each filter kept out). A daily is everyone's. Closed (§15, 12 Nov 2026, «Phase 1 closed»): read, the seven words confirmed.
+- [x] **20. The daily pool's size.** The dailies draw from Base and Intermediate (Zipf 3.5 and over): 776 Italian words, 1,302 English, 909 Spanish, so a word returns after about 2.1, 3.6 and 2.5 years. Proposed: keep it (a word every two years is not noticed, and a lower bound brings rarer words); or lower Intermediate to 3.2 for about a third more words. Closed (§15, 12 Nov 2026, «Phase 1 closed»): kept, as proposed.
 
 From Phase 0:
 
@@ -699,3 +699,13 @@ Phase 1 built, to its gate: everything but the owner's go on the meanings (Open 
 - **The files** (ADR 0003): `accepted-5.bin`, `solutions-5.bin`, `daily.bin`, `forms-5.bin` and `gloss-<interface>.bin` per game language in `core/words/src/main/assets/words/`, written now and read by `:core:words` from Phase 2 (the module joins the build then, with its first code). A sixteen-byte header, words packed five bits a letter in four bytes and found by binary search, text records behind offsets. 3.3 MB for the three languages, uncompressed (VISION Q5, closed): compression would save two thirds at the cost of an inflater a lookup and builds tied to a zlib version.
 - **The daily schedules**: 3,654 dailies a language, ten years from a provisional epoch (today, Open 10), every word once before any twice, append-only by construction (the build reads the committed file and refuses to change an entry). The schedules written while the rules were tuned this session were never committed, and were dropped before the final build. The pool's size is Open 20.
 - **Raised here**, in Open: 18, 19 and 20.
+
+### 12 Nov 2026 — Phase 1 closed (owner: "Ok, le 3 cose che mi chiedi le ho fatte e le confermo")
+
+The owner did the three things Phase 1 waited for, and confirmed them as they stand:
+
+- **Open 18, the meanings (VISION Q4)**: the samples of `docs/words/samples/` read, and the go. The proposals stand as built: a translation that one table alone gives for the word's first sense stays shown, one at most, beside those two sources agree on (`SINGLE_TABLE_TRANSLATIONS = True` in `tools/words/pipeline/config.py`).
+- **Open 19, the deny lists**: read; the seven words stay out (*porca*; *gypsy*, *prick*, *lewis*; *coger*, *polla*, *verga*), nothing added.
+- **Open 20, the daily pool**: Base and Intermediate as they are (Zipf 3.5 and over), a word returning after about two to three and a half years.
+
+Nothing in the words changes, so nothing is rebuilt. Phase 1 is done, its boxes ticked; ADR 0003 accepted. Phase 2, the game engine, is next.

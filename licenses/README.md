@@ -5,7 +5,7 @@ are not covered by that licence (VISION §13). What ships inside the APK and is 
 
 | What | License | Where |
 |---|---|---|
-| [Google Sans](https://fonts.google.com/specimen/Google+Sans), the app's default typeface, bundled as `core/designsystem/src/main/res/font/google_sans_variable.ttf`: the upstream `ofl/googlesans` variable font cut down to the scripts the family's apps print, the same file as theirs | SIL Open Font License 1.1 | `GoogleSans-OFL.txt` |
+| [Google Sans](https://fonts.google.com/specimen/Google+Sans), the app's default typeface, bundled as `core/designsystem/src/main/res/font/google_sans_variable.ttf`: the upstream `ofl/googlesans` variable font cut down to the scripts the family's apps print, the same file as theirs. Its Bold outlines also draw the letters of the launcher mark (`tools/draw_launcher_icon.py`) | SIL Open Font License 1.1 | `GoogleSans-OFL.txt` |
 | [Inter](https://github.com/rsms/inter), the second typeface, bundled as `core/designsystem/src/main/res/font/inter_variable.ttf` | SIL Open Font License 1.1 | `Inter-OFL.txt` |
 
 **The words.** The word lists, their frequencies, definitions and translations are not here yet:

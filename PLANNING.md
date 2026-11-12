@@ -17,7 +17,8 @@
 ## State
 
 - **Released**: nothing yet.
-- **In progress**: Phase 0. The owner's vision is approved, reviewed here and answered on its first points (VISION.md, «The owner's answers», 12 Nov 2026); what is still open is in §15's Open list, to be answered before what it touches is built. The build, the design system, CI (green on GitHub) and the debug key are in place; the release key is made, rehearsed and pinned; the mark is the owner's to choose.
+- **Done**: Phase 0, the foundations (12 Nov 2026): the vision reviewed and answered, the build, the design system, CI green on GitHub, the debug key and the release key (rehearsed and pinned), the start page in three languages, the mark.
+- **Next**: Phase 1, the words (the gate: sources, sets, levels, meanings across the nine pairs, sizes). What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -316,7 +317,7 @@ The marks are said by colour **and** shape (VISION §6), never colour alone, and
 
 | Mark | Colour | Shape | Letter |
 |---|---|---|---|
-| Right place | the app's colour (provisional: berry, as the mark's ground) | the tile stays square (corner 22%) | white |
+| Right place | the app's colour (berry, as the mark's ground) | the tile stays square (corner 22%) | white |
 | Elsewhere | the family's amber | the tile becomes round (corner 50%): "somewhere in the word" | dark ink |
 | Absent | the dress's quietest ground, no border | the tile sinks (lower, smaller by 4%) | the quiet ink |
 
@@ -411,7 +412,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 - [x] Hilt, `MainActivity` edge to edge with the start page: the name, the subtitle, a word composed tile by tile, then the victory line (VISION §2)
 - [x] `strings.xml` for `values/` (English), `values-it/` and `values-es/`; `locales_config.xml` for the per-app language
 - [x] A provisional launcher mark drawn by `tools/draw_launcher_icon.py` in the family's series (a white speech bubble holding a word of three tiles, the last in amber, on berry), with its monochrome layer
-- [ ] The mark and the app's colour chosen by the owner (§15, Open), drawn again by the script
+- [x] The mark and the app's colour chosen by the owner, from a board of three (the owner's letter blocks, WO / RD, the D amber and just set down, on berry), drawn again by the script (12 Nov 2026)
 - [x] The crash page (`app/src/crashpage`), for debug builds and the debug-signed release, in the three languages
 - [x] CI: `android-ci.yml` (formatting, forbidden permissions, unit tests, lint, then the APKs and the R8 mapping) and the tag-triggered `release.yml` (the tag matches `thatstheword.versionName`; the same gates; the keystore decoded from the secrets; the signed APK; the signature checked against the release key's fingerprint, refusing to publish until it is pinned; the SHA-256 file; the mapping; the body from `CHANGELOG.md`)
 - [x] CI green on GitHub (`b8df08e`, run 1, 5 min 30 s, 12 Nov 2026)
@@ -574,7 +575,7 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 - [x] **1. The name, the repository, the package.** Closed by the owner's answer (§15, 12 Nov 2026, «The owner's answers»): *That's The Word*, the owner's latest vision; the repository `thats-the-word`, as VISION §2 names it; the package `com.callbackdev.thatstheword`.
 - [x] **2. The documents' language.** English, as the family's (the same entry): VISION.md translated, the owner's Italian original in the history (`0d7cacf`).
 - [x] **3. Material 3 Expressive.** Stable Material 3, as the sisters' (the same entry): 1.4 now, with the game's own springs and shapes (§7.4).
-- [ ] **4. The app's colour and its mark.** Provisional: berry (`D86BBE · AE3790 · 7E1D68`, away from the sisters' green, coral and indigo) and a speech bubble holding a word, its last tile amber. Drawn and looked at (12 Nov 2026), it reads like a messaging app's "typing" bubble: a placeholder, no more. The owner's first idea (12 Nov 2026): letter blocks that compose a word. To do: three symbols drawn on a board with the family's marks, as on 9 Nov 2026, the owner's idea among them, at the launcher's sizes and in the themed icon's one ink; the owner chooses, then the app's colour follows.
+- [x] **4. The app's colour and its mark.** Closed by the owner's choice (§15, 12 Nov 2026, «The mark»): the letter blocks, WO / RD, the D amber and just set down, on berry.
 - [x] **5. The feedback's colours and shapes** (§7.2). The proposal accepted, with the owner's condition that every solution be a premium app's (the same entry): drawn on a board in Phase 3, with its motion, before it is built.
 - [ ] **6. Italian's keyboard and its foreign letters.** Proposed: the keyboard has all 26 letters (*taxi*, *jeans*, *yacht* are words a player types); the solutions keep to the Italian alphabet's 21.
 - [ ] **7. Bridge needs several lengths before 1.2.** VISION puts Bridge in 1.1 and variable length in 1.2 because each length costs its lists, but *gatto / cat / gato* already has three lengths. Proposed: the accepted sets of every length come with 1.1 (they are cheap: filtered expansions); what 1.2 adds per length is the solutions, their levels and meanings. And Bridge plays the player's chosen languages, two or three, not always all three: a learner of one foreign language should not need the third.
@@ -665,4 +666,10 @@ Three symbols drawn on a board, in the family's series (the app's colour as the 
 - **The launcher's label**: on the board the name is cut to «That's The…», as many launchers will cut it (VISION Q1, Open).
 
 The owner chooses (Open 4); the chosen drawing then goes into `tools/draw_launcher_icon.py`, with its letters' outlines written into the script so it keeps to the standard library.
+
+### 12 Nov 2026 — The mark (owner: "Va bene la A col berry. Però il cubo con la lettera D che è un po ruotato è troppo attaccato sopra al cubo con lettera O. [...] spostarlo un po più in basso in modo da allinearlo orizzontalmente con R e lasciarlo allineato come è ora verticalmente con O"; "Il berry va bene ma puoi consigliarmi anche altri colori (non viola o sfumature di viola)")
+
+The owner chose A, the letter blocks, on berry, and moved the D: it stood 2.2 units high and close to the O; it now stands in R's row and O's column, still turned by 10°, the gaps to its neighbours the grid's own. The whole symbol was centred again by its weight (26.7 units of the 28). A second board drew the change before and after, and the mark on four grounds that are not violet: **berry** (the provisional, the farthest from the sisters' green, coral and indigo), **raspberry** (a redder berry; the nearest to Tempo's coral, and under deuteranopia close to Passo's and Tempo's greys), **deep teal** (calm, apart from the three; to be seen beside Chiaro's sky) and **ink** (a typographic blue-black, the strongest contrast, the least colourful of the series). Berry stays, as the owner approved; another ground is one constant of the script (`BERRY`) and the badges' colour.
+
+`tools/draw_launcher_icon.py` is rewritten for the mark (ADR 0002, point 6): the three tiles and the turned D as tiles with their letters cut out by the even-odd rule, the letters Google Sans Bold's outlines (the family's face, overlaps merged, written into the script as data, so it keeps to the standard library, its H and V commands transformed alone), the D in a group turned about its centre, the keyline checked from the tiles' corner arcs. The three layers it writes, drawn, match the board's drawing pixel for pixel, the themed layer too. Closes Open 4 and Phase 0's last box: **Phase 0 is done**. The README's mark is 🔤.
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Written by tools/draw_launcher_icon.py: change the script and run it, never this file.
-     The badge's ground: the app's colour, lit from the upper left. -->
+     The badge's ground: the app's berry, lit from the upper left. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"

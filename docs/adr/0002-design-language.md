@@ -1,6 +1,6 @@
 # ADR 0002: The family's design language, and where a game departs (Phase 0)
 
-- Status: accepted (the mark pending the owner: PLANNING.md §15, Open 4)
+- Status: accepted
 - Date: 2026-11-12
 
 ## Context
@@ -46,7 +46,7 @@ and more motion, haptics and sound, its own fixed feedback colours, light and da
 5. **No colour of the genre.** The vision's identity rule (VISION §13): the palette, the shapes,
    the reveal (never the genre's flip) and the share symbols are the game's own, away from the
    genre's well-known green, yellow and grey.
-6. **The launcher mark**, provisional (`tools/draw_launcher_icon.py`): the family's series of
+6. **The launcher mark** (`tools/draw_launcher_icon.py`), first provisional: the family's series of
    9 Nov 2026 (the app's colour as the ground, lit from the upper left; a white symbol with one
    amber accent; every shape a ramp, no shadow; the whole symbol within 28 units of the centre).
    The symbol: a white speech bubble holding a word of three tiles, two cut out and the last in
@@ -57,6 +57,20 @@ and more motion, haptics and sound, its own fixed feedback colours, light and da
    placeholder only. The mark and the colour are the owner's to choose (PLANNING §15, Open 4; the
    owner's first idea, 12 Nov 2026: letter blocks composing a word). The app
    shows its mark nowhere inside itself; the first run shows no icon (the family's frame).
+
+   **Chosen on 12 Nov 2026** (the owner, from a board of three: «Blocks», «The missing word»,
+   «Quoted»; PLANNING.md §15, «The mark's board» and «The mark»). **Four letter tiles spell
+   WO / RD**: three white, lit as one shape, and the last, the D, amber, in its place in the grid
+   but still turned by 10°, as if just set down: the name, the game and the moment of the win in
+   one drawing. The owner's own idea, refined; the owner moved the D from a little high to its
+   place in the row and the column, so it no longer crowds the O. The tiles are the game's
+   (`LetterTile`'s corner, 22% of the side); the letters are Google Sans Bold's outlines, their
+   overlapping contours merged, cut out of their tiles, so the ground shows through them in the
+   themed icon too, written into the script as data so it keeps to the standard library. Measured:
+   26.7 units of the 28, centred by its weight. The ground is the berry (`D86BBE` to `AE3790` to
+   `7E1D68`), the owner's choice among berry, raspberry, deep teal and ink, the free hues that are
+   not violet; the README's badges take its deep tone, `7E1D68`. The script's XML, drawn, matches
+   the board's drawing pixel for pixel.
 7. **Tests carried over**: `TypographyTest` (every Material role and the game's own follow the
    typeface setting), `ContrastTest` (every text ink at 4.5:1 on every ground, in both dresses and
    themes; the feedback's pairs join it in Phase 3), `PageWidthTest`, and the shared UI checks of

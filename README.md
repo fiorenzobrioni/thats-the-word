@@ -1,6 +1,6 @@
 <div align="center">
 
-# 💬 That's The Word
+# 🔤 That's The Word
 
 **One word a day. Three languages. Played on your phone, sent nowhere.**
 
@@ -107,7 +107,7 @@ Every release will install over the previous one and keep your games and your no
 The phased plan, with every decision and its reason, is in [PLANNING.md](./PLANNING.md) (the
 closed periods in [docs/planning](./docs/planning/README.md)):
 
-- **Phase 0**, foundations: the build, the design system, CI. *In progress.*
+- **Phase 0**, foundations: the build, the design system, CI, the keys, the mark. *Done.*
 - **Phase 1**, the words: three languages, their levels, meanings and translations, from free
   sources, measured before anything is drawn.
 - **Phase 2**, the game engine: every rule, every edge case tested.

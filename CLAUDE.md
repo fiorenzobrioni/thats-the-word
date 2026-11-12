@@ -18,11 +18,11 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (12 Nov 2026): Phase 0.** The vision is approved and reviewed; the build, the design
-system, CI and the debug key are in place; the modules in the build are `:app`, `:core:model`,
+**State (12 Nov 2026): Phase 0 is done**, Phase 1 (the words) is next. The vision is approved and
+reviewed; the build, the design system, CI, the keys and the mark are in place; the modules in the build are `:app`, `:core:model`,
 `:core:designsystem` and `:core:testing`. The owner answered the first questions of the review on
-12 Nov 2026 (VISION, «The owner's answers»); **the mark and twelve smaller questions are still
-open** (PLANNING §15, Open): read them before building anything they touch.
+12 Nov 2026 (VISION, «The owner's answers»); **twelve smaller questions are still open**
+(PLANNING §15, Open): read them before building anything they touch.
 
 Source of truth:
 
@@ -183,10 +183,12 @@ no switch for a feature that has not shipped, no button drawn before it does som
 text that stands on its own takes `balanced()`: no line ends on one word alone, in any of the
 three languages.
 
-The launcher mark is written by `tools/draw_launcher_icon.py` (the family's series of 9 Nov 2026:
-the app's colour as the ground, a white symbol with one amber accent, within the 28-unit keyline):
-change the script and re-run it, never the XML. It is provisional until the owner chooses (PLANNING
-§15, Open 4). The app shows its mark nowhere inside itself.
+The launcher mark (four letter tiles spelling WO / RD, the last one, the D, amber and turned as if
+just set down, on the app's berry: the owner's idea and choice, 12 Nov 2026) is written by
+`tools/draw_launcher_icon.py`, in the family's series of 9 Nov 2026 (the app's colour as the
+ground, a white symbol with one amber accent, within the 28-unit keyline): change the script and
+re-run it, never the XML. Its letters are Google Sans Bold's outlines, written into the script. The
+app shows its mark nowhere inside itself.
 
 **Motion is a feature here** (VISION §12): every key moment has its movement (a letter set, a row
 revealed, a word refused, a word found, a milestone), on `ThatsTheWordMotion`'s springs, the row's

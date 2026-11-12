@@ -28,7 +28,7 @@ KEYS = {
 # answer), while the keyboard has all 26, for the loanwords a player types.
 ITALIAN_ALPHABET = frozenset("abcdefghilmnopqrstuvz")
 
-_TILDE = "̃"
+_TILDE = "\u0303"  # the combining tilde, as NFD writes the ñ
 BITS_PER_LETTER = 5
 
 

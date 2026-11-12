@@ -1,29 +1,22 @@
-# On My Tongue — Vision
+# That's The Word — Vision
 
 > Stato: approvata — 12 novembre 2026
 
 ## 1. In una frase
 
-**On My Tongue** è un gioco per Android in cui si indovina una parola nascosta, in italiano, inglese e spagnolo, pensato sia come passatempo quotidiano sia per esercitare il vocabolario di una lingua che si sta imparando. Qualità premium, codice aperto, completamente offline.
+**That's The Word** è un gioco per Android in cui ogni giorno si cerca una parola nascosta, in italiano, inglese e spagnolo, fino al momento in cui si può dire "ecco, è quella". È pensato sia come passatempo quotidiano sia per esercitare il vocabolario di una lingua che si sta imparando. Qualità premium, codice aperto, completamente offline.
 
 ## 2. Nome e voce
 
-Il nome richiama "ce l'ho sulla punta della lingua" (*on the tip of my tongue*, *en la punta de la lengua*): un modo di dire comune alle tre lingue, in cui "tongue" è anche la lingua parlata. Il nome resta in inglese in tutte le versioni dell'interfaccia.
+**That's The Word** è l'esclamazione di quando viene finalmente in mente la parola che si aveva sulla punta della lingua: "ecco, è quella". Il nome descrive il momento più bello del gioco, quello in cui la parola nascosta viene trovata, ed è la frase con cui l'app saluta ogni vittoria.
 
-Sottotitolo: **A daily word game in three tongues**.
+- Il nome resta in inglese in tutte le versioni dell'interfaccia.
+- La frase di vittoria è resa nelle altre lingue con lo stesso spirito (*Ecco la parola.*, *Esa es la palabra.*).
+- Nome del repository: `thats-the-word`.
 
-Tono dei testi: breve, calmo, un po' teatrale. Frasi corte, nessun punto esclamativo, nessun gergo da videogioco. Testi di riferimento per la schermata iniziale:
+Sottotitolo: **One word a day. Three languages.**
 
-```
-ON MY TONGUE
-A DAILY WORD GAME IN THREE TONGUES
-Today's word awaits.
-Six attempts. One word.
-T A B L E
-THE WORD IS ALMOST YOURS.
-```
-
-Ogni testo va scritto nelle tre lingue dell'interfaccia con lo stesso ritmo, non tradotto alla lettera.
+Tono dei testi: breve, calmo, un po' teatrale. Frasi corte, nessun punto esclamativo, nessun gergo da videogioco. Ogni testo va scritto nelle tre lingue dell'interfaccia con lo stesso ritmo, non tradotto alla lettera.
 
 ## 3. Principi
 
@@ -209,7 +202,7 @@ Nota: queste sono valutazioni informate, non un parere legale.
 
 ## 16. Questioni aperte
 
-1. **Disponibilità del nome.** Una ricerca web non ha trovato app chiamate "On My Tongue", ma store e registri dei marchi vanno controllati a mano prima della prima release.
+1. **Disponibilità del nome.** Una ricerca web non ha trovato app chiamate "That's The Word"; esistono però giochi dal nome vicino ("What's The Word"). Store e registri dei marchi vanno controllati a mano prima della prima release.
 2. **Nomi delle modalità** nelle tre lingue dell'interfaccia.
 3. **Licenze esatte** delle fonti spagnola e inglese e versione della licenza dei dati Wiktionary.
 4. **Qualità delle definizioni** nelle tre lingue dell'interfaccia: da valutare su un campione prima di impegnarsi.

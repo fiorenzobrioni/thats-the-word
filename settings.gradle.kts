@@ -23,7 +23,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "onmytongue"
+rootProject.name = "thats-the-word"
 
 // The module map is PLANNING.md §2. core:model and core:domain are pure Kotlin/JVM; feature
 // modules depend on core:*, never on each other; :app wires everything together.

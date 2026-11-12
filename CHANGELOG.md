@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to On My Tongue are documented here. The format follows
+All notable changes to That's The Word are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 

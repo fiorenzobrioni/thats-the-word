@@ -33,14 +33,14 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
 
-      # The tag must name the version the APK carries: bump onmytongue.versionName in
+      # The tag must name the version the APK carries: bump thatstheword.versionName in
       # gradle.properties first, then tag v<that>.
       - name: Tag matches the app version
         if: github.ref_type == 'tag'
         run: |
-          version=$(sed -n 's/^onmytongue\.versionName=//p' gradle.properties)
+          version=$(sed -n 's/^thatstheword\.versionName=//p' gradle.properties)
           if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
-            echo "::error::Tag ${GITHUB_REF_NAME} does not match onmytongue.versionName=${version} in gradle.properties."
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match thatstheword.versionName=${version} in gradle.properties."
             exit 1
           fi
 
@@ -69,24 +69,24 @@ jobs:
       - name: Build signed release APK
         run: ./gradlew :app:assembleRelease
         env:
-          ORG_GRADLE_PROJECT_ONMYTONGUE_KEYSTORE: ${{ runner.temp }}/release.jks
-          ORG_GRADLE_PROJECT_ONMYTONGUE_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          ORG_GRADLE_PROJECT_ONMYTONGUE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_ONMYTONGUE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ORG_GRADLE_PROJECT_THATSTHEWORD_KEYSTORE: ${{ runner.temp }}/release.jks
+          ORG_GRADLE_PROJECT_THATSTHEWORD_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_THATSTHEWORD_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_THATSTHEWORD_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       # The APK must carry the release key and no other: a release signed with another key (a
       # secret replaced by mistake) could never update the installs already out there. The
-      # fingerprint is the one published in keystore/README.md and the root README. Until the
-      # owner has made the key and handed over its fingerprint (PLANNING.md §15, Open), this step
-      # stops the workflow by name: nothing can be published unpinned.
+      # fingerprint is the one published in keystore/README.md and the root README. Until it is
+      # pinned, this step prints the certificate the APK was signed with and stops the workflow by
+      # name: nothing can be published unpinned, and a rehearsal shows which key the secrets hold.
       - name: Check the signature
         run: |
-          if [ -z "${RELEASE_CERT_SHA256}" ]; then
-            echo "::error::The release key's fingerprint is not pinned yet (PLANNING.md §15, Open; keystore/README.md)."
-            exit 1
-          fi
           apksigner=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)apksigner
           "$apksigner" verify --print-certs app/build/outputs/apk/release/app-release.apk | tee signature.txt
+          if [ -z "${RELEASE_CERT_SHA256}" ]; then
+            echo "::error::The release key's fingerprint is not pinned yet: compare the SHA-256 digest above with keytool's on the owner's key, then pin it (keystore/README.md)."
+            exit 1
+          fi
           if ! grep -qi "certificate SHA-256 digest: ${RELEASE_CERT_SHA256}\$" signature.txt; then
             echo "::error::The APK is not signed with the game's release key (keystore/README.md)."
             exit 1
@@ -100,9 +100,9 @@ jobs:
       - name: Rename artifacts after the tag, write the checksum
         if: github.ref_type == 'tag'
         run: |
-          cp app/build/outputs/apk/release/app-release.apk "onmytongue-${GITHUB_REF_NAME}.apk"
+          cp app/build/outputs/apk/release/app-release.apk "thats-the-word-${GITHUB_REF_NAME}.apk"
           cp app/build/outputs/mapping/release/mapping.txt "mapping-${GITHUB_REF_NAME}.txt"
-          sha256sum "onmytongue-${GITHUB_REF_NAME}.apk" > "onmytongue-${GITHUB_REF_NAME}.apk.sha256"
+          sha256sum "thats-the-word-${GITHUB_REF_NAME}.apk" > "thats-the-word-${GITHUB_REF_NAME}.apk.sha256"
 
       # The body is the CHANGELOG section for this tag and nothing else, so the page says what
       # changed in the reader's terms (no generated list of pull requests). Matched as a literal prefix, not a regex, or the dots in the version would
@@ -130,8 +130,8 @@ jobs:
         with:
           body_path: release-notes.md
           files: |
-            onmytongue-${{ github.ref_name }}.apk
-            onmytongue-${{ github.ref_name }}.apk.sha256
+            thats-the-word-${{ github.ref_name }}.apk
+            thats-the-word-${{ github.ref_name }}.apk.sha256
             mapping-${{ github.ref_name }}.txt
           # A hyphen in the tag (v1.0.0-rc1) is a pre-release by SemVer definition.
           prerelease: ${{ contains(github.ref_name, '-') }}

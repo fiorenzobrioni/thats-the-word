@@ -1,12 +1,12 @@
 // The Material 3 theme, typography, motion and the shared components (PLANNING.md §2): the
 // family's design language (docs/adr/0002-design-language.md), with the game's own tiles.
 plugins {
-    alias(libs.plugins.onmytongue.android.library)
-    alias(libs.plugins.onmytongue.android.compose)
+    alias(libs.plugins.thatstheword.android.library)
+    alias(libs.plugins.thatstheword.android.compose)
 }
 
 android {
-    namespace = "com.callbackdev.onmytongue.core.designsystem"
+    namespace = "com.callbackdev.thatstheword.core.designsystem"
 }
 
 dependencies {

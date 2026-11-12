@@ -1,4 +1,4 @@
-# On My Tongue — Technical Planning
+# That's The Word — Technical Planning
 
 > Companion to [VISION.md](VISION.md). This document defines the architecture, the design of the game engine, the words and how they are made, the look of the game, and the delivery phases.
 > It is written to be read by humans and by Claude Code.
@@ -17,7 +17,7 @@
 ## State
 
 - **Released**: nothing yet.
-- **In progress**: Phase 0. The owner's vision is approved (VISION.md, 12 Nov 2026) and reviewed here: the questions it raises, and the ones it leaves open, are in §15's Open list, to be answered before what they touch is built. The build, the design system, CI and the debug key are in place (12 Nov 2026); the release key, the mark and the name's checks are the owner's.
+- **In progress**: Phase 0. The owner's vision is approved, reviewed here and answered on its first points (VISION.md, «The owner's answers», 12 Nov 2026); what is still open is in §15's Open list, to be answered before what it touches is built. The build, the design system, CI (green on GitHub) and the debug key are in place; the release key is made and in the secrets, its fingerprint to be pinned; the mark is the owner's to choose.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -29,10 +29,10 @@ The family's stack, as Tetto carries it from Tempo and Passo (Tetto ADR 0001), a
 | Concern | Choice |
 |---|---|
 | Language | Kotlin 2.4, compiled by AGP 9's built-in Kotlin, with the Compose compiler Gradle plugin; KSP for Room and Hilt |
-| Build | Gradle 9.9 with Kotlin DSL, AGP 9.5; version catalog (`gradle/libs.versions.toml`); convention plugins in `build-logic/` (`onmytongue.*`) |
+| Build | Gradle 9.9 with Kotlin DSL, AGP 9.5; version catalog (`gradle/libs.versions.toml`); convention plugins in `build-logic/` (`thatstheword.*`) |
 | JDK | Java 21, `jvmTarget` 21, without a Gradle toolchain |
 | SDK levels | `minSdk 34`, `targetSdk 37`, `compileSdk 37` (the family's) |
-| UI | Jetpack Compose, Material 3 (1.4, stable) in the family's design language (Chiaro's generated schemes, dynamic colour on request), edge-to-edge; the game's own tiles, keyboard, motion and feedback colours (§7). Material 3 Expressive's APIs are internal in 1.4 and arrive with 1.5, still a release candidate (§15, Open) |
+| UI | Jetpack Compose, Material 3 (1.4, stable) in the family's design language (Chiaro's generated schemes, dynamic colour on request), edge-to-edge; the game's own tiles, keyboard, motion and feedback colours (§7). Stable Material 3, as the sisters' (owner, 12 Nov 2026): Material 3 Expressive's APIs are internal in 1.4 and arrive with 1.5, still a release candidate |
 | Architecture | MVVM with unidirectional data flow; coroutines and `Flow` |
 | Dependency injection | Hilt |
 | Persistence | Room for the games, their guesses, the notebook and the milestones (schema exported, every migration tested); DataStore (Preferences) for the settings |
@@ -54,7 +54,7 @@ Always pick the **latest stable** versions at setup time and record them in the 
 ## 2. Project structure
 
 ```
-onmytongue/
+thats-the-word/
 ├── app/                    # Application, MainActivity, the shell (Navigation 3), DI entry points
 ├── build-logic/            # Convention plugins (android-application, library, compose, feature, hilt, room, jvm)
 ├── core/
@@ -232,7 +232,7 @@ Only in a game whose language is not the interface's (VISION §5, §9). Three ki
 
 `Language`, `Letter` (an index in a language's keys), `Word` (key form), `Mark` (right place, elsewhere, absent), `Guess`, `GameMode`, `GameSetup`, `GameState`, `Level`, `HintKind`, `NotebookEntry`, `Milestone`, the settings enums and `UserSettings`, the appearance (`ThemeMode`, `AppPalette`, `AppFont`).
 
-### Room (`OnMyTongueDatabase`, file `onmytongue.db`, version 1, from Phase 3)
+### Room (`ThatsTheWordDatabase`, file `thatstheword.db`, version 1, from Phase 3)
 
 | Table | Columns | Notes |
 |---|---|---|
@@ -308,9 +308,9 @@ Per language, a few files in `:core:words`'s assets, uncompressed in the APK so 
 
 ### 7.1 The family's language, and where a game departs
 
-The family's design system, copied (ADR 0002): the generated dresses (Paper and Vivid), Google Sans, Inter or the phone's sans, the shapes, the springs, the page gutter, the accessibility checks; one sentence before a number; every number with the line that says what it means; no dead control. A game departs where it must (VISION §12): capitals with wide tracking for the name and the short lines above a title (`wordmark`, `eyebrow`), tiles, a keyboard, livelier springs for the game's moments (`OnMyTongueMotion.playful`), sound, and colours of its own for the feedback that never follow the dress or the wallpaper.
+The family's design system, copied (ADR 0002): the generated dresses (Paper and Vivid), Google Sans, Inter or the phone's sans, the shapes, the springs, the page gutter, the accessibility checks; one sentence before a number; every number with the line that says what it means; no dead control. A game departs where it must (VISION §12): capitals with wide tracking for the name and the short lines above a title (`wordmark`, `eyebrow`), tiles, a keyboard, livelier springs for the game's moments (`ThatsTheWordMotion.playful`), sound, and colours of its own for the feedback that never follow the dress or the wallpaper.
 
-### 7.2 The feedback: colour and shape together (proposal, §15 Open)
+### 7.2 The feedback: colour and shape together (the owner's direction, 12 Nov 2026)
 
 The marks are said by colour **and** shape (VISION §6), never colour alone, and the palette is the game's own (VISION §13):
 
@@ -337,7 +337,7 @@ Every moment has its movement, every movement collapses to a fade under reduced 
 | A letter typed | the tile pops (1.08 and back) with the game's spring |
 | A row revealed | tile by tile, 70 ms apart, the mark's colour fills from the tile's centre while its corner moves to its shape; never the genre's flip |
 | A word refused | the row shakes sideways on a spring, the line above the keyboard says why |
-| A word found | the row's tiles lift one by one in a wave and settle; the end card rises |
+| A word found | the row's tiles lift one by one in a wave and settle, and the line the name stands for arrives: «That's the word.», «Ecco la parola.», «Esa es la palabra.» (VISION §2), in the interface's language; the end card rises |
 | A milestone | its sentence arrives on the end card with a soft light across it, once |
 | The start page | the sample word's tiles arrive one by one (Phase 0) |
 
@@ -348,7 +348,7 @@ Every moment has its movement, every movement collapses to a fade under reduced 
 
 ### 7.6 Sharing a result (VISION §11)
 
-Without the word, in the app's own format: a **text** for any messaging app ("On My Tongue · #123 · Italian · 4/6", Hard and hints said), with a row of symbols per guess that keep the shapes (proposal: 🟪 right place, 🟠 elsewhere, ▫️ absent; never the genre's coloured squares), and an **image** card (the grid's shapes and colours, the date, the language, no letter), shared through a `FileProvider`, which needs no permission.
+Without the word, in the app's own format: a **text** for any messaging app ("That's The Word · #123 · Italian · 4/6", Hard and hints said), with a row of symbols per guess that keep the shapes (proposal: 🟪 right place, 🟠 elsewhere, ▫️ absent; never the genre's coloured squares), and an **image** card (the grid's shapes and colours, the date, the language, no letter), shared through a `FileProvider`, which needs no permission.
 
 ### 7.7 Accessibility (VISION §12)
 
@@ -402,21 +402,22 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 - [x] Create the repo; the owner's vision committed as `VISION.md` (`cac9c5c`, 12 Nov 2026)
 - [x] The vision reviewed: its questions and this review's in §15's Open list (12 Nov 2026)
 - [x] `PLANNING.md`, `CLAUDE.md`, `README.md` in the family's style (centred header, badges, sections, no em or en dashes), `LICENSE` (GPL-3.0 full text), `.gitignore`, `.editorconfig`, `CHANGELOG.md` (Keep a Changelog, an empty `[Unreleased]`) (12 Nov 2026)
-- [ ] The owner's answers to §15's Open list; VISION.md updated with them (in English, if the owner agrees: Open)
-- [x] Gradle setup from Tetto's (Tempo's and Passo's build): the version catalog at the latest stable versions (Gradle 9.9.1, AGP 9.5.1, Kotlin 2.4.21), `build-logic` convention plugins renamed `onmytongue.*`, with the Room convention; the wrapper; `gradle/google-maven-mirror.init.gradle.kts`; `onmytongue.versionName` in `gradle.properties`, `versionCode` derived (major * 10000 + minor * 100 + patch)
+- [x] The owner's answers to the review's first five questions; VISION.md in English, the owner's latest version (*That's The Word*), with «The owner's answers» (12 Nov 2026); the other questions stay in §15's Open list, for the phases they touch
+- [x] Gradle setup from Tetto's (Tempo's and Passo's build): the version catalog at the latest stable versions (Gradle 9.9.1, AGP 9.5.1, Kotlin 2.4.21), `build-logic` convention plugins renamed `thatstheword.*`, with the Room convention; the wrapper; `gradle/google-maven-mirror.init.gradle.kts`; `thatstheword.versionName` in `gradle.properties`, `versionCode` derived (major * 10000 + minor * 100 + patch)
 - [x] The forbidden list of §10 in `ForbiddenPermissions.kt`, wired to `check`
 - [x] Module skeleton: `:app`, `:core:model`, `:core:designsystem`, `:core:testing`; the others join with their first code
 - [x] `:core:designsystem` from the family's: Chiaro's two generated dresses (`Scheme.kt`, never hand-edited), `Type.kt` (with the game's `wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), `Shape.kt`, `Motion.kt` (with the game's `playful` spring), `PageWidth.kt`; the letter tile before its feedback (`LetterTile`); Google Sans and Inter with their licences; `TypographyTest`, `ContrastTest`, `PageWidthTest`
 - [x] `:core:testing` from the family's (`assertAccessible()`, `walkPage()`)
-- [x] Hilt, `MainActivity` edge to edge with the start page: the name, the line under it, today's promise, a word on its tiles arriving one by one (VISION §2's reference texts)
+- [x] Hilt, `MainActivity` edge to edge with the start page: the name, the subtitle, a word composed tile by tile, then the victory line (VISION §2)
 - [x] `strings.xml` for `values/` (English), `values-it/` and `values-es/`; `locales_config.xml` for the per-app language
 - [x] A provisional launcher mark drawn by `tools/draw_launcher_icon.py` in the family's series (a white speech bubble holding a word of three tiles, the last in amber, on berry), with its monochrome layer
 - [ ] The mark and the app's colour chosen by the owner (§15, Open), drawn again by the script
 - [x] The crash page (`app/src/crashpage`), for debug builds and the debug-signed release, in the three languages
-- [x] CI: `android-ci.yml` (formatting, forbidden permissions, unit tests, lint, then the APKs and the R8 mapping) and the tag-triggered `release.yml` (the tag matches `onmytongue.versionName`; the same gates; the keystore decoded from the secrets; the signed APK; the signature checked against the release key's fingerprint, refusing to publish until it is pinned; the SHA-256 file; the mapping; the body from `CHANGELOG.md`)
+- [x] CI: `android-ci.yml` (formatting, forbidden permissions, unit tests, lint, then the APKs and the R8 mapping) and the tag-triggered `release.yml` (the tag matches `thatstheword.versionName`; the same gates; the keystore decoded from the secrets; the signed APK; the signature checked against the release key's fingerprint, refusing to publish until it is pinned; the SHA-256 file; the mapping; the body from `CHANGELOG.md`)
 - [x] CI green on GitHub (`b8df08e`, run 1, 5 min 30 s, 12 Nov 2026)
-- [x] The game's own debug keystore (`keystore/debug.keystore`, alias `onmytongue-debug`, passwords `android`, RSA 2048, PKCS12), committed on purpose, with `keystore/README.md`; not a copy of a sister's
-- [ ] The **release key**: made by the owner, kept outside the repo, in the four repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`; its SHA-256 fingerprint into `keystore/README.md`, the README's Install section and `release.yml`
+- [x] The game's own debug keystore (`keystore/debug.keystore`, alias `thatstheword-debug`, passwords `android`, RSA 2048, PKCS12), committed on purpose, with `keystore/README.md`; not a copy of a sister's
+- [x] The **release key**: made by the owner, kept outside the repo, in the four repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD` (12 Nov 2026)
+- [ ] Its SHA-256 fingerprint, confirmed by the owner, into `keystore/README.md`, the README's Install section and `release.yml`; the release rehearsed
 - [x] `docs/planning/README.md` and `tools/planning_index.py` from the family's (How it is made)
 - [x] `docs/adr/0001-foundations.md`, `docs/adr/0002-design-language.md`
 
@@ -452,7 +453,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 ### Phase 3 — The game screen
 
 - [ ] The feedback's colours and shapes drawn on a board (two or three proposals, light and dark, under the three colour blindnesses and in grey), **chosen by the owner**, then `ContrastTest`'s pairs
-- [ ] `:core:data`: `OnMyTongueDatabase` version 1 (§5), the schema exported; `GameRepository` (a game saved after every guess and hint, taken up where it was); `SettingsRepository`
+- [ ] `:core:data`: `ThatsTheWordDatabase` version 1 (§5), the schema exported; `GameRepository` (a game saved after every guess and hint, taken up where it was); `SettingsRepository`
 - [ ] The shell (Navigation 3); `:feature:game`: the grid, the keyboard with its marks, the refusals' line, the end card (the solution and its display form, the guesses, share), the hardware keyboard
 - [ ] The motion of §7.4, the haptics of §7.5; the reduced motion's fades
 - [ ] The daily in the game language from a provisional start page
@@ -490,7 +491,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 ### Phase 7 — First run, settings and sound
 
 - [ ] `:feature:onboarding` in the family's frame (no icon): welcome; the game language (the phone's, or another); the level for a foreign language; then **the guided first game** (`:feature:game`'s guided mode: a fixed easy word, each rule said the first time it happens, never a page of instructions: VISION §12)
-- [ ] `:feature:settings`: the languages (the interface's through the system's per-app picker), the level, Hard, sound, haptics, motion, appearance (theme, dress, typeface, wallpaper colours, as the family's), your data, about (the privacy statement, "On My Tongue sends nothing", the licences and every source's attribution)
+- [ ] `:feature:settings`: the languages (the interface's through the system's per-app picker), the level, Hard, sound, haptics, motion, appearance (theme, dress, typeface, wallpaper colours, as the family's), your data, about (the privacy statement, "That's The Word sends nothing", the licences and every source's attribution)
 - [ ] `tools/make_sounds.py` and the sounds of §7.5
 
 ### Phase 8 — Accessibility, polish and the README's pictures
@@ -504,7 +505,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 - [ ] The name checked in the stores and the trademark registers (VISION Q1)
 - [ ] The epoch fixed (§4.6) and the schedules checked against it
-- [ ] `CHANGELOG.md`'s 1.0.0 section; `onmytongue.versionName=1.0.0`; tag `v1.0.0`
+- [ ] `CHANGELOG.md`'s 1.0.0 section; `thatstheword.versionName=1.0.0`; tag `v1.0.0`
 - [ ] The README's download link and the release key's fingerprint
 - [ ] The sister apps' READMEs name the game in "The family"
 - [ ] The log archived, as How it is made says
@@ -566,15 +567,15 @@ As the family's: the same key, the store listing, the data safety form ("no data
 
 ### Open
 
-What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The first answers needed are 1 to 5: they touch what Phase 0 leaves and Phase 1 starts.
+What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1, 2, 3 and 5 on 12 Nov 2026; 4 is open, and 6 to 17 are needed by the phases they name.
 
 From this review (§15, 12 Nov 2026, «The repository, the vision's review and this plan»), each with a proposal:
 
-- [ ] **1. The name, the repository, the package.** The repository is `thats-the-word`, the app *On My Tongue*. The family's repositories carry the app's name, and the applicationId can never change after the first release. Proposed: keep *On My Tongue*; rename the repository `onmytongue` (GitHub redirects the old address); the package `com.callbackdev.onmytongue`, which the scaffold already uses. A rename before 1.0 is one pass over the tree. The family's other names are one Italian word each: *On My Tongue*'s English is a choice of VISION §2, kept.
-- [ ] **2. The documents' language.** VISION.md is in Italian; the family writes its documents and code in English (CLAUDE.md). Proposed: VISION translated into English, faithfully, once the owner has answered this list (as «The owner's answers»), the Italian original staying as the repository's first commit (`cac9c5c`), as Tetto's concept did.
-- [ ] **3. Material 3 Expressive** (VISION §14). Its APIs (the expressive motion scheme and theme) are internal in material3 1.4.0, the stable version, and public only in 1.5.0, a release candidate since 4 Nov 2026. Proposed: the family's stable Material 3 now, with the game's own lively springs and shapes (§7.4, the round tile by its corner, no new library); 1.5 when stable, in a phase that says so.
-- [ ] **4. The app's colour and its mark.** Provisional: berry (`D86BBE · AE3790 · 7E1D68`, away from the sisters' green, coral and indigo) and a speech bubble holding a word, its last tile amber. Drawn and looked at (12 Nov 2026), it reads like a messaging app's "typing" bubble: a placeholder, no more. Proposed: three symbols drawn on a board with the family's marks, as on 9 Nov 2026 (a tile with a letter caught mid-reveal, two overlapping tiles square and round, the bubble kept only if it stops reading as a chat), and the owner chooses.
-- [ ] **5. The feedback's colours and shapes** (§7.2): right place in the app's colour and square, elsewhere in amber and round, absent sunk and quiet; a reveal that is not the genre's flip; a share text with 🟪 🟠 ▫️. Proposed: drawn on a board in Phase 3 with two alternatives, the owner chooses.
+- [x] **1. The name, the repository, the package.** Closed by the owner's answer (§15, 12 Nov 2026, «The owner's answers»): *That's The Word*, the owner's latest vision; the repository `thats-the-word`, as VISION §2 names it; the package `com.callbackdev.thatstheword`.
+- [x] **2. The documents' language.** English, as the family's (the same entry): VISION.md translated, the owner's Italian original in the history (`0d7cacf`).
+- [x] **3. Material 3 Expressive.** Stable Material 3, as the sisters' (the same entry): 1.4 now, with the game's own springs and shapes (§7.4).
+- [ ] **4. The app's colour and its mark.** Provisional: berry (`D86BBE · AE3790 · 7E1D68`, away from the sisters' green, coral and indigo) and a speech bubble holding a word, its last tile amber. Drawn and looked at (12 Nov 2026), it reads like a messaging app's "typing" bubble: a placeholder, no more. The owner's first idea (12 Nov 2026): letter blocks that compose a word. To do: three symbols drawn on a board with the family's marks, as on 9 Nov 2026, the owner's idea among them, at the launcher's sizes and in the themed icon's one ink; the owner chooses, then the app's colour follows.
+- [x] **5. The feedback's colours and shapes** (§7.2). The proposal accepted, with the owner's condition that every solution be a premium app's (the same entry): drawn on a board in Phase 3, with its motion, before it is built.
 - [ ] **6. Italian's keyboard and its foreign letters.** Proposed: the keyboard has all 26 letters (*taxi*, *jeans*, *yacht* are words a player types); the solutions keep to the Italian alphabet's 21.
 - [ ] **7. Bridge needs several lengths before 1.2.** VISION puts Bridge in 1.1 and variable length in 1.2 because each length costs its lists, but *gatto / cat / gato* already has three lengths. Proposed: the accepted sets of every length come with 1.1 (they are cheap: filtered expansions); what 1.2 adds per length is the solutions, their levels and meanings. And Bridge plays the player's chosen languages, two or three, not always all three: a learner of one foreign language should not need the third.
 - [ ] **8. What the notebook gathers.** "The words met" could mean every guess: six a game, mostly words the player knows. Proposed: the solutions by themselves; a guessed word by a touch on the end card ("Add to the notebook").
@@ -590,7 +591,7 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 
 From VISION §16, still open:
 
-- [ ] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9).
+- [ ] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9); a close name exists, «What's The Word» (VISION §16). Also to look at then: how the launchers show a fifteen-character name under the icon (some cut it to «That's The W…»).
 - [ ] **VISION Q2: the modes' names** in the three interface languages (with the strings of each phase).
 - [ ] **VISION Q3: the licences** of the Spanish and English sources and of Wiktionary's data (Phase 1).
 - [ ] **VISION Q4: the definitions' quality** in the three interface languages (Phase 1, its gate).
@@ -598,8 +599,8 @@ From VISION §16, still open:
 
 From Phase 0:
 
-- [ ] **The release key** (§11 Phase 0): made by the owner, in the four secrets, its fingerprint handed over.
-- [ ] **The environment's setup script**: AGP 9.5 builds with the SDK's build-tools 36.0.0 and downloads them at the first build of each session; adding `build-tools;36.0.0` to the script's `sdkmanager` line saves that, for every repository of the family (§15, 12 Nov 2026, «Phase 0»).
+- [ ] **The release key's fingerprint** (§11 Phase 0): the key is made and in the secrets (12 Nov 2026); its SHA-256, read from a rehearsal and confirmed by the owner against `keytool`, to be pinned.
+- [x] **The environment's setup script**: `build-tools;36.0.0` added to its `sdkmanager` line, for every repository of the family (§15, 12 Nov 2026, «The owner's answers»).
 
 ---
 
@@ -627,3 +628,17 @@ The family's build, from Tetto's (itself Tempo's and Passo's), with the game's n
 - **Signing**: the game's own debug key (`onmytongue-debug`, SHA-256 in `keystore/README.md`); the release workflow refuses to publish until the release key's fingerprint is pinned (Open).
 - **The mark** is provisional (Open 4): the family's series of 9 Nov 2026, a white speech bubble holding a word of three tiles, the last in amber, on berry, inside the 28-unit keyline (27.3).
 - **Checked** in the cloud environment: `spotlessCheck`, `checkForbiddenPermissions`, `test` (15 tests: the start page in the three languages, dark, the paper dress, a small phone, twice the text size, an open foldable; contrast, typography, the page's gutter), `:app:lintDebug`, the debug APK and the minified release signed with the debug key (2.0 MB, 1.2 of them the fonts); `INTERNET` added to the app's manifest fails both variants' permission checks, then removed. The start page's screenshots looked at. On GitHub, CI's first run is green (`b8df08e`, 5 min 30 s).
+
+### 12 Nov 2026 — The owner's answers: the name, English, Material 3, the feedback; the setup script; the release key (owner: "punto 2 segui la famiglia e fai tutto in inglese; punto 3 usiamo Material 3 stabile come le app gemelle; punto 4 per l'icona vediamo; punto 5 va bene la tua proposta. L'importante è che mi proponi soluzioni da premium app"; "Sì, applica tu la modifica allo script d'ambiente")
+
+The owner answered the review's first five questions, and sent their latest vision: the one first committed was an earlier draft. What changes, each closing its box in Open:
+
+- **The name is *That's The Word*** (Open 1), the owner's latest vision (`0d7cacf`): what one says when the word on the tip of the tongue finally comes, and the line the game greets every win with (*Ecco la parola.*, *Esa es la palabra.*); the subtitle «One word a day. Three languages.»; the repository `thats-the-word`, named by the vision itself. The two versions differ only in §1, §2 (the name, its meaning, the victory line, the repository, the subtitle; the earlier reference texts of the start page are gone) and §16's first question (a close name, «What's The Word»): the rest was compared line by line and is the same. This changes the entries «The repository, the vision's review and this plan» and «Phase 0» above: **the scaffold is renamed** (the package and applicationId `com.callbackdev.thatstheword`, the convention plugins `thatstheword.*`, the property `thatstheword.versionName`, the release properties `THATSTHEWORD_*`, the Kotlin types `ThatsTheWord*`, the database `thatstheword.db`, the APKs `thats-the-word-vX.Y.Z.apk`), and **the debug key is made again** under the new name (`thatstheword-debug`, `CN=That's The Word Debug`, SHA-256 in `keystore/README.md`): the first was hours old and never installed anywhere, and a key named after another app would have stayed in every debug build.
+- **The start page** follows the vision: the name, the subtitle, a word composed tile by tile (*Table*, *Sedia*, *Silla*), then, once the last tile has landed, the victory line in the interface's language; under reduced motion each piece fades in at the moment it would have arrived. The name is drawn with the typographic apostrophe (*That’s The Word*), in the launcher's label too.
+- **English** (Open 2): VISION.md translated faithfully, section for section, so every «VISION §N» of the plan still points where it did; the modes' English names are working names (VISION Q2); «The owner's answers» added. Its §14 says the stack is stable Material 3.
+- **Material 3, stable** (Open 3), as the sisters'; §1 says so.
+- **The feedback** (Open 5): the proposal of §7.2 is the direction; the owner's condition, premium solutions, is §11 Phase 3's first box.
+- **The mark** (Open 4) stays open; the owner's first idea, letter blocks that compose a word, goes on the board with two others.
+- **The setup script** of the cloud environment «Android 37», which the four repositories share: `build-tools;36.0.0` added to its `sdkmanager` line, run whole in this session first (exit 0). AGP 9.4.1 (the sisters') and 9.5.1 (this repository) both build with build-tools 36.0.0 (read from AGP's own `ToolsRevisionUtils`), so every repository stops downloading them at its first build; nothing is removed, 37.0.0 stays. It takes effect when a container is next built fresh.
+- **The release key**: the owner made it and set the four secrets with `gh secret set` (12 Nov 2026). Their values cannot be read from here, by design; what proves them is a signed build. `release.yml` now prints the certificate the APK was signed with before it checks the pinned fingerprint, so a rehearsal shows which key the secrets hold, and still refuses to publish while none is pinned.
+

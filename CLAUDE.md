@@ -5,8 +5,8 @@ this repository.
 
 ## What this repository is
 
-**On My Tongue** (from "it's on the tip of my tongue", *sulla punta della lingua*, *en la punta
-de la lengua*; "tongue" is also a language) is a private, offline Android word game (Kotlin /
+**That's The Word** (what one says when the word on the tip of the tongue finally comes; the
+line the game greets every word found with) is a private, offline Android word game (Kotlin /
 Jetpack Compose Material 3): a hidden word to find in a few attempts, in Italian, English or
 Spanish, as a daily pastime or to practise a language being learnt. The interface speaks the same
 three languages; the language a game is played in is chosen apart, and when the two differ the
@@ -20,14 +20,14 @@ Passo's).
 
 **State (12 Nov 2026): Phase 0.** The vision is approved and reviewed; the build, the design
 system, CI and the debug key are in place; the modules in the build are `:app`, `:core:model`,
-`:core:designsystem` and `:core:testing`. **Seventeen questions are open** (PLANNING §15, Open),
-among them the name and the package, the documents' language, the feedback's colours and the
-mark: read them before building anything they touch.
+`:core:designsystem` and `:core:testing`. The owner answered the first questions of the review on
+12 Nov 2026 (VISION, «The owner's answers»); **the mark and twelve smaller questions are still
+open** (PLANNING §15, Open): read them before building anything they touch.
 
 Source of truth:
 
-- `VISION.md`: the product, as the owner approved it on 12 Nov 2026 (in Italian, for now:
-  PLANNING §15, Open 2). Principles, the modes of 1.0, 1.1 and 1.2, practising a language, the
+- `VISION.md`: the product, as the owner approved it on 12 Nov 2026, in English with «The owner's
+  answers» (the owner's Italian original is in the history, `0d7cacf`). Principles, the modes of 1.0, 1.1 and 1.2, practising a language, the
   words and their sources, progression, the premium experience, identity and the legal notes,
   what is out of scope, its own open questions.
 - `PLANNING.md`: the architecture, the game engine (§4), the data model (§5), the words (§6), the
@@ -58,12 +58,12 @@ has not given.
 Stack: Kotlin 2.4 (compiled by AGP 9's built-in Kotlin), Compose Material 3, Hilt, Room (KSP, from
 Phase 3), DataStore, kotlinx.serialization, Navigation 3; Gradle 9.9 / AGP 9.5, version catalog
 in `gradle/libs.versions.toml`, convention plugins in `build-logic/`. Package/applicationId:
-`com.callbackdev.onmytongue` (pending PLANNING §15, Open 1). minSdk 34, compile/targetSdk 37 (the
+`com.callbackdev.thatstheword`. minSdk 34, compile/targetSdk 37 (the
 family's). Java 21.
 
 - Build debug APK: `./gradlew :app:assembleDebug` (output: `app/build/outputs/apk/debug/app-debug.apk`)
 - All unit tests: `./gradlew test`
-- One module: `./gradlew :core:designsystem:test`; one class: `--tests "com.callbackdev.onmytongue.core.designsystem.ContrastTest"`
+- One module: `./gradlew :core:designsystem:test`; one class: `--tests "com.callbackdev.thatstheword.core.designsystem.ContrastTest"`
 - Lint (every module, via `checkDependencies`): `./gradlew :app:lintDebug`
 - Format: `./gradlew spotlessApply` (CI runs `spotlessCheck`; rules in `.editorconfig`)
 - Forbidden-permission check on the merged manifests: `./gradlew :app:checkForbiddenPermissions`
@@ -78,14 +78,14 @@ family's). Java 21.
   `/opt/android-sdk` (`local.properties`, not committed). AGP 9.5 builds with the SDK's
   build-tools 36.0.0 and downloads them at the first build if the environment lacks them.
 
-**Convention plugins** (`build-logic/convention`): `onmytongue.android.application`,
-`onmytongue.android.library`, `onmytongue.android.compose`, `onmytongue.android.feature`,
-`onmytongue.android.hilt`, `onmytongue.android.room`, `onmytongue.jvm.library`. SDK levels and the
-Java version live in `OnMyTongueSdk` / `OnMyTongue.kt`; a module's own build file only says what is
+**Convention plugins** (`build-logic/convention`): `thatstheword.android.application`,
+`thatstheword.android.library`, `thatstheword.android.compose`, `thatstheword.android.feature`,
+`thatstheword.android.hilt`, `thatstheword.android.room`, `thatstheword.jvm.library`. SDK levels and the
+Java version live in `ThatsTheWordSdk` / `ThatsTheWord.kt`; a module's own build file only says what is
 specific to it. The forbidden-permission list is `ForbiddenPermissionPatterns` in
 `ForbiddenPermissions.kt`.
 
-**Version**: `onmytongue.versionName` in `gradle.properties` is the only place it is written;
+**Version**: `thatstheword.versionName` in `gradle.properties` is the only place it is written;
 `versionCode` is derived (major * 10000 + minor * 100 + patch). `release.yml` refuses a tag
 that does not match it.
 
@@ -96,7 +96,7 @@ that does not match it.
 | `:core:model` | pure Kotlin/JVM | data classes shared by everything: the appearance's enums (Phase 0); `Language`, `Letter`, `Word`, `Mark`, `Guess`, `GameSetup`, `GameState`, `Level`, `HintKind`, `NotebookEntry`, `Milestone`, `UserSettings` (Phase 2) |
 | `:core:domain` | pure Kotlin/JVM (Phase 2) | the game engine: alphabets and folding, the feedback, `Game` (guesses, refusals, Hard, hints, the end), the daily's number and word, free play's draw, streaks, statistics, milestones, the share text, the words' decoder, `BackupCodec` |
 | `:core:words` | Android library (Phase 2) | the word files in assets, written by `tools/words/`, mapped and handed to the decoder |
-| `:core:data` | Android library (Phase 3) | Room (`OnMyTongueDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories |
+| `:core:data` | Android library (Phase 3) | Room (`ThatsTheWordDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories |
 | `:core:designsystem` | Android library | M3 theme (Chiaro's dresses through the sisters), typography with the game's roles (`wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), shapes, motion (the family's springs and the game's `playful` one), page gutter (`PageWidth.kt`), `LetterTile`; later the feedback colours, the keyboard's keys, sounds and haptics |
 | `:core:testing` | Android library, test-only | `assertAccessible()` (labels, 48dp touch targets) and `walkPage()`, shared by the UI tests as `testImplementation` |
 | `:feature:*` | Android library (from Phase 3) | `game`, `home`, `notebook`, `progress`, `onboarding`, `settings` |
@@ -145,11 +145,11 @@ phase that brings its first code.
   by a ticker in a visible page's lifecycle. Sounds are loaded only while the game is on screen.
 - **Backup is an allowlist** (`app/src/main/res/xml/data_extraction_rules.xml`): the database and
   the settings file, nothing else. Android sends the copy, so the no-`INTERNET` rule stands; say
-  "On My Tongue sends nothing", never "nothing leaves the phone". A restore from a file is read
+  "That's The Word sends nothing", never "nothing leaves the phone". A restore from a file is read
   whole and checked before anything is written, and replaces only after the player's confirmation.
 - **Every user-facing string is a resource, in English, Italian and Spanish** (`values/`,
   `values-it/`, `values-es/`), with plurals where counts appear, each written in its language with
-  the same rhythm, never translated word for word (VISION §2). The name stays *On My Tongue* in
+  the same rhythm, never translated word for word (VISION §2). The name stays *That's The Word* in
   every language (`translatable="false"`). The interface language follows the system per-app
   language picker (`locales_config.xml`); the game language is the player's choice in the app.
   Dates are formatted with the locale's own patterns, never a hard-coded order.
@@ -189,7 +189,7 @@ change the script and re-run it, never the XML. It is provisional until the owne
 §15, Open 4). The app shows its mark nowhere inside itself.
 
 **Motion is a feature here** (VISION §12): every key moment has its movement (a letter set, a row
-revealed, a word refused, a word found, a milestone), on `OnMyTongueMotion`'s springs, the row's
+revealed, a word refused, a word found, a milestone), on `ThatsTheWordMotion`'s springs, the row's
 tiles staggered; never the genre's flip; no animation ever gates information.
 
 **Accessibility and foldables** (the family's, from the start): a screen's tests call
@@ -221,20 +221,22 @@ matters (the generated schemes), it is written in its ADR.
 ## Signing and CI
 
 - **Debug signing**: `keystore/debug.keystore` is intentionally committed (alias
-  `onmytongue-debug`, passwords `android`; the game's own, made in Phase 0, not a copy of a
+  `thatstheword-debug`, passwords `android`; the game's own, made in Phase 0, not a copy of a
   sister's) so debug APKs from CI and any machine share one signature. Do not regenerate it.
   Debug builds carry `applicationIdSuffix ".debug"`. Debug builds and the debug-signed release
   carry a crash page (`app/src/crashpage`): an uncaught exception shows its stack trace, to copy or
   share, so a test device can report a crash without adb. Never in a release signed with the
   release key.
 - **Release signing**: the real keystore lives OUTSIDE the repo; the `release` signingConfig is
-  created only when the four `ONMYTONGUE_KEYSTORE*` / `ONMYTONGUE_KEY_*` properties are all set
+  created only when the four `THATSTHEWORD_KEYSTORE*` / `THATSTHEWORD_KEY_*` properties are all set
   (from `~/.gradle/gradle.properties` locally, from `ORG_GRADLE_PROJECT_*` env vars in CI). Without
   them the release build is unsigned; `-PsignReleaseWithDebugKey` signs it with the debug key for
-  testing only. **The release key is not made yet** (PLANNING §15, Open): the owner makes it, puts
-  it in the four secrets, and hands over its SHA-256 fingerprint, which is then published in
-  `keystore/README.md` and the root README and pinned in `release.yml` (`RELEASE_CERT_SHA256`);
-  until then the release workflow refuses to publish. Once made, never regenerate it.
+  testing only. **The release key** was made by the owner and put in the four secrets on 12 Nov
+  2026; its SHA-256 fingerprint is published in `keystore/README.md` and the root README and pinned
+  in `release.yml` (`RELEASE_CERT_SHA256`) once the owner confirms it (PLANNING §15, Open); until
+  then the release workflow prints the certificate it signed with and refuses to publish. Never
+  regenerate it: a future Google Play listing reuses it, and a new key would mean no player could
+  update without uninstalling.
 - **Release key in CI**: the four repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`,
   `KEY_ALIAS`, `KEY_PASSWORD` (the same names as the sister apps'); `release.yml` decodes the
   keystore into the runner's temp folder and fails by name if one is missing. Never commit the

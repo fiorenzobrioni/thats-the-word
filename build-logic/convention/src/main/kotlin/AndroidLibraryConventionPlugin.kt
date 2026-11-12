@@ -1,5 +1,5 @@
 import com.android.build.api.dsl.LibraryExtension
-import com.callbackdev.onmytongue.buildlogic.configureKotlinAndroid
+import com.callbackdev.thatstheword.buildlogic.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

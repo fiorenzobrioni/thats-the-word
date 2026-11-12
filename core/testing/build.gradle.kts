@@ -2,12 +2,12 @@
 // and the page walk at twice the text size and on an open foldable. Test code only: modules take
 // it as `testImplementation`, and nothing here reaches the app.
 plugins {
-    alias(libs.plugins.onmytongue.android.library)
-    alias(libs.plugins.onmytongue.android.compose)
+    alias(libs.plugins.thatstheword.android.library)
+    alias(libs.plugins.thatstheword.android.compose)
 }
 
 android {
-    namespace = "com.callbackdev.onmytongue.core.testing"
+    namespace = "com.callbackdev.thatstheword.core.testing"
 }
 
 dependencies {

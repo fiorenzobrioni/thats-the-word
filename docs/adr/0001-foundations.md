@@ -1,28 +1,29 @@
 # ADR 0001: Foundations (Phase 0)
 
-- Status: accepted (the name and the package pending the owner: PLANNING.md §15, Open 1)
+- Status: accepted
 - Date: 2026-11-12
 
 ## Context
 
-On My Tongue starts from a repository holding only the owner's approved vision (`VISION.md`,
-in Italian, `cac9c5c`, 12 Nov 2026), and the owner's request for the family's structure: the same
+That's The Word starts from a repository holding only the owner's approved vision (`VISION.md`,
+in Italian, `cac9c5c`, an earlier draft under another name, replaced by the owner's latest the same
+day, `0d7cacf`, and translated into English with the owner's answers), and the owner's request for the family's structure: the same
 stack at its latest stable versions, the same repository layout, workflows and releases, the same
-design, the same licence, so the six apps (Chiaro, Passo, Tempo, Saldo, Tetto, On My Tongue) are
+design, the same licence, so the six apps (Chiaro, Passo, Tempo, Saldo, Tetto, That's The Word) are
 built and maintained one way. Tetto's build is the most recent of the family (Tempo's and Passo's,
 with Room); a game keeps tables (its games, its notebook), so its build is Tetto's.
 
 ## Decisions
 
 1. **Identity.** Developer namespace `callbackdev`, as the family: package and applicationId
-   `com.callbackdev.onmytongue` (debug: `com.callbackdev.onmytongue.debug`), modules under
-   `com.callbackdev.onmytongue.*`, the convention plugins `onmytongue.*`, the Gradle property
-   `onmytongue.versionName`, the release properties `ONMYTONGUE_*`. Author Fiorenzo Brioni,
+   `com.callbackdev.thatstheword` (debug: `com.callbackdev.thatstheword.debug`), modules under
+   `com.callbackdev.thatstheword.*`, the convention plugins `thatstheword.*`, the Gradle property
+   `thatstheword.versionName`, the release properties `THATSTHEWORD_*`. Author Fiorenzo Brioni,
    licence **GPL-3.0-or-later** (VISION §3; the sisters say GPL-3.0), the full text in `LICENSE`;
-   the name and the mark outside it (VISION §13). The repository is `fiorenzobrioni/thats-the-word`;
-   the family names its repositories after the app, so a rename to `onmytongue` is proposed
-   (PLANNING §15, Open 1). The applicationId is final from the first release: a change of name
-   must happen before it.
+   the name and the mark outside it (VISION §13). The repository is `fiorenzobrioni/thats-the-word`,
+   the app's name as VISION §2 gives it. The applicationId is final from the first release. The
+   scaffold was first written under the earlier draft's name and renamed the same day, its debug
+   key made again under the new name before any build was installed anywhere.
 2. **The family's build, carried over** from Tetto (`tetto@ffc1322`), at the latest stable
    versions of 12 Nov 2026, as the owner asked: Gradle 9.9.1, AGP 9.5.1 with its built-in Kotlin,
    Kotlin 2.4.21, KSP 2.3.13, Compose BOM 2026.09.00 (material3 1.4.0), Hilt 2.60.1, Room 2.8.5,
@@ -33,12 +34,12 @@ with Room); a game keeps tables (its games, its notebook), so its build is Tetto
    (PLANNING §8).
 3. **The SDK.** `minSdk 34`, the family's (the per-app language picker, themed icons and
    predictive back are native), target and compile SDK 37, Java 21 without a toolchain. AGP 9.5
-   builds with build-tools 36.0.0, which it downloads if the environment lacks them (the cloud
-   environment's script installs 37.0.0 only: PLANNING §15, Open).
+   builds with build-tools 36.0.0 (so does AGP 9.4, the sisters'); the cloud environment's setup
+   script installs them since 12 Nov 2026, beside 37.0.0.
 4. **Material 3, stable.** The vision names Material 3 Expressive (VISION §14); its APIs are
    internal in material3 1.4.0 and public only in 1.5.0, a release candidate. The family's rule is
-   the latest stable, so 1.4.0, with the game's own springs and shapes; 1.5 when it is stable
-   (PLANNING §15, Open 3).
+   the latest stable, so 1.4.0, with the game's own springs and shapes, as the sisters (owner,
+   12 Nov 2026: "usiamo Material 3 stabile come le app gemelle").
 5. **The permission gate, widened for a game.** The family's `checkForbiddenPermissions` on every
    variant's merged manifest, with Tetto's list (network, location, exact alarms, battery
    exemptions, camera, microphone, SMS, contacts, calendar, storage, installed apps, sensors) and
@@ -51,10 +52,10 @@ with Room); a game keeps tables (its games, its notebook), so its build is Tetto
    `:core:domain` and `:core:words` join in Phase 2, `:core:data` and the features from Phase 3.
    Until the start page exists as a feature, it is drawn by the shell in `:app`.
 7. **Signing, as the family.** The game's own debug keystore, committed for good
-   (`onmytongue-debug` / `android`, PKCS12, RSA 2048, created 12 Nov 2026, SHA-256 in
+   (`thatstheword-debug` / `android`, PKCS12, RSA 2048, created 12 Nov 2026, SHA-256 in
    `keystore/README.md`). The release key is the owner's to make; `release.yml` checks the APK's
    signature against its fingerprint and refuses to publish while none is pinned.
-8. **Versioning from the start.** `onmytongue.versionName` in `gradle.properties` (0.1.0 for the
+8. **Versioning from the start.** `thatstheword.versionName` in `gradle.properties` (0.1.0 for the
    foundations), `versionCode = major * 10000 + minor * 100 + patch`; the release workflow refuses
    a tag that does not match.
 9. **Three interface languages ship** (`localeFilters` en, it, es), where the family ships two.

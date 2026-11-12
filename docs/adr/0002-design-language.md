@@ -1,7 +1,6 @@
 # ADR 0002: The family's design language, and where a game departs (Phase 0)
 
-- Status: accepted (the feedback's colours and the mark pending the owner: PLANNING.md §15, Open 4
-  and 5)
+- Status: accepted (the mark pending the owner: PLANNING.md §15, Open 4)
 - Date: 2026-11-12
 
 ## Context
@@ -27,21 +26,23 @@ and more motion, haptics and sound, its own fixed feedback colours, light and da
    (checked on 12 Nov 2026). Not carried: the widget palette (no widget), the settings rows and
    status cards (they come with the phase that draws them).
 2. **The game's own type roles**, next to Material's: `wordmark` (the name, bold, tracked
-   +0.14em), `eyebrow` (a short line in capitals, tracked +0.16em), `tileLetter` (a tile's letter,
+   +0.12em), `eyebrow` (a short line in capitals, tracked +0.16em), `tileLetter` (a tile's letter,
    bold, sized by its tile and not by the text size, so a row keeps its drawing at any size), and
    the family's `heroNumber` (a streak, a score; tabular). A game speaks in capitals where the
    family never does; the capitals are drawn (`uppercase(locale)`), the strings stay in sentence
    case, so TalkBack reads words and the translators read sentences.
-3. **The game's own spring**: `OnMyTongueMotion.playful` (damping 0.55, stiffness 420), livelier
+3. **The game's own spring**: `ThatsTheWordMotion.playful` (damping 0.55, stiffness 420), livelier
    than the family's page springs, with a visible overshoot, for the game's moments; the tiles of
    a row 70 ms apart (`TILE_STAGGER_MILLIS`). Every one of them still collapses to the family's
    100 ms fade under reduced motion. The moments and their movements are PLANNING §7.4.
 4. **The letter tile** (`LetterTile`): a rounded square, its corner 22% of its side, the
    container ground with an outline before any feedback. The feedback's colours and shapes join
-   it in Phase 3, once the owner has chosen them (PLANNING §7.2, Open 5). The proposal keeps the
-   shape as half of the message: square for the right place, round for elsewhere (the same tile,
-   its corner animated from 22% to 50%, no new library), the sunk quiet tile for absent; the right
-   place in the app's colour, elsewhere in the family's amber.
+   it in Phase 3 (PLANNING §7.2). The direction is the owner's (12 Nov 2026: "va bene la tua
+   proposta. L'importante è che mi proponi soluzioni da premium app"): the shape is half of the
+   message, square for the right place, round for elsewhere (the same tile, its corner animated
+   from 22% to 50%, no new library), the sunk quiet tile for absent; the right place in the app's
+   colour, elsewhere in the family's amber. Its drawing is proposed on a board in Phase 3, at a
+   premium app's finish, before it is built.
 5. **No colour of the genre.** The vision's identity rule (VISION §13): the palette, the shapes,
    the reveal (never the genre's flip) and the share symbols are the game's own, away from the
    genre's well-known green, yellow and grey.
@@ -52,7 +53,9 @@ and more motion, haptics and sound, its own fixed feedback colours, light and da
    amber, the letter just found; the ground a berry (`D86BBE` to `AE3790` to `7E1D68`), away from
    the sisters' green, coral and indigo. Measured: 27.3 units of the 28. The monochrome layer
    restates it in one ink for themed icons. The README's badges take the berry's deep tone,
-   `7E1D68`. The mark and the colour are the owner's to choose (PLANNING §15, Open 4). The app
+   `7E1D68`. Drawn and looked at, the bubble reads like a messaging app's "typing" bubble: a
+   placeholder only. The mark and the colour are the owner's to choose (PLANNING §15, Open 4; the
+   owner's first idea, 12 Nov 2026: letter blocks composing a word). The app
    shows its mark nowhere inside itself; the first run shows no icon (the family's frame).
 7. **Tests carried over**: `TypographyTest` (every Material role and the game's own follow the
    typeface setting), `ContrastTest` (every text ink at 4.5:1 on every ground, in both dresses and

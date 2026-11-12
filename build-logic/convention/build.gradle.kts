@@ -4,7 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.callbackdev.onmytongue.buildlogic"
+group = "com.callbackdev.thatstheword.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -30,31 +30,31 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = libs.plugins.onmytongue.android.application.get().pluginId
+            id = libs.plugins.thatstheword.android.application.get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidLibrary") {
-            id = libs.plugins.onmytongue.android.library.get().pluginId
+            id = libs.plugins.thatstheword.android.library.get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("androidCompose") {
-            id = libs.plugins.onmytongue.android.compose.get().pluginId
+            id = libs.plugins.thatstheword.android.compose.get().pluginId
             implementationClass = "AndroidComposeConventionPlugin"
         }
         register("androidFeature") {
-            id = libs.plugins.onmytongue.android.feature.get().pluginId
+            id = libs.plugins.thatstheword.android.feature.get().pluginId
             implementationClass = "AndroidFeatureConventionPlugin"
         }
         register("androidHilt") {
-            id = libs.plugins.onmytongue.android.hilt.get().pluginId
+            id = libs.plugins.thatstheword.android.hilt.get().pluginId
             implementationClass = "AndroidHiltConventionPlugin"
         }
         register("androidRoom") {
-            id = libs.plugins.onmytongue.android.room.get().pluginId
+            id = libs.plugins.thatstheword.android.room.get().pluginId
             implementationClass = "AndroidRoomConventionPlugin"
         }
         register("jvmLibrary") {
-            id = libs.plugins.onmytongue.jvm.library.get().pluginId
+            id = libs.plugins.thatstheword.jvm.library.get().pluginId
             implementationClass = "JvmLibraryConventionPlugin"
         }
     }

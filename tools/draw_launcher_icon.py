@@ -4,10 +4,10 @@
     python3 tools/draw_launcher_icon.py
 
 PROVISIONAL (Phase 0, 12 Nov 2026): the mark and the app's colour are the owner's to choose
-(PLANNING.md §15, Open). This first drawing follows the family's series of 9 Nov 2026 so the APK
-has a mark of the family's kind: A WORD ON THE TIP OF THE TONGUE, a white speech bubble holding a
-word of three tiles, two still empty (cut out, the ground shows through) and the last one lit in
-amber, the letter just found.
+(PLANNING.md §15, Open 4). This first drawing follows the family's series of 9 Nov 2026 so the APK
+has a mark of the family's kind: a white speech bubble holding a word of three tiles, two still
+empty (cut out, the ground shows through) and the last one lit in amber, the letter just found.
+Looked at, it reads like a messaging app's "typing" bubble: a placeholder until the owner chooses.
 
 The series' rules, the same in every app of the family:
 - the badge's ground is the app's own colour, from its light tone at the upper left to its deep
@@ -33,7 +33,7 @@ CENTRE = 54.0
 KEYLINE = 28.0
 
 # The family's palette, the tones this mark uses: (light, base, deep). BERRY is the provisional
-# app colour: away from the sisters' green, coral and indigo (PLANNING.md §15, Open).
+# app colour: away from the sisters' green, coral and indigo (PLANNING.md §15, Open 4).
 BERRY = ("D86BBE", "AE3790", "7E1D68")
 SUN = ("FFD36A", "FDB528", "F28C17")
 WHITE = ("FFFFFF", "F4F7FB", "E3EAF4")

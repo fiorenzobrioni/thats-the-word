@@ -1,6 +1,6 @@
 # PLANNING's archive
 
-The closed periods of On My Tongue's plan, one per file, **frozen**: they are not edited. The living
+The closed periods of That's The Word's plan, one per file, **frozen**: they are not edited. The living
 plan (the architecture, the phases still open, what is open, the log of the current period) is
 [`PLANNING.md`](../../PLANNING.md), which also says how to archive. A decision that changes one of
 these is written there, naming the one it changes.

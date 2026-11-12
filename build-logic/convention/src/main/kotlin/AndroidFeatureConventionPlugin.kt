@@ -1,5 +1,5 @@
-import com.callbackdev.onmytongue.buildlogic.library
-import com.callbackdev.onmytongue.buildlogic.libs
+import com.callbackdev.thatstheword.buildlogic.library
+import com.callbackdev.thatstheword.buildlogic.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -11,9 +11,9 @@ import org.gradle.kotlin.dsl.dependencies
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("onmytongue.android.library")
-            pluginManager.apply("onmytongue.android.compose")
-            pluginManager.apply("onmytongue.android.hilt")
+            pluginManager.apply("thatstheword.android.library")
+            pluginManager.apply("thatstheword.android.compose")
+            pluginManager.apply("thatstheword.android.hilt")
 
             dependencies {
                 add("implementation", project(":core:model"))

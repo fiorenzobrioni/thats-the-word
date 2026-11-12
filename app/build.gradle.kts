@@ -1,22 +1,22 @@
 plugins {
-    alias(libs.plugins.onmytongue.android.application)
-    alias(libs.plugins.onmytongue.android.compose)
-    alias(libs.plugins.onmytongue.android.hilt)
+    alias(libs.plugins.thatstheword.android.application)
+    alias(libs.plugins.thatstheword.android.compose)
+    alias(libs.plugins.thatstheword.android.hilt)
 }
 
 // The version lives in gradle.properties; versionCode follows from it (PLANNING.md §11 Phase 0),
 // so the two can never disagree. A pre-release suffix (0.2.0-rc1) shares its final's code.
-val appVersionName = providers.gradleProperty("onmytongue.versionName").get()
+val appVersionName = providers.gradleProperty("thatstheword.versionName").get()
 val appVersionCode =
     appVersionName.substringBefore('-').split('.').map(String::toInt).let { (major, minor, patch) ->
         major * 10_000 + minor * 100 + patch
     }
 
 android {
-    namespace = "com.callbackdev.onmytongue"
+    namespace = "com.callbackdev.thatstheword"
 
     defaultConfig {
-        applicationId = "com.callbackdev.onmytongue"
+        applicationId = "com.callbackdev.thatstheword"
         versionCode = appVersionCode
         versionName = appVersionName
     }
@@ -34,17 +34,17 @@ android {
         getByName("debug") {
             storeFile = rootProject.file("keystore/debug.keystore")
             storePassword = "android"
-            keyAlias = "onmytongue-debug"
+            keyAlias = "thatstheword-debug"
             keyPassword = "android"
         }
 
         // Release key. The keystore lives OUTSIDE the repo; the four properties come from
         // ~/.gradle/gradle.properties locally and from ORG_GRADLE_PROJECT_* env vars in the
         // release workflow. Created only when fully configured, so a clean checkout still builds.
-        val releaseStore = findProperty("ONMYTONGUE_KEYSTORE") as String?
-        val releaseStorePassword = findProperty("ONMYTONGUE_KEYSTORE_PASSWORD") as String?
-        val releaseKeyAlias = findProperty("ONMYTONGUE_KEY_ALIAS") as String?
-        val releaseKeyPassword = findProperty("ONMYTONGUE_KEY_PASSWORD") as String?
+        val releaseStore = findProperty("THATSTHEWORD_KEYSTORE") as String?
+        val releaseStorePassword = findProperty("THATSTHEWORD_KEYSTORE_PASSWORD") as String?
+        val releaseKeyAlias = findProperty("THATSTHEWORD_KEY_ALIAS") as String?
+        val releaseKeyPassword = findProperty("THATSTHEWORD_KEY_PASSWORD") as String?
         if (!releaseStore.isNullOrBlank() && !releaseStorePassword.isNullOrBlank() &&
             !releaseKeyAlias.isNullOrBlank() && !releaseKeyPassword.isNullOrBlank()
         ) {

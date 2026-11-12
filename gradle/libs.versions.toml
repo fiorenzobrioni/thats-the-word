@@ -1,4 +1,4 @@
-# On My Tongue's dependency graph, one place. Every version is the latest STABLE at the time it
+# That's The Word's dependency graph, one place. Every version is the latest STABLE at the time it
 # was written (PLANNING.md §1, 12 Nov 2026): no alpha, beta or rc unless a phase needs one and says
 # why. Every library must carry a GPL-3.0-compatible license (Apache-2.0, MIT, BSD); a new one
 # needs the owner's approval before it lands here (CLAUDE.md).
@@ -84,10 +84,10 @@ room = { id = "androidx.room", version.ref = "room" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 # The convention plugins (build-logic/convention). No version: they are an included build.
-onmytongue-android-application = { id = "onmytongue.android.application" }
-onmytongue-android-library = { id = "onmytongue.android.library" }
-onmytongue-android-compose = { id = "onmytongue.android.compose" }
-onmytongue-android-feature = { id = "onmytongue.android.feature" }
-onmytongue-android-hilt = { id = "onmytongue.android.hilt" }
-onmytongue-android-room = { id = "onmytongue.android.room" }
-onmytongue-jvm-library = { id = "onmytongue.jvm.library" }
+thatstheword-android-application = { id = "thatstheword.android.application" }
+thatstheword-android-library = { id = "thatstheword.android.library" }
+thatstheword-android-compose = { id = "thatstheword.android.compose" }
+thatstheword-android-feature = { id = "thatstheword.android.feature" }
+thatstheword-android-hilt = { id = "thatstheword.android.hilt" }
+thatstheword-android-room = { id = "thatstheword.android.room" }
+thatstheword-jvm-library = { id = "thatstheword.jvm.library" }

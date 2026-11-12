@@ -3,7 +3,7 @@
     <!-- The activity draws its own Compose theme; this only gives the window a sane background
          before the first frame. DayNight, because the game follows the system; no action bar,
          because the platform's would print the app label above the Compose UI. -->
-    <style name="Theme.OnMyTongue" parent="android:Theme.DeviceDefault.DayNight">
+    <style name="Theme.ThatsTheWord" parent="android:Theme.DeviceDefault.DayNight">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>

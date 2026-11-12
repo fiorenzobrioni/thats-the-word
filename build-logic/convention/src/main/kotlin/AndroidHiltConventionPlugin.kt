@@ -1,5 +1,5 @@
-import com.callbackdev.onmytongue.buildlogic.library
-import com.callbackdev.onmytongue.buildlogic.libs
+import com.callbackdev.thatstheword.buildlogic.library
+import com.callbackdev.thatstheword.buildlogic.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

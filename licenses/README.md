@@ -1,6 +1,6 @@
 # Third-party licenses
 
-On My Tongue's code is GPL-3.0-or-later (`LICENSE` at the repo root). The app's name and its mark
+That's The Word's code is GPL-3.0-or-later (`LICENSE` at the repo root). The app's name and its mark
 are not covered by that licence (VISION §13). What ships inside the APK and is not ours:
 
 | What | License | Where |

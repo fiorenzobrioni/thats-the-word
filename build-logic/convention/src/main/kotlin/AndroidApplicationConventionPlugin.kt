@@ -1,10 +1,10 @@
 import com.android.build.api.artifact.SingleArtifact
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
-import com.callbackdev.onmytongue.buildlogic.CheckForbiddenPermissionsTask
-import com.callbackdev.onmytongue.buildlogic.ForbiddenPermissionPatterns
-import com.callbackdev.onmytongue.buildlogic.OnMyTongueSdk
-import com.callbackdev.onmytongue.buildlogic.configureKotlinAndroid
+import com.callbackdev.thatstheword.buildlogic.CheckForbiddenPermissionsTask
+import com.callbackdev.thatstheword.buildlogic.ForbiddenPermissionPatterns
+import com.callbackdev.thatstheword.buildlogic.ThatsTheWordSdk
+import com.callbackdev.thatstheword.buildlogic.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -18,7 +18,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = OnMyTongueSdk.TARGET
+                defaultConfig.targetSdk = ThatsTheWordSdk.TARGET
                 lint {
                     // One `:app:lintDebug` covers every module the app is built from.
                     checkDependencies = true

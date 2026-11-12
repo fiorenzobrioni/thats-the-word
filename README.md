@@ -1,8 +1,8 @@
 <div align="center">
 
-# 💬 On My Tongue
+# 💬 That's The Word
 
-**A daily word game in three tongues. Played on your phone, sent nowhere.**
+**One word a day. Three languages. Played on your phone, sent nowhere.**
 
 Find the hidden word in six attempts, in Italian, English or Spanish: as a calm daily pastime,
 or to practise a language you are learning, with its meaning in your own language when the game
@@ -23,11 +23,11 @@ internet at all.
 > **Status: in the making.** The foundations are laid (Phase 0); the words come next. There is
 > nothing to install yet: see [Roadmap](#roadmap).
 
-## What On My Tongue is
+## What That's The Word is
 
-You know the feeling: the word is right there, on the tip of your tongue. *Sulla punta della
-lingua*, *en la punta de la lengua*: the same saying in the three languages the game speaks, and
-in all three the tongue is also a language.
+You know the feeling: the word is right there, on the tip of your tongue, and then it comes.
+"That's the word." The name is that moment, the best one in the game, and the line the game
+greets every word found with: *Ecco la parola* in Italian, *Esa es la palabra* in Spanish.
 
 Every day there is a word to find, the same for everyone, one for each language. Each guess must
 be a real word; each letter then says whether it is in the right place, somewhere else in the
@@ -71,7 +71,7 @@ What 1.0 will do ([VISION.md](./VISION.md) has the full scope):
 
 | | |
 |---|---|
-| 🔒 **Offline and private** | no `INTERNET` permission: On My Tongue sends nothing. The build fails if a network, location, advertising id, camera, microphone, contacts, accounts, storage or installed-apps permission appears |
+| 🔒 **Offline and private** | no `INTERNET` permission: That's The Word sends nothing. The build fails if a network, location, advertising id, camera, microphone, contacts, accounts, storage or installed-apps permission appears |
 | 🎯 **Few things, done very well** | one mode polished rather than three sketched |
 | 🌍 **The other language is the heart** | playing in a language not your own without frustration, and leaving with something learnt |
 | 📖 **Open** | the code under the GPL, the words from free and documented sources, rebuilt by a script in this repository, the APK built by CI |
@@ -85,11 +85,11 @@ Android 14 (API 34) or newer. There is no release yet: the first comes with 1.0 
 
 When it comes:
 
-1. Download `onmytongue-vX.Y.Z.apk` from the latest release.
+1. Download `thats-the-word-vX.Y.Z.apk` from the latest release.
 2. Open it on the phone and allow installs from that source when Android asks.
 
 Each release will carry its SHA-256 checksum, and the release key's certificate fingerprint will
-be published here, to check that the APK is genuine. On My Tongue has no network access, so it
+be published here, to check that the APK is genuine. That's The Word has no network access, so it
 cannot check for updates: GitHub's "Watch, Custom, Releases" notifications or
 [Obtainium](https://github.com/ImranR98/Obtainium) will tell you.
 
@@ -155,7 +155,7 @@ Compose UI → ViewModel → :core:data (Room, DataStore)
 ## Project structure
 
 ```text
-onmytongue/
+thats-the-word/
 ├── app/                    # Application, MainActivity, the shell, DI
 ├── core/
 │   ├── model/              # pure Kotlin data classes
@@ -186,7 +186,7 @@ Each module joins the build with the phase that brings its first code. `:core:mo
 
 ## The family
 
-On My Tongue is one of six focused apps with the same look and the same rules:
+That's The Word is one of six focused apps with the same look and the same rules:
 [Chiaro](https://github.com/fiorenzobrioni/chiaro) (weather),
 [Passo](https://github.com/fiorenzobrioni/passo) (step counter),
 [Tempo](https://github.com/fiorenzobrioni/tempo) (clock and agenda),
@@ -196,7 +196,7 @@ game. Each stands alone.
 
 ## License
 
-[GPL-3.0-or-later](./LICENSE) © 2026 Fiorenzo Brioni. The name *On My Tongue* and its mark are
+[GPL-3.0-or-later](./LICENSE) © 2026 Fiorenzo Brioni. The name *That's The Word* and its mark are
 not covered by the licence.
 
 [Google Sans](https://fonts.google.com/specimen/Google+Sans) and

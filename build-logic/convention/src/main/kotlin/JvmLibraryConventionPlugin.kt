@@ -1,7 +1,7 @@
-import com.callbackdev.onmytongue.buildlogic.OnMyTongueJavaVersion
-import com.callbackdev.onmytongue.buildlogic.configureKotlinCompile
-import com.callbackdev.onmytongue.buildlogic.library
-import com.callbackdev.onmytongue.buildlogic.libs
+import com.callbackdev.thatstheword.buildlogic.ThatsTheWordJavaVersion
+import com.callbackdev.thatstheword.buildlogic.configureKotlinCompile
+import com.callbackdev.thatstheword.buildlogic.library
+import com.callbackdev.thatstheword.buildlogic.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -20,8 +20,8 @@ class JvmLibraryConventionPlugin : Plugin<Project> {
             pluginManager.apply("com.android.lint")
 
             extensions.configure<JavaPluginExtension> {
-                sourceCompatibility = OnMyTongueJavaVersion
-                targetCompatibility = OnMyTongueJavaVersion
+                sourceCompatibility = ThatsTheWordJavaVersion
+                targetCompatibility = ThatsTheWordJavaVersion
             }
             configureKotlinCompile()
 

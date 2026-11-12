@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solo compilaciones de prueba (app/src/crashpage): la pantalla del error. -->
+<resources>
+    <string name="debug_crash_title">That’s The Word se ha detenido</string>
+    <string name="debug_crash_body">Esta es una compilación de prueba. Abajo está el error que la detuvo: cópialo o compártelo y envíalo a quien desarrolla la app. No se ha enviado nada.</string>
+    <string name="debug_crash_copy">Copiar</string>
+    <string name="debug_crash_copied">Copiado</string>
+    <string name="debug_crash_share">Compartir</string>
+</resources>

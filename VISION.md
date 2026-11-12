@@ -1,225 +1,230 @@
-# On My Tongue — Vision
+# That's The Word — Vision
 
-> Stato: approvata — 12 novembre 2026
+> Status: approved by the owner, 12 November 2026. Written in English as the family writes its documents (the owner's answer, below); the owner's Italian original is in the repository's history (`0d7cacf`). The owner's answers to the plan's review are in «The owner's answers», at the end.
 
-## 1. In una frase
+## 1. In one sentence
 
-**On My Tongue** è un gioco per Android in cui si indovina una parola nascosta, in italiano, inglese e spagnolo, pensato sia come passatempo quotidiano sia per esercitare il vocabolario di una lingua che si sta imparando. Qualità premium, codice aperto, completamente offline.
+**That's The Word** is an Android game in which, every day, you look for a hidden word, in Italian, English and Spanish, until the moment you can say "there, that's the one". It is meant both as a daily pastime and as a way to exercise the vocabulary of a language you are learning. Premium quality, open source, entirely offline.
 
-## 2. Nome e voce
+## 2. Name and voice
 
-Il nome richiama "ce l'ho sulla punta della lingua" (*on the tip of my tongue*, *en la punta de la lengua*): un modo di dire comune alle tre lingue, in cui "tongue" è anche la lingua parlata. Il nome resta in inglese in tutte le versioni dell'interfaccia.
+**That's The Word** is what you exclaim when the word you had on the tip of your tongue finally comes to mind: "there, that's the one". The name describes the best moment of the game, the one in which the hidden word is found, and it is the line with which the app greets every win.
 
-Sottotitolo: **A daily word game in three tongues**.
+- The name stays in English in every language of the interface.
+- The victory line is rendered in the other languages in the same spirit (*Ecco la parola.*, *Esa es la palabra.*).
+- The repository's name: `thats-the-word`.
 
-Tono dei testi: breve, calmo, un po' teatrale. Frasi corte, nessun punto esclamativo, nessun gergo da videogioco. Testi di riferimento per la schermata iniziale:
+Subtitle: **One word a day. Three languages.**
 
-```
-ON MY TONGUE
-A DAILY WORD GAME IN THREE TONGUES
-Today's word awaits.
-Six attempts. One word.
-T A B L E
-THE WORD IS ALMOST YOURS.
-```
+Tone of the texts: short, calm, a little theatrical. Short sentences, no exclamation marks, no gamer slang. Every text is written in the three interface languages with the same rhythm, not translated word for word.
 
-Ogni testo va scritto nelle tre lingue dell'interfaccia con lo stesso ritmo, non tradotto alla lettera.
+## 3. Principles
 
-## 3. Principi
+1. **Few things, done very well.** One polished mode is better than three sketched.
+2. **The foreign language is the heart.** What sets the app apart is being able to play in a language that is not your own without frustration, and to come out of it having learnt something.
+3. **Offline and respectful.** No account, no ads, no tracking. The app does not ask for permission to access the Internet.
+4. **Open.** Code under the GPL-3.0-or-later licence, language data from free and documented sources, the build produced by CI.
+5. **An identity of its own.** Name, look, colours and word lists original, not taken from existing games.
 
-1. **Poche cose, fatte benissimo.** Meglio una modalità rifinita che tre abbozzate.
-2. **La lingua straniera è il cuore.** Ciò che distingue l'app è poter giocare in una lingua non propria senza frustrazione, e uscirne avendo imparato qualcosa.
-3. **Offline e rispettosa.** Nessun account, nessuna pubblicità, nessun tracciamento. L'app non richiede il permesso di accesso a Internet.
-4. **Aperta.** Codice sotto licenza GPL-3.0-or-later, dati linguistici da fonti libere e documentate, build prodotta dalla CI.
-5. **Identità propria.** Nome, aspetto, colori e liste di parole originali, non ripresi da giochi esistenti.
+## 4. Who it is for
 
-## 4. A chi si rivolge
+- Whoever wants a carefully made word pastime without ads.
+- Whoever studies Italian, English or Spanish and wants a light, daily exercise.
 
-- Chi vuole un passatempo di parole curato e senza pubblicità.
-- Chi studia italiano, inglese o spagnolo e vuole un esercizio leggero e quotidiano.
+An honest promise: it is a vocabulary exercise, not a language course.
 
-Promessa onesta: è un esercizio di vocabolario, non un corso di lingua.
+## 5. Languages
 
-## 5. Lingue
+- **Interface**: Italian, English, Spanish. It follows the device's language and can be changed from the settings.
+- **Game language**: Italian, English, Spanish, chosen independently of the interface and changeable at any time.
+- Translations, definitions, hints and the surrounding texts are always shown **in the interface language**.
+- **Playing in a foreign language**: when the game language differs from the interface's, the app turns on the practice tools (section 9).
+- **Playing in your own language**: when the two languages are the same, the game is a classic pastime: no hints, and at the end of a game the definition instead of the translation.
 
-- **Interfaccia**: italiano, inglese, spagnolo. Segue la lingua del dispositivo e si può cambiare dalle impostazioni.
-- **Lingua di gioco**: italiano, inglese, spagnolo, scelta in modo indipendente dall'interfaccia e modificabile in qualsiasi momento.
-- Traduzioni, definizioni, aiuti e testi di contorno sono sempre mostrati **nella lingua dell'interfaccia**.
-- **Gioco in lingua straniera**: quando la lingua di gioco è diversa da quella dell'interfaccia, l'app attiva gli strumenti di pratica (sezione 9).
-- **Gioco nella propria lingua**: quando le due lingue coincidono, il gioco è un passatempo classico: nessun aiuto, e a fine partita la definizione al posto della traduzione.
+## 6. Basic rules
 
-## 6. Regole di base
+- A hidden word to guess in a limited number of attempts (6 in the classic five-letter mode).
+- Every attempt must be a valid word of the vocabulary.
+- After every attempt each letter gets a feedback: right position, present elsewhere, absent.
+- The feedback is given by **colour and shape together**, never by colour alone.
 
-- Una parola nascosta da indovinare in un numero limitato di tentativi (6 nella modalità classica a 5 lettere).
-- Ogni tentativo deve essere una parola valida del vocabolario.
-- Dopo ogni tentativo ogni lettera riceve un riscontro: posizione giusta, presente altrove, assente.
-- Il riscontro è comunicato con **colore e forma insieme**, mai con il solo colore.
+### Special characters
 
-### Caratteri speciali
+- **Italian**: accents are ignored when typing; the correct form (e.g. *città*) is shown at the end of the game.
+- **Spanish**: **ñ** is a letter of its own, with its own key; accented vowels and the diaeresis are ignored when typing.
+- **English**: both British and American spellings are accepted; words with two spellings are left out of the solutions.
 
-- **Italiano**: gli accenti si ignorano in digitazione; la forma corretta (es. *città*) è mostrata a fine partita.
-- **Spagnolo**: la **ñ** è una lettera a sé con un proprio tasto; vocali accentate e dieresi si ignorano in digitazione.
-- **Inglese**: sono accettate le grafie britannica e americana; le parole con doppia grafia sono escluse dalle soluzioni.
+## 7. The app's structure
 
-## 7. Struttura dell'app
-
-| Schermata | Contenuto |
+| Screen | Content |
 |---|---|
-| **Inizio** | La parola del giorno in evidenza per la lingua di gioco attiva, cambio rapido di lingua, calendario delle giornaliere, accesso alle altre modalità. |
-| **Partita** | Griglia, tastiera con lo stato delle lettere, aiuti (se disponibili), scheda di fine partita. |
-| **Quaderno** | Le parole incontrate, con ricerca e ripasso. |
-| **Progressi** | Statistiche, serie e traguardi. |
-| **Impostazioni** | Lingue, livello di vocabolario, opzione Difficile, suoni, vibrazione, animazioni, backup, licenze e attribuzioni. |
+| **Start** | The word of the day in evidence for the active game language, a quick change of language, the calendar of the dailies, access to the other modes. |
+| **Game** | Grid, keyboard with the letters' state, hints (if available), the end-of-game card. |
+| **Notebook** | The words met, with search and review. |
+| **Progress** | Statistics, streaks and milestones. |
+| **Settings** | Languages, vocabulary level, Hard option, sounds, vibration, animations, backup, licences and attributions. |
 
-## 8. Modalità di gioco
+## 8. Game modes
 
-### Versione 1.0 — il nucleo
+The names below are working names in English; their names in the three interface languages are an open question (§16, 2).
 
-| Modalità | Descrizione |
+### Version 1.0: the core
+
+| Mode | Description |
 |---|---|
-| **Giornaliera** | Una parola al giorno per ciascuna lingua, uguale per tutti. È calcolata dalla data su una lista ordinata e congelata, quindi senza server. Cambia alla mezzanotte locale. |
-| **Archivio** | Un calendario per recuperare le giornaliere saltate o rigiocare una data specifica, dalla prima giornaliera dell'app fino a oggi. Le date future non sono giocabili. Il calendario mostra per ogni giorno se la parola è stata risolta, mancata o non giocata. |
-| **Libera** | Partite illimitate, con scelta del livello di vocabolario. |
-| **Opzione Difficile** | Gli indizi ottenuti vanno riusati nei tentativi successivi. Attivabile in Giornaliera e Libera. |
+| **Daily** | One word a day for each language, the same for everyone. It is computed from the date on an ordered, frozen list, so without a server. It changes at local midnight. |
+| **Archive** | A calendar to catch up on missed dailies or replay a specific date, from the app's first daily to today. Future dates cannot be played. The calendar shows for every day whether the word was solved, missed or not played. |
+| **Free play** | Unlimited games, with a choice of vocabulary level. |
+| **Hard option** | The clues obtained must be reused in the following attempts. Available in Daily and Free play. |
 
-Tutto a 5 lettere e 6 tentativi. Inclusi fin da subito: livelli di vocabolario, aiuti, scheda di fine partita, Quaderno, statistiche, serie, traguardi, backup.
+Everything at 5 letters and 6 attempts. Included from the start: vocabulary levels, hints, the end-of-game card, the Notebook, statistics, streaks, milestones, backup.
 
-### Versione 1.1 — le modalità linguistiche
+### Version 1.1: the language modes
 
-| Modalità | Descrizione |
+| Mode | Description |
 |---|---|
-| **Traduci** | Viene mostrata una parola nella lingua dell'interfaccia; si indovina la sua traduzione nella lingua di gioco, con meno tentativi (indicativamente 4). Allena il richiamo attivo. |
-| **Ponte** | Tre griglie, lo stesso concetto nelle tre lingue (*gatto / cat / gato*), con lunghezze diverse. Risolverne una rivela il significato e aiuta con le altre. È la modalità-firma dell'app. |
-| **Ripasso** | Ripropone le parole del Quaderno a distanza crescente di giorni. |
+| **Translate** | A word is shown in the interface language; you guess its translation in the game language, with fewer attempts (about 4). It trains active recall. |
+| **Bridge** | Three grids, the same concept in the three languages (*gatto / cat / gato*), with different lengths. Solving one reveals the meaning and helps with the others. It is the app's signature mode. |
+| **Review** | Brings back the Notebook's words at growing intervals of days. |
 
-### Versione 1.2 e oltre — le varianti
+### Version 1.2 and beyond: the variants
 
-| Modalità | Descrizione |
+| Mode | Description |
 |---|---|
-| **Scalata** | Una serie di parole con un monte tentativi complessivo; ogni soluzione diventa il primo tentativo della parola successiva. |
-| **Più griglie** | Due o quattro parole da indovinare in parallelo con gli stessi tentativi. |
-| **Lunghezza variabile** | Parole da 4 a 7 lettere. |
-| **Bugiarda** | In ogni riga un riscontro è falso. |
+| **Ladder** | A series of words with one pool of attempts for all of them; each solution becomes the first attempt of the next word. |
+| **Several grids** | Two or four words to guess in parallel with the same attempts. |
+| **Variable length** | Words from 4 to 7 letters. |
+| **Liar** | In every row one feedback is false. |
 
-L'ordine riflette il costo: ogni nuova lunghezza moltiplica le liste di parole da preparare. Il numero di tentativi delle modalità oltre la classica va tarato giocando i prototipi.
+The order reflects the cost: every new length multiplies the word lists to prepare. The number of attempts of the modes beyond the classic one is to be tuned by playing the prototypes.
 
-## 9. Praticare una lingua
+## 9. Practising a language
 
-### Livelli di vocabolario
+### Vocabulary levels
 
-Le soluzioni sono suddivise per frequenza d'uso: **Base**, **Intermedio**, **Avanzato**, **Completo**. In una lingua straniera si parte da Base. La Giornaliera pesca sempre da parole comuni, perché deve essere uguale per tutti.
+The solutions are divided by frequency of use: **Base**, **Intermediate**, **Advanced**, **Complete**. In a foreign language you start from Base. The Daily always draws from common words, because it must be the same for everyone.
 
-### Aiuti
+### Hints
 
-Disponibili solo quando si gioca in una lingua diversa da quella dell'interfaccia:
+Available only when playing in a language different from the interface's:
 
-- **Traduzione**: mostra la traduzione della soluzione, al costo di un tentativo.
-- **Definizione**: mostra una definizione nella lingua dell'interfaccia, al costo di un tentativo.
-- **Lettera**: rivela una lettera in posizione corretta, al costo di un tentativo.
+- **Translation**: shows the solution's translation, at the cost of one attempt.
+- **Definition**: shows a definition in the interface language, at the cost of one attempt.
+- **Letter**: reveals a letter in its correct position, at the cost of one attempt.
 
-Le partite giocate con aiuti valgono per la serie ma sono contrassegnate nelle statistiche.
+Games played with hints count for the streak but are marked in the statistics.
 
-### Scheda di fine partita
+### End-of-game card
 
-Per la soluzione e per ogni parola tentata: significato, traduzione nella lingua dell'interfaccia, forma con accenti corretti. Se una traduzione manca, viene mostrata la sola definizione.
+For the solution and for every word tried: meaning, translation into the interface language, the form with its correct accents. If a translation is missing, the definition alone is shown.
 
-### Quaderno
+### Notebook
 
-- Raccoglie automaticamente le parole incontrate, con traduzione, lingua e data.
-- Segna quali parole sono state indovinate, mancate o risolte con aiuti.
-- Consultabile e ricercabile come un piccolo dizionario personale.
-- Alimenta la modalità Ripasso.
+- Gathers the words met automatically, with translation, language and date.
+- Marks which words were guessed, missed or solved with hints.
+- Can be browsed and searched like a small personal dictionary.
+- Feeds the Review mode.
 
-## 10. Vocabolari
+## 10. Vocabularies
 
-Obiettivo: vocabolari **il più ampi possibile**, con una distinzione netta tra due insiemi.
+Goal: vocabularies **as wide as possible**, with a clear distinction between two sets.
 
-| Insieme | Contenuto | Criterio |
+| Set | Content | Criterion |
 |---|---|---|
-| **Parole accettate** | Tutte le forme valide, comprese forme flesse (plurali, coniugazioni) | Il più ampio possibile: meno rifiuti ingiusti |
-| **Soluzioni** | Solo forme base, senza nomi propri, sigle e termini offensivi | Ampio ma ordinato per livello; le parole rare stanno in Avanzato e Completo |
+| **Accepted words** | Every valid form, inflected forms included (plurals, conjugations) | As wide as possible: fewer unfair refusals |
+| **Solutions** | Base forms only, without proper nouns, abbreviations and offensive terms | Wide but ordered by level; rare words stay in Advanced and Complete |
 
-### Fonti previste
+### Planned sources
 
-| Dato | Fonte | Licenza |
+| Data | Source | Licence |
 |---|---|---|
-| Parole italiane | Dizionario Hunspell italiano (versione LibreOffice), espanso in tutte le forme | GPL 3 |
-| Parole spagnole | Dizionario Hunspell spagnolo | Da verificare |
-| Parole inglesi | SCOWL o ENABLE | Da verificare |
-| Frequenze d'uso | wordfreq, liste OpenSubtitles, Leipzig Corpora | CC BY-SA 4.0 / CC BY 4.0 |
-| Definizioni e traduzioni | Wiktionary, tramite i dati estratti da kaikki.org | CC BY-SA e GFDL |
+| Italian words | The Italian Hunspell dictionary (LibreOffice's version), expanded into every form | GPL 3 |
+| Spanish words | The Spanish Hunspell dictionary | To be verified |
+| English words | SCOWL or ENABLE | To be verified |
+| Frequencies of use | wordfreq, OpenSubtitles lists, Leipzig Corpora | CC BY-SA 4.0 / CC BY 4.0 |
+| Definitions and translations | Wiktionary, through the data extracted by kaikki.org | CC BY-SA and GFDL |
 
-### Regole sui dati
+### Rules on the data
 
-- I vocabolari sono generati da uno **script riproducibile** incluso nel repository: fonti, versioni e filtri sono tracciati.
-- I dati sono distribuiti come file separati, ciascuno con la propria licenza e attribuzione, elencate in un file dedicato e in una schermata dell'app.
-- Le liste delle soluzioni giornaliere sono **congelate**: gli aggiornamenti aggiungono in coda e non cambiano le parole già assegnate a una data.
-- La copertura delle traduzioni sarà incompleta per le parole rare: le parole senza traduzione affidabile non entrano in Traduci e Ponte.
-- Ponte richiede terne di concetti allineate nelle tre lingue: generate automaticamente tra le parole comuni e poi **riviste a mano**.
+- The vocabularies are generated by a **reproducible script** included in the repository: sources, versions and filters are tracked.
+- The data is distributed as separate files, each with its own licence and attribution, listed in a dedicated file and on a screen of the app.
+- The daily solution lists are **frozen**: updates add at the end and never change the words already assigned to a date.
+- The translations' coverage will be incomplete for rare words: words without a reliable translation do not enter Translate and Bridge.
+- Bridge needs triples of concepts aligned in the three languages: generated automatically among the common words and then **reviewed by hand**.
 
-## 11. Progressione
+## 11. Progression
 
-- **Statistiche** per lingua e modalità: partite, percentuale di successo, distribuzione dei tentativi, uso degli aiuti.
-- **Serie** giornaliera, per lingua. Conta solo le parole risolte nel loro giorno: le giornaliere recuperate dall'Archivio entrano nelle statistiche e nel calendario ma non riparano una serie interrotta.
-- **Traguardi**: obiettivi che premiano costanza e apprendimento, ad esempio "7 giornaliere di fila", "prima vittoria in una lingua straniera", "100 parole nel Quaderno", "giornaliera risolta in tutte e tre le lingue nello stesso giorno".
-- **Nessun contenuto sbloccabile**: niente temi o premi; i traguardi sono un riconoscimento, non una chiave.
-- **Backup**: esportazione e importazione di statistiche, traguardi e Quaderno in un file, dato che non esistono account.
-- **Condivisione** del risultato senza rivelare la parola, in un formato grafico proprio dell'app.
+- **Statistics** per language and mode: games, the share won, the distribution of attempts, the use of hints.
+- **Daily streak**, per language. Only the words solved on their own day count: the dailies caught up from the Archive enter the statistics and the calendar but do not mend a broken streak.
+- **Milestones**: goals that reward steadiness and learning, for example "7 dailies in a row", "first win in a foreign language", "100 words in the Notebook", "the daily solved in all three languages on the same day".
+- **Nothing to unlock**: no themes or prizes; milestones are a recognition, not a key.
+- **Backup**: export and import of statistics, milestones and the Notebook to a file, since there are no accounts.
+- **Sharing** a result without revealing the word, in a graphic format of the app's own.
 
-## 12. Esperienza premium
+## 12. A premium experience
 
-- **Grafica più curata e più animazioni** rispetto alle app gemelle, come si addice a un gioco.
-- **Animazioni** per ogni momento chiave: inserimento della lettera, rivelazione del riscontro, parola non valida, vittoria, traguardo raggiunto.
-- **Vibrazione** e **suoni** discreti, disattivabili separatamente.
-- **Prima partita guidata**: le regole si capiscono giocando, senza una schermata di istruzioni.
-- **Accessibilità**: forme oltre ai colori, supporto a TalkBack, testo ridimensionabile, opzione per ridurre le animazioni.
-- **Coerenza con le app gemelle**: stile, tipografia e componenti condivisi con le altre app dell'ecosistema.
-- Tema chiaro e scuro; i colori del riscontro sono fissi e propri dell'app.
+- **More care in the graphics and more animation** than in the sister apps, as befits a game.
+- **Animations** for every key moment: a letter entered, the feedback revealed, an invalid word, a win, a milestone reached.
+- Discreet **vibration** and **sounds**, each with its own switch.
+- **A guided first game**: the rules are understood by playing, without an instructions screen.
+- **Accessibility**: shapes besides colours, TalkBack support, resizable text, an option to reduce the animations.
+- **Coherence with the sister apps**: style, typography and components shared with the other apps of the ecosystem.
+- Light and dark theme; the feedback's colours are fixed and the app's own.
 
-## 13. Identità e aspetti legali
+## 13. Identity and legal aspects
 
-Nota: queste sono valutazioni informate, non un parere legale.
+Note: these are informed assessments, not legal advice.
 
-- **Regole di gioco**: le meccaniche non sono protette da diritto d'autore; lo sono nomi, codice, testi e grafica specifica.
-- **"Wordle" è un marchio del New York Times.** Nel 2024 il NYT ha inviato numerose richieste di rimozione a progetti su GitHub, contestando l'uso del nome e dell'aspetto (disposizione della griglia e schema verde/grigio/giallo). Il NYT ha dichiarato di non avere obiezioni verso giochi di parole simili che non violino marchio e opere protette.
-- **Conseguenze per questo progetto**:
-  - quel nome non è mai usato per presentare o descrivere l'app: né nell'interfaccia, né nel README, né nelle note di rilascio, né nel codice; questa nota legale e il relativo link nei Riferimenti sono gli unici punti del repository in cui compare;
-  - nessun codice, testo o lista di parole di quella origine;
-  - palette, forme e stile propri, derivati dal tema dell'ecosistema;
-  - il rischio residuo è basso ma non nullo, perché il repository è pubblico su GitHub.
-- **Licenza del codice**: GPL-3.0-or-later (GPL versione 3 o successive). Nome e logo dell'app non sono coperti dalla licenza.
-- **Licenze dei dati**: compatibili con la distribuzione insieme a codice GPLv3 (la CC BY-SA 4.0 è dichiarata compatibile in senso unico con la GPLv3).
-- **Dipendenze**: nessuna libreria proprietaria (niente pubblicità, analisi o servizi Google Play).
+- **Game rules**: mechanics are not protected by copyright; names, code, texts and specific graphics are.
+- **"Wordle" is a trademark of the New York Times.** In 2024 the NYT sent many takedown requests to projects on GitHub, contesting the use of the name and of the look (the grid's arrangement and the green/grey/yellow scheme). The NYT stated it has no objection to similar word games that do not infringe its trademark and protected works.
+- **Consequences for this project**:
+  - that name is never used to present or describe the app: not in the interface, not in the README, not in the release notes, not in the code; this legal note and its link in the References are the only places in the repository where it appears;
+  - no code, text or word list of that origin;
+  - palette, shapes and style of its own, derived from the ecosystem's theme;
+  - the remaining risk is low but not zero, because the repository is public on GitHub.
+- **The code's licence**: GPL-3.0-or-later (the GPL version 3 or any later version). The app's name and logo are not covered by the licence.
+- **The data's licences**: compatible with distribution together with GPLv3 code (CC BY-SA 4.0 is declared one-way compatible with the GPLv3).
+- **Dependencies**: no proprietary library (no advertising, analytics or Google Play services).
 
-## 14. Tecnologia e distribuzione
+## 14. Technology and distribution
 
-- **Stack**: Kotlin, Jetpack Compose, Material 3 Expressive, da allineare alle app gemelle alla creazione del repository.
-- **Motore di gioco** in Kotlin puro, separato dall'interfaccia e coperto da test.
-- **Dati** inclusi nell'app in formato compatto; nessun download.
-- **CI su GitHub**: compilazione e firma con chiave propria tramite secret, secondo la procedura delle app gemelle.
-- **Distribuzione**: release su GitHub (compatibili con Obtainium). Il Play Store è previsto nel piano ma non programmato; F-Droid è un'opzione.
-- **Sviluppo** assistito da Claude Code a partire da questo documento e da PLANNING.md.
+- **Stack**: Kotlin, Jetpack Compose, Material 3, aligned with the sister apps when the repository is created. The original text asked for Material 3 Expressive; its APIs are not in a stable release yet, so the app uses stable Material 3, as the sisters do («The owner's answers», 3).
+- **The game engine** in pure Kotlin, apart from the interface and covered by tests.
+- **Data** included in the app in a compact format; no download.
+- **CI on GitHub**: build and signing with the app's own key through secrets, following the sister apps' procedure.
+- **Distribution**: releases on GitHub (compatible with Obtainium). The Play Store is foreseen in the plan but not scheduled; F-Droid is an option.
+- **Development** assisted by Claude Code, starting from this document and from PLANNING.md.
 
-## 15. Fuori ambito
+## 15. Out of scope
 
-- Multigiocatore, classifiche online, account, sincronizzazione cloud.
-- Pubblicità, acquisti in-app, temi o contenuti sbloccabili.
-- Altri giochi: l'app fa una cosa sola.
-- Altre lingue oltre alle tre previste (l'architettura non deve però impedirle).
+- Multiplayer, online leaderboards, accounts, cloud sync.
+- Advertising, in-app purchases, themes or unlockable content.
+- Other games: the app does one thing.
+- Languages beyond the three planned (the architecture must not prevent them, though).
 
-## 16. Questioni aperte
+## 16. Open questions
 
-1. **Disponibilità del nome.** Una ricerca web non ha trovato app chiamate "On My Tongue", ma store e registri dei marchi vanno controllati a mano prima della prima release.
-2. **Nomi delle modalità** nelle tre lingue dell'interfaccia.
-3. **Licenze esatte** delle fonti spagnola e inglese e versione della licenza dei dati Wiktionary.
-4. **Qualità delle definizioni** nelle tre lingue dell'interfaccia: da valutare su un campione prima di impegnarsi.
-5. **Dimensione dell'app** con tre vocabolari completi e definizioni: da misurare con un prototipo dei dati.
+1. **The name's availability.** A web search found no app called "That's The Word"; there are, however, games with a close name ("What's The Word"). The stores and the trademark registers must be checked by hand before the first release.
+2. **The modes' names** in the three interface languages.
+3. **The exact licences** of the Spanish and English sources, and the version of the Wiktionary data's licence.
+4. **The definitions' quality** in the three interface languages: to be judged on a sample before committing to them.
+5. **The app's size** with three full vocabularies and definitions: to be measured with a prototype of the data.
 
-## Riferimenti
+## The owner's answers (12 Nov 2026)
 
-- Richieste di rimozione del NYT (AP, 2024): https://wjla.com/news/offbeat/nyt-fighting-off-wordle-copycats-with-several-takedown-notices-word-guessing-game-new-york-times-look-alikes-digital-millenium-copycat-act-github-trademark-battle
-- Compatibilità CC BY-SA 4.0 → GPLv3: https://creativecommons.org/2015/10/08/cc-by-sa-4-0-now-one-way-compatible-with-gplv3/
-- Dizionario italiano LibreOffice: https://github.com/LibreOffice/dictionaries/tree/master/it_IT
+The plan's review (PLANNING.md §15, 12 Nov 2026) asked seventeen questions, each with a proposal. The owner answered the first five; the others stay in PLANNING.md §15's Open list until answered.
+
+1. **The name**: *That's The Word*, as this vision gives it (the owner's latest version, which replaced an earlier draft with another name). The repository stays `thats-the-word`; the package and applicationId are `com.callbackdev.thatstheword`.
+2. **The documents' language**: English, as the family's ("segui la famiglia e fai tutto in inglese"). This translation is the result; the Italian original stays in the history.
+3. **Material 3**: stable, as the sister apps ("usiamo Material 3 stabile come le app gemelle"); §14 says so.
+4. **The mark**: still open ("per l'icona vediamo"). The owner's first idea: letter blocks that compose a word. To be drawn on a board with the family's marks, as the sisters' were.
+5. **The feedback's colours and shapes**: the review's proposal is accepted (colour and shape together: square for the right place in the app's colour, round for elsewhere in the family's amber, the absent tile sunk and quiet; a reveal and share symbols of the game's own), with one condition: every solution proposed must be a premium app's ("L'importante è che mi proponi soluzioni da premium app"). Drawn on a board in Phase 3, before it is built.
+
+## References
+
+- The NYT's takedown requests (AP, 2024): https://wjla.com/news/offbeat/nyt-fighting-off-wordle-copycats-with-several-takedown-notices-word-guessing-game-new-york-times-look-alikes-digital-millenium-copycat-act-github-trademark-battle
+- CC BY-SA 4.0 → GPLv3 compatibility: https://creativecommons.org/2015/10/08/cc-by-sa-4-0-now-one-way-compatible-with-gplv3/
+- LibreOffice's Italian dictionary: https://github.com/LibreOffice/dictionaries/tree/master/it_IT
 - wordfreq: https://github.com/rspeer/wordfreq
-- Liste di frequenza (Wiktionary): https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists
-- Dati Wiktionary estratti: https://kaikki.org/dictionary/rawdata.html
+- Frequency lists (Wiktionary): https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists
+- Extracted Wiktionary data: https://kaikki.org/dictionary/rawdata.html

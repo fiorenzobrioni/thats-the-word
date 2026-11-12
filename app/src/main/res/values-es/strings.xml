@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_tagline">Una palabra al día. Tres idiomas.</string>
+    <string name="start_sample_word">Silla</string>
+    <string name="start_victory">Esa es la palabra.</string>
+</resources>

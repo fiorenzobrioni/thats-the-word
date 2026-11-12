@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The name stays in English in every language of the interface (VISION §2). -->
+    <string name="app_name" translatable="false">That’s The Word</string>
+
+    <!-- The start page (VISION §2): short, calm, a little theatrical; no exclamation marks. Written
+         in sentence case: the page draws the capitals. -->
+    <string name="start_tagline">One word a day. Three languages.</string>
+    <!-- A five-letter word of this language, drawn on tiles: not a translation of the others. -->
+    <string name="start_sample_word">Table</string>
+    <!-- The line every word found is greeted with, the name's own moment (VISION §2): in each
+         language with the same spirit, never word for word. -->
+    <string name="start_victory">That’s the word.</string>
+</resources>

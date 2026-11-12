@@ -29,7 +29,7 @@ wait for a look on a phone (the reveal with the profiler, TalkBack); Phase 5 (hi
 notebook) is next. The modules in the build are `:app`, `:core:model`, `:core:domain`,
 `:core:words`, `:core:data`, `:core:designsystem`, `:core:testing`, `:feature:game` and
 `:feature:home`. The owner answered the review's questions 1 to 9 and 11 to 13 on 12 Nov 2026;
-**six smaller questions are still open** (PLANNING §15, Open: 10, 14 to 17 and 22): read them
+**four smaller questions are still open** (PLANNING §15, Open: 14 to 17): read them
 before building anything they touch.
 
 Source of truth:
@@ -142,7 +142,8 @@ phase that brings its first code.
   it without its tests for every edge case in PLANNING.md §4.9. Marks are computed from the
   solution and the guesses, never stored.
 - **Dates are local dates** from an injected clock and zone; a daily belongs to the date it was
-  started on; its word is the frozen schedule's at `date − epoch + 1`.
+  started on; its word is the frozen schedule's at `date − epoch + 1`. The epoch is 1 November
+  2026 (`DailyCalendar.EPOCH`, the owner's): never moved.
 - **The words are generated, never hand-edited** (PLANNING §6): `tools/words/` writes every file
   from pinned, free, credited sources, the same bytes on a second run. **The daily schedule is
   append-only**: no entry already published is ever changed. Every source's licence is

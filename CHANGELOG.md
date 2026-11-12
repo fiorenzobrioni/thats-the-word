@@ -41,3 +41,7 @@ All notable changes to That's The Word are documented here. The format follows
   free word is over, another one.
 - The start page sees midnight come while it is open, and shows the new day's word.
 - Long-press the icon for today's word in each language, straight to its game.
+- Under the grid, the key of the three marks; the next tile to fill is framed; a game in Hard says
+  so above its date.
+- The first daily word is the one of 1 November 2026: the calendar already has days to play.
+- The shared result marks a letter in its right place with a blue square, 🟦.

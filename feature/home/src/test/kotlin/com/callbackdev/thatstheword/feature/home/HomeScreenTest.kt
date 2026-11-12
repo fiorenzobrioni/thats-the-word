@@ -140,7 +140,7 @@ class HomeScreenTest {
     @Test
     fun `the state reads the day right`() {
         val state = state()
-        assertThat(state.number).isEqualTo(17)
+        assertThat(state.number).isEqualTo(28)
         assertThat(state.streak).isEqualTo(3)
         assertThat(state.month.found).isEqualTo(8)
         assertThat(state.month.missed).isEqualTo(2)
@@ -194,7 +194,7 @@ class HomeScreenTest {
         ).performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription("Sunday 29 November, not yet").performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription(
-            "Wednesday 11 November, before the first word",
+            "Wednesday 11 November, not played",
         ).performScrollTo().assertIsDisplayed()
         // A past day is played from the archive; a day ahead is not a door.
         compose.onNodeWithTag(HomeTags.day(day(17))).performClick()

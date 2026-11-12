@@ -18,7 +18,7 @@ import random
 from . import config
 
 
-def days_needed(epoch: datetime.date = config.PROVISIONAL_EPOCH, years: int = config.SCHEDULE_YEARS) -> int:
+def days_needed(epoch: datetime.date = config.EPOCH, years: int = config.SCHEDULE_YEARS) -> int:
     end = datetime.date(epoch.year + years, epoch.month, min(epoch.day, 28))
     return (end - epoch).days + 1
 

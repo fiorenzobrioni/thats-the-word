@@ -186,7 +186,7 @@ Only in a game whose language is not the interface's (VISION §5, §9); as propo
 
 ### 4.6 The daily word and the archive
 
-- **The epoch** is the date of daily number 1 (§15, Open: proposed, the 1.0 release's date). The daily of a local date `d` is number `d − epoch + 1`, and its word is the language's frozen schedule at that number (§6.5): the same for every player, from the local date alone, with no server (VISION §8). It changes at local midnight.
+- **The epoch** is the date of daily number 1: **1 November 2026**, fixed by the owner before the release (§15, 12 Nov 2026, «Open 10, Open 22 and VISION Q2 answered»), so the archive holds days to play whenever 1.0 comes; never moved again. The daily of a local date `d` is number `d − epoch + 1`, and its word is the language's frozen schedule at that number (§6.5): the same for every player, from the local date alone, with no server (VISION §8). It changes at local midnight.
 - A daily game belongs to the **date it was started on**: one started at 23:58 and finished at 00:03 is the earlier day's, for the calendar and the streak.
 - **The archive**: every date from the epoch to today, per language, marked solved, missed or not played; future dates are not playable (a phone's clock set ahead is not checked against anything, and needs not be: nobody is competing).
 - **The calendar** (`ArchiveMonth`, `:feature:home`): a month of a language at a time, from the epoch's to today's; each day found, missed, under way or not played, drawn as the game draws a letter (the right place's ink square, the absent tile sunk, elsewhere's amber round, the empty tile), a day caught up later from the archive with a dot; the days ahead and those before the epoch faint, not playable. A past day is touched to play it, take it up or see it.
@@ -331,6 +331,7 @@ Square for *here*, round for *somewhere else*: the shape alone says it, in grey,
 
 ### 7.3 The grid and the keyboard
 
+- Under the grid, while a game is played, the key of the marks: each mark's tile in small with its words ("Right place", "Elsewhere", "Not in the word"), quiet, wrapping at a large text size (the owner, §15, 12 Nov 2026, «Open 10, Open 22 and VISION Q2 answered»). The row being typed frames its next empty tile as a typed tile's, where the next letter goes. A game in Hard says so above its title ("English · #20 · Hard").
 - The grid: the word's length across, the attempts down, the tiles as large as the column allows (56 dp on a phone, never under 44), centred; a hint's row drawn with the hint's icon where the spent attempt was.
 - The keyboard: QWERTY in the three languages, with Ñ beside L in Spanish; Enter and Delete on the bottom row; every key at least 48 dp tall and a full row's share wide; each key in its letter's best mark, by colour and a small mark of its shape. A hardware keyboard types too. The phone's own keyboard is never used: the game's keys are its surface.
 - Refusals are said in one line above the keyboard ("Not in the list", "The second letter must be A"), never a toast, and the row shakes.
@@ -511,7 +512,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 ### Phase 9 — Release on GitHub (v1.0.0)
 
 - [ ] The name checked in the stores and the trademark registers (VISION Q1)
-- [ ] The epoch fixed (§4.6) and the schedules checked against it
+- [x] The epoch fixed (§4.6) and the schedules checked against it (12 Nov 2026: 1 November 2026, the owner's; the schedules' 3,654 entries reach to 1 November 2036)
 - [ ] `CHANGELOG.md`'s 1.0.0 section; `thatstheword.versionName=1.0.0`; tag `v1.0.0`
 - [ ] The README's download link and the release key's fingerprint
 - [ ] The sister apps' READMEs name the game in "The family"
@@ -574,7 +575,7 @@ As the family's: the same key, the store listing, the data safety form ("no data
 
 ### Open
 
-What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 10, 14 to 17 and 22 are needed by the phases they name.
+What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 14 to 17 are needed by the phases they name.
 
 From this review (§15, 12 Nov 2026, «The repository, the vision's review and this plan»), each with a proposal:
 
@@ -587,7 +588,7 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 - [x] **7. Bridge needs several lengths before 1.2.** VISION puts Bridge in 1.1 and variable length in 1.2 because each length costs its lists, but *gatto / cat / gato* already has three lengths. Proposed: the accepted sets of every length come with 1.1 (they are cheap: filtered expansions); what 1.2 adds per length is the solutions, their levels and meanings. And Bridge plays the player's chosen languages, two or three, not always all three: a learner of one foreign language should not need the third. Closed by the owner (§15, 12 Nov 2026, «Open 7 answered; longer words' slots»): the proposal confirmed.
 - [x] **8. What the notebook gathers.** "The words met" could mean every guess: six a game, mostly words the player knows. Proposed: the solutions by themselves; a guessed word by a touch on the end card ("Add to the notebook"). Closed by the owner (§15, 12 Nov 2026, «Phase 2: the game engine»): the proposal confirmed.
 - [x] **9. A day played twice.** Proposed: a day's result is its first finished game; a finished day can be played again as practice, not counted (§4.6); a daily belongs to the date it was started on. Closed by the owner (the same entry): the proposal confirmed.
-- [ ] **10. The epoch** (daily number 1). Proposed: the day 1.0 is released; until then a provisional epoch for development, fixed in Phase 9.
+- [x] **10. The epoch** (daily number 1). Proposed: the day 1.0 is released; until then a provisional epoch for development, fixed in Phase 9. Closed by the owner (§15, 12 Nov 2026, «Open 10, Open 22 and VISION Q2 answered»): 1 November 2026, fixed now.
 - [x] **11. Hints' details** (§4.5): each kind once a game; the cost drawn as the last row spent; none with one attempt left; the letter is the leftmost not yet found, the same for every player. Proposed as written. Closed by the owner (the same entry): confirmed as written.
 - [x] **12. The levels are cumulative** (Base inside Intermediate, …, Complete everything) and each game language has its own. Proposed as written (§4.7). Closed by the owner (the same entry): confirmed as written.
 - [x] **13. Sound and haptics' defaults.** Proposed: both on; sound silent whenever the phone is on silent or vibrate; haptics following the phone's own touch-feedback setting; the in-app switches of VISION §12 turn each off. Closed by the owner (§15, 12 Nov 2026, «Phase 3: the game screen»): confirmed as proposed.
@@ -599,7 +600,7 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 From VISION §16, still open:
 
 - [x] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9); a close name exists, «What's The Word» (VISION §16). Also to look at then: how the launchers show a fifteen-character name under the icon (some cut it to «That's The W…»). Closed by the owner (§15, 12 Nov 2026, «Open 21 and VISION Q1 answered»): the name stays *That's The Word*.
-- [ ] **VISION Q2: the modes' names** in the three interface languages (with the strings of each phase).
+- [x] **VISION Q2: the modes' names** in the three interface languages (with the strings of each phase). Closed for 1.0 by the owner (§15, 12 Nov 2026, «Open 10, Open 22 and VISION Q2 answered»): the names as built; 1.1's and 1.2's proposed there, decided when they are built.
 - [x] **VISION Q3: the licences** of the Spanish and English sources and of Wiktionary's data. Closed (§15, 12 Nov 2026, «Phase 1: the words»): RLA-ES tri-licensed, used under GPL-3.0-or-later; SCOWL's permissive notice; Wiktionary CC BY-SA 4.0 (and GFDL), used under CC BY-SA 4.0; wordfreq's data CC BY-SA 4.0.
 - [x] **VISION Q4: the definitions' quality** in the three interface languages. Closed by the owner's go on the samples (§15, 12 Nov 2026, «Phase 1 closed»).
 - [x] **VISION Q5: the app's size**. Closed (the same entry): 3.3 MB of word files for the three languages, uncompressed in the APK.
@@ -616,7 +617,7 @@ From Phase 3 (§15, 12 Nov 2026, «Phase 3: the game screen»):
 
 From Phase 4 (§15, 12 Nov 2026, «Phase 4: the start page»):
 
-- [ ] **22. Today's word missed ends the streak at once.** §4.8 said the run ends "today or yesterday", written for a today not yet played; it left open a today already missed, which read literally kept the run until midnight (the start page would have said "3 days in a row" under "Not this time"). Proposed, and built so, one line to undo (`Streaks.current`): a miss today ends it at once; the longest streak keeps the run it was. Or keep the run until midnight.
+- [x] **22. Today's word missed ends the streak at once.** §4.8 said the run ends "today or yesterday", written for a today not yet played; it left open a today already missed, which read literally kept the run until midnight (the start page would have said "3 days in a row" under "Not this time"). Proposed, and built so, one line to undo (`Streaks.current`): a miss today ends it at once; the longest streak keeps the run it was. Or keep the run until midnight. Closed by the owner (the same entry): confirmed as built.
 
 From Phase 0:
 
@@ -795,6 +796,13 @@ The README's «For every player» line wore the wheelchair symbol; it wears 🤝
 
 - **Open 21, closed as proposed**: the shared result's right place is 🟦, the blue square, in the right place's ink, beside 🟠 and ▫️ (`ShareText.RIGHT_PLACE`, its test; §7.6).
 - **VISION Q1, closed by the owner's choice**: the name stays *That's The Word*. Phase 9's box (the stores and the trademark registers looked at by hand) stays, as the last look before the release, not as an open question.
-- **Open 10**: the owner proposes a fixed epoch, 1 November 2026, so the archive already holds past days whenever 1.0 is released. The assessment and the question back are in this session's answer; nothing is changed until the owner's go.
-- **VISION Q2**: the modes' names explained, with a proposal, in the same answer; still open.
+- **Open 10**: the owner proposes a fixed epoch, 1 November 2026, so the archive already holds past days whenever 1.0 is released. Assessed (agreed: the archive is not empty at the release, the epoch is settled before the release rather than at it, and the schedules' entries are by number, so no word file changes), and asked back before it was set.
+- **VISION Q2**: the modes' names explained, with a proposal; answered in the next entry.
+
+### 12 Nov 2026 — Open 10, Open 22 and VISION Q2 answered; the game page's key (owner: "Open 10: ti do il mio via libera, imposta. Q2: va bene la tua proposta. Open 22: confermo la tua proposta"; "la schermata di gioco è un po' scarna [...] manca ad esempio è una legenda per capire i colori delle lettere [...] vedi tu se hai suggerimenti per renderla più viva e carina ma senza aggiungere rumore")
+
+- **Open 10, the epoch: 1 November 2026**, fixed now and never moved again (§4.6). `DailyCalendar.EPOCH` and `tools/words/`'s `EPOCH` (both renamed from `PROVISIONAL_EPOCH`). The schedules are by number, and ten years from 1 November are 3,654 entries as from 12 November: **no word file changes**, and the words' tests pass. One line of the words' report (`docs/words/README.md`, «The daily schedules») still names 2026-11-12: it is the script's output, never edited by hand, and a rebuild needs the sources' cache (about 1 GB, and Wiktionary's pinned extracts, which kaikki.org may no longer serve), so the line is rewritten at the next rebuild of the words (`build.py --check` differs by that line until then). The dailies are numbered eleven later than before: today is #12. A test phone that played a daily before this keeps its game with its word, while that date's word is now another: its data is best cleared. Phase 9's box ticked.
+- **Open 22, confirmed**: today's word missed ends the streak at once (§4.8).
+- **VISION Q2, the modes' names, closed for 1.0** as proposed, as built: Today's word / La parola di oggi / La palabra de hoy; The calendar / Il calendario / El calendario; Free play / Gioco libero / Juego libre; Hard / Difficile / Difícil; practice / esercizio / práctica. For 1.1 and 1.2, proposed and decided when they are built, on screen: Translate (Traduci, Traduce), Bridge (Ponte, Puente), Review (Ripasso, Repaso); Ladder (Scala, Escalera), the grids (Doppia and Quadrupla), Lengths (Lunghezze, Longitudes), Liar (Bugiarda, Mentirosa).
+- **The game page, less bare, without noise** (§7.3). None of this was in a later phase: the guided first game (Phase 7) teaches the rules once, by playing, and Open 17 proposes a short "How to play" card in Settings; neither shows the marks while a game is played. Built: (1) **the key of the marks** under the grid while the game is played, each mark's tile in small with two or three words in the dress's quiet ink, gone with the keyboard when the game ends, wrapping at twice the text size (it was cut there first); the grid's tiles count its room. (2) **The next tile** of the row being typed framed as a typed tile, so the eye finds where the next letter goes; still, never blinking. (3) **Hard said above the title** ("Italiano · #9 · difficile"). The screenshots were looked at in the three languages, on a small phone and at twice the text size. What would make it livelier still is already planned: the sounds (Phase 7), the milestone's light (Phase 5), the hints' row (Phase 5).
 

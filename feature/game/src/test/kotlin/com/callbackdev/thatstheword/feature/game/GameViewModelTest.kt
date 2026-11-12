@@ -131,7 +131,7 @@ class GameViewModelTest {
         assertThat(viewModel(id).awaitState().state).isEqualTo(GameState.WON)
 
         val text = second.shareText(ShareText.Labels("That’s The Word", "English", "Free play", "Hard") { "$it hints" })
-        assertThat(text).startsWith("That’s The Word · #9 · English · 2/6")
+        assertThat(text).startsWith("That’s The Word · #20 · English · 2/6")
         assertThat(text).doesNotContain(Alphabet.of(Language.ENGLISH).keyForm(solution).uppercase())
     }
 

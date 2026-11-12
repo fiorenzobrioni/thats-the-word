@@ -34,7 +34,7 @@ class OutputsTest(unittest.TestCase):
         today = datetime.date.today()
         for g in config.LANGUAGES:
             count = pack.read_header(read(g, "daily.bin"))["count"]
-            left = schedule.years_left(count, config.PROVISIONAL_EPOCH, today)
+            left = schedule.years_left(count, config.EPOCH, today)
             self.assertGreaterEqual(left, 3, f"{g}: {left:.1f} years of dailies left")
 
     def test_every_daily_is_a_solution_of_the_daily_levels_and_accepted(self):

@@ -95,7 +95,7 @@ class HomeViewModelTest {
         try {
             val first = model.await()
             assertThat(first.gameLanguage).isEqualTo(Language.ITALIAN)
-            assertThat(first.number).isEqualTo(22)
+            assertThat(first.number).isEqualTo(33)
             assertThat(first.gameLanguageToday.status).isEqualTo(DayStatus.NOT_PLAYED)
 
             val todayId = model.opened { openDaily(today, it) }

@@ -117,6 +117,10 @@ class GameScreenTest {
             "Row 1: S, absent; T, elsewhere; E, absent; A, elsewhere; M, absent",
         ).assertIsDisplayed()
         compose.onNodeWithContentDescription("Row 2, typing: P L").assertIsDisplayed()
+        // The marks' key under the grid, while the game is played.
+        compose.onNodeWithText("Right place").assertIsDisplayed()
+        compose.onNodeWithText("Elsewhere").assertIsDisplayed()
+        compose.onNodeWithText("Not in the word").assertIsDisplayed()
         compose.onNodeWithContentDescription("T, elsewhere").assertIsDisplayed()
         compose.onNodeWithContentDescription("S, absent").assertIsDisplayed()
         compose.onNodeWithContentDescription("Q").performClick()
@@ -140,6 +144,8 @@ class GameScreenTest {
         val game = game(Language.ITALIAN, "pasta", "salto", hard = true)
         draw(state(game, typed = "torta", refusal = Refusal.MustBeAt(1, Letter(0)), letter = 'A'))
         compose.onNodeWithText("La seconda lettera dev’essere A.").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Italiano · #9 · difficile", useUnmergedTree = true).assertExists()
+        compose.onNodeWithText("Al posto giusto").assertIsDisplayed()
         compose.onNodeWithContentDescription(
             "Riga 1: S, altrove; A, al posto giusto; L, assente; T, al posto giusto; O, assente",
         )
@@ -164,6 +170,7 @@ class GameScreenTest {
         compose.onNodeWithText("Practice: the day keeps its first result.").assertExists()
         compose.onNodeWithText("Play it again, as practice").assertExists()
         compose.onNodeWithText("Share the result").assertDoesNotExist()
+        compose.onNodeWithText("Right place").assertDoesNotExist()
         compose.walkPage(hasTestTag(GameTags.PAGE), "game-practice")
     }
 

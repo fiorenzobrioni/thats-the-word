@@ -42,7 +42,8 @@ Phase 1 builds them before anything is drawn, and measures them (`docs/words/REA
 6. **The daily schedule** is drawn from Base and Intermediate, every word once before any twice,
    each entry by a generator seeded with the schedule's seed and the entry's number; append-only,
    enforced by the build (it reads the committed file and refuses to change an entry). Ten years
-   from the provisional epoch.
+   from the epoch, 1 November 2026 (fixed by the owner on 12 Nov 2026, PLANNING §15, Open 10;
+   the entries are by number, so fixing it changed no byte).
 7. **Translations** are shown when two of four sources agree (the interface edition's gloss, the
    game edition's table, the interface edition's tables that list the word, the English edition's
    tables through English), or, one at most, when a single table gives it for the word's first

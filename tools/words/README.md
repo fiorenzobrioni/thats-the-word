@@ -53,7 +53,7 @@ A build after the first takes three or four minutes and about 5 GB of memory.
 - `deny_<language>.txt`: words kept out of the solutions, with why. The candidates are in
   `docs/words/review/<language>.md`; a word here stays accepted as a guess.
 
-The choices (the levels' thresholds, the daily's levels and seed, the provisional epoch, the
+The choices (the levels' thresholds, the daily's levels and seed, the epoch, the
 Spanish dictionaries read, the meanings' length) are in `pipeline/config.py`, each with its reason.
 Change one, rebuild, read the report, and record it in PLANNING.md §15.
 

@@ -15,6 +15,12 @@
     <string name="game_practice_eyebrow">%1$s · #%2$d · practice</string>
     <string name="game_guided">First game</string>
     <string name="game_back">Back</string>
+    <!-- Above the title of a game played in Hard: "English · #20 · Hard". -->
+    <string name="game_eyebrow_hard">%1$s · Hard</string>
+    <!-- The key of the marks, under the grid while a game is played (VISION §6). -->
+    <string name="key_right_place">Right place</string>
+    <string name="key_elsewhere">Elsewhere</string>
+    <string name="key_absent">Not in the word</string>
 
     <!-- The keys, as TalkBack reads them. -->
     <string name="key_enter">Enter</string>

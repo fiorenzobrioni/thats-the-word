@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit
  * at local midnight. A daily belongs to the date it was started on (the owner, PLANNING §15, Open 9):
  * the caller keeps the date of [today] at the start, and the game never moves.
  */
-class DailyCalendar(private val clock: Clock, val epoch: LocalDate = PROVISIONAL_EPOCH) {
+class DailyCalendar(private val clock: Clock, val epoch: LocalDate = EPOCH) {
     fun today(): LocalDate = LocalDate.now(clock)
 
     /** The local date of an [instant], in the clock's zone. */
@@ -55,9 +55,11 @@ class DailyCalendar(private val clock: Clock, val epoch: LocalDate = PROVISIONAL
 
     companion object {
         /**
-         * Daily number 1, provisional until the 1.0 release fixes it (PLANNING §15, Open 10): the
-         * date `tools/words/` wrote the schedules from (`PROVISIONAL_EPOCH` in its config).
+         * Daily number 1 (PLANNING.md §4.6), fixed by the owner on 12 Nov 2026 (PLANNING §15, Open
+         * 10) and never moved again: before the release, so the archive already holds days to play
+         * whenever 1.0 comes. `EPOCH` in `tools/words/`'s config is the same date; the schedules'
+         * entries are by number, so the date chose no word.
          */
-        val PROVISIONAL_EPOCH: LocalDate = LocalDate.of(2026, 11, 12)
+        val EPOCH: LocalDate = LocalDate.of(2026, 11, 1)
     }
 }

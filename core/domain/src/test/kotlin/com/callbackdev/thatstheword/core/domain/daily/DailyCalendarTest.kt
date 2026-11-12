@@ -28,8 +28,8 @@ class DailyCalendarTest {
     }
 
     @Test
-    fun `the provisional epoch is the date the schedules were written from`() {
-        assertThat(DailyCalendar.PROVISIONAL_EPOCH).isEqualTo(epoch)
+    fun `the epoch is the owner's, the first of November 2026, as the words' script has it`() {
+        assertThat(DailyCalendar.EPOCH).isEqualTo(LocalDate.of(2026, 11, 1))
     }
 
     @Test

@@ -145,8 +145,8 @@ def _readme(built) -> str:
     w("")
 
     w("## The daily schedules\n")
-    w(f"Per language, {len(next(iter(built.schedules.values()))):,} dailies: ten years from the provisional epoch,")
-    w(f"{config.PROVISIONAL_EPOCH.isoformat()} (§15 Open 10). Append-only: a rebuild keeps every entry and only adds.")
+    w(f"Per language, {len(next(iter(built.schedules.values()))):,} dailies: ten years from the epoch,")
+    w(f"{config.EPOCH.isoformat()} (§15 Open 10). Append-only: a rebuild keeps every entry and only adds.")
     w("Each word comes once before any comes twice, so a word returns after the whole pool has passed.\n")
     w("| | Dailies | Pool | A word returns after | Words that left the solutions |")
     w("|---|---|---|---|---|")

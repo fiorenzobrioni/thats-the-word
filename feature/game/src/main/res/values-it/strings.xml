@@ -9,6 +9,10 @@
     <string name="game_practice_eyebrow">%1$s · #%2$d · esercizio</string>
     <string name="game_guided">Prima partita</string>
     <string name="game_back">Indietro</string>
+    <string name="game_eyebrow_hard">%1$s · difficile</string>
+    <string name="key_right_place">Al posto giusto</string>
+    <string name="key_elsewhere">Altrove</string>
+    <string name="key_absent">Non c’è</string>
 
     <string name="key_enter">Invio</string>
     <string name="key_delete">Cancella</string>

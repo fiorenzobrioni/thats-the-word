@@ -26,7 +26,7 @@ val ScreenMargin = 16.dp
 /**
  * A letter's tile: a rounded square, rounder than a card's corner so a row of them reads as
  * pieces, not as a table's cells. Its corner is a fraction of its side, so a smaller tile (a
- * longer word, a narrow phone) keeps the same drawing. The feedback's shapes join it in Phase 3
- * (PLANNING.md §7).
+ * longer word, a narrow phone) keeps the same drawing. It is also the right place's shape; elsewhere's is round (`Feedback.kt`,
+ * PLANNING.md §7.2).
  */
 const val TILE_CORNER_PERCENT = 22

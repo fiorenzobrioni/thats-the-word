@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_it">Italiano</string>
+    <string name="language_en">Inglés</string>
+    <string name="language_es">Español</string>
+
+    <string name="game_daily_eyebrow">%1$s · #%2$d</string>
+    <string name="game_free">Juego libre</string>
+    <string name="game_guided">Primera partida</string>
+    <string name="game_back">Atrás</string>
+
+    <string name="key_enter">Enviar</string>
+    <string name="key_delete">Borrar</string>
+
+    <string name="mark_right_place">en su sitio</string>
+    <string name="mark_elsewhere">en otro sitio</string>
+    <string name="mark_absent">no está</string>
+    <string name="letter_mark">%1$s, %2$s</string>
+    <string name="row_revealed">Fila %1$d: %2$s</string>
+    <string name="row_typing">Fila %1$d, escribiendo: %2$s</string>
+    <string name="row_spent">Fila %1$d, gastada en una pista</string>
+
+    <string name="refusal_too_short">Faltan letras.</string>
+    <string name="refusal_not_a_word">No está en la lista.</string>
+    <string name="refusal_must_be_at">La %1$s letra debe ser %2$s.</string>
+    <string-array name="ordinals">
+        <item>primera</item>
+        <item>segunda</item>
+        <item>tercera</item>
+        <item>cuarta</item>
+        <item>quinta</item>
+        <item>sexta</item>
+        <item>séptima</item>
+        <item>octava</item>
+        <item>novena</item>
+        <item>décima</item>
+        <item>undécima</item>
+        <item>duodécima</item>
+    </string-array>
+    <plurals name="refusal_must_contain">
+        <item quantity="one">Falta la %2$s.</item>
+        <item quantity="many">La %2$s va %1$d veces.</item>
+        <item quantity="other">La %2$s va %1$d veces.</item>
+    </plurals>
+
+    <string name="game_found">Esa es la palabra.</string>
+    <string name="game_not_found">Esta vez no.</string>
+    <string name="end_the_word">La palabra</string>
+    <plurals name="end_found_in">
+        <item quantity="one">Encontrada en %1$d intento de %2$d.</item>
+        <item quantity="many">Encontrada en %1$d intentos de %2$d.</item>
+        <item quantity="other">Encontrada en %1$d intentos de %2$d.</item>
+    </plurals>
+    <plurals name="end_not_found">
+        <item quantity="one">Se acabó el intento.</item>
+        <item quantity="many">Se acabaron los %1$d intentos.</item>
+        <item quantity="other">Se acabaron los %1$d intentos.</item>
+    </plurals>
+    <string name="end_your_words">Tus palabras</string>
+    <string name="end_share">Compartir el resultado</string>
+
+    <string name="share_hard">Difícil</string>
+    <plurals name="share_hints">
+        <item quantity="one">%d pista</item>
+        <item quantity="many">%d pistas</item>
+        <item quantity="other">%d pistas</item>
+    </plurals>
+</resources>

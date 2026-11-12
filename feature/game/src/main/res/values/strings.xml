@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The game page (PLANNING.md §7). Short, calm, a little theatrical; no exclamation marks.
+         Sentence case: the page draws its capitals. -->
+
+    <!-- The languages, as the interface names them: the page's line above the date, the shared result. -->
+    <string name="language_it">Italian</string>
+    <string name="language_en">English</string>
+    <string name="language_es">Spanish</string>
+
+    <!-- Above the date: the game language and the daily's number. -->
+    <string name="game_daily_eyebrow">%1$s · #%2$d</string>
+    <string name="game_free">Free play</string>
+    <string name="game_guided">First game</string>
+    <string name="game_back">Back</string>
+
+    <!-- The keys, as TalkBack reads them. -->
+    <string name="key_enter">Enter</string>
+    <string name="key_delete">Delete</string>
+
+    <!-- The marks, as TalkBack says them after a letter (VISION §6). -->
+    <string name="mark_right_place">right place</string>
+    <string name="mark_elsewhere">elsewhere</string>
+    <string name="mark_absent">absent</string>
+    <!-- A letter and its mark: "C, elsewhere". -->
+    <string name="letter_mark">%1$s, %2$s</string>
+    <!-- A row read as one sentence (PLANNING.md §7.7): "Row 2: C, elsewhere; A, right place; …". -->
+    <string name="row_revealed">Row %1$d: %2$s</string>
+    <string name="row_typing">Row %1$d, typing: %2$s</string>
+    <string name="row_spent">Row %1$d, spent on a hint</string>
+
+    <!-- The refusals, said in one line above the keyboard (PLANNING.md §7.3). -->
+    <string name="refusal_too_short">Not enough letters.</string>
+    <string name="refusal_not_a_word">Not in the list.</string>
+    <!-- Hard: "The second letter must be A." -->
+    <string name="refusal_must_be_at">The %1$s letter must be %2$s.</string>
+    <string-array name="ordinals">
+        <item>first</item>
+        <item>second</item>
+        <item>third</item>
+        <item>fourth</item>
+        <item>fifth</item>
+        <item>sixth</item>
+        <item>seventh</item>
+        <item>eighth</item>
+        <item>ninth</item>
+        <item>tenth</item>
+        <item>eleventh</item>
+        <item>twelfth</item>
+    </string-array>
+    <!-- Hard: a letter found must be used, as many times as it was found. -->
+    <plurals name="refusal_must_contain">
+        <item quantity="one">The %2$s is missing.</item>
+        <item quantity="other">The %2$s is needed %1$d times.</item>
+    </plurals>
+
+    <!-- The end (VISION §2): the line the name stands for, and the line for a word not found. -->
+    <string name="game_found">That’s the word.</string>
+    <string name="game_not_found">Not this time.</string>
+    <string name="end_the_word">The word</string>
+    <plurals name="end_found_in">
+        <item quantity="one">Found in %1$d attempt of %2$d.</item>
+        <item quantity="other">Found in %1$d attempts of %2$d.</item>
+    </plurals>
+    <plurals name="end_not_found">
+        <item quantity="one">No attempt left.</item>
+        <item quantity="other">All %1$d attempts used.</item>
+    </plurals>
+    <string name="end_your_words">Your words</string>
+    <string name="end_share">Share the result</string>
+
+    <!-- The shared result's words (PLANNING.md §7.6). The name stays in English in every language. -->
+    <string name="share_app_name" translatable="false">That’s The Word</string>
+    <string name="share_hard">Hard</string>
+    <plurals name="share_hints">
+        <item quantity="one">%d hint</item>
+        <item quantity="other">%d hints</item>
+    </plurals>
+</resources>

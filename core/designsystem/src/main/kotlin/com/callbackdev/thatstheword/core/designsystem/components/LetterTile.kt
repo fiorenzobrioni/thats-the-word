@@ -24,9 +24,8 @@ import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
 import kotlinx.coroutines.delay
 
 /**
- * One letter on its tile, before any feedback: the start page's word, and from Phase 3 the grid's
- * letters as they are typed. The feedback's colours and shapes are not drawn here yet: they are
- * the owner's to choose (PLANNING.md §7, §15 Open).
+ * One letter on its tile, arriving: the start page's sample word. The grid's tiles, typed and
+ * marked, are [GameTile].
  *
  * @param appearDelayMillis when set, the tile arrives that long after it is first drawn, rising
  *   and settling with the game's spring; under reduced motion it fades in, at the same moment.

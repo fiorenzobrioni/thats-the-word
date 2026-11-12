@@ -18,14 +18,17 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (12 Nov 2026): Phases 0, 1 and 2 are done**: the words (`tools/words/`, their files in
-`core/words/src/main/assets/words/`, their report `docs/words/README.md`) have the owner's go, and
-the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9 case tested.
-Phase 3 (the game screen) is next. The vision is approved and reviewed; the build, the design
-system, CI, the keys and the mark are in place; the modules in the build are `:app`,
-`:core:model`, `:core:domain`, `:core:words`, `:core:designsystem` and `:core:testing`. The owner
-answered the review's questions 1 to 9, 11 and 12 on 12 Nov 2026; **six smaller questions are still
-open** (PLANNING §15, Open: 10 and 13 to 17): read them before building anything they touch.
+**State (12 Nov 2026): Phases 0, 1 and 2 are done, Phase 3 is built**: the words (`tools/words/`,
+their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) have the
+owner's go; the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
+case tested; the game screen (`:feature:game`) plays today's daily from a provisional start page,
+saved in Room (`:core:data`) after every move, its feedback the owner's choice (ink and amber).
+Phase 3 waits for a look on a phone (the reveal with the profiler, TalkBack); Phase 4 (the start
+page, the archive, free play) is next. The modules in the build are `:app`, `:core:model`,
+`:core:domain`, `:core:words`, `:core:data`, `:core:designsystem`, `:core:testing` and
+`:feature:game`. The owner answered the review's questions 1 to 9 and 11 to 13 on 12 Nov 2026;
+**six smaller questions are still open** (PLANNING §15, Open: 10, 14 to 17 and 21): read them
+before building anything they touch.
 
 Source of truth:
 
@@ -102,9 +105,9 @@ that does not match it.
 | `:core:domain` | pure Kotlin/JVM (Phase 2) | the game engine: alphabets and folding, the feedback, `Game` (guesses, refusals, Hard, hints, the end), the daily's number and word, free play's draw, streaks, statistics, milestones, the share text, the words' decoder, `BackupCodec` |
 | `:core:words` | Android library (Phase 2) | the word files in assets, written by `tools/words/`, mapped (`AssetWordFiles`, stored uncompressed: `noCompress` in `:app`) and handed to the decoder |
 | `:core:data` | Android library (Phase 3) | Room (`ThatsTheWordDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories |
-| `:core:designsystem` | Android library | M3 theme (Chiaro's dresses through the sisters), typography with the game's roles (`wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), shapes, motion (the family's springs and the game's `playful` one), page gutter (`PageWidth.kt`), `LetterTile`; later the feedback colours, the keyboard's keys, sounds and haptics |
+| `:core:designsystem` | Android library | M3 theme (Chiaro's dresses through the sisters), typography with the game's roles (`wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), shapes, motion (the family's springs and the game's `playful` one), page gutter (`PageWidth.kt`), the feedback (`FeedbackColors`, `markStyle`), `LetterTile`, `GameTile`, the keyboard's keys (`GameKey`), the game's few icons (`GameIcons`); later the sounds |
 | `:core:testing` | Android library, test-only | `assertAccessible()` (labels, 48dp touch targets) and `walkPage()`, shared by the UI tests as `testImplementation` |
-| `:feature:*` | Android library (from Phase 3) | `game`, `home`, `notebook`, `progress`, `onboarding`, `settings` |
+| `:feature:*` | Android library (from Phase 3) | `game` (Phase 3: the grid, the keyboard, the refusals, the end card); later `home`, `notebook`, `progress`, `onboarding`, `settings` |
 | `:app` | application | `Application`, `MainActivity`, the shell (the start page in Phase 0; Navigation 3 from Phase 3), DI entry points; wires everything |
 
 Rules: `:core:model` and `:core:domain` stay pure Kotlin/JVM; if a class there needs a `Context`

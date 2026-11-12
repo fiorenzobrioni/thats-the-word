@@ -4,6 +4,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.luminance
+import com.callbackdev.thatstheword.core.designsystem.theme.FeedbackColors
 import com.callbackdev.thatstheword.core.designsystem.theme.schemeFor
 import com.callbackdev.thatstheword.core.model.AppPalette
 import com.google.common.truth.Truth.assertWithMessage
@@ -13,7 +14,7 @@ import org.junit.Test
  * Every ink the app sets text in reads on every ground it stands on, in both dresses and both
  * themes: WCAG's 4.5:1 for text, the Accessibility Scanner's threshold. The generated schemes are
  * never hand-edited, so this pins the pairs the screens use. A screen that sets text on a new pair
- * adds it here; the feedback's colours come with their own pairs (Phase 3).
+ * adds it here; the feedback's colours have their own pairs.
  */
 class ContrastTest {
     private val dresses = AppPalette.entries.flatMap { palette ->
@@ -50,9 +51,26 @@ class ContrastTest {
         }
     }
 
-    private fun expect(dress: Dress, what: String, ink: Color, ground: Color) {
+    @Test
+    fun `every letter reads on its mark`() {
+        // The feedback's own colours, the same in every dress and theme (PLANNING.md §7.2).
+        expect(null, "a letter in its right place", FeedbackColors.OnRightPlace, FeedbackColors.RightPlace)
+        expect(null, "a letter elsewhere", FeedbackColors.OnElsewhere, FeedbackColors.Elsewhere)
+        for (dress in dresses) {
+            val s = dress.scheme
+            // An absent letter's tile, and an absent letter's key, sunk into the page.
+            expect(dress, "an absent letter", s.onSurfaceVariant, s.surfaceContainerHighest)
+            expect(dress, "an absent key", s.onSurfaceVariant, s.surfaceContainerLow)
+            // A key not yet tried, and Enter and Delete.
+            expect(dress, "an untried key", s.onSurface, s.surfaceContainerHighest)
+        }
+    }
+
+    private fun expect(dress: Dress?, what: String, ink: Color, ground: Color) {
         val ratio = contrast(ink.compositeOver(ground), ground)
-        assertWithMessage("${dress.name}: $what is ${"%.2f".format(ratio)}:1").that(ratio).isAtLeast(TEXT_CONTRAST)
+        assertWithMessage(
+            "${dress?.name ?: "feedback"}: $what is ${"%.2f".format(ratio)}:1",
+        ).that(ratio).isAtLeast(TEXT_CONTRAST)
     }
 
     private fun contrast(a: Color, b: Color): Double {

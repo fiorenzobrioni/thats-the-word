@@ -20,7 +20,8 @@
 - **Done**: Phase 0, the foundations (12 Nov 2026): the vision reviewed and answered, the build, the design system, CI green on GitHub, the debug key and the release key (rehearsed and pinned), the start page in three languages, the mark.
 - **Done**: Phase 1, the words (12 Nov 2026): the pipeline (`tools/words/`), the accepted sets, the solutions and their levels, the glossaries of the nine pairs, the daily schedules, the files and their report (`docs/words/README.md`); the owner's go on the meanings, the deny lists and the daily pool.
 - **Done**: Phase 2, the game engine (12 Nov 2026): `:core:model`, `:core:domain` (the folding, the marks, `Game` with Hard and the hints, the daily's dates and numbers, free play's draw, streaks, statistics, milestones, the share text, the words' decoder) and `:core:words` (the assets, mapped), every §4.9 case named in a test; the owner's answers to Open 8, 9, 11 and 12.
-- **Next**: Phase 3, the game screen. What is still open (§15) is needed by the phases it names.
+- **Built**: Phase 3, the game screen (12 Nov 2026): the feedback chosen by the owner (ink and amber), `:core:data` (Room version 1, the settings), the shell on Navigation 3, `:feature:game` (the grid, the keyboard, the refusals, the end card, the motion, the haptics), today's daily from a provisional start page. Its acceptance on a phone (the reveal at the phone's refresh rate with the profiler, TalkBack through a game) is still to be looked at.
+- **Next**: Phase 4, the start page, the daily, the archive and free play. What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -239,7 +240,7 @@ Only in a game whose language is not the interface's (VISION §5, §9); as propo
 
 | Table | Columns | Notes |
 |---|---|---|
-| `games` | `id`, `language`, `mode`, `daily_date` (epoch day, for a daily), `level` (for free play), `solution` (key form), `length`, `attempts`, `hard`, `ui_language`, `status`, `started_at`, `finished_at`, `practice` | A daily's counted game unique per `(language, daily_date)` when not practice. The marks are never stored: they follow from the solution and the guesses |
+| `games` | `id`, `language`, `mode`, `daily_date` (epoch day, for a daily), `level` (for free play), `solution` (key form), `length`, `attempts`, `hard`, `ui_language`, `status`, `started_at`, `started_on` (the local date it was started on, an epoch day), `finished_at`, `practice` (0 for the counted game, 1, 2… for a finished day's replays) | A daily's counted game unique per `(language, daily_date)`: a unique index on `(language, daily_date, practice)` (§15, 12 Nov 2026, «Phase 3: the game screen»). The marks are never stored: they follow from the solution and the guesses |
 | `guesses` | `game_id`, `position`, `word` (key form) | Cascade on the game's delete |
 | `hints` | `game_id`, `kind`, `position` | One `position` sequence with the guesses: a game is its moves in order (§4.3), and the letter a hint revealed follows from the guesses before it |
 | `notebook` | `language`, `word` (key form), `first_met`, `last_met`, `times_met`, `solved`, `missed`, `with_hints`, `saved_by_hand` | One row per word and language: the solutions by themselves, a guessed word when the player adds it from the end card (the owner, Open 8); the meanings are read from `:core:words`, never copied. 1.1's review adds its columns by a tested migration |
@@ -319,11 +320,11 @@ The marks are said by colour **and** shape (VISION §6), never colour alone, and
 
 | Mark | Colour | Shape | Letter |
 |---|---|---|---|
-| Right place | the app's colour (berry, as the mark's ground) | the tile stays square (corner 22%) | white |
+| Right place | a deep ink blue (`#233A7A`) | the tile stays square (corner 22%) | white |
 | Elsewhere | the family's amber | the tile becomes round (corner 50%): "somewhere in the word" | dark ink |
 | Absent | the dress's quietest ground, no border | the tile sinks (lower, smaller by 4%) | the quiet ink |
 
-Square for *here*, round for *somewhere else*: the shape alone says it, in grey, under every colour blindness, and in the share text (§7.6). The two colours are a blue-red and an amber, apart under deuteranopia and protanopia, and apart from the genre's well-known green, yellow and grey. Each letter ink is pinned at 4.5:1 on its ground by `ContrastTest`. Drawn on a board in Phase 3, with two alternatives, before the owner chooses.
+Square for *here*, round for *somewhere else*: the shape alone says it, in grey, under every colour blindness, and in the share text (§7.6). The two colours are an ink blue and an amber, apart under all three colour blindnesses, tritanopia included, and apart from the genre's well-known green, yellow and grey. Each letter ink is pinned at 4.5:1 on its ground by `ContrastTest` (`FeedbackColors`, `markStyle`). Chosen by the owner on a board of three (§15, 12 Nov 2026, «Phase 3: the game screen»): the berry of the first proposal gave way to the ink, the safest pair. On the keyboard each key takes its letter's mark: the colour, and a small square or dot in its corner for the shape; an absent letter's key sinks into the page.
 
 ### 7.3 The grid and the keyboard
 
@@ -455,16 +456,16 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 ### Phase 3 — The game screen
 
-- [ ] The feedback's colours and shapes drawn on a board (two or three proposals, light and dark, under the three colour blindnesses and in grey), **chosen by the owner**, then `ContrastTest`'s pairs
-- [ ] `:core:data`: `ThatsTheWordDatabase` version 1 (§5), the schema exported; `GameRepository` (a game saved after every guess and hint, taken up where it was); `SettingsRepository`
-- [ ] The shell (Navigation 3); `:feature:game`: the grid, the keyboard with its marks, the refusals' line, the end card (the solution and its display form, the guesses, share), the hardware keyboard
-- [ ] The motion of §7.4, the haptics of §7.5; the reduced motion's fades
-- [ ] The daily in the game language from a provisional start page
-- [ ] UI tests from states, with `assertAccessible()` and `walkPage()` at twice the text size and on an open foldable; TalkBack's sentences; the screenshots looked at
+- [x] The feedback's colours and shapes drawn on a board (three proposals, light and dark, under the three colour blindnesses and in grey, with the reveal's motion), **chosen by the owner** (B, ink and amber), then `ContrastTest`'s pairs (12 Nov 2026)
+- [x] `:core:data`: `ThatsTheWordDatabase` version 1 (§5), the schema exported; `GameRepository` (a game saved after every guess and hint, taken up where it was); `SettingsRepository` (12 Nov 2026)
+- [x] The shell (Navigation 3); `:feature:game`: the grid, the keyboard with its marks, the refusals' line, the end card (the solution and its display form, the guesses, share), the hardware keyboard (12 Nov 2026)
+- [x] The motion of §7.4, the haptics of §7.5; the reduced motion's fades (12 Nov 2026; the milestone's light is Phase 5's, with the milestones)
+- [x] The daily in the game language from a provisional start page (12 Nov 2026)
+- [x] UI tests from states, with `assertAccessible()` and `walkPage()` at twice the text size and on an open foldable; TalkBack's sentences; the screenshots looked at (12 Nov 2026)
 
 **Acceptance:**
-- [ ] A daily played from start to end, closed in the middle and taken up again.
-- [ ] TalkBack reads a revealed row as one sentence; at twice the text size nothing is cut.
+- [ ] A daily played from start to end, closed in the middle and taken up again. On the JVM (12 Nov 2026: `GameViewModelTest`, through the page's view model, Room and the real words); on a phone, to be looked at.
+- [ ] TalkBack reads a revealed row as one sentence; at twice the text size nothing is cut. The sentences and the large-text pages are tested (12 Nov 2026); TalkBack itself, on a phone.
 - [ ] The reveal holds the phone's refresh rate on a mid-range device (looked at with the profiler).
 
 ### Phase 4 — Start, the daily, the archive and free play
@@ -570,7 +571,7 @@ As the family's: the same key, the store listing, the data safety form ("no data
 
 ### Open
 
-What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11 and 12 on 12 Nov 2026; 10 and 13 to 17 are needed by the phases they name.
+What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 10, 14 to 17 and 21 are needed by the phases they name.
 
 From this review (§15, 12 Nov 2026, «The repository, the vision's review and this plan»), each with a proposal:
 
@@ -586,7 +587,7 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 - [ ] **10. The epoch** (daily number 1). Proposed: the day 1.0 is released; until then a provisional epoch for development, fixed in Phase 9.
 - [x] **11. Hints' details** (§4.5): each kind once a game; the cost drawn as the last row spent; none with one attempt left; the letter is the leftmost not yet found, the same for every player. Proposed as written. Closed by the owner (the same entry): confirmed as written.
 - [x] **12. The levels are cumulative** (Base inside Intermediate, …, Complete everything) and each game language has its own. Proposed as written (§4.7). Closed by the owner (the same entry): confirmed as written.
-- [ ] **13. Sound and haptics' defaults.** Proposed: both on; sound silent whenever the phone is on silent or vibrate; haptics following the phone's own touch-feedback setting; the in-app switches of VISION §12 turn each off.
+- [x] **13. Sound and haptics' defaults.** Proposed: both on; sound silent whenever the phone is on silent or vibrate; haptics following the phone's own touch-feedback setting; the in-app switches of VISION §12 turn each off. Closed by the owner (§15, 12 Nov 2026, «Phase 3: the game screen»): confirmed as proposed.
 - [ ] **14. Settings, two additions.** Proposed: Appearance as the family's (theme, dress, typeface, wallpaper colours; VISION speaks of light and dark only), and the interface language through Android's per-app picker, which Settings opens (the family's way), rather than a list of the app's own.
 - [ ] **15. A daily reminder and a home-screen card**, not in VISION. Every sister has its cards, and a daily game is the kind of app a quiet reminder serves. Proposed: the reminder in 1.0 (one inexact alarm, silent on a day already played: the family's code), the card in 1.1; or neither.
 - [ ] **16. A native speaker's read** of the Spanish and Italian texts before 1.0 (VISION §2: the same rhythm, not a translation). Who?
@@ -605,6 +606,10 @@ From Phase 1 (§15, 12 Nov 2026, «Phase 1: the words»):
 - [x] **18. The owner's go on the meanings** (VISION Q4): read `docs/words/samples/` (50 words for each of the nine pairs, 35 of them from the daily pool) and say go, or what to change. With it, whether a translation that one table alone gives (marked *single* in the samples; about a third of the shown translations between Italian, Spanish and English's foreign pairs) stays shown, or only translations two sources agree on (the coverage would drop to the "agreed" column of the report). Closed (§15, 12 Nov 2026, «Phase 1 closed»): go, the samples read; the single-table translations stay, as built.
 - [x] **19. The deny lists read by a person**: `tools/words/lists/deny_*.txt` (seeded with seven words: *porca*; *gypsy*, *prick*, *lewis*; *coger*, *polla*, *verga*) and the candidates in `docs/words/review/` (every solution with an offensive or vulgar sense somewhere, and what each filter kept out). A daily is everyone's. Closed (§15, 12 Nov 2026, «Phase 1 closed»): read, the seven words confirmed.
 - [x] **20. The daily pool's size.** The dailies draw from Base and Intermediate (Zipf 3.5 and over): 776 Italian words, 1,302 English, 909 Spanish, so a word returns after about 2.1, 3.6 and 2.5 years. Proposed: keep it (a word every two years is not noticed, and a lower bound brings rarer words); or lower Intermediate to 3.2 for about a third more words. Closed (§15, 12 Nov 2026, «Phase 1 closed»): kept, as proposed.
+
+From Phase 3 (§15, 12 Nov 2026, «Phase 3: the game screen»):
+
+- [ ] **21. The share text's right-place symbol** (§7.6). It was proposed as 🟪 to match the berry; the right place is now ink blue. Proposed: 🟦, the blue square, beside 🟠 for elsewhere and ▫️ for absent (the shapes still say it: square, round, small). The genre's well-known squares are green and yellow; a high-contrast variant of it uses blue and orange *squares*, which a round 🟠 keeps apart. Or keep 🟪. Not changed until answered (`ShareText.RIGHT_PLACE`).
 
 From Phase 0:
 
@@ -740,3 +745,21 @@ What was decided, and why:
 - **Robolectric at SDK 35** for `:core:words` too, as `:app` and `:core:designsystem` pin it: the newest SDK's sandbox fails under Java 21 on a reflection into `java.base`.
 
 Checked here: `spotlessCheck`, `checkForbiddenPermissions`, `test` (every module), `:app:lintDebug` (no issue), `:app:assembleDebug`; the words' Python tests (53) and `build.py --check` (the same bytes).
+
+### 12 Nov 2026 — Phase 3: the game screen (owner: "Procedi con la fase 3")
+
+Open 13 was asked first, the phase's haptics touching it, and **the owner confirmed it as proposed**: sound and haptics on, sound silent on a phone in silent or vibrate, haptics following the phone's touch-feedback setting, an in-app switch for each (Phase 7). Then the feedback's board, then the phase:
+
+- **The feedback's board** (a private page shown to the owner, not committed): three proposals drawn as the game draws them, a row revealed with its motion (the colour filling from the tile's centre, the corner moving to its shape, the 70 ms stagger, the found word's wave), in light and dark, under protanopia, deuteranopia and tritanopia (Machado, Oliveira and Fernandes, 2009) and in grey, with the keys after a guess. **A**, berry and amber (§7.2 as proposed); **B**, ink and amber (the pair that stays apart under all three colour blindnesses, giving up the berry); **C**, A with the absent tile emptied to a hairline frame. **The owner chose B.** §7.2 now says so: right place a deep ink blue `#233A7A` with a white letter (10.7:1), elsewhere the amber `#FDB528` with a dark ink (9.4:1), absent the dress's quietest ground; `ContrastTest` pins the pairs, the keys' too.
+- **What B asked of the rest**: the Vivid dress's primary is an azure near the ink, so nothing beside the marks wears it. Enter and Delete stand on the letters' untried ground, and the end card's share button is outlined. The share text's 🟪 was chosen for the berry: Open 21 asks the owner about 🟦, and nothing is changed until then.
+- **`:core:data`** joins the build: `ThatsTheWordDatabase` version 1 (games, guesses, hints, notebook, milestones; the schema exported to `core/data/schemas/` and committed), `GameRepository`, `SettingsRepository` (DataStore, `settings`), `Lexicons` (the three languages' words, opened once), `InterfaceLanguage` (the per-app language, else the phone's). The notebook's and the milestones' tables are in the first schema though written from Phase 5, so they need no migration.
+- **Two columns of §5, settled in the code.** `practice` is a number, 0 for a day's counted game and 1, 2… for its replays, so the unique index on `(language, daily_date, practice)` is the day's one counted game: Room cannot declare a partial index (`WHERE practice = 0`), and one added by hand would fail Room's own check of the schema. And `started_on`, the local date a game was started on, is kept beside `started_at`: an instant read again in another time zone gives another date, and the streak needs the date as it was (§4.6). §5 now lists both.
+- **A game is saved after every move** in one transaction (its new moves and its status), and taken up by replaying its moves (`Game.restore`): the marks and the hint's letter are computed again, never read back. The letters typed and not yet sent live in the page's saved state.
+- **The schema's test** reads the committed JSON through Room's `MigrationTestHelper` in the unit tests (Robolectric): the Room convention now hands `schemas/` to the unit tests' assets, so every future migration is tested the same way, without a device.
+- **The shell** is Navigation 3: a start key and a game key (`@Serializable`, kept with the activity's state), each page's view models living as long as its entry (`lifecycle-viewmodel-navigation3`, AndroidX's own, of the lifecycle version already in the catalog, Apache-2.0), predictive back, a short slide and fade between pages, a fade under reduced motion.
+- **`:feature:game`**: the grid (tiles as large as the column allows, 56dp at most, 44 at least; the grid in the middle of the room above the keyboard), the keyboard (QWERTY, Ñ beside L, Enter and Delete on the bottom row, each key in its letter's best mark by colour and a small square or dot; its keys a row's share wide, so marked as dense targets, each its own labelled node), the refusals' line (with Hard's naming the position by its ordinal, or the letter and how many times), the end card (the line the name stands for, the word as it is written, how it was found, the words tried with each of their written forms, the result shared as text through the system's chooser), a hardware keyboard. Free play's and the guided game's titles are ready for Phases 4 and 7.
+- **The motion of §7.4**: a typed letter pops; a row is revealed tile by tile, the mark's colour filling from the centre while the corner moves (on the tile's layer, nothing measured again); a refused row shakes on a spring; a found word's row lifts in a wave, «That's the word.» rises and the end card follows, the keyboard leaving only then, the grid keeping its size. A game opened already finished is drawn at rest. Every movement is a fade under reduced motion; no information waits for one: a row's sentence for TalkBack is there as it is accepted, and announced (a polite live region) once its reveal ends. The milestone's light comes with the milestones (Phase 5).
+- **The haptics of §7.5** through the view's constants: a key's tap, a tick a revealed tile, a refusal, a win; no `VIBRATE`.
+- **The provisional start page**: Phase 0's page, with today's daily in the game language under the victory line (play it, take it up, see it), its language and number. The game language is the interface's until the first run asks (Phase 7).
+- **The tests**: `:core:data` 10 (a daily saved and taken up, one counted daily a day, the date before midnight, a hint replayed, the cascade, a future date refused, the stored forms; the schema; the settings' defaults and choices), `:feature:game` 14 (the page from states in the three languages, dark, a small phone, twice the text size, an open foldable, each with `assertAccessible()`; the end played while the page is open; the view model playing a daily to its end across two pages, and a hardware keyboard's Ñ), the start page's 3 more, `ContrastTest`'s feedback pairs. The screenshots were looked at: the share button was first tonal, in the dress's peach beside the amber marks, and is outlined now; the grid stood at the top of a tall phone, and is centred now.
+- **Not done here, a phone's to say**: the reveal's frames with the profiler, TalkBack through a whole game, the haptics' feel. Phase 3's acceptance boxes stay open for them.

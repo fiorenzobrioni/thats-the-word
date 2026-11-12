@@ -11,4 +11,14 @@
     <!-- The line every word found is greeted with, the name's own moment (VISION §2): in each
          language with the same spirit, never word for word. -->
     <string name="start_victory">That’s the word.</string>
+
+    <!-- Today's daily in the game language, from the start page (provisional, PLANNING.md §11 Phase 3). -->
+    <string name="start_play">Play today’s word</string>
+    <string name="start_continue">Take up today’s word</string>
+    <string name="start_see">See today’s word</string>
+    <!-- Under the button: the game language and the daily's number. -->
+    <string name="start_today_caption">%1$s · daily #%2$d</string>
+    <string name="start_language_it">Italian</string>
+    <string name="start_language_en">English</string>
+    <string name="start_language_es">Spanish</string>
 </resources>

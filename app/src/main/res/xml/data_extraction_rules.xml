@@ -4,7 +4,7 @@
   An allowlist, so nothing is carried by accident:
 
   - `databases/thatstheword.db` and its write-ahead log: the games played, the notebook, the
-    milestones (Phase 4).
+    milestones (from Phase 3).
   - `files/datastore/settings.preferences_pb`: the languages, the level, the options, the look.
 
   Left out by not being named: the word lists, which ship in the APK and are never copied;

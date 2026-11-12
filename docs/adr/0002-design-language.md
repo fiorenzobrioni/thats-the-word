@@ -42,7 +42,11 @@ and more motion, haptics and sound, its own fixed feedback colours, light and da
    message, square for the right place, round for elsewhere (the same tile, its corner animated
    from 22% to 50%, no new library), the sunk quiet tile for absent; the right place in the app's
    colour, elsewhere in the family's amber. Its drawing is proposed on a board in Phase 3, at a
-   premium app's finish, before it is built.
+   premium app's finish, before it is built. *Decided on the board (12 Nov 2026, PLANNING §15,
+   «Phase 3: the game screen»)*: the shapes as above, and the right place in a deep ink blue
+   (`#233A7A`) instead of the app's colour, the owner's choice of the three proposals, the pair
+   that stays apart under all three colour blindnesses. `FeedbackColors` and `markStyle` hold
+   it; the tiles are `GameTile`, the keys `GameKey`.
 5. **No colour of the genre.** The vision's identity rule (VISION §13): the palette, the shapes,
    the reveal (never the genre's flip) and the share symbols are the game's own, away from the
    genre's well-known green, yellow and grey.

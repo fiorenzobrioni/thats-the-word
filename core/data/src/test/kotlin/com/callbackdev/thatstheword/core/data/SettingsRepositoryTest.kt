@@ -1,0 +1,61 @@
+package com.callbackdev.thatstheword.core.data
+
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import com.callbackdev.thatstheword.core.model.AppPalette
+import com.callbackdev.thatstheword.core.model.Language
+import com.callbackdev.thatstheword.core.model.Level
+import com.callbackdev.thatstheword.core.model.ThemeMode
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
+
+/** The settings file (PLANNING.md §5): what was never chosen reads as its default. */
+class SettingsRepositoryTest {
+    @get:Rule val folder = TemporaryFolder()
+
+    private fun TestScope.repository(interfaceLanguage: Language = Language.SPANISH) = SettingsRepository(
+        PreferenceDataStoreFactory.create(scope = backgroundScope) {
+            folder.root.resolve("settings.preferences_pb")
+        },
+    ) { interfaceLanguage }
+
+    @Test
+    fun `the defaults`() = runTest {
+        val settings = repository().current()
+        assertThat(settings.gameLanguage).isEqualTo(Language.SPANISH)
+        assertThat(settings.levelOf(Language.ITALIAN)).isEqualTo(Level.BASE)
+        assertThat(settings.hard).isFalse()
+        // The owner, PLANNING §15, Open 13.
+        assertThat(settings.sound).isTrue()
+        assertThat(settings.haptics).isTrue()
+        assertThat(settings.reducedMotion).isNull()
+        assertThat(settings.themeMode).isEqualTo(ThemeMode.SYSTEM)
+        assertThat(settings.palette).isEqualTo(AppPalette.VIVID)
+        assertThat(settings.firstRunDone).isFalse()
+    }
+
+    @Test
+    fun `what is chosen is read back`() = runTest {
+        val repository = repository()
+        repository.setGameLanguage(Language.ITALIAN)
+        repository.setLevel(Language.ITALIAN, Level.ADVANCED)
+        repository.setHard(true)
+        repository.setHaptics(false)
+        repository.setReducedMotion(true)
+        repository.setPalette(AppPalette.PAPER)
+        val settings = repository.current()
+        assertThat(settings.gameLanguage).isEqualTo(Language.ITALIAN)
+        assertThat(settings.levelOf(Language.ITALIAN)).isEqualTo(Level.ADVANCED)
+        assertThat(settings.levelOf(Language.ENGLISH)).isEqualTo(Level.BASE)
+        assertThat(settings.hard).isTrue()
+        assertThat(settings.haptics).isFalse()
+        assertThat(settings.reducedMotion).isTrue()
+        assertThat(settings.palette).isEqualTo(AppPalette.PAPER)
+
+        repository.setReducedMotion(null)
+        assertThat(repository.current().reducedMotion).isNull()
+    }
+}

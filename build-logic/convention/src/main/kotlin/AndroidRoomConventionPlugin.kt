@@ -1,4 +1,6 @@
 import androidx.room.gradle.RoomExtension
+import com.android.build.api.variant.AndroidComponentsExtension
+import com.android.build.api.variant.HasUnitTest
 import com.callbackdev.thatstheword.buildlogic.library
 import com.callbackdev.thatstheword.buildlogic.libs
 import org.gradle.api.Plugin
@@ -18,6 +20,15 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
 
             extensions.configure<RoomExtension> {
                 schemaDirectory("$projectDir/schemas")
+            }
+            // MigrationTestHelper reads the committed schemas as assets: the Robolectric tests
+            // (the unit tests) open them, so every migration is tested without a device.
+            extensions.getByType(AndroidComponentsExtension::class.java).apply {
+                onVariants { variant ->
+                    (variant as? HasUnitTest)?.unitTest?.sources?.assets?.addStaticSourceDirectory(
+                        "$projectDir/schemas",
+                    )
+                }
             }
 
             dependencies {

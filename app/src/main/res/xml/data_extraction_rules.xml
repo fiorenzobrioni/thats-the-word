@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  What Android's backup and device transfer carry, decided rather than inherited (PLANNING.md §5).
+  An allowlist, so nothing is carried by accident:
+
+  - `databases/onmytongue.db` and its write-ahead log: the games played, the notebook, the
+    milestones (Phase 4).
+  - `files/datastore/settings.preferences_pb`: the languages, the level, the options, the look.
+
+  Left out by not being named: the word lists, which ship in the APK and are never copied;
+  caches; `no_backup`. Written in Phase 0, before those files exist, so that no build ever carries
+  more than this; checked with `bmgr` on a device when the database arrives.
+
+  The same list twice on purpose: `<cloud-backup>` is the copy Android sends to Google Drive,
+  end-to-end encrypted with the phone's PIN, pattern or password since Android 9, and only if the
+  player turned backup on; `<device-transfer>` is the direct phone-to-phone move. The game sends
+  neither itself and needs no permission for them: Android does the moving.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="database" path="onmytongue.db" />
+        <include domain="database" path="onmytongue.db-wal" />
+        <include domain="file" path="datastore/settings.preferences_pb" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="database" path="onmytongue.db" />
+        <include domain="database" path="onmytongue.db-wal" />
+        <include domain="file" path="datastore/settings.preferences_pb" />
+    </device-transfer>
+</data-extraction-rules>

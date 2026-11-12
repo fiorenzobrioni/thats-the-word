@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Written by tools/draw_launcher_icon.py: change the script and run it, never this file.
+     The mark (provisional): a speech bubble holding a word, its last tile lit in amber. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+<path android:pathData="M 43.00,31.00 H 65.00 A 11.00,11.00 0 0 1 76.00,42.00 V 50.00 A 11.00,11.00 0 0 1 65.00,61.00 H 43.00 A 11.00,11.00 0 0 1 32.00,50.00 V 42.00 A 11.00,11.00 0 0 1 43.00,31.00 Z M 39.15,41.25 H 43.85 A 2.40,2.40 0 0 1 46.25,43.65 V 48.35 A 2.40,2.40 0 0 1 43.85,50.75 H 39.15 A 2.40,2.40 0 0 1 36.75,48.35 V 43.65 A 2.40,2.40 0 0 1 39.15,41.25 Z M 51.65,41.25 H 56.35 A 2.40,2.40 0 0 1 58.75,43.65 V 48.35 A 2.40,2.40 0 0 1 56.35,50.75 H 51.65 A 2.40,2.40 0 0 1 49.25,48.35 V 43.65 A 2.40,2.40 0 0 1 51.65,41.25 Z" android:fillType="evenOdd">
+    <aapt:attr name="android:fillColor">
+        <gradient android:type="linear" android:startX="32.00" android:startY="29.00" android:endX="76.00" android:endY="73.00">
+            <item android:offset="0" android:color="#FFFFFFFF"/>
+            <item android:offset="1" android:color="#FFE3EAF4"/>
+        </gradient>
+    </aapt:attr>
+</path>
+<path android:pathData="M 39.00,59.00 L 35.50,71.00 L 51.00,59.00 Z" android:strokeWidth="2.50" android:strokeLineJoin="round">
+    <aapt:attr name="android:fillColor">
+        <gradient android:type="linear" android:startX="32.00" android:startY="29.00" android:endX="76.00" android:endY="73.00">
+            <item android:offset="0" android:color="#FFFFFFFF"/>
+            <item android:offset="1" android:color="#FFE3EAF4"/>
+        </gradient>
+    </aapt:attr>
+    <aapt:attr name="android:strokeColor">
+        <gradient android:type="linear" android:startX="32.00" android:startY="29.00" android:endX="76.00" android:endY="73.00">
+            <item android:offset="0" android:color="#FFFFFFFF"/>
+            <item android:offset="1" android:color="#FFE3EAF4"/>
+        </gradient>
+    </aapt:attr>
+</path>
+<path android:pathData="M 64.15,41.25 H 68.85 A 2.40,2.40 0 0 1 71.25,43.65 V 48.35 A 2.40,2.40 0 0 1 68.85,50.75 H 64.15 A 2.40,2.40 0 0 1 61.75,48.35 V 43.65 A 2.40,2.40 0 0 1 64.15,41.25 Z">
+    <aapt:attr name="android:fillColor">
+        <gradient android:type="linear" android:startX="61.75" android:startY="41.25" android:endX="71.25" android:endY="50.75">
+            <item android:offset="0" android:color="#FFFFD36A"/>
+            <item android:offset="1" android:color="#FFF28C17"/>
+        </gradient>
+    </aapt:attr>
+</path>
+</vector>

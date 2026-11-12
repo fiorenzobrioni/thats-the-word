@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Written by tools/draw_launcher_icon.py: change the script and run it, never this file.
+     The themed icon's layer: the same mark in one ink, the lit tile a solid square. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+<path android:pathData="M 43.00,31.00 H 65.00 A 11.00,11.00 0 0 1 76.00,42.00 V 50.00 A 11.00,11.00 0 0 1 65.00,61.00 H 43.00 A 11.00,11.00 0 0 1 32.00,50.00 V 42.00 A 11.00,11.00 0 0 1 43.00,31.00 Z M 39.15,41.25 H 43.85 A 2.40,2.40 0 0 1 46.25,43.65 V 48.35 A 2.40,2.40 0 0 1 43.85,50.75 H 39.15 A 2.40,2.40 0 0 1 36.75,48.35 V 43.65 A 2.40,2.40 0 0 1 39.15,41.25 Z M 51.65,41.25 H 56.35 A 2.40,2.40 0 0 1 58.75,43.65 V 48.35 A 2.40,2.40 0 0 1 56.35,50.75 H 51.65 A 2.40,2.40 0 0 1 49.25,48.35 V 43.65 A 2.40,2.40 0 0 1 51.65,41.25 Z M 64.15,41.25 H 68.85 A 2.40,2.40 0 0 1 71.25,43.65 V 48.35 A 2.40,2.40 0 0 1 68.85,50.75 H 64.15 A 2.40,2.40 0 0 1 61.75,48.35 V 43.65 A 2.40,2.40 0 0 1 64.15,41.25 Z" android:fillType="evenOdd" android:fillColor="#FFFFFFFF"/>
+<path android:pathData="M 39.00,59.00 L 35.50,71.00 L 51.00,59.00 Z" android:fillColor="#FFFFFFFF" android:strokeColor="#FFFFFFFF" android:strokeWidth="2.50" android:strokeLineJoin="round"/>
+<path android:pathData="M 65.55,43.85 H 67.45 A 1.20,1.20 0 0 1 68.65,45.05 V 46.95 A 1.20,1.20 0 0 1 67.45,48.15 H 65.55 A 1.20,1.20 0 0 1 64.35,46.95 V 45.05 A 1.20,1.20 0 0 1 65.55,43.85 Z" android:fillColor="#FFFFFFFF"/>
+</vector>

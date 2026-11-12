@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The name stays in English in every language of the interface (VISION §2). -->
+    <string name="app_name" translatable="false">On My Tongue</string>
+
+    <!-- The start page (VISION §2's reference texts): short, calm, a little theatrical; no
+         exclamation marks. Written in sentence case: the page draws the capitals. -->
+    <string name="start_tagline">A daily word game in three tongues</string>
+    <string name="start_today">Today’s word awaits.</string>
+    <string name="start_rules">Six attempts. One word.</string>
+    <!-- A five-letter word of this language, drawn on tiles: not a translation of the others. -->
+    <string name="start_sample_word">Table</string>
+    <string name="start_almost">The word is almost yours.</string>
+</resources>

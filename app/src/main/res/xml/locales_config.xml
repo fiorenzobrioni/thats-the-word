@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The interface's languages, offered by the system per-app language picker
+     (Settings > Apps > On My Tongue > Language). The language a game is played in is the
+     player's own choice in the app, apart from this (VISION §5). -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="it" />
+    <locale android:name="es" />
+</locale-config>

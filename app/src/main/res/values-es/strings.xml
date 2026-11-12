@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_tagline">Un juego de palabras diario en tres lenguas</string>
+    <string name="start_today">La palabra de hoy te espera.</string>
+    <string name="start_rules">Seis intentos. Una palabra.</string>
+    <string name="start_sample_word">Silla</string>
+    <string name="start_almost">La palabra ya casi es tuya.</string>
+</resources>

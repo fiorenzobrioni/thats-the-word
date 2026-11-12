@@ -231,12 +231,12 @@ matters (the generated schemes), it is written in its ADR.
   created only when the four `THATSTHEWORD_KEYSTORE*` / `THATSTHEWORD_KEY_*` properties are all set
   (from `~/.gradle/gradle.properties` locally, from `ORG_GRADLE_PROJECT_*` env vars in CI). Without
   them the release build is unsigned; `-PsignReleaseWithDebugKey` signs it with the debug key for
-  testing only. **The release key** was made by the owner and put in the four secrets on 12 Nov
-  2026; its SHA-256 fingerprint is published in `keystore/README.md` and the root README and pinned
-  in `release.yml` (`RELEASE_CERT_SHA256`) once the owner confirms it (PLANNING §15, Open); until
-  then the release workflow prints the certificate it signed with and refuses to publish. Never
-  regenerate it: a future Google Play listing reuses it, and a new key would mean no player could
-  update without uninstalling.
+  testing only. **The release key** was made by the owner for this app alone and put in the four
+  secrets on 12 Nov 2026 (`CN=callbackdev`). Its SHA-256 fingerprint (PLANNING §15, 12 Nov 2026) is
+  `14:D4:1B:20:DC:B0:B1:FC:DB:22:42:DE:0B:0C:3D:09:B5:55:07:7E:D5:4D:9B:34:13:F0:00:07:A3:D1:BE:4B`:
+  published in `keystore/README.md` and the root README, and pinned in `release.yml`, which refuses
+  an APK signed by any other key. Never regenerate it: a future Google Play listing reuses it, and
+  a new key would mean no player could update without uninstalling.
 - **Release key in CI**: the four repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`,
   `KEY_ALIAS`, `KEY_PASSWORD` (the same names as the sister apps'); `release.yml` decodes the
   keystore into the runner's temp folder and fails by name if one is missing. Never commit the

@@ -16,10 +16,10 @@ builds are signed apart.
 SHA-256 certificate fingerprints:
 
 - `debug.keystore`: `66:0B:06:17:0A:8C:E2:01:40:C7:8A:1B:3B:A4:9F:EA:CC:D6:62:39:73:01:4B:EF:59:8D:31:B8:DF:EE:B0:75`
-- release key: **not made yet** (PLANNING.md §15, Open). When the owner hands over its
-  fingerprint, it is written here, in the root README's Install section, and pinned in
-  `release.yml` (`RELEASE_CERT_SHA256`, lower case and without colons), which until then refuses
-  to publish anything.
+- release key: `14:D4:1B:20:DC:B0:B1:FC:DB:22:42:DE:0B:0C:3D:09:B5:55:07:7E:D5:4D:9B:34:13:F0:00:07:A3:D1:BE:4B`
+  (the one published in the root README and pinned in `release.yml`; `CN=callbackdev`, made by the
+  owner for this app alone and put in the four secrets on 12 Nov 2026, checked by a signed
+  rehearsal and against `keytool` the same day)
 
 ## The release key
 
@@ -28,7 +28,8 @@ outside `debug.keystore`). It signs every release for the life of the app, and a
 Play listing must reuse it (PLANNING.md §11, Google Play), so losing it means players cannot update
 without uninstalling. It is kept outside the repo, with the family's keys and an offline backup.
 
-Creating it (once, by the owner, on a machine of theirs):
+Creating it (once, by the owner, on a machine of theirs; done on 12 Nov 2026, the file name and
+the alias the owner's own):
 
 ```bash
 keytool -genkeypair -v -keystore thatstheword-release.jks -storetype PKCS12 \

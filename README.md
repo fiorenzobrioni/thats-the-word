@@ -85,13 +85,22 @@ Android 14 (API 34) or newer. There is no release yet: the first comes with 1.0 
 
 When it comes:
 
-1. Download `thats-the-word-vX.Y.Z.apk` from the latest release.
+1. Download `thats-the-word-vX.Y.Z.apk` from the
+   [latest release](https://github.com/fiorenzobrioni/thats-the-word/releases/latest).
 2. Open it on the phone and allow installs from that source when Android asks.
 
-Each release will carry its SHA-256 checksum, and the release key's certificate fingerprint will
-be published here, to check that the APK is genuine. That's The Word has no network access, so it
-cannot check for updates: GitHub's "Watch, Custom, Releases" notifications or
-[Obtainium](https://github.com/ImranR98/Obtainium) will tell you.
+**Verify the download.** Put the APK and its `.sha256` file in one folder and run
+`sha256sum -c thats-the-word-vX.Y.Z.apk.sha256`. To check that the APK is genuine, compare its
+signing certificate (`apksigner verify --print-certs`, or AppVerifier on the phone) with this
+SHA-256 fingerprint:
+
+```
+14:D4:1B:20:DC:B0:B1:FC:DB:22:42:DE:0B:0C:3D:09:B5:55:07:7E:D5:4D:9B:34:13:F0:00:07:A3:D1:BE:4B
+```
+
+**Updates.** That's The Word has no network access, so it cannot check for updates. Use GitHub's
+"Watch, Custom, Releases" notifications, or [Obtainium](https://github.com/ImranR98/Obtainium).
+Every release will install over the previous one and keep your games and your notebook.
 
 ## Roadmap
 

@@ -53,8 +53,10 @@ with Room); a game keeps tables (its games, its notebook), so its build is Tetto
    Until the start page exists as a feature, it is drawn by the shell in `:app`.
 7. **Signing, as the family.** The game's own debug keystore, committed for good
    (`thatstheword-debug` / `android`, PKCS12, RSA 2048, created 12 Nov 2026, SHA-256 in
-   `keystore/README.md`). The release key is the owner's to make; `release.yml` checks the APK's
-   signature against its fingerprint and refuses to publish while none is pinned.
+   `keystore/README.md`). The release key was made by the owner for this app alone and put in the
+   four secrets on 12 Nov 2026 (`CN=callbackdev`); its SHA-256 fingerprint is pinned in
+   `release.yml`, which refuses an APK signed by any other key, and published in
+   `keystore/README.md` and the root README.
 8. **Versioning from the start.** `thatstheword.versionName` in `gradle.properties` (0.1.0 for the
    foundations), `versionCode = major * 10000 + minor * 100 + patch`; the release workflow refuses
    a tag that does not match.

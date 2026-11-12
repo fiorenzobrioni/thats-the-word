@@ -17,7 +17,7 @@
 ## State
 
 - **Released**: nothing yet.
-- **In progress**: Phase 0. The owner's vision is approved, reviewed here and answered on its first points (VISION.md, «The owner's answers», 12 Nov 2026); what is still open is in §15's Open list, to be answered before what it touches is built. The build, the design system, CI (green on GitHub) and the debug key are in place; the release key is made and in the secrets, its fingerprint to be pinned; the mark is the owner's to choose.
+- **In progress**: Phase 0. The owner's vision is approved, reviewed here and answered on its first points (VISION.md, «The owner's answers», 12 Nov 2026); what is still open is in §15's Open list, to be answered before what it touches is built. The build, the design system, CI (green on GitHub) and the debug key are in place; the release key is made, rehearsed and pinned; the mark is the owner's to choose.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -417,7 +417,7 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 - [x] CI green on GitHub (`b8df08e`, run 1, 5 min 30 s, 12 Nov 2026)
 - [x] The game's own debug keystore (`keystore/debug.keystore`, alias `thatstheword-debug`, passwords `android`, RSA 2048, PKCS12), committed on purpose, with `keystore/README.md`; not a copy of a sister's
 - [x] The **release key**: made by the owner, kept outside the repo, in the four repository secrets `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD` (12 Nov 2026)
-- [ ] Its SHA-256 fingerprint, confirmed by the owner, into `keystore/README.md`, the README's Install section and `release.yml`; the release rehearsed
+- [x] Its SHA-256 fingerprint, confirmed by the owner, into `keystore/README.md`, the README's Install section and `release.yml`; the release rehearsed (12 Nov 2026)
 - [x] `docs/planning/README.md` and `tools/planning_index.py` from the family's (How it is made)
 - [x] `docs/adr/0001-foundations.md`, `docs/adr/0002-design-language.md`
 
@@ -599,7 +599,7 @@ From VISION §16, still open:
 
 From Phase 0:
 
-- [ ] **The release key's fingerprint** (§11 Phase 0): the key is made and in the secrets (12 Nov 2026); its SHA-256, read from a rehearsal and confirmed by the owner against `keytool`, to be pinned.
+- [x] **The release key's fingerprint** (§11 Phase 0): pinned (§15, 12 Nov 2026, «The release key's fingerprint pinned»).
 - [x] **The environment's setup script**: `build-tools;36.0.0` added to its `sdkmanager` line, for every repository of the family (§15, 12 Nov 2026, «The owner's answers»).
 
 ---
@@ -645,4 +645,12 @@ The owner answered the review's first five questions, and sent their latest visi
 ### 12 Nov 2026 — The release key rehearsed (owner: "ho creato la chiave per l'apk come per gli altri repo gemelli e copiato i secrets con i comandi gh [...] Verifica")
 
 The release workflow can only be started by hand from the default branch, which holds the vision alone; so it was rehearsed once on this branch, by a push trigger added for one commit (`9f3bd5f`) and removed by the next (`dbcdbe3`). The publishing steps run on tags only, so nothing was published. Release run 1: the four secrets present and decoded, the minified APK built and signed with them (so the store password, the alias and the key password are right), then the signature's check stopped, by design, on the fingerprint not yet pinned, after printing the certificate: `CN=callbackdev`, SHA-256 `14:D4:1B:20:DC:B0:B1:FC:DB:22:42:DE:0B:0C:3D:09:B5:55:07:7E:D5:4D:9B:34:13:F0:00:07:A3:D1:BE:4B`. It is none of the sisters' published keys (Passo's, Tempo's, Tetto's), so the secrets hold a key of the game's own. It is pinned in `release.yml`, `keystore/README.md` and the README once the owner has compared it with `keytool -list -v` on the key itself (Open).
+
+### 12 Nov 2026 — The release key's fingerprint pinned (owner: "L'impronta coincide, fissala pure (è una chiave nuova creata apposta per questa app)")
+
+The owner compared the rehearsal's certificate with `keytool -list -v` on the key itself: the same. A key made for this app alone, as the sisters each have theirs. Its SHA-256,
+
+`14:D4:1B:20:DC:B0:B1:FC:DB:22:42:DE:0B:0C:3D:09:B5:55:07:7E:D5:4D:9B:34:13:F0:00:07:A3:D1:BE:4B`
+
+is pinned in `release.yml` (`RELEASE_CERT_SHA256`, lower case and without colons), which now refuses an APK signed by any other key, and published in `keystore/README.md` and the README's Install section, with the checksum's and the certificate's checks the family's READMEs give. Closes the Open box and Phase 0's. The check's line was tried on the rehearsal's own `apksigner` output: it matches.
 

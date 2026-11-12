@@ -76,9 +76,10 @@ jobs:
 
       # The APK must carry the release key and no other: a release signed with another key (a
       # secret replaced by mistake) could never update the installs already out there. The
-      # fingerprint is the one published in keystore/README.md and the root README. Until it is
-      # pinned, this step prints the certificate the APK was signed with and stops the workflow by
-      # name: nothing can be published unpinned, and a rehearsal shows which key the secrets hold.
+      # fingerprint is the one published in keystore/README.md and the root README. The step
+      # prints the certificate the APK was signed with first, so a failed check shows which key the
+      # secrets hold; with no fingerprint pinned it stops by name, so nothing is ever published
+      # unpinned.
       - name: Check the signature
         run: |
           apksigner=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)apksigner
@@ -92,8 +93,8 @@ jobs:
             exit 1
           fi
         env:
-          # The release key's SHA-256, lower case and without colons: empty until the owner hands it over.
-          RELEASE_CERT_SHA256: ""
+          # The release key's SHA-256, lower case and without colons (keystore/README.md).
+          RELEASE_CERT_SHA256: 14d41b20dcb0b1fcdb2242de0b0c3d09b555077ed54d9b3413f00007a3d1be4b
 
       # Named after the tag: the mapping must stay paired with the exact APK it deobfuscates,
       # and the checksum lets a reader verify the download (README, "Install").

@@ -23,7 +23,7 @@ Passo's).
 have the owner's go. Phase 2 (the engine) is next. The vision is approved and
 reviewed; the build, the design system, CI, the keys and the mark are in place; the modules in the build are `:app`, `:core:model`,
 `:core:designsystem` and `:core:testing`. The owner answered the first questions of the review on
-12 Nov 2026 (VISION, «The owner's answers»); **eleven smaller questions are still open**
+12 Nov 2026 (VISION, «The owner's answers»); **ten smaller questions are still open**
 (PLANNING §15, Open): read them before building anything they touch.
 
 Source of truth:

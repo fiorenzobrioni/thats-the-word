@@ -24,8 +24,8 @@ KEYS = {
     "es": _LATIN + "ñ",
 }
 
-# The Italian alphabet's 21 letters: a solution keeps to them (§15 Open 6, the proposal), while the
-# keyboard has all 26, for the loanwords a player types.
+# The Italian alphabet's 21 letters: a solution keeps to them (PLANNING §15 Open 6, the owner's
+# answer), while the keyboard has all 26, for the loanwords a player types.
 ITALIAN_ALPHABET = frozenset("abcdefghilmnopqrstuvz")
 
 _TILDE = "̃"

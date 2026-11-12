@@ -34,7 +34,7 @@ Phase 1 builds them before anything is drawn, and measures them (`docs/words/REA
    decides, the language's own edition where the English has no entry) of a common part of speech,
    not an inflected form first, not offensive (the first sense, or half the senses), not dated in
    every sense, in wordfreq's list, in the spelling dictionary, within the Italian alphabet's 21
-   letters (§15 Open 6, as proposed), written the same in British and American English, and not on
+   letters (§15 Open 6, confirmed by the owner), written the same in British and American English, and not on
    the language's deny list. One display form a key: the most frequent.
 5. **Levels** by Zipf frequency, the same thresholds in the three languages (Base 4.5,
    Intermediate 3.5, Advanced 2.7); an English word whose name SCOWL lists as more common is

@@ -654,3 +654,15 @@ The owner compared the rehearsal's certificate with `keytool -list -v` on the ke
 
 is pinned in `release.yml` (`RELEASE_CERT_SHA256`, lower case and without colons), which now refuses an APK signed by any other key, and published in `keystore/README.md` and the README's Install section, with the checksum's and the certificate's checks the family's READMEs give. Closes the Open box and Phase 0's. The check's line was tried on the rehearsal's own `apksigner` output: it matches.
 
+### 12 Nov 2026 — The mark's board (owner: "Prepara la tavola con le tre proposte per l'icona. Se la mia proposta non ti convince scartala e aggiungine una tua o modificala come pensi sia meglio")
+
+Three symbols drawn on a board, in the family's series (the app's colour as the ground, lit from the upper left; a white symbol with one amber accent; no shadow; within the 28-unit keyline), as real VectorDrawable layers rendered beside Passo's, Tempo's and Tetto's marks: in the circle, squircle and rounded-square masks, as themed icons light and dark, at 48, 32 and 24 px, on light and dark home screens, under a simulated deuteranopia and in grey, and the first on three grounds. The letters are Google Sans Bold's outlines (the family's face, overlaps removed), so a cut letter is a true hole in the themed icon too.
+
+- **A, Blocks** (the owner's idea, refined, and the recommendation): four tiles spell WO / RD, the last one amber, tilted and a little high, still landing. The name, the game and the moment of the win in one drawing; the letters say "word" and keep it clear of the genre's look. Reach 27.5. At 24 px it becomes four squares: the price of its detail.
+- **B, The missing word**: three lines of a sentence and, at the end of the last, the word arriving in amber. The quietest; it says "language" more than "game", and could pass for a notes app. Reach 26.2. A first drawing, the tile in the middle of the middle line, read as a slider control and was redrawn.
+- **C, Quoted**: a game tile, amber, its W cut out, between white quotation marks: the word as said, «That's the word». The most graphic and the clearest small; its risk: a W on a square tile recalls Microsoft Word's icon. Reach 27.2.
+- **The ground**: the provisional berry is the free hue farthest from the sisters' green, coral and indigo; violet sits by Tetto's indigo, a deep teal by Passo's green. Under deuteranopia the berry turns a dull slate, nearer Tetto's indigo in hue but apart in lightness and saturation. Chiaro and Saldo are not in this session: the choice is to be looked at beside them too.
+- **The launcher's label**: on the board the name is cut to «That's The…», as many launchers will cut it (VISION Q1, Open).
+
+The owner chooses (Open 4); the chosen drawing then goes into `tools/draw_launcher_icon.py`, with its letters' outlines written into the script so it keeps to the standard library.
+

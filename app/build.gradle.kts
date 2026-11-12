@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.thatstheword.android.application)
     alias(libs.plugins.thatstheword.android.compose)
     alias(libs.plugins.thatstheword.android.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 // The version lives in gradle.properties; versionCode follows from it (PLANNING.md §11 Phase 0),
@@ -104,10 +105,20 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:words"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    implementation(project(":feature:game"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    // The back stack's keys are saved with the activity's state: @Serializable routes.
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(project(":core:testing"))
     testImplementation(libs.androidx.junit)

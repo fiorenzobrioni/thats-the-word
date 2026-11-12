@@ -15,7 +15,7 @@ import com.callbackdev.thatstheword.core.model.AppPalette
 /**
  * The game's theme: the family's design language (`docs/adr/0002-design-language.md`). The
  * defaults are the vivid dress and Google Sans. [dynamicColor] takes Material's roles from the
- * wallpaper instead. The feedback's colours, when they come (PLANNING.md §7, Phase 3), are the
+ * wallpaper instead. The feedback's colours (`FeedbackColors`, PLANNING.md §7.2) are the
  * game's own and follow neither the dress nor the wallpaper: a letter in the right place looks
  * the same on every phone.
  */

@@ -1,5 +1,6 @@
 package com.callbackdev.thatstheword.shell
 
+import androidx.compose.material3.Surface
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
@@ -7,27 +8,39 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
+import com.callbackdev.thatstheword.core.domain.daily.DayStatus
 import com.callbackdev.thatstheword.core.model.AppPalette
+import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.core.testing.assertAccessible
 import com.callbackdev.thatstheword.core.testing.walkPage
 import com.callbackdev.thatstheword.core.testing.writeScreenshot
+import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
+import java.time.LocalDate
 
-/** The start page (PLANNING.md §11 Phase 0), in the three languages, both themes and both dresses. */
+/** The start page (PLANNING.md §11 Phases 0 and 3), in the three languages, both themes and both dresses. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "en-rGB-w411dp-h891dp-xxhdpi")
 class StartPageTest {
     @get:Rule val compose = createComposeRule()
 
+    private var today: TodayUi? = TodayUi(Language.ITALIAN, LocalDate.of(2026, 11, 20), 9, DayStatus.NOT_PLAYED)
+    private var played = 0
+
     private fun draw(dark: Boolean = false, palette: AppPalette = AppPalette.VIVID) {
-        compose.setContent { ThatsTheWordTheme(darkTheme = dark, palette = palette) { ThatsTheWordRoot() } }
+        compose.setContent {
+            ThatsTheWordTheme(darkTheme = dark, palette = palette) {
+                Surface { StartPage(today = today, onPlay = { played++ }) }
+            }
+        }
         // Past the tiles' wave: the test clock runs every spring to its end.
         compose.mainClock.advanceTimeBy(2_000)
     }
@@ -40,6 +53,31 @@ class StartPageTest {
         compose.onNodeWithContentDescription("Table").assertIsDisplayed()
         compose.assertAccessible()
         compose.writeScreenshot("start")
+    }
+
+    @Test
+    fun `offers today's daily in the game language`() {
+        draw()
+        compose.onNodeWithText("Play today’s word").performClick()
+        compose.onNodeWithText("Italian · daily #9").assertIsDisplayed()
+        assertThat(played).isEqualTo(1)
+    }
+
+    @Test
+    fun `takes up a daily in progress, and shows one finished`() {
+        today = today?.copy(status = DayStatus.IN_PROGRESS)
+        draw()
+        compose.onNodeWithText("Take up today’s word").assertIsDisplayed()
+    }
+
+    @Test
+    @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
+    fun `a finished daily, in Spanish`() {
+        today = today?.copy(status = DayStatus.SOLVED, language = Language.ENGLISH)
+        draw()
+        compose.onNodeWithText("Mira la palabra de hoy").assertIsDisplayed()
+        compose.onNodeWithText("Inglés · diaria n.º 9").assertIsDisplayed()
+        compose.writeScreenshot("start-es-solved")
     }
 
     @Test

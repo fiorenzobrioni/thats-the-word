@@ -11,9 +11,6 @@ name: Release
 on:
   push:
     tags: ['v*']
-    # One push only: the rehearsal of the owner's new key on this branch, before the workflow is on
-    # main (PLANNING.md §15, 12 Nov 2026). Removed by the next commit.
-    branches: ['claude/friendly-heisenberg-8klk15']
   workflow_dispatch:
 
 permissions:

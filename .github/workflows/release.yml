@@ -48,6 +48,9 @@ jobs:
       - name: Formatting, permissions, tests, lint
         run: ./gradlew spotlessCheck :app:checkForbiddenPermissions test :app:lintDebug
 
+      - name: Words
+        run: python3 -m unittest discover -s tools/words/tests -t tools/words
+
       # A missing secret fails here, by name, rather than as an unsigned APK further down.
       - name: Decode release keystore
         env:

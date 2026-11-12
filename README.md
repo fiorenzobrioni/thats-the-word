@@ -20,8 +20,9 @@ internet at all.
 
 </div>
 
-> **Status: in the making.** The foundations are laid (Phase 0); the words come next. There is
-> nothing to install yet: see [Roadmap](#roadmap).
+> **Status: in the making.** The foundations are laid (Phase 0) and the words are built (Phase 1),
+> waiting for a person's read of their meanings. There is nothing to install yet: see
+> [Roadmap](#roadmap).
 
 ## What That's The Word is
 
@@ -109,7 +110,8 @@ closed periods in [docs/planning](./docs/planning/README.md)):
 
 - **Phase 0**, foundations: the build, the design system, CI, the keys, the mark. *Done.*
 - **Phase 1**, the words: three languages, their levels, meanings and translations, from free
-  sources, measured before anything is drawn.
+  sources, measured before anything is drawn. *Built; [the report](./docs/words/README.md) waits
+  for its read.*
 - **Phase 2**, the game engine: every rule, every edge case tested.
 - **Phase 3**, the game screen: the grid, the keyboard, the motion.
 - **Phase 4**, the start page, the daily word, the archive and free play.
@@ -132,6 +134,14 @@ Requires JDK 21 (the one bundled with Android Studio works) and the Android SDK.
 ./gradlew :app:lintDebug            # lint, every module
 ./gradlew spotlessApply             # format the code
 ./gradlew :app:checkForbiddenPermissions
+```
+
+The words are rebuilt from their pinned sources by `tools/words/` (Python, nothing to install;
+[its README](./tools/words/README.md)):
+
+```bash
+python3 tools/words/build.py           # fetch, build and write every word file and the report
+python3 tools/words/build.py --check   # a second run must write the same bytes
 ```
 
 For an installable minified build to test with:
@@ -190,6 +200,7 @@ Each module joins the build with the phase that brings its first code. `:core:mo
 | [PLANNING.md](./PLANNING.md) | architecture, the game engine, the words, the look of the game, the phased plan and its decisions |
 | [docs/planning](./docs/planning/README.md) | the closed periods of that plan's log, frozen, with an index of every section |
 | [docs/adr/](./docs/adr/) | the architecture decision records |
+| [docs/words](./docs/words/README.md) | the words: their sources, counts, levels, meanings in nine language pairs, sizes, and the samples a person reads |
 | [CHANGELOG.md](./CHANGELOG.md) | what shipped, per version; a section is written before its tag |
 | [CLAUDE.md](./CLAUDE.md) | the operating rules for AI-assisted development in this repo |
 

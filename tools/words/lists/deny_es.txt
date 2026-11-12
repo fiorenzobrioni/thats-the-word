@@ -1,0 +1,6 @@
+# Spanish words kept out of the solutions by hand (PLANNING.md §6.2): what Wiktionary's tags miss.
+# One word a line, as written, with why. Read by a person; the candidates are in
+# docs/words/review/es.md. A word here stays accepted as a guess.
+coger    # "to take" in Spain, vulgar in much of Latin America: a daily is everyone's
+polla    # vulgar first, in Spain
+verga    # vulgar first, in most of Latin America

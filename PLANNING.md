@@ -18,7 +18,8 @@
 
 - **Released**: nothing yet.
 - **Done**: Phase 0, the foundations (12 Nov 2026): the vision reviewed and answered, the build, the design system, CI green on GitHub, the debug key and the release key (rehearsed and pinned), the start page in three languages, the mark.
-- **Next**: Phase 1, the words (the gate: sources, sets, levels, meanings across the nine pairs, sizes). What is still open (§15) is needed by the phases it names.
+- **Built, at its gate**: Phase 1, the words (12 Nov 2026): the pipeline (`tools/words/`), the accepted sets, the solutions and their levels, the glossaries of the nine pairs, the daily schedules, the files and their report (`docs/words/README.md`). It closes on the owner's go on the meanings (§15 Open 18) and the deny lists read (Open 19).
+- **Next**: Phase 2, the game engine, once Phase 1 has its go. What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -265,12 +266,12 @@ The words are the riskiest part of the game, and the heaviest (VISION §10, §16
 | Data | Source | Licence | To check in Phase 1 |
 |---|---|---|---|
 | Italian words, every form | Hunspell `it_IT` (LibreOffice dictionaries), expanded | GPL-3.0 | The version and its affix rules |
-| Spanish words, every form | Hunspell `es` (the RLA-ES project), expanded | GPL-3.0 / LGPL-3.0 / MPL-1.1, to verify | The licence of the exact release (VISION Q3) |
-| English words, both spellings | SCOWL (up to size 70 for the accepted set), with its British and American variant lists; ENABLE as a public-domain fallback | SCOWL's own permissive notice; ENABLE public domain | The size that refuses no common word |
+| Spanish words, every form | Hunspell `es` (the RLA-ES project, 2.9: Spain's, Mexico's and the Río de la Plata's), expanded | GPL-3.0-or-later / LGPL-3.0-or-later / MPL-1.1 at the user's choice (checked on the release, `es/LICENSE.md`): used under GPL-3.0-or-later | Done (Phase 1) |
+| English words, both spellings | SCOWL 2020.12.07 (up to size 70 for the accepted set), with its British and American lists; a solution must be in both. ENABLE was not needed | SCOWL's own permissive notice | Done (Phase 1) |
 | Frequencies | `wordfreq`'s data (frozen since 2024), cross-checked with OpenSubtitles lists | CC BY-SA 4.0 | The thresholds of the four levels |
 | Meanings, translations, parts of speech, written forms | Wiktionary, as extracted by wiktextract (kaikki.org): the English, Italian and Spanish editions | CC BY-SA 4.0 and GFDL | Coverage per language pair (§6.4) |
 
-The expansion of Hunspell's affixes is done by a tool run at build time, never shipped (an `unmunch` or a pure-Python expander, its licence recorded). Every source is downloaded by the script at a pinned version with its checksum, into a cache outside the repository; what ships is only what the script writes.
+The expansion of Hunspell's affixes is done by a tool run at build time, never shipped: the pipeline's own pure-Python expander (`tools/words/pipeline/hunspell.py`, this repository's code). Every source's version, checksum and licence is in `docs/words/README.md`; the choices made on them in `docs/adr/0003-words.md`. Every source is downloaded by the script at a pinned version with its checksum, into a cache outside the repository; what ships is only what the script writes.
 
 ### 6.2 The two sets
 
@@ -429,18 +430,18 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 ### Phase 1 — The words (highest risk, a gate)
 
-- [ ] `tools/words/`: the pipeline in Python, its sources pinned with their checksums and fetched into a cache outside the repository, its own tests, one command to rebuild everything, the same bytes on a second run
-- [ ] The licences of the exact releases checked and recorded (VISION Q3), each source in `licenses/README.md`
-- [ ] The accepted sets per language at five letters, with their counts; a list of 200 common words per language that must all be accepted
-- [ ] The solutions per language: lemmas, no proper nouns, abbreviations, offensive or vulgar words (Wiktionary's tags, the deny lists read by a person), the English double spellings and the Italian foreign letters out; the four levels' thresholds and counts
-- [ ] Meanings and translations: the coverage of the nine pairs on the solutions (§6.4); a sample of 50 words per pair read by a person; **the owner's go** on their quality (VISION Q4)
-- [ ] The daily schedules, ten years per language, append-only, not plain text, with the test of §4.6
-- [ ] The files' formats and their sizes in the APK measured (VISION Q5); `docs/adr/0003-words.md`
-- [ ] The report: `docs/words/README.md`
+- [x] `tools/words/`: the pipeline in Python (standard library only), its sources pinned with their checksums and fetched into a cache outside the repository, its own tests (`python3 -m unittest discover -s tools/words/tests -t tools/words`, in CI), one command to rebuild everything (`python3 tools/words/build.py`), the same bytes on a second run (`--check`) (12 Nov 2026)
+- [x] The licences of the exact releases checked and recorded (VISION Q3), each source in `licenses/README.md` (12 Nov 2026)
+- [x] The accepted sets per language at five letters, with their counts (Italian 8,314, English 22,919, Spanish 13,281); 200 common words per language, all accepted (12 Nov 2026)
+- [ ] The solutions per language: lemmas, no proper nouns, abbreviations, offensive or vulgar words (Wiktionary's tags, the deny lists read by a person), the English double spellings and the Italian foreign letters out; the four levels' thresholds and counts. Built (12 Nov 2026: 1,691, 3,612 and 2,484); the deny lists wait for the owner's read (§15 Open 19)
+- [ ] Meanings and translations: the coverage of the nine pairs on the solutions (§6.4); a sample of 50 words per pair read by a person; **the owner's go** on their quality (VISION Q4). Measured and sampled (12 Nov 2026, `docs/words/samples/`); the go is Open 18
+- [x] The daily schedules, ten years per language, append-only, not plain text, with the test of §4.6 (12 Nov 2026; provisional epoch, Open 10)
+- [x] The files' formats and their sizes in the APK measured (VISION Q5: 3.3 MB for the three languages); `docs/adr/0003-words.md` (12 Nov 2026)
+- [x] The report: `docs/words/README.md` (12 Nov 2026)
 
 **Acceptance:**
-- [ ] The report answers VISION's questions 3, 4 and 5 with numbers, and the owner has said go.
-- [ ] A second run of the script writes the same bytes.
+- [ ] The report answers VISION's questions 3, 4 and 5 with numbers, and the owner has said go. The numbers are there (12 Nov 2026); the go is Open 18.
+- [x] A second run of the script writes the same bytes (12 Nov 2026).
 
 ### Phase 2 — The game engine
 
@@ -594,9 +595,15 @@ From VISION §16, still open:
 
 - [ ] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9); a close name exists, «What's The Word» (VISION §16). Also to look at then: how the launchers show a fifteen-character name under the icon (some cut it to «That's The W…»).
 - [ ] **VISION Q2: the modes' names** in the three interface languages (with the strings of each phase).
-- [ ] **VISION Q3: the licences** of the Spanish and English sources and of Wiktionary's data (Phase 1).
-- [ ] **VISION Q4: the definitions' quality** in the three interface languages (Phase 1, its gate).
-- [ ] **VISION Q5: the app's size** with three languages' words and meanings (Phase 1).
+- [x] **VISION Q3: the licences** of the Spanish and English sources and of Wiktionary's data. Closed (§15, 12 Nov 2026, «Phase 1: the words»): RLA-ES tri-licensed, used under GPL-3.0-or-later; SCOWL's permissive notice; Wiktionary CC BY-SA 4.0 (and GFDL), used under CC BY-SA 4.0; wordfreq's data CC BY-SA 4.0.
+- [ ] **VISION Q4: the definitions' quality** in the three interface languages (Phase 1, its gate): measured and sampled; the owner's go is Open 18.
+- [x] **VISION Q5: the app's size**. Closed (the same entry): 3.3 MB of word files for the three languages, uncompressed in the APK.
+
+From Phase 1 (§15, 12 Nov 2026, «Phase 1: the words»):
+
+- [ ] **18. The owner's go on the meanings** (VISION Q4): read `docs/words/samples/` (50 words for each of the nine pairs, 35 of them from the daily pool) and say go, or what to change. With it, whether a translation that one table alone gives (marked *single* in the samples; about a third of the shown translations between Italian, Spanish and English's foreign pairs) stays shown, or only translations two sources agree on (the coverage would drop to the "agreed" column of the report).
+- [ ] **19. The deny lists read by a person**: `tools/words/lists/deny_*.txt` (seeded with seven words: *porca*; *gypsy*, *prick*, *lewis*; *coger*, *polla*, *verga*) and the candidates in `docs/words/review/` (every solution with an offensive or vulgar sense somewhere, and what each filter kept out). A daily is everyone's.
+- [ ] **20. The daily pool's size.** The dailies draw from Base and Intermediate (Zipf 3.5 and over): 776 Italian words, 1,302 English, 909 Spanish, so a word returns after about 2.1, 3.6 and 2.5 years. Proposed: keep it (a word every two years is not noticed, and a lower bound brings rarer words); or lower Intermediate to 3.2 for about a third more words.
 
 From Phase 0:
 
@@ -677,3 +684,18 @@ The owner chose A, the letter blocks, on berry, and moved the D: it stood 2.2 un
 
 Chiaro's and Saldo's marks, read from their public repositories (not attached to this session, read only), were drawn with the others: the grounds of the family, in OKLCH hue, are Tempo's coral 31°, Passo's green 152°, Saldo's laguna 192°, Chiaro's sky 257° (with its night band, a deep blue, at 264°), Tetto's indigo 275°, and this game's berry 340°. **The berry stands apart from all five**, in colour, under a simulated deuteranopia and on a dark home screen: the caveat of «The mark's board» and «The mark» (Chiaro and Saldo unseen) is lifted. The deep teal shown as an alternative ground on 12 Nov would have stood 18° from Saldo's laguna: well that it was not chosen. Tetto's own ground is Tetto's to decide, in Tetto's repository.
 
+
+### 12 Nov 2026 — Phase 1: the words (owner: "Procedi con la fase 1 di That's the word")
+
+Phase 1 built, to its gate: everything but the owner's go on the meanings (Open 18) and the deny lists read (Open 19). The pipeline is `tools/words/` (its README), its choices `docs/adr/0003-words.md`, its numbers `docs/words/README.md`, written by the pipeline. What was decided, and why:
+
+- **Standard library only.** The pipeline expands Hunspell's affixes with its own small expander and reads wordfreq's MessagePack with its own small decoder: nothing to install, nothing of a third party run, and no new dependency to approve. Its tests (45) run in CI and in the release's gates; the last of them read the committed files as the app will (the §4.6 test of three years left among them).
+- **The sources and their licences (VISION Q3, closed).** LibreOffice's Italian dictionary 5.1.1 (GPL-3.0); RLA-ES 2.9 for Spain, Mexico and the Río de la Plata, whose voseo has five-letter forms (*tenés*), tri-licensed and used under GPL-3.0-or-later; SCOWL 2020.12.07, the last release in its classic expanded form (its 2026 release is a database to build); wordfreq 3.1.1's data (CC BY-SA 4.0); Wiktionary through wiktextract (kaikki.org), the English edition's Italian, Spanish and English entries and the Italian and Spanish editions (CC BY-SA 4.0 and GFDL, used under CC BY-SA 4.0). ENABLE was not needed. Each is in `licenses/README.md`.
+- **Wiktionary's extracts move every week** and kaikki.org keeps no old one. They are pinned by their content's SHA-256 like the others; a repin is one command (`build.py fetch --repin`), and changes meanings, never a daily. Committing reduced snapshots to the repository was weighed and left out: §6.1 keeps the sources out, and the outputs are committed.
+- **Accepted**: the spelling dictionary's forms widened by Wiktionary's single words (never a name, an abbreviation, a Roman numeral): 8,314 Italian, 22,919 English, 13,281 Spanish. 200 common words a language, written by hand in `tools/words/lists/`, are all accepted; the build fails otherwise.
+- **Solutions**: 1,691 Italian, 3,612 English, 2,484 Spanish. Lemmas as the English edition says (its tags are the most regular; the language's own edition where it has no entry), of a common part of speech, and not: an inflected form first (every entry opens with "plural of" or the like: *cuori*, *bumps*, but not *notte* or *posto*); offensive, when the first sense or half the senses are (a single slur sense among many, as *apple*'s or *rosso*'s, does not exclude: the review lists them); dated in every sense; outside wordfreq's list; outside the spelling dictionary; outside the Italian alphabet's 21 letters (Open 6, applied as proposed, one switch to undo); written differently in British and American English (a solution must be in both SCOWL lists: its variant lists hold *among*); on the deny list. One written form a key form, the most frequent.
+- **Levels** by Zipf frequency, the same in the three languages so a level means one frequency: Base from 4.5, Intermediate from 3.5, Advanced from 2.7 (Base 270, 434 and 301 words). wordfreq folds case, so an English word whose name SCOWL lists as more common (*cisco*) is Advanced at least; *lewis*, whose name SCOWL does not list, is on the deny list.
+- **Translations and meanings** (§6.4). A translation is shown when two of four sources agree, or, one at most, when a single translation table gives it for the word's first sense: the second rule takes the pairs without English from about 35% to about 67% of the solutions, and is noisier (*guado*, the ford, gets *glasto*, the woad), so it is marked *single* in the samples and is the owner's to keep (Open 18). The meaning is the interface edition's gloss when it defines, otherwise the translation's own definition, from an entry of the same part of speech. On the daily pool: meanings 79% to 99% a pair, translations 82% to 94%.
+- **The files** (ADR 0003): `accepted-5.bin`, `solutions-5.bin`, `daily.bin`, `forms-5.bin` and `gloss-<interface>.bin` per game language in `core/words/src/main/assets/words/`, written now and read by `:core:words` from Phase 2 (the module joins the build then, with its first code). A sixteen-byte header, words packed five bits a letter in four bytes and found by binary search, text records behind offsets. 3.3 MB for the three languages, uncompressed (VISION Q5, closed): compression would save two thirds at the cost of an inflater a lookup and builds tied to a zlib version.
+- **The daily schedules**: 3,654 dailies a language, ten years from a provisional epoch (today, Open 10), every word once before any twice, append-only by construction (the build reads the committed file and refuses to change an entry). The schedules written while the rules were tuned this session were never committed, and were dropped before the final build. The pool's size is Open 20.
+- **Raised here**, in Open: 18, 19 and 20.

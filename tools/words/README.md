@@ -1,0 +1,72 @@
+# tools/words: the words, made from free sources
+
+That's The Word's words are generated, never edited by hand (PLANNING.md §6, CLAUDE.md). This
+directory is the pipeline that makes them: Python 3.11 or later, its standard library alone,
+nothing to install.
+
+```bash
+python3 tools/words/build.py
+```
+
+```bash
+python3 tools/words/build.py --check
+```
+
+```bash
+python3 -m unittest discover -s tools/words/tests -t tools/words
+```
+
+The first writes every file; the second rebuilds in memory and fails if a committed file differs
+(a second run must write the same bytes); the third runs the pipeline's tests (the last of them
+read the committed files, as the app will).
+
+## What it does
+
+1. **Fetch** (`pipeline/sources.py`): every source at a pinned version, checked against the
+   SHA-256 of its content, into a cache outside the repository (`~/.cache/thats-the-word/words`,
+   or `$THATSTHEWORD_WORDS_CACHE`; about 1 GB). A source whose content differs is refused.
+2. **Reduce** (`pipeline/wiktionary.py`): the five Wiktionary extracts (5 GB of JSON) are read
+   once and kept in the cache as what the game reads: single words of the three languages, each
+   sense's gloss, tags, links and the lemma it is a form of, and the translation tables into the
+   other two languages. About ten minutes, once.
+3. **The words** (`pipeline/lexicon.py`): the accepted set (Hunspell expanded by
+   `pipeline/hunspell.py` for Italian and Spanish, SCOWL for English, widened by Wiktionary's
+   single words); the written forms of each key form; the lemmas; the solutions and why each
+   other lemma is kept out; the levels (`pipeline/frequency.py` reads wordfreq's data).
+4. **The glossary** (`pipeline/glossary.py`): for the nine pairs, the translations (agreed by two
+   sources, or given by one table for the first sense) and the meanings.
+5. **The daily schedules** (`pipeline/schedule.py`): append-only; the committed file is read
+   first and no entry in it ever changes.
+6. **The files** (`pipeline/pack.py`, its formats in `docs/adr/0003-words.md`) into
+   `core/words/src/main/assets/words/`, and **the report** (`pipeline/report.py`) into
+   `docs/words/`: the counts, the levels, the coverage, the sizes, the samples a person reads and
+   the words a person decides on.
+
+A build after the first takes three or four minutes and about 5 GB of memory.
+
+## What a person writes
+
+`lists/` holds the only words written by hand, each file with its reason at the top:
+
+- `common_<language>.txt`: 200 common words a language, lemmas and inflected forms, that must all
+  be accepted. The build fails if one is not.
+- `deny_<language>.txt`: words kept out of the solutions, with why. The candidates are in
+  `docs/words/review/<language>.md`; a word here stays accepted as a guess.
+
+The choices (the levels' thresholds, the daily's levels and seed, the provisional epoch, the
+Spanish dictionaries read, the meanings' length) are in `pipeline/config.py`, each with its reason.
+Change one, rebuild, read the report, and record it in PLANNING.md §15.
+
+## When a source moves
+
+kaikki.org republishes its Wiktionary extracts every week and does not keep the old ones. Once a
+pinned extract can no longer be fetched (on a machine whose cache lacks it):
+
+```bash
+python3 tools/words/build.py fetch --repin wiktionary.en.en wiktionary.en.it wiktionary.en.es wiktionary.it wiktionary.es
+```
+
+prints the new checksums, to be written in `pipeline/sources.py` with the dump's date in
+`ORIGINS`; then rebuild and read the report. Meanings and translations may change; a daily never
+does (the schedule is append-only, and a word that left the solutions keeps its day and its
+glossary entry, named in the report).

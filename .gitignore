@@ -44,3 +44,4 @@ desktop.ini
 
 # Python caches of the tools/ scripts
 tools/__pycache__/
+tools/words/**/__pycache__/

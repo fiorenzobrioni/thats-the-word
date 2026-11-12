@@ -25,6 +25,13 @@ jobs:
       - name: Formatting
         run: ./gradlew spotlessCheck
 
+      # The words' pipeline and the committed word files (tools/words/README.md): its rules on
+      # hand-written entries, and the files as the app reads them (the schedule's three years
+      # left, every daily a solution, the common words accepted, the deny lists kept out).
+      # Rebuilding the words needs the sources' cache, so CI checks the files, not the build.
+      - name: Words
+        run: python3 -m unittest discover -s tools/words/tests -t tools/words
+
       # Privacy is enforced, not promised (VISION §3): the merged manifest
       # of every variant must hold no network, location, exact-alarm, battery-exemption,
       # advertising-id, camera, microphone, SMS, contacts, calendar, storage or installed-apps permission

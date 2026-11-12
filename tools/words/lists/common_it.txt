@@ -1,0 +1,24 @@
+# 200 common Italian words of five letters, lemmas and inflected forms, written as a player
+# would type or read them (accents included). Every one must be accepted: `build.py` fails
+# otherwise (PLANNING.md §11 Phase 1, §14: an unfair refusal of a real word). Written by a person,
+# not drawn from the sources it checks.
+abito acqua aereo aiuto altro altra altri amava amico amica
+amici amore anche bagno balla banca barca basso bella belli
+birra bocca borsa bosco bravo breve bruno buono buona calda
+caldo calma canta canto carne carta cassa causa città colpa
+conto corpo corso costa cuore dente denti detto dieci dolce
+donne dorme dormo entro esame fatto fermo festa fiore fiume
+forse forte frase fuori gatto gente gioco grado grano guida
+isola letto libro linea lungo madre mamma mente mezzo mille
+molto monte mondo mosca notte nuovo nuova occhi padre paese
+palla panno parco parla parte passo pasta penso piano piede
+pigro pizza porta posto prato prima prova quale quasi quota
+radio regno resto sacco salto santo sasso scala scena scusa
+sedia segno senso senza serie sonno sopra sotto spesa sport
+stato stava testa tetto torre treno tutto tutti verde verso
+vento video vista zucca viene sento siamo erano fanno fosse
+sarai verrà dirlo parli canti mangi dormi vuole posso dammi
+vieni tieni sogno fiori libri gatti virtù caffè andrò dovrà
+capii lessi presi corsi legge pesca pesce pesci amaro amari
+salve fiato leone tigre volpe pollo coppa tazza cuoco prete
+ponte porto fiera soldi tenda banco gesso penna gomma zaino

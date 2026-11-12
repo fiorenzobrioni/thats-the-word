@@ -18,10 +18,12 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (12 Nov 2026): Phase 0 is done**, Phase 1 (the words) is next. The vision is approved and
+**State (12 Nov 2026): Phases 0 and 1 are done**: the words (`tools/words/`, their files in
+`core/words/src/main/assets/words/`, read from Phase 2, and their report `docs/words/README.md`)
+have the owner's go. Phase 2 (the engine) is next. The vision is approved and
 reviewed; the build, the design system, CI, the keys and the mark are in place; the modules in the build are `:app`, `:core:model`,
 `:core:designsystem` and `:core:testing`. The owner answered the first questions of the review on
-12 Nov 2026 (VISION, «The owner's answers»); **twelve smaller questions are still open**
+12 Nov 2026 (VISION, «The owner's answers»); **ten smaller questions are still open**
 (PLANNING §15, Open): read them before building anything they touch.
 
 Source of truth:
@@ -69,7 +71,9 @@ family's). Java 21.
 - Forbidden-permission check on the merged manifests: `./gradlew :app:checkForbiddenPermissions`
 - Installable minified build: `./gradlew :app:assembleRelease -PsignReleaseWithDebugKey`
 - Launcher icon: `python3 tools/draw_launcher_icon.py`
-- The words (from Phase 1): `tools/words/`, its own README; never edit its outputs by hand.
+- The words: `python3 tools/words/build.py` (`--check`: a rebuild must write the same bytes),
+  tests `python3 -m unittest discover -s tools/words/tests -t tools/words`; `tools/words/README.md`.
+  Never edit its outputs by hand (`core/words/src/main/assets/words/`, `docs/words/`).
 - On a machine with no system JDK, prepend `JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"`.
 - **Maven Central answers HTTP 429** (Too Many Requests; it happens in the Claude Code cloud
   sandbox): add `--init-script gradle/google-maven-mirror.init.gradle.kts` to any command. It

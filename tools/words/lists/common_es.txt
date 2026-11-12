@@ -1,0 +1,24 @@
+# 200 common Spanish words of five letters, lemmas and inflected forms, written as a player
+# would type or read them (accents included). Every one must be accepted: `build.py` fails
+# otherwise (PLANNING.md §11 Phase 1, §14: an unfair refusal of a real word). Written by a person,
+# not drawn from the sources it checks.
+abajo abril abrir acero actor altos alzar amigo amiga andar
+antes apoyo arbol arena arroz avión ayuda bajar bajos banco
+bebía besos bolsa bueno buena cable cajas calle calor campo
+caras carne carta casas cerca cinco claro clase cobre coche
+comer comió corre corto cosas crear creer cuero dejar desde
+dicho dices dieta disco doble donde dulce ellos enero entre
+error estar estoy estás falta feliz final flaco forma fruta
+fuera gafas gallo ganar gatos gordo gorra grupo habla hacer
+hasta hecho hielo hijos hogar hotel huevo igual joven juego
+julio junio largo leche lejos letra libro limón listo llama
+lleno llora lugar luego madre manos marzo mayor media menos
+metro miedo mirar mismo mitad mucho mujer mundo museo nadar
+niños noche norte nubes nuevo nunca obras oeste orden padre
+palma papel parar pared parte paseo patio pecho perro pesca
+pinta pisos plata playa plaza poner prima pobre poder queso
+quiso radio ramas reloj rosas ruido saber salir salud santo
+siete silla sitio sobre suelo tabla tarde techo tener tengo
+tigre todas todos tomar trigo vacas vamos veces venir verde
+vidas viejo vieja visto viven volar zorro árbol añade sabés
+cañón leñas sueña mañas daños puños niñez dueño señal piñas

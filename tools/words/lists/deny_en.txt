@@ -1,0 +1,6 @@
+# English words kept out of the solutions by hand (PLANNING.md §6.2): what Wiktionary's tags miss.
+# One word a line, as written, with why. Read by a person; the candidates are in
+# docs/words/review/en.md. A word here stays accepted as a guess.
+gypsy    # an ethnic slur to many of the people it names
+prick    # vulgar first, in most players' ears
+lewis    # a lifting iron, but its frequency is the name's: it would be an Intermediate daily

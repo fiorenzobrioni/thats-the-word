@@ -1,0 +1,24 @@
+# 200 common English words of five letters, lemmas and inflected forms, written as a player
+# would type or read them (accents included). Every one must be accepted: `build.py` fails
+# otherwise (PLANNING.md §11 Phase 1, §14: an unfair refusal of a real word). Written by a person,
+# not drawn from the sources it checks.
+about actor adult again alarm alive alone apple argue aside
+aware badly began being bench black block board bones bread
+brick brief broad build buses cable cards cause chair cheap
+chest china civil class clerk clock cloud coast court crash
+crime crowd dated death depth doing dozen drama dream drink
+eager earth eight enemy enter equal event exist faith fault
+fifth final flash flour focus found fresh fruit games given
+globe grand great gross grown guess habit heart hello horse
+human ideal index input judge knife known laser laugh learn
+leave level limit lives loose magic maker match mayor might
+model month mount mouth music never noise noted nurse offer
+other owner panel party photo piece pitch plane plate pound
+press prime prior proof prove quiet radio range reach relax
+right robot round rural sauce scene sense seven shape sharp
+shelf shift shock shoot sight sixty sleep slide smile solid
+sorry space speak spend sport stand state steel still stood
+storm strip study sugar sunny sweet taken teach thank there
+thing third three throw tired today total tough trade treat
+trial truck truth under until urban usual value visit waste
+water where while whose women worry worst wound wrong young

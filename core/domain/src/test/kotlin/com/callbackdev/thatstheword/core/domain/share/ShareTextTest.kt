@@ -46,8 +46,8 @@ class ShareTextTest {
             That’s The Word · #123 · English · 3/6
 
             🟠🟠🟠▫️▫️
-            ▫️🟪🟪🟠🟪
-            🟪🟪🟪🟪🟪
+            ▫️🟦🟦🟠🟦
+            🟦🟦🟦🟦🟦
             """.trimIndent(),
         )
         assertThat(text.lowercase()).doesNotContain("crane")
@@ -73,7 +73,7 @@ class ShareTextTest {
 
     @Test
     fun `the marks keep their shapes - a square here, a circle elsewhere`() {
-        assertThat(ShareText.RIGHT_PLACE).isEqualTo("🟪")
+        assertThat(ShareText.RIGHT_PLACE).isEqualTo("🟦")
         assertThat(ShareText.ELSEWHERE).isEqualTo("🟠")
         assertThat(ShareText.ABSENT).isEqualTo("▫️")
     }

@@ -355,7 +355,7 @@ Every moment has its movement, every movement collapses to a fade under reduced 
 
 ### 7.6 Sharing a result (VISION §11)
 
-Without the word, in the app's own format: a **text** for any messaging app ("That's The Word · #123 · Italian · 4/6", Hard and hints said), with a row of symbols per guess that keep the shapes (proposal: 🟪 right place, 🟠 elsewhere, ▫️ absent; never the genre's coloured squares), and an **image** card (the grid's shapes and colours, the date, the language, no letter), shared through a `FileProvider`, which needs no permission.
+Without the word, in the app's own format: a **text** for any messaging app ("That's The Word · #123 · Italian · 4/6", Hard and hints said), with a row of symbols per guess that keep the shapes (🟦 right place, in the right place's ink, 🟠 elsewhere, ▫️ absent: the owner, §15, 12 Nov 2026, «Open 21 and VISION Q1 answered»; never the genre's coloured squares), and an **image** card (the grid's shapes and colours, the date, the language, no letter), shared through a `FileProvider`, which needs no permission.
 
 ### 7.7 Accessibility (VISION §12)
 
@@ -574,7 +574,7 @@ As the family's: the same key, the store listing, the data safety form ("no data
 
 ### Open
 
-What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 10, 14 to 17, 21 and 22 are needed by the phases they name.
+What is still to decide or to do, in one place, besides the steps of the phases in §11 (which keep their boxes there): a box opens here, with the reference to the log entry it comes from, and closes here, with the one that closes it. A new question is written here and asked before it is built. The owner answered 1 to 9, 11, 12 and 13 on 12 Nov 2026; 10, 14 to 17 and 22 are needed by the phases they name.
 
 From this review (§15, 12 Nov 2026, «The repository, the vision's review and this plan»), each with a proposal:
 
@@ -598,7 +598,7 @@ From this review (§15, 12 Nov 2026, «The repository, the vision's review and t
 
 From VISION §16, still open:
 
-- [ ] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9); a close name exists, «What's The Word» (VISION §16). Also to look at then: how the launchers show a fifteen-character name under the icon (some cut it to «That's The W…»).
+- [x] **VISION Q1: the name's availability** in the stores and the trademark registers, by hand, before 1.0 (Phase 9); a close name exists, «What's The Word» (VISION §16). Also to look at then: how the launchers show a fifteen-character name under the icon (some cut it to «That's The W…»). Closed by the owner (§15, 12 Nov 2026, «Open 21 and VISION Q1 answered»): the name stays *That's The Word*.
 - [ ] **VISION Q2: the modes' names** in the three interface languages (with the strings of each phase).
 - [x] **VISION Q3: the licences** of the Spanish and English sources and of Wiktionary's data. Closed (§15, 12 Nov 2026, «Phase 1: the words»): RLA-ES tri-licensed, used under GPL-3.0-or-later; SCOWL's permissive notice; Wiktionary CC BY-SA 4.0 (and GFDL), used under CC BY-SA 4.0; wordfreq's data CC BY-SA 4.0.
 - [x] **VISION Q4: the definitions' quality** in the three interface languages. Closed by the owner's go on the samples (§15, 12 Nov 2026, «Phase 1 closed»).
@@ -612,7 +612,7 @@ From Phase 1 (§15, 12 Nov 2026, «Phase 1: the words»):
 
 From Phase 3 (§15, 12 Nov 2026, «Phase 3: the game screen»):
 
-- [ ] **21. The share text's right-place symbol** (§7.6). It was proposed as 🟪 to match the berry; the right place is now ink blue. Proposed: 🟦, the blue square, beside 🟠 for elsewhere and ▫️ for absent (the shapes still say it: square, round, small). The genre's well-known squares are green and yellow; a high-contrast variant of it uses blue and orange *squares*, which a round 🟠 keeps apart. Or keep 🟪. Not changed until answered (`ShareText.RIGHT_PLACE`).
+- [x] **21. The share text's right-place symbol** (§7.6). It was proposed as 🟪 to match the berry; the right place is now ink blue. Proposed: 🟦, the blue square, beside 🟠 for elsewhere and ▫️ for absent (the shapes still say it: square, round, small). The genre's well-known squares are green and yellow; a high-contrast variant of it uses blue and orange *squares*, which a round 🟠 keeps apart. Or keep 🟪. Closed by the owner (§15, 12 Nov 2026, «Open 21 and VISION Q1 answered»): 🟦, as proposed.
 
 From Phase 4 (§15, 12 Nov 2026, «Phase 4: the start page»):
 
@@ -790,3 +790,11 @@ None of the open questions touches the phase (10, the epoch, stays provisional; 
 ### 12 Nov 2026 — The README's accessibility line (owner: "sostituisci l'emoji ♿ dal README.md con un emoji più adatta che non indichi invalidità. Se presente in altre parti del repo sostituisci anche lì")
 
 The README's «For every player» line wore the wheelchair symbol; it wears 🤝 now: a game made to be played by everyone, not a sign of disability. It appeared nowhere else in the repository. The sisters' READMEs (Passo's and Tetto's «For every reader») carry the same symbol: theirs to change in their repositories.
+
+### 12 Nov 2026 — Open 21 and VISION Q1 answered; Open 10 and VISION Q2 discussed (owner: "la 21 accetto la tua proposta"; "Q1 confermiamo il nome dell'app attuale"; on Open 10: "Cosa ne dici se mettiamo una data fissa al 1 novembre 2026?"; on Q2: "spiegami meglio e dimmi il tuo consiglio")
+
+- **Open 21, closed as proposed**: the shared result's right place is 🟦, the blue square, in the right place's ink, beside 🟠 and ▫️ (`ShareText.RIGHT_PLACE`, its test; §7.6).
+- **VISION Q1, closed by the owner's choice**: the name stays *That's The Word*. Phase 9's box (the stores and the trademark registers looked at by hand) stays, as the last look before the release, not as an open question.
+- **Open 10**: the owner proposes a fixed epoch, 1 November 2026, so the archive already holds past days whenever 1.0 is released. The assessment and the question back are in this session's answer; nothing is changed until the owner's go.
+- **VISION Q2**: the modes' names explained, with a proposal, in the same answer; still open.
+

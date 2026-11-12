@@ -29,7 +29,7 @@ wait for a look on a phone (the reveal with the profiler, TalkBack); Phase 5 (hi
 notebook) is next. The modules in the build are `:app`, `:core:model`, `:core:domain`,
 `:core:words`, `:core:data`, `:core:designsystem`, `:core:testing`, `:feature:game` and
 `:feature:home`. The owner answered the review's questions 1 to 9 and 11 to 13 on 12 Nov 2026;
-**seven smaller questions are still open** (PLANNING §15, Open: 10, 14 to 17, 21 and 22): read them
+**six smaller questions are still open** (PLANNING §15, Open: 10, 14 to 17 and 22): read them
 before building anything they touch.
 
 Source of truth:

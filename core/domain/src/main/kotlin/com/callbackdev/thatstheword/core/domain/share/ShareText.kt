@@ -26,7 +26,7 @@ object ShareText {
     )
 
     const val SEPARATOR = " · "
-    const val RIGHT_PLACE = "🟪" // 🟪, a square: here
+    const val RIGHT_PLACE = "🟦" // 🟦, a blue square: here, in the right place's ink (the owner, PLANNING §15, Open 21)
     const val ELSEWHERE = "🟠" // 🟠, round: somewhere in the word
     const val ABSENT = "▫️" // ▫️
 

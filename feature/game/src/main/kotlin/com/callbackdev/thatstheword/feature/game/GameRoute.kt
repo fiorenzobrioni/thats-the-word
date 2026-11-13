@@ -44,6 +44,8 @@ fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modi
         onEnter = viewModel::submit,
         onHardwareChar = viewModel::typeChar,
         onNext = { viewModel.next(onOpenGame) },
+        onTakeHint = viewModel::takeHint,
+        onToggleNotebook = viewModel::toggleNotebook,
         onShare = {
             val text = viewModel.shareText(labels) ?: return@GameScreen
             val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)

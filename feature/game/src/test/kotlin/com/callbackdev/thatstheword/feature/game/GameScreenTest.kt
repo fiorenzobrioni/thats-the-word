@@ -6,13 +6,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
@@ -24,8 +27,12 @@ import com.callbackdev.thatstheword.core.domain.words.Alphabet
 import com.callbackdev.thatstheword.core.domain.words.Lexicon
 import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameSetup
+import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.core.model.Letter
+import com.callbackdev.thatstheword.core.model.Milestone
+import com.callbackdev.thatstheword.core.model.NotebookEntry
+import com.callbackdev.thatstheword.core.model.Word
 import com.callbackdev.thatstheword.core.testing.assertAccessible
 import com.callbackdev.thatstheword.core.testing.walkPage
 import com.callbackdev.thatstheword.core.testing.writeScreenshot
@@ -68,6 +75,7 @@ class GameScreenTest {
                 solution = alphabet.parse(solution)!!,
                 hard = hard,
                 interfaceLanguage = ui,
+                hintKinds = Lexicon(files, language).hintKinds(alphabet.parse(solution)!!, ui),
             ),
         )
         for (guess in guesses) game = (game.submit(alphabet.parse(guess)!!, anyWord) as Submission.Accepted).game
@@ -80,21 +88,28 @@ class GameScreenTest {
         refusal: Refusal? = null,
         letter: Char? = null,
         practice: Boolean = false,
+        notebook: Map<Word, NotebookEntry> = emptyMap(),
+        milestones: List<Milestone> = emptyList(),
     ): GameUiState {
         val alphabet = Alphabet.of(game.setup.language)
         return GameUiState.of(
-            game,
-            typed.map { alphabet.letterOf(it)!! },
-            refusal?.let { RefusalUi(it, letter, 1) },
-            Lexicon(files, game.setup.language).forms,
-            practice,
+            game = game,
+            typed = typed.map { alphabet.letterOf(it)!! },
+            refusal = refusal?.let { RefusalUi(it, letter, 1) },
+            lexicon = Lexicon(files, game.setup.language),
+            practice = practice,
+            notebook = notebook,
+            milestones = milestones,
         )
     }
 
     private val typedLetters = mutableListOf<Letter>()
     private var entered = 0
 
-    private fun draw(state: GameUiState, dark: Boolean = false) {
+    private val hintsTaken = mutableListOf<HintKind>()
+    private val toggled = mutableListOf<Int>()
+
+    private fun draw(state: GameUiState, dark: Boolean = false, hintsOpen: Boolean = false) {
         compose.setContent {
             ThatsTheWordTheme(darkTheme = dark) {
                 GameScreen(
@@ -104,6 +119,9 @@ class GameScreenTest {
                     onDelete = {},
                     onEnter = { entered++ },
                     onShare = {},
+                    onTakeHint = { hintsTaken += it },
+                    onToggleNotebook = { toggled += it },
+                    hintsOpenAtStart = hintsOpen,
                 )
             }
         }
@@ -275,4 +293,109 @@ class GameScreenTest {
         draw(state(game(Language.ENGLISH, "train", "steam", "brain"), typed = "gr"))
         compose.walkPage(hasTestTag(GameTags.PAGE), "game-foldable")
     }
+
+    /** An Italian word, played with the interface in English: the hints are there. */
+    private fun foreign(vararg guesses: String) = game(Language.ITALIAN, "citta", *guesses, ui = Language.ENGLISH)
+
+    @Test
+    fun `the hints open in the keyboard's place, their cost said, and a touch takes one`() {
+        draw(state(foreign("torta")))
+        compose.onNodeWithContentDescription("Hints").assertIsDisplayed().performClick()
+        compose.onNodeWithTag(GameTags.HINTS_PANEL).assertIsDisplayed()
+        compose.onNodeWithText("Each costs an attempt: a row of the grid is spent.").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Q").assertDoesNotExist()
+        compose.assertAccessible()
+        compose.writeScreenshot("game-hints")
+        compose.onNodeWithTag(GameTags.hint(HintKind.LETTER)).performClick()
+        assertThat(hintsTaken).containsExactly(HintKind.LETTER)
+        // The keyboard is back, the hint taken.
+        compose.onNodeWithContentDescription("Q").assertIsDisplayed()
+    }
+
+    @Test
+    fun `a game in the interface's own language has no hints`() {
+        draw(state(game(Language.ENGLISH, "train", "steam")))
+        compose.onNodeWithContentDescription("Hints").assertDoesNotExist()
+    }
+
+    @Test
+    fun `the hints taken are drawn in the rows they spent, the last first`() {
+        val game = foreign("torta").takeHint(HintKind.TRANSLATION).takeHint(HintKind.LETTER)
+        val state = state(game)
+        assertThat(state.takenHints.map { it.kind }).containsExactly(HintKind.TRANSLATION, HintKind.LETTER).inOrder()
+        draw(state)
+        val translation = state.takenHints.first().text
+        assertThat(translation).isNotEmpty()
+        compose.onNodeWithContentDescription("Row 6, spent on a hint. Translation: $translation").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Row 5, spent on a hint: the first letter is C.").assertIsDisplayed()
+        compose.assertAccessible()
+        compose.writeScreenshot("game-hints-taken")
+    }
+
+    @Test
+    fun `with one attempt left the hints say why they cannot be taken`() {
+        draw(state(foreign("torta", "pasta", "salto", "porta", "tetto")), hintsOpen = true)
+        compose.onNodeWithTag(GameTags.hint(HintKind.TRANSLATION)).assertIsNotEnabled()
+        compose.onAllNodesWithText("Not on the last attempt").assertCountEquals(3)
+        compose.writeScreenshot("game-hints-last")
+    }
+
+    @Test
+    @Config(qualifiers = "it-rIT-w411dp-h891dp-xxhdpi", fontScale = 2f)
+    fun `the hints at twice the text size, in Italian`() {
+        draw(state(game(Language.SPANISH, "arbol", "nubes", ui = Language.ITALIAN)), hintsOpen = true)
+        compose.onNodeWithText("Torna alla tastiera").assertExists()
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-hints-large-text-it")
+    }
+
+    @Test
+    fun `the end explains the words, offers the notebook and says a milestone`() {
+        val alphabet = Alphabet.of(Language.ITALIAN)
+        val torta = alphabet.parse("torta")!!
+        val done = state(
+            foreign("torta", "pasta", "citta"),
+            notebook = mapOf(
+                alphabet.parse("citta")!! to entry(alphabet.parse("citta")!!, savedByHand = false),
+                torta to entry(torta, savedByHand = true),
+            ),
+            milestones = listOf(Milestone.FIRST_FOREIGN_WIN),
+        )
+        draw(done)
+        compose.onNodeWithText("città").assertExists()
+        compose.onNodeWithTag(GameTags.MEANING).assertExists()
+        compose.onNodeWithText("Kept in your notebook.").assertExists()
+        compose.onNodeWithText("Your first word found in another language.").assertExists()
+        compose.onNodeWithContentDescription("Take torta out of the notebook").assertExists()
+        compose.onNodeWithContentDescription("Add pasta to the notebook").performScrollTo().performClick()
+        assertThat(toggled).containsExactly(1)
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-won-meanings")
+    }
+
+    @Test
+    @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
+    fun `the end in the game's own language gives the definitions, in Spanish`() {
+        draw(state(game(Language.SPANISH, "arbol", "nubes", "arbol")))
+        compose.onNodeWithText("árbol").assertExists()
+        compose.onNodeWithContentDescription("Añade nubes al cuaderno").assertExists()
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-won-meanings-es")
+    }
+
+    @Test
+    @Config(qualifiers = "en-rGB-w411dp-h891dp-xxhdpi", fontScale = 2f)
+    fun `the meanings at twice the text size`() {
+        draw(state(foreign("torta", "pasta", "citta"), milestones = listOf(Milestone.HUNDRED_WORDS)))
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-won-meanings-large-text")
+    }
+
+    private fun entry(word: Word, savedByHand: Boolean) = NotebookEntry(
+        language = Language.ITALIAN,
+        word = word,
+        firstMet = LocalDate.of(2026, 11, 20),
+        lastMet = LocalDate.of(2026, 11, 20),
+        timesMet = 1,
+        solved = if (savedByHand) 0 else 1,
+        missed = 0,
+        withHints = 0,
+        savedByHand = savedByHand,
+    )
 }

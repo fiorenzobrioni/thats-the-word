@@ -61,6 +61,16 @@ interface GameDao {
     )
     fun observeSummaries(): Flow<List<GameSummary>>
 
+    @Query(
+        """
+        SELECT g.*,
+            (SELECT COUNT(*) FROM guesses WHERE game_id = g.id) AS guess_count,
+            (SELECT COUNT(*) FROM hints WHERE game_id = g.id) AS hint_count
+        FROM games g ORDER BY g.id
+        """,
+    )
+    suspend fun summaries(): List<GameSummary>
+
     @Query("DELETE FROM games WHERE id = :id")
     suspend fun deleteGame(id: Long)
 }

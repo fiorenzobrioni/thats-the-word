@@ -105,4 +105,11 @@
 
     <string name="home_hard">Difficile</string>
     <string name="home_hard_line">Ogni indizio trovato va usato nelle parole che seguono. Dalla prossima partita.</string>
+    <string name="home_notebook_eyebrow">Il tuo quaderno</string>
+    <plurals name="home_notebook_line">
+        <item quantity="one">Una parola incontrata, con il suo significato.</item>
+        <item quantity="many">%d parole incontrate, con il loro significato.</item>
+        <item quantity="other">%d parole incontrate, con il loro significato.</item>
+    </plurals>
+    <string name="home_notebook_open">Apri il quaderno</string>
 </resources>

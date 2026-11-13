@@ -113,4 +113,11 @@
     <!-- The Hard option (PLANNING.md §4.4). -->
     <string name="home_hard">Hard</string>
     <string name="home_hard_line">Every clue found must be used in the words that follow. From the next game.</string>
+    <!-- The notebook's card (VISION §9), drawn once it holds a word. -->
+    <string name="home_notebook_eyebrow">Your notebook</string>
+    <plurals name="home_notebook_line">
+        <item quantity="one">One word met, with what it means.</item>
+        <item quantity="other">%d words met, with what they mean.</item>
+    </plurals>
+    <string name="home_notebook_open">Open the notebook</string>
 </resources>

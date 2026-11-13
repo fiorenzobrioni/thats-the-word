@@ -88,4 +88,39 @@
         <item quantity="one">%d hint</item>
         <item quantity="other">%d hints</item>
     </plurals>
+    <!-- The hints (PLANNING.md §4.5), only in a game whose language is not the interface's. -->
+    <string name="hints_open">Hints</string>
+    <string name="hints_shown">Open</string>
+    <string name="hints_hidden">Closed</string>
+    <string name="hints_cost">Each costs an attempt: a row of the grid is spent.</string>
+    <string name="hints_close">Back to the keyboard</string>
+    <string name="hint_translation">Translation</string>
+    <string name="hint_translation_line">The word in your language</string>
+    <string name="hint_definition">Meaning</string>
+    <string name="hint_definition_line">What it means, in your language</string>
+    <string name="hint_letter">A letter</string>
+    <string name="hint_letter_line">One letter in its place</string>
+    <string name="hint_costs">One attempt</string>
+    <string name="hint_taken">Taken</string>
+    <string name="hint_not_for_this_word">Not for this word</string>
+    <string name="hint_last_attempt">Not on the last attempt</string>
+    <string name="hint_all_found">Every place found</string>
+    <!-- A row spent on a hint, as TalkBack reads it: "Row 6, spent on a hint. Translation: cat." -->
+    <string name="row_hint_text">Row %1$d, spent on a hint. %2$s: %3$s</string>
+    <!-- "Row 6, spent on a hint: the third letter is A." -->
+    <string name="row_hint_letter">Row %1$d, spent on a hint: the %2$s letter is %3$s.</string>
+
+    <!-- The end card's words explained (VISION §9), and the notebook (the owner, PLANNING §15, Open 8). -->
+    <string name="end_kept">Kept in your notebook.</string>
+    <string name="end_form_of">A form of %1$s.</string>
+    <string name="notebook_add">Add %1$s to the notebook</string>
+    <string name="notebook_remove">Take %1$s out of the notebook</string>
+    <string name="notebook_in">%1$s is in the notebook</string>
+
+    <!-- The milestones (PLANNING.md §4.8): recognition, said once on the end card. -->
+    <string name="milestone_eyebrow">Milestone</string>
+    <string name="milestone_seven_dailies">Today’s word found seven days in a row.</string>
+    <string name="milestone_first_foreign_win">Your first word found in another language.</string>
+    <string name="milestone_hundred_words">A hundred words in your notebook.</string>
+    <string name="milestone_three_languages">The day’s word found in all three languages.</string>
 </resources>

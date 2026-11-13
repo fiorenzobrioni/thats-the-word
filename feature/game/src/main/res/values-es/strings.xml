@@ -73,4 +73,35 @@
         <item quantity="many">%d pistas</item>
         <item quantity="other">%d pistas</item>
     </plurals>
+    <!-- Las pistas (PLANNING.md §4.5), solo en una partida en un idioma distinto del de la interfaz. -->
+    <string name="hints_open">Pistas</string>
+    <string name="hints_shown">Abiertas</string>
+    <string name="hints_hidden">Cerradas</string>
+    <string name="hints_cost">Cada una cuesta un intento: se gasta una fila de la cuadrícula.</string>
+    <string name="hints_close">Volver al teclado</string>
+    <string name="hint_translation">Traducción</string>
+    <string name="hint_translation_line">La palabra en tu idioma</string>
+    <string name="hint_definition">Significado</string>
+    <string name="hint_definition_line">Qué quiere decir, en tu idioma</string>
+    <string name="hint_letter">Una letra</string>
+    <string name="hint_letter_line">Una letra en su sitio</string>
+    <string name="hint_costs">Un intento</string>
+    <string name="hint_taken">Usada</string>
+    <string name="hint_not_for_this_word">No para esta palabra</string>
+    <string name="hint_last_attempt">No en el último intento</string>
+    <string name="hint_all_found">Todos los sitios hallados</string>
+    <string name="row_hint_text">Fila %1$d, gastada en una pista. %2$s: %3$s</string>
+    <string name="row_hint_letter">Fila %1$d, gastada en una pista: la %2$s letra es %3$s.</string>
+
+    <string name="end_kept">Anotada en tu cuaderno.</string>
+    <string name="end_form_of">Una forma de %1$s.</string>
+    <string name="notebook_add">Añade %1$s al cuaderno</string>
+    <string name="notebook_remove">Quita %1$s del cuaderno</string>
+    <string name="notebook_in">%1$s está en el cuaderno</string>
+
+    <string name="milestone_eyebrow">Hito</string>
+    <string name="milestone_seven_dailies">La palabra de hoy hallada siete días seguidos.</string>
+    <string name="milestone_first_foreign_win">Tu primera palabra hallada en otro idioma.</string>
+    <string name="milestone_hundred_words">Cien palabras en tu cuaderno.</string>
+    <string name="milestone_three_languages">La palabra del día hallada en los tres idiomas.</string>
 </resources>

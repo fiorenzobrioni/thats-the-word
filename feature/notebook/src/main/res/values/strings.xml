@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The notebook (VISION §9): the words met. Short, calm; sentence case, the page draws its capitals. -->
+    <string name="notebook_title">Notebook</string>
+    <plurals name="notebook_count">
+        <item quantity="one">%d word</item>
+        <item quantity="other">%d words</item>
+    </plurals>
+    <string name="notebook_back">Back</string>
+    <string name="notebook_intro">The words you met, with what they mean.</string>
+    <string name="notebook_empty">No word yet. The words of your games gather here.</string>
+    <string name="notebook_search">Search your words</string>
+    <string name="notebook_clear">Clear the search</string>
+    <string name="notebook_no_match">No word matches.</string>
+    <string name="notebook_all">All</string>
+    <string name="notebook_language_it">Italian</string>
+    <string name="notebook_language_en">English</string>
+    <string name="notebook_language_es">Spanish</string>
+    <!-- How a word was met, then the last day it was: "Found · 20 November". -->
+    <string name="notebook_standing_date">%1$s · %2$s</string>
+    <string name="notebook_found">Found</string>
+    <string name="notebook_found_hints">Found with hints</string>
+    <string name="notebook_missed">Missed</string>
+    <string name="notebook_found_and_missed">Found, sometimes missed</string>
+    <string name="notebook_kept">Kept from a game</string>
+    <string name="notebook_form_of">A form of %1$s.</string>
+    <plurals name="notebook_times">
+        <item quantity="one">Met once, on %2$s.</item>
+        <item quantity="other">Met %1$d times since %2$s.</item>
+    </plurals>
+    <!-- A word's row, opened or not, as TalkBack says it. -->
+    <string name="notebook_opened">Open</string>
+    <string name="notebook_closed">Closed</string>
+</resources>

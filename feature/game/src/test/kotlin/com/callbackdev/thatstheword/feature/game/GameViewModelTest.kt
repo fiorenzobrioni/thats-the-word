@@ -8,13 +8,16 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.callbackdev.thatstheword.core.data.GameRepository
 import com.callbackdev.thatstheword.core.data.Lexicons
+import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
 import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
+import com.callbackdev.thatstheword.core.domain.words.meaning
 import com.callbackdev.thatstheword.core.model.GameState
+import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.core.model.Word
 import com.callbackdev.thatstheword.core.words.AssetWordFiles
@@ -77,9 +80,15 @@ class GameViewModelTest {
 
     private fun games() = GameRepository(database, lexicons) { clock }
 
-    private fun viewModel(id: Long) = GameViewModel(id, SavedStateHandle(), games(), lexicons, settings) {
-        Language.ENGLISH
-    }
+    private fun viewModel(id: Long, speaks: Language = Language.ENGLISH) = GameViewModel(
+        gameId = id,
+        savedState = SavedStateHandle(),
+        games = games(),
+        lexicons = lexicons,
+        settings = settings,
+        interfaceLanguage = { speaks },
+        notebook = NotebookRepository(database) { clock },
+    )
 
     /** The model's state once it is loaded and [until] holds: its flows are fed from Room's threads too. */
     private fun GameViewModel.awaitState(until: (GameUiState) -> Boolean = { true }) =
@@ -213,5 +222,68 @@ class GameViewModelTest {
         val another = model.awaitNext()
         assertThat(another).isNotEqualTo(id)
         assertThat(runBlocking { games().load(another)!!.game.setup.solution }).isNotEqualTo(solution)
+    }
+
+    @Test
+    fun `a hint spends an attempt, is drawn in the last row and is kept with the game`() {
+        // An Italian word for a player whose interface speaks English: the hints are there.
+        val id = runBlocking { games().dailyGame(Language.ITALIAN, today, Language.ENGLISH, hard = false) }
+        val model = viewModel(id)
+        val start = model.awaitState()
+        assertThat(start.hintsAvailable).isTrue()
+        assertThat(start.hintChoices.first { it.kind == HintKind.LETTER }.status).isEqualTo(HintStatus.OFFERED)
+
+        model.takeHint(HintKind.LETTER)
+        val hinted = model.awaitState { it.takenHints.isNotEmpty() }
+        val letter = hinted.takenHints.single()
+        assertThat(letter.position).isEqualTo(0)
+        assertThat(letter.letter).isEqualTo(hinted.solution.first())
+        assertThat(hinted.spentOnHints).isEqualTo(1)
+        assertThat(hinted.hintChoices.first { it.kind == HintKind.LETTER }.status).isEqualTo(HintStatus.TAKEN)
+        // Taken twice: nothing more is spent.
+        model.takeHint(HintKind.LETTER)
+        assertThat(model.awaitState().spentOnHints).isEqualTo(1)
+        settle(id, 1)
+        assertThat(viewModel(id).awaitState().takenHints.single().letter).isEqualTo(letter.letter)
+    }
+
+    @Test
+    fun `a game in the interface's own language has no hints`() {
+        val id = runBlocking { games().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = false) }
+        val model = viewModel(id)
+        assertThat(model.awaitState().hintsAvailable).isFalse()
+        model.takeHint(HintKind.TRANSLATION)
+        assertThat(model.awaitState().spentOnHints).isEqualTo(0)
+    }
+
+    @Test
+    fun `the end explains the words, keeps the solution and adds a word tried by hand`() {
+        val id = runBlocking { games().dailyGame(Language.SPANISH, today, Language.ENGLISH, hard = false) }
+        val daily = lexicons.of(Language.SPANISH).daily
+        val solution = daily.word(DailyCalendar(clock).number(today))
+        val other = (1..daily.size).asSequence().map { daily.word(it) }.first { it != solution }
+        val model = viewModel(id)
+        model.awaitState()
+        model.type(other)
+        model.submit()
+        model.awaitState { it.rows.size == 1 }
+        model.type(solution)
+        model.submit()
+        val end = model.awaitState { it.finished && it.solutionKept }
+        assertThat(end.solutionMeaning).isEqualTo(
+            MeaningUi.of(lexicons.of(Language.SPANISH).meaning(solution, Language.ENGLISH)),
+        )
+        assertThat(end.sameLanguage).isFalse()
+        assertThat(end.tried).hasSize(1)
+        assertThat(end.tried.single().inNotebook).isFalse()
+        // A first win in a foreign language, said once on the card.
+        assertThat(model.awaitState { it.milestones.isNotEmpty() }.milestones)
+            .containsExactly(com.callbackdev.thatstheword.core.model.Milestone.FIRST_FOREIGN_WIN)
+
+        model.toggleNotebook(0)
+        val added = model.awaitState { it.tried.single().inNotebook }.tried.single()
+        assertThat(added.removable).isTrue()
+        model.toggleNotebook(0)
+        assertThat(model.awaitState { !it.tried.single().inNotebook }.tried.single().inNotebook).isFalse()
     }
 }

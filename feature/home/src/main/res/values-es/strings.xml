@@ -105,4 +105,11 @@
 
     <string name="home_hard">Difícil</string>
     <string name="home_hard_line">Cada pista encontrada debe usarse en las palabras que siguen. Desde la próxima partida.</string>
+    <string name="home_notebook_eyebrow">Tu cuaderno</string>
+    <plurals name="home_notebook_line">
+        <item quantity="one">Una palabra encontrada, con lo que significa.</item>
+        <item quantity="many">%d palabras encontradas, con lo que significan.</item>
+        <item quantity="other">%d palabras encontradas, con lo que significan.</item>
+    </plurals>
+    <string name="home_notebook_open">Abrir el cuaderno</string>
 </resources>

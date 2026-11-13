@@ -1,6 +1,7 @@
 package com.callbackdev.thatstheword.feature.game
 
 import android.view.HapticFeedbackConstants
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
@@ -8,6 +9,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,6 +67,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -80,6 +84,7 @@ import com.callbackdev.thatstheword.core.designsystem.theme.pageGutter
 import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
 import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameState
+import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Letter
 import com.callbackdev.thatstheword.core.model.Mark
 import kotlinx.coroutines.delay
@@ -107,6 +112,9 @@ fun GameScreen(
     onNext: () -> Unit = {},
     haptics: Boolean = true,
     onHardwareChar: (Char) -> Boolean = { false },
+    onTakeHint: (HintKind) -> Unit = {},
+    onToggleNotebook: (Int) -> Unit = {},
+    hintsOpenAtStart: Boolean = false,
 ) {
     val reduced = reducedMotion()
     val view = LocalView.current
@@ -127,9 +135,13 @@ fun GameScreen(
         }
     }
 
-    // TalkBack: the last row, once it is revealed (a polite live region); every refusal.
+    // TalkBack: the last row, once it is revealed (a polite live region); every refusal; a hint
+    // taken, what it shows.
     var announcement by remember { mutableStateOf("") }
     val lastRowSentence = state.rows.lastOrNull()?.let { rowSentence(state.rows.size, it) }
+    val hintAnnouncement = state.takenHints.lastOrNull()?.let { hint ->
+        hintSentence(state.attempts - state.takenHints.size + 1, hint)
+    } ?: ""
     LaunchedEffect(state.rows.size) {
         if (state.rows.size > rowsAtStart && lastRowSentence != null) {
             repeat(state.length) {
@@ -143,6 +155,14 @@ fun GameScreen(
     }
     LaunchedEffect(state.refusal?.id) {
         if (state.refusal != null) haptic(HapticFeedbackConstants.REJECT)
+    }
+
+    // The hints stand in the keyboard's place while they are open: two touches to take one.
+    var hintsOpen by rememberSaveable { mutableStateOf(hintsOpenAtStart) }
+    if (state.finished || !state.hintsAvailable) hintsOpen = false
+    val hintsAtStart = remember { state.takenHints.size }
+    LaunchedEffect(state.takenHints.size) {
+        if (state.takenHints.size > hintsAtStart) announcement = hintAnnouncement
     }
 
     val focus = remember { FocusRequester() }
@@ -166,7 +186,7 @@ fun GameScreen(
                     }
                 },
         ) {
-            TopBar(state, onBack)
+            TopBar(state, onBack, hintsOpen = hintsOpen, onHints = { hintsOpen = !hintsOpen })
             BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
                 // The tiles as large as the column allows (56dp, never under 44): the keyboard's
                 // height is counted whether it is there or not, so the grid keeps its size when
@@ -188,7 +208,7 @@ fun GameScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = if (ending) Arrangement.Top else Arrangement.Center,
                 ) {
-                    Grid(state, tile, rowsAtStart, endedHere, revealMillis, reduced)
+                    Grid(state, tile, rowsAtStart, hintsAtStart, endedHere, revealMillis, reduced)
                     MarksKey(visible = !ending)
                     RefusalLine(state)
                     Box(
@@ -208,7 +228,13 @@ fun GameScreen(
                                 slideInVertically(ThatsTheWordMotion.playful()) { it / 3 }
                         },
                     ) {
-                        EndCard(state, onShare, onNext, Modifier.padding(top = 8.dp, bottom = 24.dp))
+                        EndCard(
+                            state = state,
+                            onShare = onShare,
+                            onNext = onNext,
+                            onToggleNotebook = onToggleNotebook,
+                            modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
+                        )
                     }
                 }
             }
@@ -222,25 +248,48 @@ fun GameScreen(
                         slideOutVertically(ThatsTheWordMotion.spatial()) { it }
                 },
             ) {
-                Keyboard(
-                    state = state,
-                    onLetter = {
-                        haptic(HapticFeedbackConstants.KEYBOARD_TAP)
-                        onLetter(it)
+                val bottom = Modifier
+                    .padding(pageGutter(sideInsets = false))
+                    .padding(horizontal = KEYBOARD_MARGIN)
+                    .padding(top = 4.dp, bottom = 12.dp)
+                AnimatedContent(
+                    targetState = hintsOpen,
+                    transitionSpec = {
+                        fadeIn(ThatsTheWordMotion.effects(reduced)) togetherWith
+                            fadeOut(ThatsTheWordMotion.effects(reduced))
                     },
-                    onDelete = {
-                        haptic(HapticFeedbackConstants.KEYBOARD_TAP)
-                        onDelete()
-                    },
-                    onEnter = {
-                        haptic(HapticFeedbackConstants.KEYBOARD_TAP)
-                        onEnter()
-                    },
-                    modifier = Modifier
-                        .padding(pageGutter(sideInsets = false))
-                        .padding(horizontal = KEYBOARD_MARGIN)
-                        .padding(top = 4.dp, bottom = 12.dp),
-                )
+                    label = "keyboard",
+                ) { open ->
+                    if (open) {
+                        HintsPanel(
+                            state = state,
+                            onTake = {
+                                haptic(HapticFeedbackConstants.CONFIRM)
+                                hintsOpen = false
+                                onTakeHint(it)
+                            },
+                            onClose = { hintsOpen = false },
+                            modifier = bottom,
+                        )
+                    } else {
+                        Keyboard(
+                            state = state,
+                            onLetter = {
+                                haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+                                onLetter(it)
+                            },
+                            onDelete = {
+                                haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+                                onDelete()
+                            },
+                            onEnter = {
+                                haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+                                onEnter()
+                            },
+                            modifier = bottom,
+                        )
+                    }
+                }
             }
         }
     }
@@ -248,7 +297,7 @@ fun GameScreen(
 
 /** The page's top: back, and what this game is (its language and number, its date). */
 @Composable
-private fun TopBar(state: GameUiState, onBack: () -> Unit) {
+private fun TopBar(state: GameUiState, onBack: () -> Unit, hintsOpen: Boolean, onHints: () -> Unit) {
     val locale = LocalConfiguration.current.locales[0]
     val language = stringResource(languageName(state.language))
     val (eyebrowOfMode, title) = when (val mode = state.mode) {
@@ -290,8 +339,30 @@ private fun TopBar(state: GameUiState, onBack: () -> Unit) {
             )
             Text(text = title, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
         }
-        // The back button's width again, so the title stands in the middle of the page.
-        Spacer(Modifier.width(48.dp))
+        if (state.hintsAvailable && !state.finished) {
+            // The hints, in a game whose language is not the interface's (VISION §5).
+            val label = stringResource(R.string.hints_open)
+            val shown = stringResource(if (hintsOpen) R.string.hints_shown else R.string.hints_hidden)
+            IconButton(
+                onClick = onHints,
+                modifier = Modifier
+                    .testTag(GameTags.HINTS)
+                    .semantics { stateDescription = shown },
+            ) {
+                Icon(
+                    GameIcons.Hint,
+                    contentDescription = label,
+                    tint = if (hintsOpen) {
+                        MaterialTheme.colorScheme.onSurface
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
+                )
+            }
+        } else {
+            // The back button's width again, so the title stands in the middle of the page.
+            Spacer(Modifier.width(48.dp))
+        }
     }
 }
 
@@ -300,6 +371,7 @@ private fun Grid(
     state: GameUiState,
     tile: Dp,
     rowsAtStart: Int,
+    hintsAtStart: Int,
     endedHere: Boolean,
     revealMillis: Long,
     reduced: Boolean,
@@ -333,6 +405,22 @@ private fun Grid(
                 }
 
                 row == state.rows.size && !state.finished && !spent -> TypingRow(state, row, tile, reduced)
+
+                // A row spent on a hint: the first hint the last row, the next the row above, so
+                // a hint stays where it was drawn (PLANNING.md §7.3).
+                spent && state.takenHints.getOrNull(state.attempts - 1 - row) != null -> {
+                    val index = state.attempts - 1 - row
+                    androidx.compose.runtime.key(row, "hint") {
+                        HintRow(
+                            hint = state.takenHints[index],
+                            number = row + 1,
+                            length = state.length,
+                            tile = tile,
+                            animate = index >= hintsAtStart,
+                            reduced = reduced,
+                        )
+                    }
+                }
 
                 else -> {
                     val description = if (spent) stringResource(R.string.row_spent, row + 1) else ""
@@ -469,6 +557,16 @@ object GameTags {
     const val END_CARD = "game_end_card"
     const val NEXT = "game_next"
     const val MARKS_KEY = "game_marks_key"
+    const val MEANING = "game_meaning"
+    const val MILESTONE = "game_milestone"
+    const val HINTS = "game_hints"
+    const val HINTS_PANEL = "game_hints_panel"
+
+    fun hint(kind: HintKind) = "game_hint_${kind.name.lowercase()}"
+
+    fun hintRow(kind: HintKind) = "game_hint_row_${kind.name.lowercase()}"
+
+    fun notebook(index: Int) = "game_notebook_$index"
 }
 
 private val MAX_TILE = 56.dp
@@ -478,7 +576,7 @@ private val REFUSAL_LINE = 40.dp
 private val MARKS_KEY = 32.dp
 private val MARK_SAMPLE = 12.dp
 private val SHAKE_VELOCITY = 900.dp
-private const val SPENT_ALPHA = 0.4f
+internal const val SPENT_ALPHA = 0.4f
 
 /** After the last tile of a row starts, the time its spring takes to settle. */
 private const val REVEAL_SETTLE_MILLIS = 420L

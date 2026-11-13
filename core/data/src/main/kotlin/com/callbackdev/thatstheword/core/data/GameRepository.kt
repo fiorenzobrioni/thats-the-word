@@ -2,7 +2,6 @@ package com.callbackdev.thatstheword.core.data
 
 import androidx.room.withTransaction
 import com.callbackdev.thatstheword.core.data.db.GameEntity
-import com.callbackdev.thatstheword.core.data.db.GameSummary
 import com.callbackdev.thatstheword.core.data.db.GuessEntity
 import com.callbackdev.thatstheword.core.data.db.HintEntity
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
@@ -12,12 +11,12 @@ import com.callbackdev.thatstheword.core.domain.game.Game
 import com.callbackdev.thatstheword.core.domain.game.Move
 import com.callbackdev.thatstheword.core.domain.progress.GameRecord
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
-import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameSetup
 import com.callbackdev.thatstheword.core.model.GameState
 import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.core.model.Level
+import com.callbackdev.thatstheword.core.model.Milestone
 import com.callbackdev.thatstheword.core.model.Word
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -46,6 +45,7 @@ class GameRepository @Inject constructor(
     private val clock: Provider<Clock>,
 ) {
     private val dao = database.games()
+    private val notebook = NotebookRepository(database, clock)
 
     private fun calendar() = DailyCalendar(clock.get())
 
@@ -191,11 +191,14 @@ class GameRepository @Inject constructor(
 
     /**
      * Saves [game]'s moves that are not saved yet, and where it stands, in one transaction: a
-     * crash between two moves loses nothing that was played.
+     * crash between two moves loses nothing that was played. The move that ends the game writes
+     * its solution in the notebook (not a replay's: PLANNING.md §4.6) and asks the milestones, in
+     * the same transaction; the milestones it reached are returned, for the end card to say once.
      */
-    suspend fun save(id: Long, game: Game) {
+    suspend fun save(id: Long, game: Game): Set<Milestone> {
         val alphabet = Alphabet.of(game.setup.language)
-        database.withTransaction {
+        return database.withTransaction {
+            val entity = checkNotNull(dao.game(id)) { "no game $id to save" }
             val saved = dao.guesses(id).size + dao.hints(id).size
             for (position in saved until game.moves.size) {
                 when (val move = game.moves[position]) {
@@ -205,28 +208,18 @@ class GameRepository @Inject constructor(
             }
             val finishedAt = if (game.state.finished) Instant.now(clock.get()).toEpochMilli() else null
             dao.updateStatus(id, statusOf(game.state), finishedAt)
+            if (entity.status == STATUS_PLAYING && game.state.finished) {
+                val record = GameRecord.of(game, LocalDate.ofEpochDay(entity.startedOn), entity.practice > 0)
+                notebook.afterGame(record)
+            } else {
+                emptySet()
+            }
         }
     }
 
     /** Every game as the progress reads it (PLANNING.md §4.8), in the order they were started. */
-    fun records(): Flow<List<GameRecord>> = dao.observeSummaries().map { rows -> rows.map(::recordOf) }
-
-    private fun recordOf(summary: GameSummary): GameRecord {
-        val entity = summary.game
-        val language = languageOf(entity.language)
-        return GameRecord(
-            language = language,
-            interfaceLanguage = languageOf(entity.uiLanguage),
-            mode = modeOf(entity),
-            solution = Alphabet.of(language).parseStored(entity.solution),
-            state = stateOf(entity.status),
-            attemptsUsed = summary.guessCount + summary.hintCount,
-            attempts = entity.attempts,
-            hints = summary.hintCount,
-            hard = entity.hard,
-            startedOn = LocalDate.ofEpochDay(entity.startedOn),
-            practice = entity.practice > 0,
-        )
+    fun records(): Flow<List<GameRecord>> = dao.observeSummaries().map { rows ->
+        rows.map { recordOf(it, clock.get()) }
     }
 
     private fun setupOf(entity: GameEntity): GameSetup {
@@ -235,26 +228,13 @@ class GameRepository @Inject constructor(
         val solution = Alphabet.of(language).parseStored(entity.solution)
         return GameSetup(
             language = language,
-            mode = modeOf(entity),
+            mode = modeOf(entity, clock.get()),
             solution = solution,
             attempts = entity.attempts,
             hard = entity.hard,
             interfaceLanguage = interfaceLanguage,
             hintKinds = lexicons.of(language).hintKinds(solution, interfaceLanguage),
         )
-    }
-
-    private fun modeOf(entity: GameEntity): GameMode = when (entity.mode) {
-        MODE_DAILY -> {
-            val date = LocalDate.ofEpochDay(checkNotNull(entity.dailyDate) { "a daily without its date" })
-            GameMode.Daily(date, calendar().number(date))
-        }
-
-        MODE_FREE -> GameMode.Free(Level.ofCode(checkNotNull(entity.level) { "free play without its level" }))
-
-        MODE_GUIDED -> GameMode.Guided
-
-        else -> error("no mode is called ${entity.mode}")
     }
 
     companion object {
@@ -265,7 +245,7 @@ class GameRepository @Inject constructor(
         const val STATUS_WON = "won"
         const val STATUS_LOST = "lost"
 
-        private fun languageOf(tag: String): Language = Language.ofTag(tag) ?: error("no language is $tag")
+        internal fun languageOf(tag: String): Language = Language.ofTag(tag) ?: error("no language is $tag")
 
         private fun hintOf(kind: String): HintKind = HintKind.valueOf(kind.uppercase())
 
@@ -275,14 +255,14 @@ class GameRepository @Inject constructor(
             GameState.LOST -> STATUS_LOST
         }
 
-        private fun stateOf(status: String): GameState = when (status) {
+        internal fun stateOf(status: String): GameState = when (status) {
             STATUS_PLAYING -> GameState.PLAYING
             STATUS_WON -> GameState.WON
             STATUS_LOST -> GameState.LOST
             else -> error("no state is $status")
         }
 
-        private fun Alphabet.parseStored(keyForm: String): Word =
+        internal fun Alphabet.parseStored(keyForm: String): Word =
             parse(keyForm) ?: error("$keyForm is not a word of $language")
     }
 }

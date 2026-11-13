@@ -73,4 +73,35 @@
         <item quantity="many">%d aiuti</item>
         <item quantity="other">%d aiuti</item>
     </plurals>
+    <!-- Gli aiuti (PLANNING.md §4.5), solo in una partita in una lingua diversa da quella dell’interfaccia. -->
+    <string name="hints_open">Aiuti</string>
+    <string name="hints_shown">Aperti</string>
+    <string name="hints_hidden">Chiusi</string>
+    <string name="hints_cost">Ognuno costa un tentativo: una riga della griglia se ne va.</string>
+    <string name="hints_close">Torna alla tastiera</string>
+    <string name="hint_translation">Traduzione</string>
+    <string name="hint_translation_line">La parola nella tua lingua</string>
+    <string name="hint_definition">Significato</string>
+    <string name="hint_definition_line">Che cosa vuol dire, nella tua lingua</string>
+    <string name="hint_letter">Una lettera</string>
+    <string name="hint_letter_line">Una lettera al suo posto</string>
+    <string name="hint_costs">Un tentativo</string>
+    <string name="hint_taken">Usato</string>
+    <string name="hint_not_for_this_word">Non per questa parola</string>
+    <string name="hint_last_attempt">Non all’ultimo tentativo</string>
+    <string name="hint_all_found">Ogni posto trovato</string>
+    <string name="row_hint_text">Riga %1$d, spesa per un aiuto. %2$s: %3$s</string>
+    <string name="row_hint_letter">Riga %1$d, spesa per un aiuto: la %2$s lettera è %3$s.</string>
+
+    <string name="end_kept">Annotata nel tuo quaderno.</string>
+    <string name="end_form_of">Una forma di %1$s.</string>
+    <string name="notebook_add">Aggiungi %1$s al quaderno</string>
+    <string name="notebook_remove">Togli %1$s dal quaderno</string>
+    <string name="notebook_in">%1$s è nel quaderno</string>
+
+    <string name="milestone_eyebrow">Traguardo</string>
+    <string name="milestone_seven_dailies">La parola di oggi trovata sette giorni di fila.</string>
+    <string name="milestone_first_foreign_win">La tua prima parola trovata in un’altra lingua.</string>
+    <string name="milestone_hundred_words">Cento parole nel tuo quaderno.</string>
+    <string name="milestone_three_languages">La parola del giorno trovata in tutte e tre le lingue.</string>
 </resources>

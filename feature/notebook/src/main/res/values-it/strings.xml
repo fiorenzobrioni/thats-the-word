@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notebook_title">Quaderno</string>
+    <plurals name="notebook_count">
+        <item quantity="one">%d parola</item>
+        <item quantity="many">%d parole</item>
+        <item quantity="other">%d parole</item>
+    </plurals>
+    <string name="notebook_back">Indietro</string>
+    <string name="notebook_intro">Le parole che hai incontrato, con il loro significato.</string>
+    <string name="notebook_empty">Ancora nessuna parola. Qui si raccolgono quelle delle tue partite.</string>
+    <string name="notebook_search">Cerca tra le tue parole</string>
+    <string name="notebook_clear">Cancella la ricerca</string>
+    <string name="notebook_no_match">Nessuna parola corrisponde.</string>
+    <string name="notebook_all">Tutte</string>
+    <string name="notebook_language_it">Italiano</string>
+    <string name="notebook_language_en">Inglese</string>
+    <string name="notebook_language_es">Spagnolo</string>
+    <string name="notebook_standing_date">%1$s · %2$s</string>
+    <string name="notebook_found">Trovata</string>
+    <string name="notebook_found_hints">Trovata con aiuti</string>
+    <string name="notebook_missed">Sfuggita</string>
+    <string name="notebook_found_and_missed">Trovata, a volte sfuggita</string>
+    <string name="notebook_kept">Annotata da una partita</string>
+    <string name="notebook_form_of">Una forma di %1$s.</string>
+    <plurals name="notebook_times">
+        <item quantity="one">Incontrata una volta, il %2$s.</item>
+        <item quantity="many">Incontrata %1$d volte dal %2$s.</item>
+        <item quantity="other">Incontrata %1$d volte dal %2$s.</item>
+    </plurals>
+    <string name="notebook_opened">Aperta</string>
+    <string name="notebook_closed">Chiusa</string>
+</resources>

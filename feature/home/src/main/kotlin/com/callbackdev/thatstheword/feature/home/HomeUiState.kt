@@ -34,6 +34,8 @@ data class LanguageToday(val language: Language, val status: DayStatus, val atte
  * @property level free play's level in the game language.
  * @property freeUnderWay the level of the game language's free game left unfinished, if one is.
  * @property hard the Hard option, for the next game (PLANNING.md §4.4).
+ * @property notebookSize how many words the notebook holds, in every language: its card is drawn
+ *   once it holds one.
  */
 @Immutable
 data class HomeUiState(
@@ -46,6 +48,7 @@ data class HomeUiState(
     val level: Level,
     val freeUnderWay: Level?,
     val hard: Boolean,
+    val notebookSize: Int = 0,
 ) {
     val gameLanguageToday: LanguageToday get() = languages.first { it.language == gameLanguage }
 
@@ -61,6 +64,7 @@ data class HomeUiState(
             calendar: DailyCalendar,
             month: YearMonth?,
             scheduleLength: Int,
+            notebookSize: Int = 0,
         ): HomeUiState {
             val today = calendar.today()
             val language = settings.gameLanguage
@@ -76,6 +80,7 @@ data class HomeUiState(
                     .lastOrNull { it.language == language && it.mode is GameMode.Free && it.state == GameState.PLAYING }
                     ?.let { (it.mode as GameMode.Free).level },
                 hard = settings.hard,
+                notebookSize = notebookSize,
             )
         }
 

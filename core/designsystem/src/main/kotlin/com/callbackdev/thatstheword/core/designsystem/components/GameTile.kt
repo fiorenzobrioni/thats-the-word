@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.callbackdev.thatstheword.core.designsystem.theme.RIGHT_PLACE_CORNER_PERCENT
+import com.callbackdev.thatstheword.core.designsystem.theme.RIM_WIDTH
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
 import com.callbackdev.thatstheword.core.designsystem.theme.markStyle
@@ -132,6 +133,10 @@ fun GameTile(
                     } else {
                         val radius = hypot(this.size.width, this.size.height) / 2f * p.coerceAtLeast(0f)
                         drawCircle(s.ground, radius, Offset(this.size.width / 2f, this.size.height / 2f))
+                    }
+                    // On a dark page the right place's edge arrives with its colour.
+                    s.rim?.let { rim ->
+                        drawBorder(outlineShape, rim.copy(alpha = p.coerceIn(0f, 1f)), RIM_WIDTH.toPx())
                     }
                 }
             },

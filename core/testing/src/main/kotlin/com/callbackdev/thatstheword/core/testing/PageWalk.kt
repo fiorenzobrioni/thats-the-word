@@ -10,6 +10,7 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performSemanticsAction
+import com.google.common.truth.Truth.assertWithMessage
 import java.io.File
 
 /**
@@ -18,11 +19,19 @@ import java.io.File
  * `build/screenshots` as `name-1.png`, `name-2.png`… for a person to look at: the large-text and
  * wide-window passes (PLANNING.md §12) read the whole page, not its first screen.
  *
+ * Every page has a heading on its first screen, so TalkBack's headings navigation lands on it.
+ *
  * @param scrollable the page's scrolling list or column.
  */
 fun ComposeContentTestRule.walkPage(scrollable: SemanticsMatcher, name: String, maxScreens: Int = 12) {
     for (screen in 1..maxScreens) {
         waitForIdle()
+        if (screen == 1) {
+            val headings = onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading)).fetchSemanticsNodes()
+            assertWithMessage(
+                "A heading on «$name»'s first screen, for TalkBack's headings",
+            ).that(headings).isNotEmpty()
+        }
         assertAccessible()
         writeScreenshot("$name-$screen")
         val node = onNode(scrollable).fetchSemanticsNode()

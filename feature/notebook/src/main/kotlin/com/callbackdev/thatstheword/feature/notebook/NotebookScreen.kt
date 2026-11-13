@@ -61,6 +61,7 @@ import com.callbackdev.thatstheword.core.designsystem.icons.GameIcons
 import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
 import com.callbackdev.thatstheword.core.designsystem.theme.balanced
+import com.callbackdev.thatstheword.core.designsystem.theme.markGround
 import com.callbackdev.thatstheword.core.designsystem.theme.markStyle
 import com.callbackdev.thatstheword.core.designsystem.theme.padding
 import com.callbackdev.thatstheword.core.designsystem.theme.pageGutter
@@ -340,7 +341,7 @@ private fun StandingGlyph(standing: WordStanding) {
                 scaleX = style.scale
                 scaleY = style.scale
             }
-            .background(style.ground, RoundedCornerShape(CornerSize(style.cornerPercent.toInt()))),
+            .markGround(style.ground, RoundedCornerShape(CornerSize(style.cornerPercent.toInt())), style.rim, 1.dp),
     )
 }
 

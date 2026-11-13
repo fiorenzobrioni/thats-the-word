@@ -7,6 +7,8 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
 import androidx.compose.ui.test.isRoot
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.TextOverflow
 import com.callbackdev.thatstheword.core.designsystem.components.DENSE_TARGETS_TAG
 import com.google.common.truth.Truth.assertWithMessage
 import kotlin.math.roundToInt
@@ -20,6 +22,12 @@ import kotlin.math.roundToInt
  *   so), which makes a small control a problem only where that widened area runs into another
  *   control's: there a finger, and the Scanner, find less than 48dp.
  * - **Label**: every control says what it is to TalkBack, with a text, a description or a value.
+ *
+ * - **Nothing cut**: no text is clipped by the room it was given, at any text size (the pages
+ *   scroll; a box of a fixed height that cuts its words at twice the text size is the bug the
+ *   large-text walks are for). A text that ends in an ellipsis on purpose (a closed entry's
+ *   first lines, opened by a touch) says so by its `maxLines` and `TextOverflow.Ellipsis`, and
+ *   TalkBack still reads it whole.
  *
  * Contrast is the theme's, pinned by `ContrastTest` in `:core:designsystem`. A control cut by the
  * edge of a scrolling list is measured when it is scrolled into view, as the Scanner does.
@@ -40,6 +48,14 @@ fun SemanticsNodeInteractionsProvider.assertAccessible() {
         }
         visit(root, dense = false, ancestors = emptyList())
         problems += problemsOf(controls)
+    }
+    // Every text of its own, unmerged: a button's label is cut as surely as a paragraph.
+    for (root in onAllNodes(isRoot(), useUnmergedTree = true).fetchSemanticsNodes()) {
+        fun visit(node: SemanticsNode) {
+            cutText(node)?.let { problems += it }
+            node.children.forEach(::visit)
+        }
+        visit(root)
     }
     assertWithMessage("Accessibility problems on screen").that(problems).isEmpty()
 }
@@ -142,6 +158,23 @@ private fun problemsOf(controls: List<Control>): List<String> {
     return problems
 }
 
+/** A text laid out in less room than it needs, unless it ends in an ellipsis on purpose. */
+private fun cutText(node: SemanticsNode): String? {
+    if (!node.layoutInfo.isPlaced) return null
+    val action = node.config.getOrNull(SemanticsActions.GetTextLayoutResult)?.action ?: return null
+    val layouts = mutableListOf<TextLayoutResult>()
+    if (action(layouts) != true) return null
+    val layout = layouts.firstOrNull() ?: return null
+    val input = layout.layoutInput
+    val ellipsis = input.overflow == TextOverflow.Ellipsis && input.maxLines != Int.MAX_VALUE
+    // Height and lines only: a simple text's layout is as wide as its words, its paragraph as wide
+    // as the room, so the width's own flag says nothing; a word too long for its line is broken.
+    val cut = layout.didOverflowHeight || layout.multiParagraph.didExceedMaxLines
+    if (!cut || ellipsis) return null
+    val text = input.text.text
+    return "«${text.take(TEXT_IN_MESSAGE)}${if (text.length > TEXT_IN_MESSAGE) "…" else ""}» is cut"
+}
+
 private fun labelOf(node: SemanticsNode): String {
     val config = node.config
     return listOfNotNull(
@@ -154,3 +187,6 @@ private fun labelOf(node: SemanticsNode): String {
 
 /** Material's minimum, less half a dp for rounding at the test's density. */
 private const val MIN_TARGET_DP = 47.5f
+
+/** How much of a cut text the failure quotes. */
+private const val TEXT_IN_MESSAGE = 40

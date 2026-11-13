@@ -1,0 +1,52 @@
+# That's The Word's Baseline Profile (PLANNING.md §11 Phase 8, §15 "Phase 8").
+#
+# The code a player meets in the first seconds and in every game: the start, the first run (the one
+# launch no profile of the phone's own can help), the start page and the game page, with what they
+# stand on (the engine, the words' reader, the data, the design system,
+# Hilt's graph). AGP compiles it into the APK (assets/dexopt/baseline.prof), R8 rewrites it to the
+# minified names, and androidx.profileinstaller (merged through Compose) hands it to ART at the
+# install, so these methods run compiled from the first launch instead of interpreted until the
+# phone's own profile catches up, days later.
+#
+# Written by hand, in the format's own wildcards (`**` any packages, `*` one segment), because the
+# generator needs a phone or an emulator: a rule names a package, never a class, so a class added
+# or renamed stays covered. The libraries' own profiles (Compose, Room, Navigation, DataStore)
+# arrive with them. The pages a player opens now and then (Settings, Your data, the notebook, the
+# progress) are left to ART, as is the home-screen card, which Glance draws in the
+# background.
+#
+# `ProfileRulesTest` checks that every package named here still holds code.
+
+# The start: the application, the activity and Hilt's graph (generated beside them), the shell.
+HSPLcom/callbackdev/thatstheword/*;->**(**)**
+HSPLcom/callbackdev/thatstheword/shell/**;->**(**)**
+
+# Started by the application: the reminder's watch and the card's listener.
+HSPLcom/callbackdev/thatstheword/core/reminder/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/widget/WidgetUpdater*;->**(**)**
+
+# What every page stands on.
+HSPLcom/callbackdev/thatstheword/core/model/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/core/domain/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/core/words/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/core/data/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/core/designsystem/**;->**(**)**
+
+# The first run, the start page and the game.
+HSPLcom/callbackdev/thatstheword/feature/onboarding/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/feature/home/**;->**(**)**
+HSPLcom/callbackdev/thatstheword/feature/game/**;->**(**)**
+
+# The classes themselves, loaded and verified at the install rather than at the first touch.
+Lcom/callbackdev/thatstheword/*;
+Lcom/callbackdev/thatstheword/shell/**;
+Lcom/callbackdev/thatstheword/core/reminder/**;
+Lcom/callbackdev/thatstheword/widget/WidgetUpdater*;
+Lcom/callbackdev/thatstheword/core/model/**;
+Lcom/callbackdev/thatstheword/core/domain/**;
+Lcom/callbackdev/thatstheword/core/words/**;
+Lcom/callbackdev/thatstheword/core/data/**;
+Lcom/callbackdev/thatstheword/core/designsystem/**;
+Lcom/callbackdev/thatstheword/feature/onboarding/**;
+Lcom/callbackdev/thatstheword/feature/home/**;
+Lcom/callbackdev/thatstheword/feature/game/**;

@@ -22,7 +22,8 @@
     <string name="mark_absent">assente</string>
     <string name="letter_mark">%1$s, %2$s</string>
     <string name="row_revealed">Riga %1$d: %2$s</string>
-    <string name="row_typing">Riga %1$d, in scrittura: %2$s</string>
+    <string name="row_typing">Riga %1$d di %2$d, in scrittura: %3$s</string>
+    <string name="row_waiting">Riga %1$d di %2$d: scrivi una parola</string>
     <string name="row_spent">Riga %1$d, spesa per un aiuto</string>
 
     <string name="refusal_too_short">Mancano lettere.</string>
@@ -110,8 +111,21 @@
     <string name="milestone_hundred_words">Cento parole nel tuo quaderno.</string>
     <string name="milestone_three_languages">La parola del giorno trovata in tutte e tre le lingue.</string>
     <!-- La prima partita guidata: ogni regola detta una volta, la prima volta che accade. -->
-    <string name="lesson_first_guess">Trova la parola nascosta in %1$d tentativi. Comincia da una parola qualsiasi di %2$d lettere.</string>
-    <string name="lesson_five_letters">Servono tutte e %1$d le lettere.</string>
+    <plurals name="lesson_attempts">
+        <item quantity="one">Trova la parola nascosta in %d tentativo.</item>
+        <item quantity="many">Trova la parola nascosta in %d tentativi.</item>
+        <item quantity="other">Trova la parola nascosta in %d tentativi.</item>
+    </plurals>
+    <plurals name="lesson_start_letters">
+        <item quantity="one">Comincia da una parola qualsiasi di %d lettera.</item>
+        <item quantity="many">Comincia da una parola qualsiasi di %d lettere.</item>
+        <item quantity="other">Comincia da una parola qualsiasi di %d lettere.</item>
+    </plurals>
+    <plurals name="lesson_all_letters">
+        <item quantity="one">Serve la sua lettera.</item>
+        <item quantity="many">Servono tutte e %d le lettere.</item>
+        <item quantity="other">Servono tutte e %d le lettere.</item>
+    </plurals>
     <string name="lesson_only_words">Valgono solo parole vere. Una rifiutata non costa nulla: provane un’altra.</string>
     <string name="lesson_right_place">Quadrata, in inchiostro: la lettera è al suo posto.</string>
     <string name="lesson_elsewhere">Tonda, in ambra: è nella parola, ma altrove.</string>

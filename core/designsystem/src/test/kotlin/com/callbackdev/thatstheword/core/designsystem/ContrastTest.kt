@@ -11,6 +11,7 @@ import com.callbackdev.thatstheword.core.designsystem.theme.schemeFor
 import com.callbackdev.thatstheword.core.designsystem.theme.widgetCardContainer
 import com.callbackdev.thatstheword.core.model.AppPalette
 import com.callbackdev.thatstheword.core.model.WidgetCardColor
+import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
 import org.junit.Test
 
@@ -68,6 +69,26 @@ class ContrastTest {
             // A key not yet tried, and Enter and Delete.
             expect(dress, "an untried key", s.onSurface, s.surfaceContainerHighest)
         }
+    }
+
+    @Test
+    fun `the right place stands out on a dark page by its rim`() {
+        // Where the ink blue is nearly the page's darkness and an absent letter's (both square),
+        // its rim is what sets it apart: 3:1 from every dark ground, the contrast a shape needs.
+        for (dress in dresses.filter { it.scheme.surface.luminance() < 0.2f }) {
+            val s = dress.scheme
+            val grounds = listOf(s.surface, s.surfaceContainerLow, s.surfaceContainer, s.surfaceContainerHighest)
+            for (ground in grounds) {
+                assertWithMessage("${dress.name}: the right place's rim on its ground")
+                    .that(contrast(FeedbackColors.RightPlaceRim, ground))
+                    .isAtLeast(3.0)
+            }
+        }
+        // Every dark dress is a dark page to the rim, and no light one is.
+        assertThat(dresses.count { it.scheme.surface.luminance() < 0.2f }).isEqualTo(AppPalette.entries.size)
+        assertWithMessage("the rim beside the ink blue itself")
+            .that(contrast(FeedbackColors.RightPlaceRim, FeedbackColors.RightPlace))
+            .isAtLeast(3.0)
     }
 
     @Test

@@ -18,7 +18,7 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (13 Nov 2026): Phases 0, 1 and 2 are done, Phases 3, 4, 5, 6, 7 and 7b are built**: the words (`tools/words/`,
+**State (13 Nov 2026): Phases 0, 1 and 2 are done, Phases 3, 4, 5, 6, 7, 7b and 8 are built**: the words (`tools/words/`,
 their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) have the
 owner's go; the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
 case tested; the game screen (`:feature:game`) plays a daily, a replay or a free word,
@@ -35,9 +35,12 @@ Settings holds how to play, the game, the app's language (the system's picker), 
 reminder (`:core:reminder`), sound, touch and motion, the appearance, your data, the licences; the
 sounds are the game's own (`tools/make_sounds.py`); the home-screen card «Today's word»
 (`:widget`, PLANNING §7.8) shows each language's word of today and the streak, redrawn after a game
-and at midnight. Phases 3 to 7b wait for a look on a phone (the reveal with the profiler, TalkBack,
-`bmgr`, the sounds, the reminder, the card); Phase 8 (accessibility, polish, the README's pictures)
-is next. The modules in the build are `:app`, `:core:model`, `:core:domain`, `:core:words`,
+and at midnight; Phase 8 brought the accessibility pass (no text cut and a heading on every page,
+checked in every screen's tests; the right place's rim on a dark page; the typed row read back to
+TalkBack), the hand-written Baseline Profile (`app/src/main/baseline-prof.txt`) and the README's
+nine pictures. Phases 3 to 8 wait for a look on a phone (the reveal with the profiler, TalkBack,
+`bmgr`, the sounds, the reminder, the card, the start-up measured); Phase 9 (the 1.0.0 release) is
+next. The modules in the build are `:app`, `:core:model`, `:core:domain`, `:core:words`,
 `:core:data`, `:core:reminder`, `:core:designsystem`, `:core:testing`, `:feature:game`,
 `:feature:home`, `:feature:notebook`, `:feature:onboarding`, `:feature:progress`,
 `:feature:settings` and `:widget`. The owner answered every question of the review (16, the Italian
@@ -87,6 +90,9 @@ family's). Java 21.
 - Format: `./gradlew spotlessApply` (CI runs `spotlessCheck`; rules in `.editorconfig`)
 - Forbidden-permission check on the merged manifests: `./gradlew :app:checkForbiddenPermissions`
 - Installable minified build: `./gradlew :app:assembleRelease -PsignReleaseWithDebugKey`
+- The Baseline Profile is `app/src/main/baseline-prof.txt`, written by hand by package (no device
+  here to generate one); `ProfileRulesTest` refuses a rule that names code no longer there. A
+  package moved or added to the start or the game's path is a line there.
 - Launcher icon (and the reminder's status-bar icon): `python3 tools/draw_launcher_icon.py`
 - The sounds: `python3 tools/make_sounds.py` (`--check`: a rebuild must write the same bytes); never
   edit `core/designsystem/src/main/res/raw/sound_*.wav` by hand.
@@ -203,7 +209,9 @@ a composable: Chiaro's two generated dresses (`theme/Scheme.kt`, copied through 
 hand-edited), Google Sans / Inter / system type, the family's shapes and springs, and every
 animation collapses to a fade under reduced motion (the system's setting, and the in-app switch
 when it comes). **The feedback's colours are the game's own** and follow neither the dress nor the
-wallpaper; each letter ink on them is pinned at 4.5:1 by `ContrastTest`. The principles hold: one
+wallpaper; each letter ink on them is pinned at 4.5:1 by `ContrastTest`. On a dark page the right
+place's ink blue takes its rim (`rightPlaceRim()`, drawn with `markGround`, PLANNING §7.2):
+anything new that draws the right place draws it so. The principles hold: one
 sentence before any number, every number with the line that says what it means, no dead tab and
 no switch for a feature that has not shipped, no button drawn before it does something. A short
 text that stands on its own takes `balanced()`: no line ends on one word alone, in any of the
@@ -221,8 +229,10 @@ revealed, a word refused, a word found, a milestone), on `ThatsTheWordMotion`'s 
 tiles staggered; never the genre's flip; no animation ever gates information.
 
 **Accessibility and foldables** (the family's, from the start): a screen's tests call
-`assertAccessible()` on what they draw, and walk the page at twice the text size and on an open
-foldable (`walkPage()`); text inks are pinned at 4.5:1 by `ContrastTest`. A page leaves
+`assertAccessible()` on what they draw (targets, labels, and no text cut unless it ends in an
+ellipsis on purpose), and walk the page at twice the text size and on an open foldable
+(`walkPage()`, which also wants a heading on the page's first screen); text inks are pinned at
+4.5:1 by `ContrastTest`. A page leaves
 `pageGutter()` on each side (in a list's content padding, never by narrowing the list), so an open
 foldable shows a centred column. A tile's letter is sized by its tile, not by the text size. TalkBack
 reads a row as one sentence, a key with its mark.

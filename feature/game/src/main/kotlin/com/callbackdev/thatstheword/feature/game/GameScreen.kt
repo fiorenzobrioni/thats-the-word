@@ -10,7 +10,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -79,6 +78,7 @@ import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
 import com.callbackdev.thatstheword.core.designsystem.theme.balanced
+import com.callbackdev.thatstheword.core.designsystem.theme.markGround
 import com.callbackdev.thatstheword.core.designsystem.theme.markStyle
 import com.callbackdev.thatstheword.core.designsystem.theme.padding
 import com.callbackdev.thatstheword.core.designsystem.theme.pageGutter
@@ -474,20 +474,21 @@ private fun TypingRow(state: GameUiState, row: Int, tile: Dp, reduced: Boolean) 
             shake.animateTo(0f, spring(dampingRatio = 0.22f, stiffness = 1400f), initialVelocity = velocity)
         }
     }
+    // TalkBack: where the player stands ("Row 3 of 6"), and each letter typed or deleted heard as
+    // the row reads back, as a text field reads back what is typed in it (a polite live region).
     val sentence = if (state.typed.isEmpty()) {
-        ""
+        stringResource(R.string.row_waiting, row + 1, state.attempts)
     } else {
-        stringResource(
-            R.string.row_typing,
-            row + 1,
-            state.typed.joinToString(" "),
-        )
+        stringResource(R.string.row_typing, row + 1, state.attempts, state.typed.joinToString(" "))
     }
     Row(
         horizontalArrangement = Arrangement.spacedBy(TILE_GAP),
         modifier = Modifier
             .graphicsLayer { translationX = shake.value }
-            .clearAndSetSemantics { if (sentence.isNotEmpty()) contentDescription = sentence },
+            .clearAndSetSemantics {
+                contentDescription = sentence
+                liveRegion = LiveRegionMode.Polite
+            },
     ) {
         repeat(state.length) { i ->
             GameTile(letter = state.typed.getOrNull(i), mark = null, size = tile, active = i == state.typed.size)
@@ -546,7 +547,7 @@ internal fun MarkSample(mark: Mark, size: Dp = MARK_SAMPLE) {
                 scaleX = style.scale
                 scaleY = style.scale
             }
-            .background(style.ground, RoundedCornerShape(CornerSize(style.cornerPercent.toInt())))
+            .markGround(style.ground, RoundedCornerShape(CornerSize(style.cornerPercent.toInt())), style.rim, 1.dp)
             .clearAndSetSemantics {},
     )
 }

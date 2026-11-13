@@ -71,9 +71,11 @@ import com.callbackdev.thatstheword.core.designsystem.theme.RIGHT_PLACE_CORNER_P
 import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.balanced
+import com.callbackdev.thatstheword.core.designsystem.theme.markGround
 import com.callbackdev.thatstheword.core.designsystem.theme.padding
 import com.callbackdev.thatstheword.core.designsystem.theme.pageGutter
 import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
+import com.callbackdev.thatstheword.core.designsystem.theme.rightPlaceRim
 import com.callbackdev.thatstheword.core.designsystem.theme.tabular
 import com.callbackdev.thatstheword.feature.settings.R
 import java.time.LocalDate
@@ -316,7 +318,11 @@ private fun OutcomeCard(outcome: DataOutcome, onDismiss: () -> Unit) {
         Box(
             Modifier
                 .size(28.dp)
-                .background(if (failed) colors.surfaceContainerHighest else FeedbackColors.RightPlace, shape),
+                .markGround(
+                    if (failed) colors.surfaceContainerHighest else FeedbackColors.RightPlace,
+                    shape,
+                    if (failed) null else rightPlaceRim(),
+                ),
             contentAlignment = Alignment.Center,
         ) {
             if (failed) {

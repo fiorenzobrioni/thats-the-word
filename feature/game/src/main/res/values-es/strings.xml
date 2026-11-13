@@ -22,7 +22,8 @@
     <string name="mark_absent">no está</string>
     <string name="letter_mark">%1$s, %2$s</string>
     <string name="row_revealed">Fila %1$d: %2$s</string>
-    <string name="row_typing">Fila %1$d, escribiendo: %2$s</string>
+    <string name="row_typing">Fila %1$d de %2$d, escribiendo: %3$s</string>
+    <string name="row_waiting">Fila %1$d de %2$d: escribe una palabra</string>
     <string name="row_spent">Fila %1$d, gastada en una pista</string>
 
     <string name="refusal_too_short">Faltan letras.</string>
@@ -110,8 +111,21 @@
     <string name="milestone_hundred_words">Cien palabras en tu cuaderno.</string>
     <string name="milestone_three_languages">La palabra del día hallada en los tres idiomas.</string>
     <!-- La primera partida guiada: cada regla dicha una vez, la primera vez que ocurre. -->
-    <string name="lesson_first_guess">Encuentra la palabra oculta en %1$d intentos. Empieza con cualquier palabra de %2$d letras.</string>
-    <string name="lesson_five_letters">Hacen falta las %1$d letras.</string>
+    <plurals name="lesson_attempts">
+        <item quantity="one">Encuentra la palabra oculta en %d intento.</item>
+        <item quantity="many">Encuentra la palabra oculta en %d intentos.</item>
+        <item quantity="other">Encuentra la palabra oculta en %d intentos.</item>
+    </plurals>
+    <plurals name="lesson_start_letters">
+        <item quantity="one">Empieza con cualquier palabra de %d letra.</item>
+        <item quantity="many">Empieza con cualquier palabra de %d letras.</item>
+        <item quantity="other">Empieza con cualquier palabra de %d letras.</item>
+    </plurals>
+    <plurals name="lesson_all_letters">
+        <item quantity="one">Hace falta su letra.</item>
+        <item quantity="many">Hacen falta las %d letras.</item>
+        <item quantity="other">Hacen falta las %d letras.</item>
+    </plurals>
     <string name="lesson_only_words">Solo cuentan palabras de verdad. Una rechazada no cuesta nada: prueba otra.</string>
     <string name="lesson_right_place">Cuadrada, en tinta: la letra está en su sitio.</string>
     <string name="lesson_elsewhere">Redonda, en ámbar: está en la palabra, pero en otro sitio.</string>

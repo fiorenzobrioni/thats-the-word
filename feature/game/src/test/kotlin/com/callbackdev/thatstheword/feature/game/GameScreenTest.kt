@@ -155,7 +155,7 @@ class GameScreenTest {
         compose.onNodeWithContentDescription(
             "Row 1: S, absent; T, elsewhere; E, absent; A, elsewhere; M, absent",
         ).assertIsDisplayed()
-        compose.onNodeWithContentDescription("Row 2, typing: P L").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Row 2 of 6, typing: P L").assertIsDisplayed()
         // The marks' key under the grid, while the game is played.
         compose.onNodeWithText("Right place").assertIsDisplayed()
         compose.onNodeWithText("Elsewhere").assertIsDisplayed()
@@ -349,6 +349,8 @@ class GameScreenTest {
         assertThat(translation).isNotEmpty()
         compose.onNodeWithContentDescription("Row 6, spent on a hint. Translation: $translation").assertIsDisplayed()
         compose.onNodeWithContentDescription("Row 5, spent on a hint: the first letter is C.").assertIsDisplayed()
+        // The row to type says where the player stands, even with nothing typed yet.
+        compose.onNodeWithContentDescription("Row 2 of 6: type a word").assertIsDisplayed()
         compose.assertAccessible()
         compose.writeScreenshot("game-hints-taken")
     }

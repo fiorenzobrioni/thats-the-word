@@ -1,10 +1,17 @@
 package com.callbackdev.thatstheword.core.designsystem.theme
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.callbackdev.thatstheword.core.model.Mark
 
 /**
@@ -21,14 +28,48 @@ object FeedbackColors {
     val RightPlace = Color(0xFF233A7A)
     val OnRightPlace = Color(0xFFFFFFFF)
 
+    /**
+     * The right place's rim on a dark page (PLANNING.md §7.2, §15 "Phase 8"): the ink blue is
+     * nearly as dark as a dark page and as an absent letter's ground there, and both are square,
+     * so on a dark page the ink blue carries a light edge of its own hue, 3:1 from every dark
+     * ground (`ContrastTest`), as a word found's tiles do on the home-screen card. On a light page
+     * the ink blue stands out by itself, and takes none.
+     */
+    val RightPlaceRim = Color(0xFF9DB0EA)
+
     /** Elsewhere: the family's amber. */
     val Elsewhere = Color(0xFFFDB528)
     val OnElsewhere = Color(0xFF2B1B00)
 }
 
-/** A mark's drawing: its ground, its letter's ink, its corner and its size. */
+/** A mark's drawing: its ground, its letter's ink, its corner, its size and its rim, if any. */
 @Immutable
-data class MarkStyle(val ground: Color, val ink: Color, val cornerPercent: Float, val scale: Float)
+data class MarkStyle(
+    val ground: Color,
+    val ink: Color,
+    val cornerPercent: Float,
+    val scale: Float,
+    val rim: Color? = null,
+)
+
+/** The right place's rim where the page is dark ([FeedbackColors.RightPlaceRim]), else none. */
+@Composable
+@ReadOnlyComposable
+fun rightPlaceRim(): Color? =
+    if (MaterialTheme.colorScheme.surface.luminance() < DARK_PAGE) FeedbackColors.RightPlaceRim else null
+
+/**
+ * A mark's [ground] in [shape], and its [rim] when it has one: the right place's tile, glyph, bar
+ * or badge drawn the same way wherever it stands.
+ */
+fun Modifier.markGround(ground: Color, shape: Shape, rim: Color? = null, rimWidth: Dp = RIM_WIDTH): Modifier =
+    background(ground, shape).then(if (rim != null) Modifier.border(rimWidth, rim, shape) else Modifier)
+
+/** A page darker than this is a dark page: the dark dresses' grounds, and the wallpaper's. */
+private const val DARK_PAGE = 0.2f
+
+/** The rim's width on a tile, a key or a badge; a small glyph takes 1dp. */
+val RIM_WIDTH: Dp = 1.5.dp
 
 /** Square for *here*: the tile keeps its corner. */
 const val RIGHT_PLACE_CORNER_PERCENT = TILE_CORNER_PERCENT.toFloat()
@@ -51,6 +92,7 @@ fun markStyle(mark: Mark): MarkStyle = when (mark) {
         FeedbackColors.OnRightPlace,
         RIGHT_PLACE_CORNER_PERCENT,
         1f,
+        rightPlaceRim(),
     )
 
     Mark.ELSEWHERE -> MarkStyle(FeedbackColors.Elsewhere, FeedbackColors.OnElsewhere, ELSEWHERE_CORNER_PERCENT, 1f)

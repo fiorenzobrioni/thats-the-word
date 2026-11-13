@@ -62,6 +62,7 @@ import com.callbackdev.thatstheword.core.designsystem.theme.TILE_CORNER_PERCENT
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.balanced
 import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
+import com.callbackdev.thatstheword.core.designsystem.theme.rightPlaceRim
 import com.callbackdev.thatstheword.core.designsystem.theme.tabular
 import com.callbackdev.thatstheword.core.domain.daily.ArchiveDay
 import com.callbackdev.thatstheword.core.domain.daily.ArchiveMonth
@@ -237,7 +238,9 @@ private fun lookOf(status: DayStatus, playable: Boolean = true, today: Boolean =
     val colors = MaterialTheme.colorScheme
     if (!playable) return DayLook(Color.Transparent, colors.onSurface.copy(alpha = FAINT), null, SquareTile, 1f)
     return when (status) {
-        DayStatus.SOLVED -> DayLook(FeedbackColors.RightPlace, FeedbackColors.OnRightPlace, null, SquareTile, 1f)
+        // On a dark page the found day's rim (PLANNING.md §7.2), drawn as a not-played day's frame is.
+        DayStatus.SOLVED ->
+            DayLook(FeedbackColors.RightPlace, FeedbackColors.OnRightPlace, rightPlaceRim(), SquareTile, 1f)
 
         DayStatus.MISSED -> DayLook(
             colors.surfaceContainerHighest,
@@ -389,7 +392,7 @@ internal fun StatusGlyph(status: DayStatus, modifier: Modifier = Modifier, size:
                 scaleY = look.scale
             }
             .background(look.ground, look.shape)
-            .then(look.border?.let { Modifier.border(1.5.dp, it, look.shape) } ?: Modifier)
+            .then(look.border?.let { Modifier.border(GLYPH_LINE, it, look.shape) } ?: Modifier)
             .clearAndSetSemantics {},
         contentAlignment = Alignment.Center,
     ) {
@@ -401,6 +404,7 @@ private const val DAYS_A_WEEK = 7
 private val GRID_MAX_WIDTH = 420.dp
 private val CELL_GAP = 4.dp
 private val GLYPH = 14.dp
+private val GLYPH_LINE = 1.5.dp
 private val DOT = 4.dp
 private const val FAINT = 0.38f
 

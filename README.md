@@ -24,7 +24,8 @@ internet at all.
 > the game's rules are written and tested (Phase 2); the game, the start page, the practice of
 > a language (hints, meanings, the notebook), your progress, your data and sharing, the first run
 > with its guided first game, settings, the sounds, the daily reminder and the home-screen card are
-> built (Phases 3 to 7b) and wait for a look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
+> built (Phases 3 to 7b), with the accessibility pass and a faster start (Phase 8), and wait for a
+> look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
 
 ## What That's The Word is
 
@@ -41,6 +42,31 @@ What sets the game apart is the other language. Choose to play in a language tha
 phone's, and the game turns into practice: a few hints, each paid with an attempt, the meaning
 and the translation of every word in your own language when the game ends, and a notebook that
 keeps the words you met. It is a vocabulary exercise, not a language course, and it says so.
+
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="docs/screenshots/home.png" width="250" alt="The start page on Friday 13 November: the name in wide capitals, then today's word in each language, Italian under way with an amber disc, English found in four with an ink square, Spanish waiting with an empty frame; the card of today's word, number 13, its five tiles in ink blue and the line Found in 4 attempts of 6; the streak, 6 days in a row, each word found on its own day"><br><sub><b>The start page</b>: today's word in three languages</sub></td>
+    <td align="center" width="33%"><img src="docs/screenshots/game.png" width="250" alt="Today's English word, two rows in: GREAT with R in its place as an ink square, E and A elsewhere as amber discs, G and T sunk; TRACE with R, A and E in their places; B R A being typed in the third row; under the grid the key of the three marks; the keyboard below with E, R and A in ink, the letters not in the word faded"><br><sub><b>The game</b>: each mark by colour and by shape</sub></td>
+    <td align="center" width="33%"><img src="docs/screenshots/word-found.png" width="250" alt="Today's Italian word found from an English phone in three attempts: TORTA, PASTA, CITTA; under the grid the line That's the word.; the card with the word written città, Found in 3 attempts of 6, its translation city, town, Kept in your notebook, and the milestone Your first word found in another language"><br><sub><b>That's the word.</b> Its meaning in your language</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/hints.png" width="250" alt="A Spanish word from an English phone, in the dark theme: two rows played, NUBES with B in its place, its ink square rimmed in light blue, and CARTA with A and R elsewhere; the last row spent on a hint, the translation tree; in the keyboard's place the three hints, Translation taken, Meaning and A letter for one attempt each, under the line Each costs an attempt: a row of the grid is spent"><br><sub><b>Hints</b>, each paid with an attempt</sub></td>
+    <td align="center"><img src="docs/screenshots/guided.png" width="250" alt="The first game: REACT against the hidden word, R elsewhere, E, A and T in their places, C not in the word; under the grid each mark is explained beside its tile: Square, in ink: the letter is in its place. Round, in amber: in the word, but somewhere else. Sunk: the letter is not in the word."><br><sub><b>A first game that teaches</b>, one rule at a time</sub></td>
+    <td align="center"><img src="docs/screenshots/calendar.png" width="250" alt="The calendar of November 2026: 10 words found, 2 missed, 1 of them caught up later; the days from the 1st to the 13th as tiles, found in ink blue, missed sunk, the 5th caught up later with a dot, the 7th not played in a frame; the days still to come faded; then the key, and free play with its levels below"><br><sub><b>The calendar</b>: every daily, played or still to play</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/notebook.png" width="250" alt="The notebook, 7 words: città, city, town, found on 13 November; torta, cake, pie, tart, kept from a game; árbol, tree, found with hints; fiume, river; nubes, cloud, missed; porta, door, goal; each with its language and how it was met, a search field and the filters All, Italian, Spanish above"><br><sub><b>The notebook</b>: the words you met, and what they mean</sub></td>
+    <td align="center"><img src="docs/screenshots/progress.png" width="250" alt="Your progress in English, the daily word: 10 found out of 12, 83% of the daily words found, a current streak of 6 and a longest of 6; where the attempts went, three in three, four in four with the latest game marked, three in five, two not found"><br><sub><b>Your progress</b>, every number with its line</sub></td>
+    <td align="center"><img src="docs/screenshots/widget.png" width="250" alt="The home-screen card on a wallpaper: at four by two on blue, Today's word number 13 on Friday 13 November, English found in 4 as five ink squares with a light rim, Italian under way with an amber disc, Spanish waiting with empty frames, 6 days in a row in English; two smaller cards side by side in plum and on a light ground; a one-row card in teal with the streak's 6 in a row"><br><sub><b>A card for the home screen</b>, changed after a game and at midnight</sub></td>
+  </tr>
+</table>
+
+Drawn by the app's own screens from sample games on Friday 13 November 2026, in English (the
+app also speaks Italian and Spanish). The phone's status bar is not in the pictures; the card is
+drawn by Glance as a launcher draws it, on a stand-in wallpaper. The command that redraws them is
+in [Build](#build).
 
 ## Features
 
@@ -133,7 +159,8 @@ closed periods in [docs/planning](./docs/planning/README.md)):
   *Built; to be looked at on a phone.*
 - **Phase 7b**, the home-screen card: today's word in each language and the streak. *Built; to
   be looked at on a phone.*
-- **Phase 8**, the accessibility pass and polish.
+- **Phase 8**, the accessibility pass, a faster start and these pictures. *Built; to be looked at
+  on a phone.*
 - **Phase 9**, the 1.0 release on GitHub.
 
 After 1.0: **Translate**, **Bridge** (one idea in three languages, three grids) and **Review**
@@ -158,6 +185,9 @@ The words are rebuilt from their pinned sources by `tools/words/` (Python, nothi
 python3 tools/words/build.py           # fetch, build and write every word file and the report
 python3 tools/words/build.py --check   # a second run must write the same bytes
 ```
+
+The pictures above are redrawn from sample games, and only on request:
+`./gradlew test -PupdateScreenshots`.
 
 For an installable minified build to test with:
 `./gradlew :app:assembleRelease -PsignReleaseWithDebugKey`. It is signed with the debug key

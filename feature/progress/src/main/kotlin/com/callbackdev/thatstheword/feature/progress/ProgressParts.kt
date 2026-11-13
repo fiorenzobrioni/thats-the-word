@@ -55,8 +55,10 @@ import com.callbackdev.thatstheword.core.designsystem.theme.FeedbackColors
 import com.callbackdev.thatstheword.core.designsystem.theme.RIGHT_PLACE_CORNER_PERCENT
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.balanced
+import com.callbackdev.thatstheword.core.designsystem.theme.markGround
 import com.callbackdev.thatstheword.core.designsystem.theme.markStyle
 import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
+import com.callbackdev.thatstheword.core.designsystem.theme.rightPlaceRim
 import com.callbackdev.thatstheword.core.designsystem.theme.tabular
 import com.callbackdev.thatstheword.core.domain.progress.Statistics
 import com.callbackdev.thatstheword.core.model.Mark
@@ -104,6 +106,7 @@ private fun DistributionBar(row: DistributionRow, fraction: Float, index: Int) {
     val colors = MaterialTheme.colorScheme
     val won = row.attempts != null
     val absent = markStyle(Mark.ABSENT)
+    val rim = rightPlaceRim()
     val length = remember { Animatable(0f) }
     LaunchedEffect(fraction, reduced) {
         if (reduced) {
@@ -138,8 +141,11 @@ private fun DistributionBar(row: DistributionRow, fraction: Float, index: Int) {
                         Modifier
                             .width((room * length.value).coerceAtLeast(MIN_BAR))
                             .height(BAR_HEIGHT)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(if (won) FeedbackColors.RightPlace else absent.ground),
+                            .markGround(
+                                if (won) FeedbackColors.RightPlace else absent.ground,
+                                RoundedCornerShape(6.dp),
+                                if (won) rim else null,
+                            ),
                     )
                     Spacer(Modifier.width(8.dp))
                 }
@@ -172,7 +178,7 @@ private fun RowLabel(label: String, latest: Boolean, won: Boolean) {
             .size(LABEL_TILE)
             .then(
                 if (ground != null) {
-                    Modifier.background(ground, shape)
+                    Modifier.markGround(ground, shape, if (won) rightPlaceRim() else null, 1.dp)
                 } else {
                     Modifier.border(1.5.dp, colors.outlineVariant, shape)
                 },
@@ -242,7 +248,7 @@ private fun Badge(reached: Boolean) {
             .size(BADGE)
             .then(
                 if (reached) {
-                    Modifier.background(FeedbackColors.RightPlace, shape)
+                    Modifier.markGround(FeedbackColors.RightPlace, shape, rightPlaceRim())
                 } else {
                     Modifier.border(2.dp, MaterialTheme.colorScheme.outlineVariant, shape)
                 },
@@ -276,13 +282,14 @@ private fun Nearness(milestone: MilestoneUi) {
         if (milestone.target <= MAX_TILES) {
             Row(Modifier.clearAndSetSemantics {}, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 val shape = RoundedCornerShape(RIGHT_PLACE_CORNER_PERCENT.toInt())
+                val rim = rightPlaceRim()
                 repeat(milestone.target) { i ->
                     Box(
                         Modifier
                             .size(MINI_TILE)
                             .then(
                                 if (i < milestone.reached) {
-                                    Modifier.background(FeedbackColors.RightPlace, shape)
+                                    Modifier.markGround(FeedbackColors.RightPlace, shape, rim, 1.dp)
                                 } else {
                                     Modifier.border(1.5.dp, colors.outlineVariant, shape)
                                 },
@@ -304,8 +311,7 @@ private fun Nearness(milestone: MilestoneUi) {
                     Modifier
                         .fillMaxWidth(milestone.reached.toFloat() / milestone.target)
                         .fillMaxHeight()
-                        .clip(CircleShape)
-                        .background(FeedbackColors.RightPlace),
+                        .markGround(FeedbackColors.RightPlace, CircleShape, rightPlaceRim(), 1.dp),
                 )
             }
         }

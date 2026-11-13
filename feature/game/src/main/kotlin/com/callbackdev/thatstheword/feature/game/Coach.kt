@@ -1,6 +1,5 @@
 package com.callbackdev.thatstheword.feature.game
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SizeTransform
@@ -27,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -182,21 +182,23 @@ private val Lesson.icon: ImageVector?
 
 @Composable
 private fun lessonText(lesson: Lesson): String = when (lesson) {
-    Lesson.FIRST_GUESS -> stringResource(R.string.lesson_first_guess, GameSetup.ATTEMPTS, GameSetup.LENGTH)
-    Lesson.FIVE_LETTERS -> stringResource(R.string.lesson_five_letters, GameSetup.LENGTH)
-    else -> stringResource(lessonRes(lesson))
-}
+    // Two sentences, each with its own count, so each language says its plural (lint's rule).
+    Lesson.FIRST_GUESS -> pluralStringResource(R.plurals.lesson_attempts, GameSetup.ATTEMPTS, GameSetup.ATTEMPTS) +
+        " " + pluralStringResource(R.plurals.lesson_start_letters, GameSetup.LENGTH, GameSetup.LENGTH)
 
-@StringRes
-private fun lessonRes(lesson: Lesson): Int = when (lesson) {
-    Lesson.FIRST_GUESS -> R.string.lesson_first_guess
-    Lesson.FIVE_LETTERS -> R.string.lesson_five_letters
-    Lesson.ONLY_WORDS -> R.string.lesson_only_words
-    Lesson.RIGHT_PLACE -> R.string.lesson_right_place
-    Lesson.ELSEWHERE -> R.string.lesson_elsewhere
-    Lesson.ABSENT -> R.string.lesson_absent
-    Lesson.KEYBOARD -> R.string.lesson_keyboard
-    Lesson.HINTS -> R.string.lesson_hints
+    Lesson.FIVE_LETTERS -> pluralStringResource(R.plurals.lesson_all_letters, GameSetup.LENGTH, GameSetup.LENGTH)
+
+    Lesson.ONLY_WORDS -> stringResource(R.string.lesson_only_words)
+
+    Lesson.RIGHT_PLACE -> stringResource(R.string.lesson_right_place)
+
+    Lesson.ELSEWHERE -> stringResource(R.string.lesson_elsewhere)
+
+    Lesson.ABSENT -> stringResource(R.string.lesson_absent)
+
+    Lesson.KEYBOARD -> stringResource(R.string.lesson_keyboard)
+
+    Lesson.HINTS -> stringResource(R.string.lesson_hints)
 }
 
 private val CoachShape = RoundedCornerShape(20.dp)

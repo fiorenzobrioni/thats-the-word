@@ -36,7 +36,9 @@ import androidx.compose.ui.unit.dp
 import com.callbackdev.thatstheword.core.designsystem.theme.FeedbackColors
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
+import com.callbackdev.thatstheword.core.designsystem.theme.markGround
 import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
+import com.callbackdev.thatstheword.core.designsystem.theme.rightPlaceRim
 import com.callbackdev.thatstheword.core.model.Mark
 
 /**
@@ -62,7 +64,9 @@ fun GameKey(letter: Char, mark: Mark?, label: String, onClick: () -> Unit, modif
     }
     val animatedGround by animateColorAsState(ground, ThatsTheWordMotion.effects(reduced), label = "key")
     val animatedInk by animateColorAsState(ink, ThatsTheWordMotion.effects(reduced), label = "keyInk")
-    KeySurface(label = label, onClick = onClick, ground = animatedGround, modifier = modifier) {
+    // On a dark page, the right place's key carries the tile's rim (PLANNING.md §7.2).
+    val rim = if (mark == Mark.RIGHT_PLACE) rightPlaceRim() else null
+    KeySurface(label = label, onClick = onClick, ground = animatedGround, rim = rim, modifier = modifier) {
         val textSize = with(LocalDensity.current) { KEY_LETTER.toSp() }
         Text(
             text = letter.toString(),
@@ -107,6 +111,7 @@ private fun KeySurface(
     onClick: () -> Unit,
     ground: Color,
     modifier: Modifier,
+    rim: Color? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val shape = RoundedCornerShape(KEY_CORNER)
@@ -114,7 +119,7 @@ private fun KeySurface(
         modifier
             .height(KeyHeight)
             .clip(shape)
-            .background(ground, shape)
+            .markGround(ground, shape, rim)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(),

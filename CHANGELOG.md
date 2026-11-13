@@ -84,3 +84,10 @@ All notable changes to That's The Word are documented here. The format follows
   A touch on a language opens its word. It changes after every game and at midnight, never on a
   timer; hold it to choose what it stands on (light, dark, as the phone, or one of six colours)
   and how solid it is. Settings can add it for you.
+- In the dark, a letter in its right place carries a light edge of its own blue, in the grid, on
+  the keys, in the calendar and wherever a word found is drawn: on a dark page the ink blue no
+  longer melts into the ground or into a letter that is not in the word.
+- With TalkBack, the row being typed says where you are, "Row 3 of 6", and reads back every
+  letter you type or delete; the first game's sentences say their numbers as each language does.
+- A faster first launch: the start, the first run, the start page and the game come compiled
+  with the app, rather than learnt by the phone over its first days.

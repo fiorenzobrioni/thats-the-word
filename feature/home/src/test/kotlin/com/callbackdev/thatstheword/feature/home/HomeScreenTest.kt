@@ -292,35 +292,17 @@ class HomeScreenTest {
         compose.onNodeWithText("Take up your word").performScrollTo().performClick()
         assertThat(free).isEqualTo(1)
         compose.writeScreenshot("home-free-under-way")
-        // Tried: a question first, since it counts as missed.
+        // The question, for a word tried, is asked over the word, on its own page.
         compose.onNodeWithText("A new word, at Intermediate").performScrollTo().performClick()
-        compose.onNodeWithTag(HomeTags.LEAVE_DIALOG).assertIsDisplayed()
-        compose.writeScreenshot("home-free-leave")
-        compose.onNodeWithTag(HomeTags.LEAVE_NO).performClick()
-        assertThat(newFree).isEqualTo(0)
-        compose.onNodeWithTag(HomeTags.LEAVE_DIALOG).assertDoesNotExist()
-        compose.onNodeWithTag(HomeTags.NEW_FREE).performScrollTo().performClick()
-        compose.onNodeWithTag(HomeTags.LEAVE_YES).performClick()
         assertThat(newFree).isEqualTo(1)
         compose.assertAccessible()
-    }
-
-    @Test
-    fun `a free word never tried gives way with no question`() {
-        draw(state(records = records + freeUnderWay(attemptsUsed = 0)))
-        compose.onNodeWithText("A word is under way, at Advanced.").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithTag(HomeTags.NEW_FREE).performScrollTo().performClick()
-        compose.onNodeWithTag(HomeTags.LEAVE_DIALOG).assertDoesNotExist()
-        assertThat(newFree).isEqualTo(1)
     }
 
     @Test
     @Config(qualifiers = "it-rIT-w411dp-h891dp-xxhdpi")
     fun `a free word under way, in Italian`() {
         draw(state(records = records + freeUnderWay(attemptsUsed = 2)))
-        compose.onNodeWithText("Una nuova parola, livello Intermedio").performScrollTo().performClick()
-        compose.writeScreenshot("home-free-leave-it")
-        compose.onNodeWithTag(HomeTags.LEAVE_NO).performClick()
+        compose.onNodeWithText("Una nuova parola, livello Intermedio").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag(HomeTags.FREE_UNDER_WAY).performScrollTo()
         compose.writeScreenshot("home-free-under-way-it")
     }
@@ -329,9 +311,7 @@ class HomeScreenTest {
     @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
     fun `a free word under way, in Spanish`() {
         draw(state(records = records + freeUnderWay(attemptsUsed = 2)))
-        compose.onNodeWithText("Una palabra nueva, nivel Intermedio").performScrollTo().performClick()
-        compose.writeScreenshot("home-free-leave-es")
-        compose.onNodeWithTag(HomeTags.LEAVE_NO).performClick()
+        compose.onNodeWithText("Una palabra nueva, nivel Intermedio").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag(HomeTags.FREE_UNDER_WAY).performScrollTo()
         compose.writeScreenshot("home-free-under-way-es")
     }

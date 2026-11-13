@@ -45,7 +45,7 @@ data object OnboardingKey : NavKey
 data object StartKey : NavKey
 
 @Serializable
-data class GameKey(val gameId: Long) : NavKey
+data class GameKey(val gameId: Long, val askToLeave: Boolean = false) : NavKey
 
 @Serializable
 data object NotebookKey : NavKey
@@ -122,6 +122,7 @@ fun ThatsTheWordRoot(
                         onOpenNotebook = { backStack.add(NotebookKey) },
                         onOpenProgress = { backStack.add(ProgressKey) },
                         onOpenSettings = { backStack.add(SettingsKey) },
+                        onAskToLeave = { backStack.add(GameKey(it, askToLeave = true)) },
                     )
                 }
                 entry<SettingsKey> {
@@ -146,6 +147,7 @@ fun ThatsTheWordRoot(
                         gameId = key.gameId,
                         onBack = { backStack.removeLastOrNull() },
                         onOpenGame = { backStack.replaceTop(GameKey(it)) },
+                        askToLeave = key.askToLeave,
                     )
                 }
             },

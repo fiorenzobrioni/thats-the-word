@@ -33,9 +33,7 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,13 +42,11 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -472,7 +468,8 @@ private fun StreakLines(state: HomeUiState) {
 /**
  * Free play (VISION §8, §9): the level of the game language, chosen among four, and a word to play.
  * A word under way is taken up; or left for a new one at the level chosen (PLANNING.md §4.7; the
- * owner, §15, 13 Nov 2026), after a question when it was tried, since it then counts as missed.
+ * owner, §15, 13 Nov 2026): a word tried opens with the question, over its rows, since it then
+ * counts as missed.
  */
 @Composable
 private fun FreePlayCard(
@@ -482,7 +479,6 @@ private fun FreePlayCard(
     onNew: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var leaving by rememberSaveable { mutableStateOf(false) }
     val underWay = state.freeUnderWay
     PageGroup(modifier.testTag(HomeTags.FREE)) {
         Eyebrow(
@@ -545,7 +541,7 @@ private fun FreePlayCard(
             Spacer(Modifier.height(8.dp))
             // Outlined: the word under way is the first offer; leaving it is the second.
             OutlinedButton(
-                onClick = { if (underWay.attemptsUsed > 0) leaving = true else onNew() },
+                onClick = onNew,
                 modifier = Modifier
                     .heightIn(min = 48.dp)
                     .testTag(HomeTags.NEW_FREE),
@@ -557,42 +553,6 @@ private fun FreePlayCard(
             }
         }
     }
-    if (leaving) {
-        LeaveWordDialog(
-            onLeave = {
-                leaving = false
-                onNew()
-            },
-            onDismiss = { leaving = false },
-        )
-    }
-}
-
-/** The question before a word tried is left: it counts as missed (PLANNING.md §4.7). */
-@Composable
-private fun LeaveWordDialog(onLeave: () -> Unit, onDismiss: () -> Unit) {
-    val ink = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.home_free_leave_title), textAlign = TextAlign.Center) },
-        text = {
-            Text(
-                text = stringResource(R.string.home_free_leave_text),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        },
-        confirmButton = {
-            TextButton(onClick = onLeave, colors = ink, modifier = Modifier.testTag(HomeTags.LEAVE_YES)) {
-                Text(stringResource(R.string.home_free_leave_yes))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss, colors = ink, modifier = Modifier.testTag(HomeTags.LEAVE_NO)) {
-                Text(stringResource(R.string.home_free_leave_no))
-            }
-        },
-        modifier = Modifier.testTag(HomeTags.LEAVE_DIALOG),
-    )
 }
 
 @Composable
@@ -721,9 +681,6 @@ object HomeTags {
     const val PLAY_FREE = "home_play_free"
     const val FREE_UNDER_WAY = "home_free_under_way"
     const val NEW_FREE = "home_new_free"
-    const val LEAVE_DIALOG = "home_leave_dialog"
-    const val LEAVE_YES = "home_leave_yes"
-    const val LEAVE_NO = "home_leave_no"
     const val HARD = "home_hard"
     const val HARD_STATUS = "home_hard_status"
     const val MONTH = "home_month"

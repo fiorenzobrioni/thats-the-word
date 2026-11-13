@@ -19,7 +19,9 @@ import com.callbackdev.thatstheword.feature.game.share.ShareSheet
  * The game of [gameId], on screen: its view model, and the share sheet for its result, the picture
  * or the text (no permission: both go through the system's chooser, PLANNING.md §7.6, §10).
  * [onOpenGame] takes the id of the game the end card offers next, which stands in this one's place;
- * [onGuidedDone] is the guided first game's end: the game itself, from its start page.
+ * [onGuidedDone] is the guided first game's end: the game itself, from its start page. With
+ * [askToLeave], the page opens on the question whether to leave this free word for a new one
+ * (PLANNING.md §4.7), asked once.
  *
  * The sounds are decoded while the page is started and released when it stops (PLANNING.md §9).
  */
@@ -30,6 +32,7 @@ fun GameRoute(
     onOpenGame: (Long) -> Unit,
     modifier: Modifier = Modifier,
     onGuidedDone: () -> Unit = onBack,
+    askToLeave: Boolean = false,
 ) {
     val viewModel = hiltViewModel<GameViewModel, GameViewModel.Factory>(
         key = "game-$gameId",
@@ -49,6 +52,8 @@ fun GameRoute(
     )
     // Saved, so a sheet open when the phone turns is open after.
     var sharing by rememberSaveable { mutableStateOf(false) }
+    // Saved too: answered once, the question is not asked again when the phone turns.
+    var asking by rememberSaveable { mutableStateOf(askToLeave) }
     GameScreen(
         state = current,
         haptics = haptics,
@@ -62,6 +67,12 @@ fun GameRoute(
         onToggleNotebook = viewModel::toggleNotebook,
         onShare = { sharing = true },
         onSound = play,
+        askToLeave = asking,
+        onLeave = {
+            asking = false
+            viewModel.leave()
+        },
+        onKeep = { asking = false },
         modifier = modifier,
     )
     if (sharing) {

@@ -117,6 +117,9 @@ fun GameScreen(
     onToggleNotebook: (Int) -> Unit = {},
     hintsOpenAtStart: Boolean = false,
     onSound: (GameSound) -> Unit = {},
+    askToLeave: Boolean = false,
+    onLeave: () -> Unit = {},
+    onKeep: () -> Unit = {},
 ) {
     val reduced = reducedMotion()
     val view = LocalView.current
@@ -318,6 +321,8 @@ fun GameScreen(
             }
         }
     }
+    // Only a word under way is left: one that ended meanwhile has nothing to ask.
+    if (askToLeave && !state.finished) LeaveWordDialog(onLeave = onLeave, onKeep = onKeep)
 }
 
 /** The page's top: back, and what this game is (its language and number, its date). */
@@ -589,6 +594,9 @@ object GameTags {
     const val HINTS_PANEL = "game_hints_panel"
     const val COACH = "game_coach"
     const val LESSON_DONE = "game_lesson_done"
+    const val LEAVE_DIALOG = "game_leave_dialog"
+    const val LEAVE_YES = "game_leave_yes"
+    const val LEAVE_NO = "game_leave_no"
 
     fun hint(kind: HintKind) = "game_hint_${kind.name.lowercase()}"
 

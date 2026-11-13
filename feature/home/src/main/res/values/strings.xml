@@ -119,10 +119,6 @@
     <string name="home_free_take_up">Take up your word</string>
     <!-- Beside "Take up your word": the word under way left, a new one drawn at the level chosen. -->
     <string name="home_free_new">A new word, at %1$s</string>
-    <string name="home_free_leave_title">Leave this word?</string>
-    <string name="home_free_leave_text">It counts as missed. You will see what it was, and a new word is one touch away.</string>
-    <string name="home_free_leave_yes">Leave it</string>
-    <string name="home_free_leave_no">Keep playing</string>
 
     <!-- The Hard option (PLANNING.md §4.4). -->
     <string name="home_hard">Hard</string>

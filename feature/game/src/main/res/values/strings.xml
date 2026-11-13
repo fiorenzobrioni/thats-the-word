@@ -80,6 +80,11 @@
         <item quantity="one">Left after %1$d attempt of %2$d.</item>
         <item quantity="other">Left after %1$d attempts of %2$d.</item>
     </plurals>
+    <!-- Over a free word under way, from the start page's "A new word": leaving it counts as missed. -->
+    <string name="leave_title">Leave this word?</string>
+    <string name="leave_text">It counts as missed. You will see what it was, and a new word is one touch away.</string>
+    <string name="leave_yes">Leave it</string>
+    <string name="leave_no">Keep playing</string>
     <string name="end_your_words">Your words</string>
     <string name="end_share">Share the result</string>
     <!-- What comes next (PLANNING.md §4.6, §4.7): the day again, not counted; another free word. -->

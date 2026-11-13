@@ -162,7 +162,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `a new free word at another level - an untried word gives way, a tried one is left and shown`() {
+    fun `a new free word at another level - an untried word gives way, a tried one is asked about`() {
         val model = viewModel()
         val keep = kotlinx.coroutines.GlobalScope.launch(Dispatchers.Unconfined) { model.state.collect {} }
         try {
@@ -171,22 +171,21 @@ class HomeViewModelTest {
             model.setLevel(Level.ADVANCED)
             model.await { it.level == Level.ADVANCED }
             // Never tried: the new word comes at once, at the level chosen.
-            val fresh = model.opened { newFree(it) }
+            val fresh = model.opened { opened -> newFree(opened) { error("nothing to ask about") } }
             assertThat(fresh).isNotEqualTo(untried)
             assertThat(runBlocking { games.load(untried) }).isNull()
             assertThat(runBlocking { games.load(fresh)!!.game.setup.mode }).isEqualTo(GameMode.Free(Level.ADVANCED))
 
-            // Tried: left, lost, and its end card is what opens.
+            // Tried: its own page is asked to open, with the question; it is still under way.
             val game = runBlocking { games.load(fresh)!!.game }
             val daily = lexicons.of(Language.ITALIAN).daily
             val guess = (1..daily.size).asSequence().map { daily.word(it) }.first { it != game.setup.solution }
             val accepted = game.submit(guess, lexicons.of(Language.ITALIAN).accepted) as Submission.Accepted
             runBlocking { games.save(fresh, accepted.game) }
             assertThat(model.await { it.freeUnderWay?.attemptsUsed == 1 }.freeUnderWay?.level).isEqualTo(Level.ADVANCED)
-            val shown = model.opened { newFree(it) }
-            assertThat(shown).isEqualTo(fresh)
-            assertThat(runBlocking { games.load(shown)!!.game.state }).isEqualTo(GameState.LOST)
-            assertThat(model.await { it.freeUnderWay == null }.freeUnderWay).isNull()
+            val asked = model.opened { ask -> newFree({ error("no word drawn over one tried") }, ask) }
+            assertThat(asked).isEqualTo(fresh)
+            assertThat(runBlocking { games.load(asked)!!.game.state }).isEqualTo(GameState.PLAYING)
         } finally {
             keep.cancel()
         }

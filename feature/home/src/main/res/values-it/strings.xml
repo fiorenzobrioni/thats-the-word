@@ -112,10 +112,6 @@
     <string name="home_free_play">Gioca una parola</string>
     <string name="home_free_take_up">Riprendi la tua parola</string>
     <string name="home_free_new">Una nuova parola, livello %1$s</string>
-    <string name="home_free_leave_title">Lasciare questa parola?</string>
-    <string name="home_free_leave_text">Conta come sfuggita. Vedrai qual era, e una nuova parola sarà a un tocco.</string>
-    <string name="home_free_leave_yes">Lasciala</string>
-    <string name="home_free_leave_no">Continua a giocare</string>
 
     <string name="home_hard">Difficile</string>
     <string name="home_hard_line">Ogni indizio trovato va usato nelle parole che seguono.</string>

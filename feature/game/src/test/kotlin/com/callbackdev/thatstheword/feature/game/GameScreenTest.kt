@@ -261,6 +261,75 @@ class GameScreenTest {
         compose.walkPage(hasTestTag(GameTags.PAGE), "game-left")
     }
 
+    private fun freeUnderWay(language: Language, solution: String, vararg guesses: String): Game {
+        val alphabet = Alphabet.of(language)
+        return guesses.fold(
+            Game.start(
+                GameSetup(
+                    language = language,
+                    mode = GameMode.Free(com.callbackdev.thatstheword.core.model.Level.ADVANCED),
+                    solution = alphabet.parse(solution)!!,
+                    interfaceLanguage = language,
+                ),
+            ),
+        ) { game, guess -> (game.submit(alphabet.parse(guess)!!, anyWord) as Submission.Accepted).game }
+    }
+
+    private fun drawAsking(game: Game, onLeave: () -> Unit, onKeep: () -> Unit) {
+        compose.setContent {
+            ThatsTheWordTheme {
+                GameScreen(
+                    state = state(game),
+                    onBack = {},
+                    onLetter = {},
+                    onDelete = {},
+                    onEnter = {},
+                    onShare = {},
+                    askToLeave = true,
+                    onLeave = onLeave,
+                    onKeep = onKeep,
+                )
+            }
+        }
+        compose.mainClock.advanceTimeBy(3_000)
+    }
+
+    @Test
+    fun `a free word tried is asked about over its rows, and kept or left`() {
+        var left = 0
+        var kept = 0
+        drawAsking(freeUnderWay(Language.ENGLISH, "train", "steam", "plant"), { left++ }, { kept++ })
+        compose.onNodeWithTag(GameTags.LEAVE_DIALOG).assertIsDisplayed()
+        compose.onNodeWithText("Leave this word?").assertIsDisplayed()
+        compose.writeScreenshot("game-leave")
+        compose.onNodeWithTag(GameTags.LEAVE_NO).performClick()
+        assertThat(kept).isEqualTo(1)
+        compose.onNodeWithTag(GameTags.LEAVE_YES).performClick()
+        assertThat(left).isEqualTo(1)
+    }
+
+    @Test
+    @Config(qualifiers = "it-rIT-w411dp-h891dp-xxhdpi")
+    fun `the question in Italian`() {
+        drawAsking(freeUnderWay(Language.ITALIAN, "cuore", "carte", "porte"), {}, {})
+        compose.onNodeWithText("Lasciare questa parola?").assertIsDisplayed()
+        compose.writeScreenshot("game-leave-it")
+    }
+
+    @Test
+    @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
+    fun `the question in Spanish`() {
+        drawAsking(freeUnderWay(Language.SPANISH, "arbol", "nubes", "carta"), {}, {})
+        compose.onNodeWithText("¿Dejar esta palabra?").assertIsDisplayed()
+        compose.writeScreenshot("game-leave-es")
+    }
+
+    @Test
+    fun `a word that ended meanwhile is not asked about`() {
+        drawAsking(freeUnderWay(Language.ENGLISH, "train", "steam", "train"), {}, {})
+        compose.onNodeWithTag(GameTags.LEAVE_DIALOG).assertDoesNotExist()
+    }
+
     @Test
     @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
     fun `the Spanish keyboard has its Ñ`() {

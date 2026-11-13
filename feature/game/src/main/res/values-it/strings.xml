@@ -67,6 +67,10 @@
         <item quantity="many">Lasciata dopo %1$d tentativi su %2$d.</item>
         <item quantity="other">Lasciata dopo %1$d tentativi su %2$d.</item>
     </plurals>
+    <string name="leave_title">Lasciare questa parola?</string>
+    <string name="leave_text">Conta come sfuggita. Vedrai qual era, e una nuova parola sarà a un tocco.</string>
+    <string name="leave_yes">Lasciala</string>
+    <string name="leave_no">Continua a giocare</string>
     <string name="end_your_words">Le tue parole</string>
     <string name="end_share">Condividi il risultato</string>
     <string name="end_play_again">Rigiocala, per esercizio</string>

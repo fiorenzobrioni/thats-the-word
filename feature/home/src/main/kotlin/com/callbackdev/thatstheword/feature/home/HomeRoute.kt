@@ -8,7 +8,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /**
  * The start page on screen, from its view model; [onOpenGame] takes the id of the game a touch
- * started or took up. Its state is collected in the page's lifecycle, so the ticker that sees the
+ * started or took up, [onAskToLeave] the id of a free word tried, to open with the question
+ * whether to leave it for a new one. Its state is collected in the page's lifecycle, so the ticker that sees the
  * change of day runs only while the page is seen (PLANNING.md §9).
  */
 @Composable
@@ -18,6 +19,7 @@ fun HomeRoute(
     onOpenProgress: () -> Unit,
     modifier: Modifier = Modifier,
     onOpenSettings: () -> Unit = {},
+    onAskToLeave: (Long) -> Unit = onOpenGame,
 ) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -30,7 +32,7 @@ fun HomeRoute(
         onMonth = viewModel::showMonth,
         onLevel = viewModel::setLevel,
         onPlayFree = { viewModel.openFree(onOpenGame) },
-        onNewFree = { viewModel.newFree(onOpenGame) },
+        onNewFree = { viewModel.newFree(onOpenGame, onAskToLeave) },
         onHard = viewModel::setHard,
         onNotebook = onOpenNotebook,
         onProgress = onOpenProgress,

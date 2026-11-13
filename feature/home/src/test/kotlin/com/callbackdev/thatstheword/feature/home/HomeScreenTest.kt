@@ -111,12 +111,14 @@ class HomeScreenTest {
         settings: UserSettings = this.settings,
         records: List<GameRecord> = this.records,
         month: YearMonth? = null,
-    ) = HomeUiState.of(settings, records, calendar, month, scheduleLength = 3_654)
+        notebookSize: Int = 12,
+    ) = HomeUiState.of(settings, records, calendar, month, scheduleLength = 3_654, notebookSize = notebookSize)
 
     private val opened = mutableListOf<LocalDate>()
     private val languages = mutableListOf<Language>()
     private var free = 0
     private var hard: Boolean? = null
+    private var notebook = 0
 
     private fun draw(state: HomeUiState = state(), dark: Boolean = false) {
         compose.setContent {
@@ -130,6 +132,7 @@ class HomeScreenTest {
                     onLevel = {},
                     onPlayFree = { free++ },
                     onHard = { hard = it },
+                    onNotebook = { notebook++ },
                 )
             }
         }
@@ -333,5 +336,21 @@ class HomeScreenTest {
     fun `on an open foldable`() {
         draw()
         compose.walkPage(hasTestTag(HomeTags.PAGE), "home-foldable")
+    }
+
+    @Test
+    fun `the notebook's card says how many words it holds, and opens it`() {
+        draw()
+        compose.onNodeWithText("12 words met, with what they mean.").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag(HomeTags.OPEN_NOTEBOOK).performScrollTo().performClick()
+        assertThat(notebook).isEqualTo(1)
+        compose.assertAccessible()
+        compose.writeScreenshot("home-notebook")
+    }
+
+    @Test
+    fun `an empty notebook has no card`() {
+        draw(state(notebookSize = 0))
+        compose.onNodeWithTag(HomeTags.NOTEBOOK).assertDoesNotExist()
     }
 }

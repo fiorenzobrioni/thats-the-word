@@ -6,14 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.callbackdev.thatstheword.core.data.GameRepository
 import com.callbackdev.thatstheword.core.data.InterfaceLanguage
 import com.callbackdev.thatstheword.core.data.Lexicons
+import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SavedGame
 import com.callbackdev.thatstheword.core.data.SettingsRepository
+import com.callbackdev.thatstheword.core.domain.game.Game
 import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
 import com.callbackdev.thatstheword.core.model.GameMode
+import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Letter
+import com.callbackdev.thatstheword.core.model.Milestone
 import com.callbackdev.thatstheword.core.model.Word
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -24,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -46,6 +51,7 @@ class GameViewModel @AssistedInject constructor(
     private val lexicons: Lexicons,
     private val settings: SettingsRepository,
     private val interfaceLanguage: InterfaceLanguage,
+    private val notebook: NotebookRepository,
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -58,9 +64,35 @@ class GameViewModel @AssistedInject constructor(
     private var refusals = 0
     private val saving = Mutex()
 
-    val state: StateFlow<GameUiState?> = combine(saved, typed, refusal) { saved, typed, refusal ->
-        saved?.let { GameUiState.of(it.game, typed, refusal, lexicons.of(it.game.setup.language).forms, it.practice) }
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    /** The milestones the game reached while the page was open: said once, on its end card. */
+    private val reached = MutableStateFlow<List<Milestone>>(emptyList())
+
+    /** The game language's words in the notebook, for the end card's marks. */
+    private val kept = combine(saved.map { it?.game?.setup?.language }.distinctUntilChanged(), notebook.entries()) {
+            language,
+            entries,
+        ->
+        entries.filter { it.language == language }.associateBy { it.word }
+    }
+
+    /** The interface's language, read once a page: the end card's meanings speak it. */
+    private val speaks = interfaceLanguage.current()
+
+    val state: StateFlow<GameUiState?> =
+        combine(saved, typed, refusal, kept, reached) { saved, typed, refusal, kept, reached ->
+            saved?.let {
+                GameUiState.of(
+                    game = it.game,
+                    typed = typed,
+                    refusal = refusal,
+                    lexicon = lexicons.of(it.game.setup.language),
+                    practice = it.practice,
+                    interfaceLanguage = speaks,
+                    notebook = kept,
+                    milestones = reached,
+                )
+            }
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     /** Haptics on or off (the owner, PLANNING §15, Open 13: on, the phone's own setting followed). */
     val haptics: StateFlow<Boolean> = settings.settings.map { it.haptics }
@@ -105,9 +137,48 @@ class GameViewModel @AssistedInject constructor(
 
             is Submission.Accepted -> {
                 refusal.value = null
-                saved.value = current.copy(game = submission.game)
                 setTyped(emptyList())
-                viewModelScope.launch { saving.withLock { games.save(current.id, submission.game) } }
+                play(current, submission.game)
+            }
+        }
+    }
+
+    /**
+     * A hint taken (PLANNING.md §4.5): an attempt spent, the grid's last free row drawn as the
+     * hint, saved like a guess. A hint not offered now (taken, or one attempt left) does nothing.
+     */
+    fun takeHint(kind: HintKind) {
+        val current = saved.value ?: return
+        if (kind !in current.game.hintsOffered) return
+        refusal.value = null
+        play(current, current.game.takeHint(kind))
+    }
+
+    /** The move made: on screen at once, saved before the next, its milestones kept for the end card. */
+    private fun play(current: SavedGame, next: Game) {
+        saved.value = current.copy(game = next)
+        viewModelScope.launch {
+            val milestones = saving.withLock { games.save(current.id, next) }
+            if (milestones.isNotEmpty()) reached.value = reached.value + milestones
+        }
+    }
+
+    /**
+     * The end card's mark beside a word tried (the owner, PLANNING §15, Open 8): the word added to
+     * the notebook, or, added by hand a moment ago, taken back. A word a game hid stays.
+     */
+    fun toggleNotebook(index: Int) {
+        val game = saved.value?.game?.takeIf { it.state.finished } ?: return
+        val word =
+            game.guesses.map { it.word }.distinct().filter { it != game.setup.solution }.getOrNull(index) ?: return
+        val language = game.setup.language
+        val shown = state.value?.tried?.getOrNull(index) ?: return
+        viewModelScope.launch {
+            if (!shown.inNotebook) {
+                val milestones = notebook.save(language, word)
+                if (milestones.isNotEmpty()) reached.value = reached.value + milestones
+            } else if (shown.removable) {
+                notebook.unsave(language, word)
             }
         }
     }

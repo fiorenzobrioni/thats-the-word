@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.callbackdev.thatstheword.core.data.DayTicker
 import com.callbackdev.thatstheword.core.data.GameRepository
 import com.callbackdev.thatstheword.core.data.Lexicons
+import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DayStatus
@@ -71,8 +72,15 @@ class HomeViewModelTest {
 
     private val games get() = GameRepository(database, lexicons) { clock }
 
-    private fun viewModel() =
-        HomeViewModel(settings, games, { Language.ITALIAN }, { clock }, SavedStateHandle(), DayTicker { clock })
+    private fun viewModel() = HomeViewModel(
+        settings,
+        games,
+        { Language.ITALIAN },
+        { clock },
+        SavedStateHandle(),
+        DayTicker { clock },
+        NotebookRepository(database) { clock },
+    )
 
     /** The state once [until] holds, collected as the page would. */
     private fun HomeViewModel.await(until: (HomeUiState) -> Boolean = { true }): HomeUiState = runBlocking {

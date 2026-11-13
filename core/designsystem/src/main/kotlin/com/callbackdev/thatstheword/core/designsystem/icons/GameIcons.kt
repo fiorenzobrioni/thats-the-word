@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 /**
  * The few icons the game draws, on Material's 24 grid, in rounded strokes like the family's: drawn
- * here rather than pulled from an icon library for six shapes. Tinted by their caller.
+ * here rather than pulled from an icon library for a dozen shapes. Tinted by their caller.
  */
 object GameIcons {
     private fun icon(name: String, block: androidx.compose.ui.graphics.vector.PathBuilder.() -> Unit): ImageVector =
@@ -23,6 +23,21 @@ object GameIcons {
                 pathBuilder = block,
             )
         }.build()
+
+    /** A stroke filled too: the one icon that says "on" by its ground (the notebook's mark kept). */
+    private fun filledIcon(
+        name: String,
+        block: androidx.compose.ui.graphics.vector.PathBuilder.() -> Unit,
+    ): ImageVector = ImageVector.Builder(name, 24.dp, 24.dp, 24f, 24f).apply {
+        path(
+            fill = SolidColor(Color.Black),
+            stroke = SolidColor(Color.Black),
+            strokeLineWidth = 2f,
+            strokeLineCap = StrokeCap.Round,
+            strokeLineJoin = StrokeJoin.Round,
+            pathBuilder = block,
+        )
+    }.build()
 
     /** Enter: the return arrow. */
     val Enter: ImageVector by lazy {
@@ -100,6 +115,111 @@ object GameIcons {
             moveTo(9f, 6f)
             lineTo(15f, 12f)
             lineTo(9f, 18f)
+        }
+    }
+
+    /** The hints: a light bulb. */
+    val Hint: ImageVector by lazy {
+        icon("Hint") {
+            moveTo(9f, 17f)
+            lineTo(8.6f, 14.8f)
+            arcTo(6f, 6f, 0f, isMoreThanHalf = true, isPositiveArc = true, x1 = 15.4f, y1 = 14.8f)
+            lineTo(15f, 17f)
+            close()
+            moveTo(10f, 20.5f)
+            horizontalLineTo(14f)
+        }
+    }
+
+    /** The translation hint: a word going one way and coming back in another language. */
+    val Translation: ImageVector by lazy {
+        icon("Translation") {
+            moveTo(4f, 8f)
+            horizontalLineTo(18f)
+            moveTo(15f, 5f)
+            lineTo(18f, 8f)
+            lineTo(15f, 11f)
+            moveTo(20f, 16f)
+            horizontalLineTo(6f)
+            moveTo(9f, 13f)
+            lineTo(6f, 16f)
+            lineTo(9f, 19f)
+        }
+    }
+
+    /** The meaning: an open book. */
+    val Definition: ImageVector by lazy {
+        icon("Definition") {
+            moveTo(12f, 6.5f)
+            curveTo(10f, 5f, 7f, 4.5f, 3f, 5f)
+            verticalLineTo(18.5f)
+            curveTo(7f, 18f, 10f, 18.5f, 12f, 20f)
+            curveTo(14f, 18.5f, 17f, 18f, 21f, 18.5f)
+            verticalLineTo(5f)
+            curveTo(17f, 4.5f, 14f, 5f, 12f, 6.5f)
+            close()
+            moveTo(12f, 6.5f)
+            verticalLineTo(20f)
+        }
+    }
+
+    /** The letter hint: a tile with a letter in it. */
+    val Letter: ImageVector by lazy {
+        icon("Letter") {
+            moveTo(6f, 3.5f)
+            horizontalLineTo(18f)
+            arcTo(2.5f, 2.5f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 20.5f, y1 = 6f)
+            verticalLineTo(18f)
+            arcTo(2.5f, 2.5f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 18f, y1 = 20.5f)
+            horizontalLineTo(6f)
+            arcTo(2.5f, 2.5f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 3.5f, y1 = 18f)
+            verticalLineTo(6f)
+            arcTo(2.5f, 2.5f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 6f, y1 = 3.5f)
+            close()
+            moveTo(8.5f, 16.5f)
+            lineTo(12f, 7.5f)
+            lineTo(15.5f, 16.5f)
+            moveTo(9.8f, 13.2f)
+            horizontalLineTo(14.2f)
+        }
+    }
+
+    private fun androidx.compose.ui.graphics.vector.PathBuilder.bookmark() {
+        moveTo(7f, 3f)
+        horizontalLineTo(17f)
+        arcTo(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 18f, y1 = 4f)
+        verticalLineTo(20.5f)
+        lineTo(12f, 16.5f)
+        lineTo(6f, 20.5f)
+        verticalLineTo(4f)
+        arcTo(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 7f, y1 = 3f)
+        close()
+    }
+
+    /** The notebook, and a word not in it yet: a bookmark. */
+    val Notebook: ImageVector by lazy { icon("Notebook") { bookmark() } }
+
+    /** A word kept in the notebook: the bookmark filled. */
+    val NotebookKept: ImageVector by lazy { filledIcon("NotebookKept") { bookmark() } }
+
+    /** The notebook's search: a lens. */
+    val Search: ImageVector by lazy {
+        icon("Search") {
+            moveTo(17.5f, 10.5f)
+            arcTo(7f, 7f, 0f, isMoreThanHalf = true, isPositiveArc = true, x1 = 3.5f, y1 = 10.5f)
+            arcTo(7f, 7f, 0f, isMoreThanHalf = true, isPositiveArc = true, x1 = 17.5f, y1 = 10.5f)
+            moveTo(15.5f, 15.5f)
+            lineTo(20.5f, 20.5f)
+        }
+    }
+
+    /** What clears a search: a cross. */
+    val Clear: ImageVector by lazy {
+        icon("Clear") {
+            moveTo(6f, 6f)
+            lineTo(18f, 18f)
+            moveTo(18f, 6f)
+            lineTo(6f, 18f)
         }
     }
 }

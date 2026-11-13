@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.callbackdev.thatstheword.core.data.DayTicker
 import com.callbackdev.thatstheword.core.data.GameRepository
 import com.callbackdev.thatstheword.core.data.InterfaceLanguage
+import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
 import com.callbackdev.thatstheword.core.model.Language
@@ -26,7 +27,7 @@ import javax.inject.Provider
 /**
  * The start page (PLANNING.md §11 Phase 4): today's word in each language, the game language
  * changed in one touch, the streak, the calendar of the dailies, free play and Hard; and the games
- * they open, started or taken up.
+ * they open, started or taken up; and the notebook, once it holds a word.
  *
  * The change of day is seen live by [DayTicker], collected only while the page is on screen
  * (`WhileSubscribed`): nothing runs while it is not (PLANNING.md §9). The calendar's month is kept
@@ -40,17 +41,25 @@ class HomeViewModel @Inject constructor(
     private val clock: Provider<Clock>,
     private val savedState: SavedStateHandle,
     ticker: DayTicker,
+    notebook: NotebookRepository,
 ) : ViewModel() {
     private val month = savedState.getStateFlow<String?>(MONTH, null)
 
     val state: StateFlow<HomeUiState?> =
-        combine(settings.settings, games.records(), ticker.dates, month) { settings, records, _, month ->
+        combine(
+            settings.settings,
+            games.records(),
+            ticker.dates,
+            month,
+            notebook.size(),
+        ) { settings, records, _, month, notebookSize ->
             HomeUiState.of(
                 settings = settings,
                 records = records,
                 calendar = DailyCalendar(clock.get()),
                 month = month?.let(YearMonth::parse),
                 scheduleLength = games.scheduleLength(settings.gameLanguage),
+                notebookSize = notebookSize,
             )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_AFTER_MILLIS), null)
 

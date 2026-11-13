@@ -22,6 +22,8 @@ import androidx.room.RoomDatabase
 abstract class ThatsTheWordDatabase : RoomDatabase() {
     abstract fun games(): GameDao
 
+    abstract fun notebook(): NotebookDao
+
     companion object {
         const val NAME = "thatstheword.db"
     }

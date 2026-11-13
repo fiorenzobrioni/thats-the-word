@@ -109,6 +109,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":feature:game"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:notebook"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

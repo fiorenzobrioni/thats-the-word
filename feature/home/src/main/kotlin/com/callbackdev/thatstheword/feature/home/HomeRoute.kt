@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
  * change of day runs only while the page is seen (PLANNING.md §9).
  */
 @Composable
-fun HomeRoute(onOpenGame: (Long) -> Unit, modifier: Modifier = Modifier) {
+fun HomeRoute(onOpenGame: (Long) -> Unit, onOpenNotebook: () -> Unit, modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val current = state ?: return
@@ -25,6 +25,7 @@ fun HomeRoute(onOpenGame: (Long) -> Unit, modifier: Modifier = Modifier) {
         onLevel = viewModel::setLevel,
         onPlayFree = { viewModel.openFree(onOpenGame) },
         onHard = viewModel::setHard,
+        onNotebook = onOpenNotebook,
         modifier = modifier,
     )
 }

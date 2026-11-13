@@ -88,7 +88,8 @@ import java.util.Locale
  * The start page (VISION §7, PLANNING.md §11 Phase 4), drawn from its state alone: the name; the
  * three game languages, each with how its word of today stands, one touch to play in another; the
  * game language's word of today, to play, take up or see; the streak; the calendar of the dailies,
- * where a past day is played from the archive; free play at a level; and Hard, for the next game.
+ * where a past day is played from the archive; free play at a level; the notebook, once it holds a
+ * word; and Hard, for the next game.
  *
  * Its sections arrive one after another the first time the page is drawn, on the family's spring;
  * a fade under reduced motion; nothing waits for them.
@@ -104,6 +105,7 @@ fun HomeScreen(
     onPlayFree: () -> Unit,
     onHard: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    onNotebook: () -> Unit = {},
 ) {
     // Saveable, so the sections arrive once in the page's life, not at every return from a game.
     val arrived = rememberSaveable { mutableStateOf(false) }
@@ -130,7 +132,8 @@ fun HomeScreen(
                 Calendar(state.month, onMonth, onDay)
             }
             FreePlayCard(state, onLevel, onPlayFree, Modifier.arrive(5, arrived))
-            HardRow(state.hard, onHard, Modifier.arrive(6, arrived))
+            if (state.notebookSize > 0) NotebookCard(state.notebookSize, onNotebook, Modifier.arrive(6, arrived))
+            HardRow(state.hard, onHard, Modifier.arrive(7, arrived))
         }
     }
 }
@@ -544,6 +547,37 @@ private fun levelLine(level: Level): Int = when (level) {
     Level.COMPLETE -> R.string.home_level_complete_line
 }
 
+/**
+ * The notebook (VISION §9): how many words it holds, and the way in. Drawn once it holds one: a
+ * notebook with nothing in it has nothing to say yet.
+ */
+@Composable
+private fun NotebookCard(size: Int, onOpen: () -> Unit, modifier: Modifier = Modifier) {
+    Group(modifier.testTag(HomeTags.NOTEBOOK)) {
+        Eyebrow(R.string.home_notebook_eyebrow)
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = pluralStringResource(R.plurals.home_notebook_line, size, size),
+            style = MaterialTheme.typography.bodyLarge.balanced(),
+            textAlign = TextAlign.Center,
+        )
+        Spacer(Modifier.height(16.dp))
+        Button(
+            onClick = onOpen,
+            colors = inkButtonColors(),
+            modifier = Modifier
+                .heightIn(min = 56.dp)
+                .testTag(HomeTags.OPEN_NOTEBOOK),
+        ) {
+            Text(
+                text = stringResource(R.string.home_notebook_open),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+}
+
 /** The Hard option (PLANNING.md §4.4): a switch, for the next game; a game started keeps its own. */
 @Composable
 private fun HardRow(hard: Boolean, onHard: (Boolean) -> Unit, modifier: Modifier = Modifier) {
@@ -622,6 +656,8 @@ object HomeTags {
     const val PLAY_FREE = "home_play_free"
     const val HARD = "home_hard"
     const val MONTH = "home_month"
+    const val NOTEBOOK = "home_notebook"
+    const val OPEN_NOTEBOOK = "home_open_notebook"
 
     fun language(language: Language) = "home_language_${language.tag}"
 

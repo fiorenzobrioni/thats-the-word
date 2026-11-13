@@ -24,17 +24,21 @@ import com.callbackdev.thatstheword.core.designsystem.theme.reducedMotion
 import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.feature.game.GameRoute
 import com.callbackdev.thatstheword.feature.home.HomeRoute
+import com.callbackdev.thatstheword.feature.notebook.NotebookRoute
 import kotlinx.serialization.Serializable
 
-/** Where the shell can go: the start page, and a game by its id. Saved with the activity's state. */
+/** Where the shell can go: the start page, a game by its id, the notebook. Saved with the activity's state. */
 @Serializable
 data object StartKey : NavKey
 
 @Serializable
 data class GameKey(val gameId: Long) : NavKey
 
+@Serializable
+data object NotebookKey : NavKey
+
 /**
- * The app's pages (Navigation 3): the start page, and the game page above it. Each page's view
+ * The app's pages (Navigation 3): the start page, and the game page or the notebook above it. Each page's view
  * models live as long as its entry on the back stack; predictive back pops it.
  *
  * [dailyRequest] is a language whose daily of today a launcher shortcut asked for (PLANNING.md
@@ -65,7 +69,13 @@ fun ThatsTheWordRoot(dailyRequest: Language? = null, onDailyRequestHandled: () -
             popTransitionSpec = { pageTransition(reduced, forward = false) },
             predictivePopTransitionSpec = { pageTransition(reduced, forward = false) },
             entryProvider = entryProvider {
-                entry<StartKey> { HomeRoute(onOpenGame = { backStack.add(GameKey(it)) }) }
+                entry<StartKey> {
+                    HomeRoute(
+                        onOpenGame = { backStack.add(GameKey(it)) },
+                        onOpenNotebook = { backStack.add(NotebookKey) },
+                    )
+                }
+                entry<NotebookKey> { NotebookRoute(onBack = { backStack.removeLastOrNull() }) }
                 entry<GameKey> { key ->
                     GameRoute(
                         gameId = key.gameId,

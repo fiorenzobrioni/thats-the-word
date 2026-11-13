@@ -45,3 +45,14 @@ All notable changes to That's The Word are documented here. The format follows
   so above its date.
 - The first daily word is the one of 1 November 2026: the calendar already has days to play.
 - The shared result marks a letter in its right place with a blue square, 🟦.
+- In a language that is not your own, three hints behind the light bulb: the translation, the
+  meaning or a letter in its place. Each costs an attempt, said before you take it, and is drawn
+  in the row it spent.
+- The end of a game explains the words in your language: the word's translation and meaning,
+  and those of each word you tried.
+- The notebook: every word a game hid, found or missed, and any word you tried that you choose to
+  keep, with what it means, when you met it and how. Search it with or without accents, or look
+  at one language at a time; it opens from the start page.
+- Milestones: seven days in a row, a first word in another language, a hundred words in the
+  notebook, the day's word in all three languages. Each is said once, on the card of the game
+  that reached it.

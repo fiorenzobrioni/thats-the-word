@@ -8,6 +8,7 @@ import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
 import com.callbackdev.thatstheword.core.domain.game.FreePlay
 import com.callbackdev.thatstheword.core.domain.game.Game
+import com.callbackdev.thatstheword.core.domain.game.GuidedGame
 import com.callbackdev.thatstheword.core.domain.game.Move
 import com.callbackdev.thatstheword.core.domain.progress.GameRecord
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
@@ -122,6 +123,43 @@ class GameRepository @Inject constructor(
             ),
         )
     }
+
+    /**
+     * The id of the guided first game in [language] (PLANNING.md §11 Phase 7): the one under way
+     * taken up, else a new one on the language's fixed word. Never Hard: it teaches the rules, not
+     * the harder one. Started again from Settings ("How to play") as often as the player likes; a
+     * lesson, so it is counted nowhere.
+     */
+    suspend fun guidedGame(language: Language, interfaceLanguage: Language): Long = database.withTransaction {
+        dao.guidedGames(language.tag).lastOrNull { it.status == STATUS_PLAYING }?.let { return@withTransaction it.id }
+        val solution = GuidedGame.solution(language)
+        val now = clock.get()
+        dao.insertGame(
+            GameEntity(
+                language = language.tag,
+                mode = MODE_GUIDED,
+                dailyDate = null,
+                level = null,
+                solution = Alphabet.of(language).keyForm(solution),
+                length = solution.length,
+                attempts = GameSetup.ATTEMPTS,
+                hard = false,
+                uiLanguage = interfaceLanguage.tag,
+                status = STATUS_PLAYING,
+                startedAt = Instant.now(now).toEpochMilli(),
+                startedOn = LocalDate.now(now).toEpochDay(),
+                finishedAt = null,
+                practice = 0,
+            ),
+        )
+    }
+
+    /**
+     * Whether [language]'s word of [date] is finished, its counted game won or lost: the daily
+     * reminder stays quiet then (PLANNING.md §8).
+     */
+    suspend fun dailyFinished(language: Language, date: LocalDate): Boolean =
+        dao.countedDaily(language.tag, date.toEpochDay())?.let { it.status != STATUS_PLAYING } ?: false
 
     /** A game taken up: before its first move it takes the Hard chosen now; after, it keeps its own. */
     private suspend fun takeUp(game: GameEntity, hard: Boolean): Long {

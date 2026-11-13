@@ -22,8 +22,9 @@ internet at all.
 
 > **Status: in the making.** The foundations are laid (Phase 0), the words are made (Phase 1),
 > the game's rules are written and tested (Phase 2); the game, the start page, the practice of
-> a language (hints, meanings, the notebook), your progress, your data and sharing are built
-> (Phases 3 to 6) and wait for a look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
+> a language (hints, meanings, the notebook), your progress, your data and sharing, the first run
+> with its guided first game, settings, the sounds and the daily reminder are built (Phases 3 to 7)
+> and wait for a look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
 
 ## What That's The Word is
 
@@ -64,6 +65,10 @@ What 1.0 will do ([VISION.md](./VISION.md) has the full scope):
   recognise steadiness and learning. Nothing to unlock: recognition, never a key.
 - 📤 **Share a result** without giving the word away, in the game's own look.
 - 💾 **Your data**: a backup file of your games, notebook and milestones, to keep or to move.
+- 🎓 **A first game that teaches**: the rules said one at a time, the moment they happen, never a
+  page of instructions.
+- 🔔 **A daily reminder, if you want one**: one quiet notification at your hour, only while the
+  day's word is still to find.
 - ✨ **Made to feel good**: every key moment has its movement, discreet haptics and sounds, each
   with its own switch; light and dark, the family's dresses and typefaces.
 - 🤝 **For every player**: shapes as well as colours, TalkBack throughout, text at twice its size,
@@ -121,7 +126,9 @@ closed periods in [docs/planning](./docs/planning/README.md)):
   on a phone.*
 - **Phase 6**, progress, milestones, sharing and your data. *Built; to be looked at on a
   phone.*
-- **Phase 7**, the first run (a guided first game), settings and sound.
+- **Phase 7**, the first run (a guided first game), settings, sound and the daily reminder.
+  *Built; to be looked at on a phone.*
+- **Phase 7b**, the home-screen card: today's word in each language and the streak.
 - **Phase 8**, the accessibility pass and polish.
 - **Phase 9**, the 1.0 release on GitHub.
 
@@ -185,11 +192,12 @@ thats-the-word/
 │   ├── domain/             # pure Kotlin: the game engine, the daily word, streaks, statistics
 │   ├── words/              # the word files and their reader
 │   ├── data/               # Room, DataStore, repositories
+│   ├── reminder/           # the daily reminder: one inexact alarm, its notification
 │   ├── designsystem/       # theme, tiles, keyboard, motion, sounds
 │   └── testing/            # shared UI test helpers (accessibility, page walks)
 ├── feature/                # game, home, notebook, progress, onboarding, settings
 ├── build-logic/            # convention plugins, the forbidden-permission check
-├── tools/                  # the words' script, the launcher icon, the plan's index
+├── tools/                  # the words' script, the sounds' script, the launcher icon, the plan's index
 └── keystore/               # the shared debug key (deliberately committed)
 ```
 

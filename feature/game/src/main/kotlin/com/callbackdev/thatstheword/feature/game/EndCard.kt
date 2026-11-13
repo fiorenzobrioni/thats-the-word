@@ -47,6 +47,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.callbackdev.thatstheword.core.designsystem.icons.GameIcons
+import com.callbackdev.thatstheword.core.designsystem.sound.GameSound
 import com.callbackdev.thatstheword.core.designsystem.theme.GroupShape
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
@@ -73,6 +74,7 @@ internal fun EndCard(
     onNext: () -> Unit,
     modifier: Modifier = Modifier,
     onToggleNotebook: (Int) -> Unit = {},
+    onSound: (GameSound) -> Unit = {},
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val won = state.state == GameState.WON
@@ -124,7 +126,17 @@ internal fun EndCard(
                     textAlign = TextAlign.Center,
                 )
             }
-            state.milestones.forEach { MilestoneNote(it) }
+            state.milestones.forEach { MilestoneNote(it, onSound) }
+            if (state.guided) {
+                // The guided game's last lesson: what the game is from now on.
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    text = stringResource(R.string.lesson_done),
+                    style = MaterialTheme.typography.titleMedium.balanced(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.testTag(GameTags.LESSON_DONE),
+                )
+            }
             if (state.tried.isNotEmpty()) {
                 HorizontalDivider(Modifier.padding(vertical = 14.dp), color = MaterialTheme.colorScheme.outlineVariant)
                 val yours = stringResource(R.string.end_your_words)
@@ -156,6 +168,7 @@ internal fun EndCard(
                             when (next) {
                                 NextGame.PRACTICE -> R.string.end_play_again
                                 NextGame.ANOTHER_WORD -> R.string.end_another_word
+                                NextGame.START_PLAYING -> R.string.end_start_playing
                             },
                         ),
                         textAlign = TextAlign.Center,
@@ -322,12 +335,13 @@ private fun TriedWord(word: TriedWordUi, onToggle: (Int) -> Unit) {
  * never a key: nothing is unlocked by it.
  */
 @Composable
-private fun MilestoneNote(milestone: Milestone) {
+private fun MilestoneNote(milestone: Milestone, onSound: (GameSound) -> Unit) {
     val reduced = reducedMotion()
     val locale = LocalConfiguration.current.locales[0]
     val light = remember { Animatable(0f) }
     val arrival = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
+        onSound(GameSound.MILESTONE)
         arrival.animateTo(1f, ThatsTheWordMotion.playful(reduced))
         if (!reduced) light.animateTo(1f, tween(LIGHT_MILLIS, easing = FastOutSlowInEasing))
     }

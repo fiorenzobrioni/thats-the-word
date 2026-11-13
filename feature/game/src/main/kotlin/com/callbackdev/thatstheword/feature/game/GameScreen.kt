@@ -74,6 +74,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import com.callbackdev.thatstheword.core.designsystem.components.GameTile
 import com.callbackdev.thatstheword.core.designsystem.icons.GameIcons
+import com.callbackdev.thatstheword.core.designsystem.sound.GameSound
 import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
@@ -115,10 +116,16 @@ fun GameScreen(
     onTakeHint: (HintKind) -> Unit = {},
     onToggleNotebook: (Int) -> Unit = {},
     hintsOpenAtStart: Boolean = false,
+    onSound: (GameSound) -> Unit = {},
 ) {
     val reduced = reducedMotion()
     val view = LocalView.current
     val haptic: (Int) -> Unit = { if (haptics) view.performHapticFeedback(it) }
+    // The key's touch: felt and heard together (PLANNING.md §7.5).
+    val tap: () -> Unit = {
+        haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+        onSound(GameSound.KEY)
+    }
 
     // What the page saw when it opened: the rows below this were revealed here, and are played.
     val rowsAtStart = remember { state.rows.size }
@@ -144,17 +151,26 @@ fun GameScreen(
     } ?: ""
     LaunchedEffect(state.rows.size) {
         if (state.rows.size > rowsAtStart && lastRowSentence != null) {
-            repeat(state.length) {
+            // Each tile's note as its colour arrives: a row plays its result as a short phrase.
+            val marks = state.rows.last().marks
+            repeat(state.length) { i ->
                 delay(ThatsTheWordMotion.TILE_STAGGER_MILLIS)
                 haptic(HapticFeedbackConstants.SEGMENT_TICK)
+                onSound(GameSound.of(marks[i]))
             }
             delay(revealMillis - state.length * ThatsTheWordMotion.TILE_STAGGER_MILLIS)
             announcement = lastRowSentence
-            if (state.state == GameState.WON) haptic(HapticFeedbackConstants.CONFIRM)
+            if (state.state == GameState.WON) {
+                haptic(HapticFeedbackConstants.CONFIRM)
+                onSound(GameSound.WIN)
+            }
         }
     }
     LaunchedEffect(state.refusal?.id) {
-        if (state.refusal != null) haptic(HapticFeedbackConstants.REJECT)
+        if (state.refusal != null) {
+            haptic(HapticFeedbackConstants.REJECT)
+            onSound(GameSound.REFUSAL)
+        }
     }
 
     // The hints stand in the keyboard's place while they are open: two touches to take one.
@@ -192,8 +208,11 @@ fun GameScreen(
                 // height is counted whether it is there or not, so the grid keeps its size when
                 // the keyboard leaves.
                 val keyboard = if (ending) KEYBOARD_HEIGHT else 0.dp
+                // The guided game keeps a lesson's room under the grid, so the grid does not move
+                // when one is said.
+                val under = if (state.guided) COACH else MARKS_KEY
                 val tile =
-                    tileSize(maxWidth, maxHeight - keyboard - REFUSAL_LINE - MARKS_KEY, state.length, state.attempts)
+                    tileSize(maxWidth, maxHeight - keyboard - REFUSAL_LINE - under, state.length, state.attempts)
                 // While the game is played the grid stands in the middle of the room above the
                 // keyboard; once it is over, the end card follows it down the page.
                 val viewport = maxHeight
@@ -209,7 +228,11 @@ fun GameScreen(
                     verticalArrangement = if (ending) Arrangement.Top else Arrangement.Center,
                 ) {
                     Grid(state, tile, rowsAtStart, hintsAtStart, endedHere, revealMillis, reduced)
-                    MarksKey(visible = !ending)
+                    if (state.guided) {
+                        Coach(state.lessons, visible = !ending)
+                    } else {
+                        MarksKey(visible = !ending)
+                    }
                     RefusalLine(state)
                     Box(
                         Modifier
@@ -233,6 +256,7 @@ fun GameScreen(
                             onShare = onShare,
                             onNext = onNext,
                             onToggleNotebook = onToggleNotebook,
+                            onSound = onSound,
                             modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
                         )
                     }
@@ -265,6 +289,7 @@ fun GameScreen(
                             state = state,
                             onTake = {
                                 haptic(HapticFeedbackConstants.CONFIRM)
+                                onSound(GameSound.RIGHT_PLACE)
                                 hintsOpen = false
                                 onTakeHint(it)
                             },
@@ -275,15 +300,15 @@ fun GameScreen(
                         Keyboard(
                             state = state,
                             onLetter = {
-                                haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+                                tap()
                                 onLetter(it)
                             },
                             onDelete = {
-                                haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+                                tap()
                                 onDelete()
                             },
                             onEnter = {
-                                haptic(HapticFeedbackConstants.KEYBOARD_TAP)
+                                tap()
                                 onEnter()
                             },
                             modifier = bottom,
@@ -512,11 +537,11 @@ private fun MarksKey(visible: Boolean) {
 
 /** A mark's tile in small: its ground and its shape, nothing to read. */
 @Composable
-private fun MarkSample(mark: Mark) {
+internal fun MarkSample(mark: Mark, size: Dp = MARK_SAMPLE) {
     val style = markStyle(mark)
     Box(
         Modifier
-            .size(MARK_SAMPLE)
+            .size(size)
             .graphicsLayer {
                 scaleX = style.scale
                 scaleY = style.scale
@@ -561,6 +586,8 @@ object GameTags {
     const val MILESTONE = "game_milestone"
     const val HINTS = "game_hints"
     const val HINTS_PANEL = "game_hints_panel"
+    const val COACH = "game_coach"
+    const val LESSON_DONE = "game_lesson_done"
 
     fun hint(kind: HintKind) = "game_hint_${kind.name.lowercase()}"
 
@@ -574,6 +601,7 @@ private val MIN_TILE = 44.dp
 internal val TILE_GAP = 6.dp
 private val REFUSAL_LINE = 40.dp
 private val MARKS_KEY = 32.dp
+private val COACH = 104.dp
 private val MARK_SAMPLE = 12.dp
 private val SHAKE_VELOCITY = 900.dp
 internal const val SPENT_ALPHA = 0.4f

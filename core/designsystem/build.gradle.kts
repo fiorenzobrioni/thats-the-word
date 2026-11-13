@@ -21,6 +21,8 @@ dependencies {
     api(libs.androidx.compose.material3)
 
     implementation(libs.androidx.core.ktx)
+    // The sounds live as long as the game page is started (PLANNING.md §9): its lifecycle.
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     testImplementation(libs.androidx.junit)
 }

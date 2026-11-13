@@ -24,7 +24,9 @@ with its overlapping contours merged, written below in font units centred on the
 script needs only Python's standard library.
 
 Re-running this script IS the drawing: ic_launcher_background.xml, ic_launcher_foreground.xml and
-ic_launcher_monochrome.xml are its output and are not edited by hand.
+ic_launcher_monochrome.xml are its output and are not edited by hand; so is the daily reminder's
+status-bar icon, core/reminder/src/main/res/drawable/ic_stat_word.xml (the same tiles in one ink, on
+the 24-unit grid).
 """
 
 import math
@@ -33,6 +35,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "app/src/main/res/drawable"
+STATUS = ROOT / "core/reminder/src/main/res/drawable"
 
 CENTRE = 54.0
 KEYLINE = 28.0
@@ -217,6 +220,31 @@ def monochrome():
     )
 
 
+def status_bar():
+    """The daily reminder's status-bar icon (PLANNING.md §8): the themed layer's tiles, white on
+    transparent as the system tints it, scaled from the mark's 56 units to 20 of the 24-unit grid,
+    2 units of air all round."""
+    scale = 20.0 / (KEYLINE * 2)
+    whites = " ".join(tile_path(letter, *tile_centre(column, row)) for letter, column, row in TILES)
+    body = f'<path android:pathData="{whites}" android:fillType="evenOdd" android:fillColor="#FFFFFFFF"/>\n'
+    letter, column, row = LAST
+    cx, cy = tile_centre(column, row)
+    last = f'<path android:pathData="{tile_path(letter, cx, cy)}" android:fillType="evenOdd" android:fillColor="#FFFFFFFF"/>\n'
+    body += turned(last, cx, cy)
+    group = (
+        f'<group android:pivotX="{f(CENTRE)}" android:pivotY="{f(CENTRE)}" android:scaleX="{scale:.4f}" '
+        f'android:scaleY="{scale:.4f}" android:translateX="{f(12 - CENTRE)}" android:translateY="{f(12 - CENTRE)}">\n'
+        f"{body}</group>\n"
+    )
+    what = "The daily reminder's status-bar icon: the mark's tiles in one ink, white, tinted by the system."
+    return HEADER.format(what=what) + (
+        '<vector xmlns:android="http://schemas.android.com/apk/res/android"\n'
+        '    android:width="24dp"\n    android:height="24dp"\n'
+        '    android:viewportWidth="24"\n    android:viewportHeight="24">\n'
+        f"{group}</vector>\n"
+    )
+
+
 def main():
     measured = reach()
     assert measured <= KEYLINE, f"the symbol reaches {measured:.1f}, past the keyline {KEYLINE}"
@@ -224,6 +252,8 @@ def main():
     (RES / "ic_launcher_background.xml").write_text(background(), encoding="utf-8", newline="\n")
     (RES / "ic_launcher_foreground.xml").write_text(foreground(), encoding="utf-8", newline="\n")
     (RES / "ic_launcher_monochrome.xml").write_text(monochrome(), encoding="utf-8", newline="\n")
+    STATUS.mkdir(parents=True, exist_ok=True)
+    (STATUS / "ic_stat_word.xml").write_text(status_bar(), encoding="utf-8", newline="\n")
     print(f"launcher mark written; the symbol reaches {measured:.1f} of {KEYLINE}")
 
 

@@ -23,5 +23,5 @@ a derivative of each, under the licence named here:
 The meanings and translations are Wiktionary's text, cut to a line and chosen among, not
 rewritten; as CC BY-SA asks, they stay under CC BY-SA 4.0, credited to Wiktionary's contributors.
 
-Everything here is credited in Settings, About (a later phase), because a licence that asks for
+Everything here is credited in the app, Settings › About › Licences and sources, because a licence that asks for
 credit is not satisfied by a file the player never opens.

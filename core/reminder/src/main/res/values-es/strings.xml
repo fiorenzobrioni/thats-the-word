@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- El recordatorio diario: su canal, como lo listan los ajustes del sistema. -->
+    <string name="reminder_channel_name">Recordatorio diario</string>
+    <string name="reminder_channel_description">A la hora que elijas, solo los días en que aún no has jugado la palabra.</string>
+
+    <!-- La notificación: una frase sobre la palabra de hoy, y qué hace un toque. -->
+    <string name="reminder_title">La palabra de hoy te espera</string>
+    <string name="reminder_text">En %1$s, aún por encontrar. Un toque la abre.</string>
+    <string name="reminder_language_it">italiano</string>
+    <string name="reminder_language_en">inglés</string>
+    <string name="reminder_language_es">español</string>
+</resources>

@@ -32,6 +32,10 @@ jobs:
       - name: Words
         run: python3 -m unittest discover -s tools/words/tests -t tools/words
 
+      # The sounds are the script's output (PLANNING.md §7.5): a rebuild must write the same bytes.
+      - name: Sounds
+        run: python3 tools/make_sounds.py --check
+
       # Privacy is enforced, not promised (VISION §3): the merged manifest
       # of every variant must hold no network, location, exact-alarm, battery-exemption,
       # advertising-id, camera, microphone, SMS, contacts, calendar, storage or installed-apps permission

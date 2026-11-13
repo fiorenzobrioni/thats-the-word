@@ -17,6 +17,7 @@ fun HomeRoute(
     onOpenNotebook: () -> Unit,
     onOpenProgress: () -> Unit,
     modifier: Modifier = Modifier,
+    onOpenSettings: () -> Unit = {},
 ) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -32,6 +33,7 @@ fun HomeRoute(
         onHard = viewModel::setHard,
         onNotebook = onOpenNotebook,
         onProgress = onOpenProgress,
+        onSettings = onOpenSettings,
         modifier = modifier,
     )
 }

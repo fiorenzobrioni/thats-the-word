@@ -33,6 +33,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.time.Clock
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.YearMonth
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -105,6 +106,9 @@ class HomeScreenTest {
         wallpaperColors = false,
         firstRunDone = true,
         tipsSeen = true,
+        reminder = false,
+        reminderTime = LocalTime.of(20, 0),
+        askedNotifications = false,
     )
 
     private fun state(
@@ -121,6 +125,8 @@ class HomeScreenTest {
     private var notebook = 0
     private var progress = 0
 
+    private var settingsOpened = 0
+
     private fun draw(state: HomeUiState = state(), dark: Boolean = false) {
         compose.setContent {
             ThatsTheWordTheme(darkTheme = dark) {
@@ -135,6 +141,7 @@ class HomeScreenTest {
                     onHard = { hard = it },
                     onNotebook = { notebook++ },
                     onProgress = { progress++ },
+                    onSettings = { settingsOpened++ },
                 )
             }
         }
@@ -366,5 +373,12 @@ class HomeScreenTest {
     fun `an empty notebook has no card`() {
         draw(state(notebookSize = 0))
         compose.onNodeWithTag(HomeTags.NOTEBOOK).assertDoesNotExist()
+    }
+
+    @Test
+    fun `settings open from the page's corner`() {
+        draw()
+        compose.onNodeWithContentDescription("Settings").performClick()
+        assertThat(settingsOpened).isEqualTo(1)
     }
 }

@@ -2,6 +2,7 @@ package com.callbackdev.thatstheword.feature.game
 
 import androidx.compose.runtime.Immutable
 import com.callbackdev.thatstheword.core.domain.game.Game
+import com.callbackdev.thatstheword.core.domain.game.Lesson
 import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.game.TakenHint
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
@@ -80,10 +81,14 @@ data class MeaningUi(val written: String, val lemma: String?, val translations: 
 @Immutable
 data class TriedWordUi(val index: Int, val meaning: MeaningUi, val inNotebook: Boolean, val removable: Boolean)
 
-/** What the end card offers next (PLANNING.md §4.6, §4.7): the day again as practice, or another free word. */
+/**
+ * What the end card offers next (PLANNING.md §4.6, §4.7): the day again as practice, another free
+ * word, or, after the guided first game, the game itself (PLANNING.md §11 Phase 7).
+ */
 enum class NextGame {
     PRACTICE,
     ANOTHER_WORD,
+    START_PLAYING,
 }
 
 /**
@@ -134,16 +139,20 @@ data class GameUiState(
     val milestones: List<Milestone> = emptyList(),
     /** Whether the meanings are the word's own language's definitions: no translation to give. */
     val sameLanguage: Boolean = true,
+    /** What the guided first game says now, each lesson once (PLANNING.md §11 Phase 7); empty otherwise. */
+    val lessons: List<Lesson> = emptyList(),
 ) {
+    val guided: Boolean get() = mode == GameMode.Guided
+
     val next: NextGame?
         get() = when (mode) {
             is GameMode.Daily -> NextGame.PRACTICE
             is GameMode.Free -> NextGame.ANOTHER_WORD
-            GameMode.Guided -> null
+            GameMode.Guided -> NextGame.START_PLAYING
         }
 
-    /** A day's result is shared, a replay's is not: it is no day's result. */
-    val shareable: Boolean get() = !practice
+    /** A day's result is shared, a replay's is not: it is no day's result; nor the guided game's, a lesson. */
+    val shareable: Boolean get() = !practice && !guided
     val finished: Boolean get() = state.finished
 
     companion object {
@@ -180,6 +189,7 @@ data class GameUiState(
             interfaceLanguage: Language = game.setup.interfaceLanguage,
             notebook: Map<Word, NotebookEntry> = emptyMap(),
             milestones: List<Milestone> = emptyList(),
+            lessons: List<Lesson> = emptyList(),
         ): GameUiState {
             val language = game.setup.language
             val alphabet = Alphabet.of(language)
@@ -229,6 +239,7 @@ data class GameUiState(
                 solutionKept = notebook.containsKey(solution),
                 milestones = milestones,
                 sameLanguage = language == interfaceLanguage,
+                lessons = if (finished) emptyList() else lessons,
             )
         }
 

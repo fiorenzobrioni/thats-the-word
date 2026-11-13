@@ -51,6 +51,9 @@ private val InterFamily = FontFamily(
 /** The phone's own sans: a different font on every device, with whatever weights it has. */
 private val SystemFamily = FontFamily.Default
 
+/** The face of [font], for a page that shows each in its own drawing (Settings, Appearance). */
+fun fontFamilyOf(font: AppFont): FontFamily = familyFor(font)
+
 internal fun familyFor(font: AppFont): FontFamily = when (font) {
     AppFont.GOOGLE_SANS -> GoogleSansFamily
     AppFont.INTER -> InterFamily

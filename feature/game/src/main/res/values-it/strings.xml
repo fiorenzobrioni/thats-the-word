@@ -109,4 +109,15 @@
     <string name="milestone_first_foreign_win">La tua prima parola trovata in un’altra lingua.</string>
     <string name="milestone_hundred_words">Cento parole nel tuo quaderno.</string>
     <string name="milestone_three_languages">La parola del giorno trovata in tutte e tre le lingue.</string>
+    <!-- La prima partita guidata: ogni regola detta una volta, la prima volta che accade. -->
+    <string name="lesson_first_guess">Trova la parola nascosta in %1$d tentativi. Comincia da una parola qualsiasi di %2$d lettere.</string>
+    <string name="lesson_five_letters">Servono tutte e %1$d le lettere.</string>
+    <string name="lesson_only_words">Valgono solo parole vere. Una rifiutata non costa nulla: provane un’altra.</string>
+    <string name="lesson_right_place">Quadrata, in inchiostro: la lettera è al suo posto.</string>
+    <string name="lesson_elsewhere">Tonda, in ambra: è nella parola, ma altrove.</string>
+    <string name="lesson_absent">Affondata: la lettera non è nella parola.</string>
+    <string name="lesson_keyboard">I tasti ricordano ciò che hai trovato. Lascia stare quelli affondati.</string>
+    <string name="lesson_hints">Serve una mano? La lampadina in alto dà un aiuto, per un tentativo.</string>
+    <string name="lesson_done">È tutto qui. Una parola nuova ogni giorno, in ogni lingua.</string>
+    <string name="end_start_playing">Inizia a giocare</string>
 </resources>

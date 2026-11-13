@@ -130,4 +130,16 @@
     <string name="milestone_first_foreign_win">Your first word found in another language.</string>
     <string name="milestone_hundred_words">A hundred words in your notebook.</string>
     <string name="milestone_three_languages">The day’s word found in all three languages.</string>
+    <!-- The guided first game (VISION §12, PLANNING.md §11 Phase 7): each rule said once, the first
+         time it happens, under the grid. -->
+    <string name="lesson_first_guess">Find the hidden word in %1$d attempts. Start with any word of %2$d letters.</string>
+    <string name="lesson_five_letters">A word needs all %1$d letters.</string>
+    <string name="lesson_only_words">Only real words count. One refused costs nothing: try another.</string>
+    <string name="lesson_right_place">Square, in ink: the letter is in its place.</string>
+    <string name="lesson_elsewhere">Round, in amber: in the word, but somewhere else.</string>
+    <string name="lesson_absent">Sunk: the letter is not in the word.</string>
+    <string name="lesson_keyboard">The keys remember what you found. Leave the sunk ones out.</string>
+    <string name="lesson_hints">Stuck? The bulb above gives a hint, for one attempt.</string>
+    <string name="lesson_done">That is all there is to it. A new word every day, in each language.</string>
+    <string name="end_start_playing">Start playing</string>
 </resources>

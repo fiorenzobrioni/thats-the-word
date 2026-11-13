@@ -122,4 +122,6 @@
         <item quantity="other">%d words met, with what they mean.</item>
     </plurals>
     <string name="home_notebook_open">Open the notebook</string>
+    <!-- The start page's way to Settings (PLANNING.md §11 Phase 7), as TalkBack reads it. -->
+    <string name="home_settings">Settings</string>
 </resources>

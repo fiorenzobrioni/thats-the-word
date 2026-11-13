@@ -109,4 +109,15 @@
     <string name="milestone_first_foreign_win">Tu primera palabra hallada en otro idioma.</string>
     <string name="milestone_hundred_words">Cien palabras en tu cuaderno.</string>
     <string name="milestone_three_languages">La palabra del día hallada en los tres idiomas.</string>
+    <!-- La primera partida guiada: cada regla dicha una vez, la primera vez que ocurre. -->
+    <string name="lesson_first_guess">Encuentra la palabra oculta en %1$d intentos. Empieza con cualquier palabra de %2$d letras.</string>
+    <string name="lesson_five_letters">Hacen falta las %1$d letras.</string>
+    <string name="lesson_only_words">Solo cuentan palabras de verdad. Una rechazada no cuesta nada: prueba otra.</string>
+    <string name="lesson_right_place">Cuadrada, en tinta: la letra está en su sitio.</string>
+    <string name="lesson_elsewhere">Redonda, en ámbar: está en la palabra, pero en otro sitio.</string>
+    <string name="lesson_absent">Hundida: la letra no está en la palabra.</string>
+    <string name="lesson_keyboard">Las teclas recuerdan lo que encontraste. Deja de lado las hundidas.</string>
+    <string name="lesson_hints">¿Te atascas? La bombilla de arriba da una pista, a cambio de un intento.</string>
+    <string name="lesson_done">Eso es todo. Una palabra nueva cada día, en cada idioma.</string>
+    <string name="end_start_playing">Empezar a jugar</string>
 </resources>

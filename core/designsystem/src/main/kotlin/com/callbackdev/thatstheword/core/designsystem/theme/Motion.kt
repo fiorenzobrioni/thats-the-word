@@ -72,6 +72,9 @@ object ThatsTheWordMotion {
  */
 val LocalReducedMotion = staticCompositionLocalOf { false }
 
+/** What the phone itself says, whatever the player chose in the app. */
+val LocalSystemReducedMotion = staticCompositionLocalOf { false }
+
 private fun reducedMotionOf(context: Context): Boolean =
     Settings.Global.getFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
 
@@ -100,3 +103,7 @@ internal fun rememberReducedMotion(context: Context): Boolean {
 @Composable
 @ReadOnlyComposable
 fun reducedMotion(): Boolean = LocalReducedMotion.current
+
+@Composable
+@ReadOnlyComposable
+fun systemReducedMotion(): Boolean = LocalSystemReducedMotion.current

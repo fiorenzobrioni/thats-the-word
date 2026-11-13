@@ -65,3 +65,17 @@ All notable changes to That's The Word are documented here. The format follows
   and shown with what it will replace, before anything changes.
 - Share your result as a picture, the grid's shapes and colours without a letter, or as text; the
   sheet shows the picture as it will be sent.
+- A first run: the name and three promises, the language you will play in (your own, or one to
+  practise), the level to start from in another language, then a first game that teaches the
+  rules as they happen, one sentence at a time, never a page of instructions. Skip it if you
+  know the game.
+- Settings, from the start page: how to play in three lines, with the first game to play again;
+  the game language, free play's level and Hard; the app's language, through your phone's own
+  picker; sounds, vibration and motion (as the phone, less or full); the theme, the dress, the
+  typeface and your wallpaper's colours; your data; what the game sends (nothing), the licences
+  and every source of the words, with their credits.
+- Sounds, made by the game's own code: a soft tick for each key, a note for each tile as a row is
+  revealed (your result plays as a short phrase), a word refused, a word found, a milestone.
+  Silent whenever your phone is.
+- A daily reminder, off until you turn it on: one quiet notification at the hour you choose, only
+  while today's word is still to find, gone at midnight. A touch opens the word.

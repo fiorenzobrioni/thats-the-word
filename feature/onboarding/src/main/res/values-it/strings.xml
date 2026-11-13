@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Il primo avvio. -->
+    <string name="onboarding_tagline">Una parola al giorno. Tre lingue.</string>
+    <string name="onboarding_word">parola</string>
+    <string name="onboarding_progress">Passo %1$d di %2$d</string>
+
+    <string name="onboarding_promise_daily">Una parola al giorno</string>
+    <string name="onboarding_promise_daily_line">La stessa per tutti, in italiano, inglese e spagnolo.</string>
+    <string name="onboarding_promise_learn">Una lingua da esercitare</string>
+    <string name="onboarding_promise_learn_line">Gioca in una che stai imparando: aiuti e significati arrivano nella tua.</string>
+    <string name="onboarding_promise_private">Nient’altro</string>
+    <string name="onboarding_promise_private_line">Nessun account, nessuna pubblicità. That’s The Word non invia nulla.</string>
+
+    <string name="onboarding_language_title">In che lingua giocherai?</string>
+    <string name="onboarding_language_body">Puoi cambiarla quando vuoi, e giocare in tutte e tre.</string>
+    <string name="onboarding_language_it">Italiano</string>
+    <string name="onboarding_language_en">Inglese</string>
+    <string name="onboarding_language_es">Spagnolo</string>
+    <string name="onboarding_language_it_in_sentence">italiano</string>
+    <string name="onboarding_language_en_in_sentence">inglese</string>
+    <string name="onboarding_language_es_in_sentence">spagnolo</string>
+    <string name="onboarding_language_own">La tua lingua: il gioco classico.</string>
+    <string name="onboarding_language_foreign">Per esercitarti, con aiuti e significati in %1$s.</string>
+
+    <string name="onboarding_level_title">Da dove cominciamo?</string>
+    <string name="onboarding_level_body">In %1$s le parole sono ordinate da quanto sono comuni. Base è il punto da cui partire.</string>
+    <string name="onboarding_level_base">Base</string>
+    <string name="onboarding_level_base_line">Le parole di tutti i giorni.</string>
+    <string name="onboarding_level_intermediate">Intermedio</string>
+    <string name="onboarding_level_intermediate_line">Parole comuni, un passo più in là.</string>
+    <string name="onboarding_level_advanced">Avanzato</string>
+    <string name="onboarding_level_advanced_line">Parole più rare, per un orecchio allenato.</string>
+    <string name="onboarding_level_complete">Completo</string>
+    <string name="onboarding_level_complete_line">Tutte le parole che il gioco conosce.</string>
+
+    <string name="onboarding_begin">Cominciamo</string>
+    <string name="onboarding_next">Continua</string>
+    <string name="onboarding_play_first">Gioca la prima partita</string>
+    <string name="onboarding_skip">So già come si gioca</string>
+</resources>

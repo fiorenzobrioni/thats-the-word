@@ -10,6 +10,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.callbackdev.thatstheword.core.designsystem.sound.rememberGameSounds
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.feature.game.share.ShareSheet
@@ -17,16 +18,27 @@ import com.callbackdev.thatstheword.feature.game.share.ShareSheet
 /**
  * The game of [gameId], on screen: its view model, and the share sheet for its result, the picture
  * or the text (no permission: both go through the system's chooser, PLANNING.md §7.6, §10).
- * [onOpenGame] takes the id of the game the end card offers next, which stands in this one's place.
+ * [onOpenGame] takes the id of the game the end card offers next, which stands in this one's place;
+ * [onGuidedDone] is the guided first game's end: the game itself, from its start page.
+ *
+ * The sounds are decoded while the page is started and released when it stops (PLANNING.md §9).
  */
 @Composable
-fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modifier: Modifier = Modifier) {
+fun GameRoute(
+    gameId: Long,
+    onBack: () -> Unit,
+    onOpenGame: (Long) -> Unit,
+    modifier: Modifier = Modifier,
+    onGuidedDone: () -> Unit = onBack,
+) {
     val viewModel = hiltViewModel<GameViewModel, GameViewModel.Factory>(
         key = "game-$gameId",
         creationCallback = { it.create(gameId) },
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
     val haptics by viewModel.haptics.collectAsStateWithLifecycle()
+    val sound by viewModel.sound.collectAsStateWithLifecycle()
+    val play = rememberGameSounds(enabled = sound)
     val current = state ?: return
     val labels = ShareText.Labels(
         appName = stringResource(R.string.share_app_name),
@@ -45,10 +57,11 @@ fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modi
         onDelete = viewModel::delete,
         onEnter = viewModel::submit,
         onHardwareChar = viewModel::typeChar,
-        onNext = { viewModel.next(onOpenGame) },
+        onNext = { viewModel.next(onGuidedDone, onOpenGame) },
         onTakeHint = viewModel::takeHint,
         onToggleNotebook = viewModel::toggleNotebook,
         onShare = { sharing = true },
+        onSound = play,
         modifier = modifier,
     )
     if (sharing) {

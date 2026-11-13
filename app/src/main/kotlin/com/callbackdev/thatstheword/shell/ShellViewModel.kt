@@ -13,8 +13,9 @@ import javax.inject.Provider
 
 /**
  * What the shell opens by itself, outside any page: today's daily of a language, asked for by a
- * launcher shortcut (PLANNING.md §8). The language asked for becomes the game language, so Back
- * lands on a start page that speaks of it.
+ * launcher shortcut or the daily reminder (PLANNING.md §8), the language asked for becoming the
+ * game language, so Back lands on a start page that speaks of it; and the guided first game,
+ * played again from Settings (PLANNING.md §11 Phase 7).
  */
 @HiltViewModel
 class ShellViewModel @Inject constructor(
@@ -33,4 +34,7 @@ class ShellViewModel @Inject constructor(
             settings.current().hard,
         )
     }
+
+    /** The id of the guided first game in the game language, taken up or started afresh. */
+    suspend fun openGuided(): Long = games.guidedGame(settings.current().gameLanguage, interfaceLanguage.current())
 }

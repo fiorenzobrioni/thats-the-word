@@ -114,6 +114,7 @@ dependencies {
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:progress"))
     implementation(project(":feature:settings"))
+    implementation(project(":widget"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

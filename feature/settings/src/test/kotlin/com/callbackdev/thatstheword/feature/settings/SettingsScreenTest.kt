@@ -62,7 +62,12 @@ class SettingsScreenTest {
     private val chosen = mutableListOf<Any?>()
     private var guided = 0
 
-    private fun draw(state: SettingsUiState, dark: Boolean = false, block: ReminderBlock = ReminderBlock.NONE) {
+    private fun draw(
+        state: SettingsUiState,
+        dark: Boolean = false,
+        block: ReminderBlock = ReminderBlock.NONE,
+        homeCard: HomeCard = HomeCard.ADD,
+    ) {
         compose.setContent {
             ThatsTheWordTheme(darkTheme = dark) {
                 SettingsScreen(
@@ -70,6 +75,7 @@ class SettingsScreenTest {
                     onBack = {},
                     reminderBlock = block,
                     version = "0.7.0",
+                    homeCard = homeCard,
                     actions = SettingsActions(
                         gameLanguage = { chosen += it },
                         level = { chosen += it },
@@ -79,6 +85,7 @@ class SettingsScreenTest {
                         palette = { chosen += it },
                         font = { chosen += it },
                         playGuided = { guided++ },
+                        addCard = { chosen += "card" },
                     ),
                 )
             }
@@ -141,6 +148,31 @@ class SettingsScreenTest {
         compose.onNodeWithText("Open notification settings").performScrollTo().assertIsDisplayed()
         compose.assertAccessible()
         compose.writeScreenshot("settings-reminder-blocked")
+    }
+
+    @Test
+    fun `the home-screen card is added in a touch`() {
+        draw(SettingsUiState(settings, Language.ENGLISH))
+        compose.onNodeWithTag(SettingsTags.HOME_CARD).performScrollTo().performClick()
+        assertThat(chosen).contains("card")
+        compose.onNodeWithText("Add the card").assertIsDisplayed()
+        compose.assertAccessible()
+        compose.writeScreenshot("settings-card-add")
+    }
+
+    @Test
+    fun `the home-screen card, once on the home screen, is said`() {
+        draw(SettingsUiState(settings, Language.ENGLISH), homeCard = HomeCard.PLACED)
+        compose.onNodeWithText("The card is on your home screen").performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    @Config(qualifiers = "it-rIT-w411dp-h891dp-xxhdpi")
+    fun `the home-screen card, where the launcher cannot be asked, is explained`() {
+        draw(SettingsUiState(settings, Language.ITALIAN), homeCard = HomeCard.BY_HAND)
+        compose.onNodeWithText("La parola di oggi, nella schermata Home").performScrollTo().assertIsDisplayed()
+        compose.assertAccessible()
+        compose.writeScreenshot("settings-card-by-hand-it")
     }
 
     @Test

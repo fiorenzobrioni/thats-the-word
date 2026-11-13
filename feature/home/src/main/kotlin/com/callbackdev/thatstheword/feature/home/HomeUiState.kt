@@ -2,8 +2,8 @@ package com.callbackdev.thatstheword.feature.home
 
 import androidx.compose.runtime.Immutable
 import com.callbackdev.thatstheword.core.domain.daily.ArchiveMonth
-import com.callbackdev.thatstheword.core.domain.daily.Dailies
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
+import com.callbackdev.thatstheword.core.domain.daily.DayStanding
 import com.callbackdev.thatstheword.core.domain.daily.DayStatus
 import com.callbackdev.thatstheword.core.domain.progress.GameRecord
 import com.callbackdev.thatstheword.core.domain.progress.Streaks
@@ -84,15 +84,10 @@ data class HomeUiState(
             )
         }
 
-        private fun languageToday(records: List<GameRecord>, language: Language, today: LocalDate): LanguageToday {
-            // The day's counted game is unique: its first game that is not practice.
-            val counted = records.firstOrNull { it.language == language && !it.practice && it.daily?.date == today }
-            return LanguageToday(
-                language = language,
-                status = Dailies.status(records, language, today),
-                attemptsUsed = counted?.attemptsUsed ?: 0,
-                attempts = counted?.attempts ?: 6,
-            )
-        }
+        // The card on the home screen reads the same standing (TodayWords): the two never disagree.
+        private fun languageToday(records: List<GameRecord>, language: Language, today: LocalDate): LanguageToday =
+            DayStanding.of(records, language, today).let {
+                LanguageToday(it.language, it.status, it.attemptsUsed, it.attempts)
+            }
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A tile of a word found, as the card draws it on a dark ground: ink blue, its light rim. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/widget_preview_found" />
+    <stroke android:width="1.5dp" android:color="@color/widget_preview_rim" />
+    <corners android:radius="5dp" />
+</shape>

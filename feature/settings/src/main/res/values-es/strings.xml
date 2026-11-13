@@ -181,4 +181,13 @@
     <string name="licences_meanings_note">Los significados y las traducciones son texto de Wikcionario, reducido a una línea, acreditado a sus autores y compartido con licencia CC BY-SA 4.0.</string>
     <string name="licences_section_sounds">Sonidos</string>
     <string name="licences_sounds">Hechos por el propio código del juego, con unas líneas de aritmética. Ninguna grabación, nada prestado.</string>
+
+    <!-- The home-screen card (PLANNING.md §8, the pin request). -->
+    <string name="settings_card_section">Pantalla de inicio</string>
+    <string name="settings_card_add">Añadir la tarjeta</string>
+    <string name="settings_card_add_line">La palabra de hoy en cada idioma, y tu racha, en tu pantalla de inicio.</string>
+    <string name="settings_card_placed">La tarjeta está en tu pantalla de inicio</string>
+    <string name="settings_card_placed_line">Mantenla pulsada para elegir sobre qué está.</string>
+    <string name="settings_card_by_hand">La palabra de hoy, en la pantalla de inicio</string>
+    <string name="settings_card_by_hand_line">Añádela desde los widgets de la pantalla de inicio: mantén pulsado un espacio vacío y luego Widgets.</string>
 </resources>

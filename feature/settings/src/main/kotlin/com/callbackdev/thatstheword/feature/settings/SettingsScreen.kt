@@ -102,6 +102,7 @@ class SettingsActions(
     val font: (AppFont) -> Unit = {},
     val wallpaperColors: (Boolean) -> Unit = {},
     val playGuided: () -> Unit = {},
+    val addCard: () -> Unit = {},
     val data: () -> Unit = {},
     val licences: () -> Unit = {},
 )
@@ -116,7 +117,8 @@ class SettingsActions(
  *
  * [reminderBlock] is what stands between the reminder and the player, read by the route from the
  * system; a switch that is on while Android drops what it sends says so, and opens the page that
- * fixes it.
+ * fixes it. [homeCard] is where the home-screen card stands (PLANNING.md §8, the pin request);
+ * null draws nothing of it.
  */
 @Composable
 fun SettingsScreen(
@@ -126,6 +128,7 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     reminderBlock: ReminderBlock = ReminderBlock.NONE,
     version: String = "",
+    homeCard: HomeCard? = null,
 ) {
     val arrived = rememberSaveable { mutableStateOf(false) }
     val settings = state.settings
@@ -162,6 +165,7 @@ fun SettingsScreen(
                     )
                 }
                 ReminderSection(state, reminderBlock, actions, Modifier.arrive(3, arrived))
+                homeCard?.let { HomeCardSection(it, actions, Modifier.arrive(3, arrived)) }
                 FeelSection(state, actions, Modifier.arrive(4, arrived))
                 AppearanceSection(state, actions, Modifier.arrive(5, arrived))
                 SettingsSection(stringResource(R.string.settings_data_section), Modifier.arrive(6, arrived)) {
@@ -352,6 +356,39 @@ private fun ReminderSection(
             },
             onDismiss = { choosing = false },
         )
+    }
+}
+
+/**
+ * Where the home-screen card stands (PLANNING.md §8): one to add, in a touch, where the launcher
+ * takes the request; on a home screen already; or to be added from the launcher's own widgets,
+ * where it does not.
+ */
+enum class HomeCard { ADD, PLACED, BY_HAND }
+
+@Composable
+private fun HomeCardSection(card: HomeCard, actions: SettingsActions, modifier: Modifier = Modifier) {
+    SettingsSection(stringResource(R.string.settings_card_section), modifier) {
+        when (card) {
+            HomeCard.ADD -> LinkRow(
+                title = stringResource(R.string.settings_card_add),
+                line = stringResource(R.string.settings_card_add_line),
+                onClick = actions.addCard,
+                tag = SettingsTags.HOME_CARD,
+            )
+
+            HomeCard.PLACED -> TextRow(
+                title = stringResource(R.string.settings_card_placed),
+                line = stringResource(R.string.settings_card_placed_line),
+                tag = SettingsTags.HOME_CARD,
+            )
+
+            HomeCard.BY_HAND -> TextRow(
+                title = stringResource(R.string.settings_card_by_hand),
+                line = stringResource(R.string.settings_card_by_hand_line),
+                tag = SettingsTags.HOME_CARD,
+            )
+        }
     }
 }
 
@@ -719,6 +756,7 @@ object SettingsTags {
     const val REMINDER = "settings_reminder"
     const val REMINDER_TIME = "settings_reminder_time"
     const val REMINDER_BLOCKED = "settings_reminder_blocked"
+    const val HOME_CARD = "settings_home_card"
     const val SOUND = "settings_sound"
     const val HAPTICS = "settings_haptics"
     const val WALLPAPER = "settings_wallpaper"

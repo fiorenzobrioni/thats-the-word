@@ -181,4 +181,13 @@
     <string name="licences_meanings_note">Significati e traduzioni sono il testo di Wikizionario, ridotto a una riga, accreditato ai suoi autori e condiviso con licenza CC BY-SA 4.0.</string>
     <string name="licences_section_sounds">Suoni</string>
     <string name="licences_sounds">Fatti dal codice stesso del gioco, con qualche riga di aritmetica. Nessuna registrazione, niente di preso in prestito.</string>
+
+    <!-- The home-screen card (PLANNING.md §8, the pin request). -->
+    <string name="settings_card_section">Schermata Home</string>
+    <string name="settings_card_add">Aggiungi la scheda</string>
+    <string name="settings_card_add_line">La parola di oggi in ogni lingua, e la tua serie, nella schermata Home.</string>
+    <string name="settings_card_placed">La scheda è nella tua schermata Home</string>
+    <string name="settings_card_placed_line">Tienila premuta per scegliere su che cosa sta.</string>
+    <string name="settings_card_by_hand">La parola di oggi, nella schermata Home</string>
+    <string name="settings_card_by_hand_line">Aggiungila dai widget della schermata Home: tieni premuto uno spazio vuoto, poi Widget.</string>
 </resources>

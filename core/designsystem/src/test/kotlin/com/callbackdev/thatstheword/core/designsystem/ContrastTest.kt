@@ -4,10 +4,13 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.luminance
+import com.callbackdev.thatstheword.core.designsystem.theme.CARD_TILE_RIM_ALPHA
 import com.callbackdev.thatstheword.core.designsystem.theme.FeedbackColors
 import com.callbackdev.thatstheword.core.designsystem.theme.PictureColors
 import com.callbackdev.thatstheword.core.designsystem.theme.schemeFor
+import com.callbackdev.thatstheword.core.designsystem.theme.widgetCardContainer
 import com.callbackdev.thatstheword.core.model.AppPalette
+import com.callbackdev.thatstheword.core.model.WidgetCardColor
 import com.google.common.truth.Truth.assertWithMessage
 import org.junit.Test
 
@@ -72,6 +75,23 @@ class ContrastTest {
         // One look on every phone (PLANNING.md §7.6): its words and its numbers on its ground.
         expect(null, "the picture's ink", PictureColors.Ink, PictureColors.Ground)
         expect(null, "the picture's quiet ink", PictureColors.QuietInk, PictureColors.Ground)
+    }
+
+    @Test
+    fun `the home-screen card's inks read on each of its colours`() {
+        // The card's colour grounds carry white, and its quiet ink at 75% (docs/adr/0004).
+        for (color in WidgetCardColor.entries) {
+            val ground = widgetCardContainer(color)
+            expect(null, "white on the $color card", Color.White, ground)
+            expect(null, "the quiet ink on the $color card", Color.White.copy(alpha = 0.75f), ground)
+            // A word found's tiles are the right place's ink blue, as dark as the cards: their
+            // rim (the card's tile rim, `TilesPainter`) stands at 3:1 from the ground, the
+            // contrast a shape needs.
+            val rim = Color.White.copy(alpha = CARD_TILE_RIM_ALPHA).compositeOver(ground)
+            assertWithMessage("the found tiles' rim on the $color card")
+                .that(contrast(rim, ground))
+                .isAtLeast(3.0)
+        }
     }
 
     private fun expect(dress: Dress?, what: String, ink: Color, ground: Color) {

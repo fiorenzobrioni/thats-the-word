@@ -23,8 +23,8 @@ internet at all.
 > **Status: in the making.** The foundations are laid (Phase 0), the words are made (Phase 1),
 > the game's rules are written and tested (Phase 2); the game, the start page, the practice of
 > a language (hints, meanings, the notebook), your progress, your data and sharing, the first run
-> with its guided first game, settings, the sounds and the daily reminder are built (Phases 3 to 7)
-> and wait for a look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
+> with its guided first game, settings, the sounds, the daily reminder and the home-screen card are
+> built (Phases 3 to 7b) and wait for a look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
 
 ## What That's The Word is
 
@@ -67,6 +67,9 @@ What 1.0 will do ([VISION.md](./VISION.md) has the full scope):
 - 💾 **Your data**: a backup file of your games, notebook and milestones, to keep or to move.
 - 🎓 **A first game that teaches**: the rules said one at a time, the moment they happen, never a
   page of instructions.
+- 🏠 **A card for the home screen**: each language's word of today, drawn as the game draws it,
+  and your streak, at any size; a touch opens the word. It changes after a game and at midnight,
+  never on a timer.
 - 🔔 **A daily reminder, if you want one**: one quiet notification at your hour, only while the
   day's word is still to find.
 - ✨ **Made to feel good**: every key moment has its movement, discreet haptics and sounds, each
@@ -128,7 +131,8 @@ closed periods in [docs/planning](./docs/planning/README.md)):
   phone.*
 - **Phase 7**, the first run (a guided first game), settings, sound and the daily reminder.
   *Built; to be looked at on a phone.*
-- **Phase 7b**, the home-screen card: today's word in each language and the streak.
+- **Phase 7b**, the home-screen card: today's word in each language and the streak. *Built; to
+  be looked at on a phone.*
 - **Phase 8**, the accessibility pass and polish.
 - **Phase 9**, the 1.0 release on GitHub.
 
@@ -170,7 +174,7 @@ then publishes the signed APK, its checksum and the R8 mapping, with the matchin
 - **Kotlin** 2.4, **Jetpack Compose** with Material 3, Gradle 9.9 and AGP 9.5, minSdk **34**
   (Android 14), target and compile SDK **37**
 - **Room** (games, the notebook, milestones), **DataStore** (settings), **Hilt**, **Coroutines**
-  and **Flow**, **Navigation 3**
+  and **Flow**, **Navigation 3**, **Glance** (the home-screen card)
 - The game engine in pure Kotlin, apart from the interface, with a test for every rule
 - The words built by a reproducible Python script from free sources, shipped as compact files
   read in place
@@ -196,6 +200,7 @@ thats-the-word/
 │   ├── designsystem/       # theme, tiles, keyboard, motion, sounds
 │   └── testing/            # shared UI test helpers (accessibility, page walks)
 ├── feature/                # game, home, notebook, progress, onboarding, settings
+├── widget/                 # the home-screen card (Glance)
 ├── build-logic/            # convention plugins, the forbidden-permission check
 ├── tools/                  # the words' script, the sounds' script, the launcher icon, the plan's index
 └── keystore/               # the shared debug key (deliberately committed)

@@ -83,6 +83,13 @@
 
     <!-- The shared result's words (PLANNING.md §7.6). The name stays in English in every language. -->
     <string name="share_app_name" translatable="false">That’s The Word</string>
+    <!-- The share sheet (PLANNING.md §7.6): the picture as it will be sent, or the text. -->
+    <string name="share_sheet_line">Your grid, without the word.</string>
+    <string name="share_picture">Share the picture</string>
+    <string name="share_as_text">Share as text</string>
+    <string name="share_picture_description">The picture to share: your grid, without the word.</string>
+    <!-- The picture's line for a free game: "Italian · Free play". -->
+    <string name="share_free_eyebrow">%1$s · %2$s</string>
     <string name="share_hard">Hard</string>
     <plurals name="share_hints">
         <item quantity="one">%d hint</item>

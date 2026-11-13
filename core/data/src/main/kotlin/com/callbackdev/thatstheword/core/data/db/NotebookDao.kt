@@ -1,6 +1,7 @@
 package com.callbackdev.thatstheword.core.data.db
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
@@ -35,4 +36,24 @@ interface NotebookDao {
 
     @Upsert
     suspend fun unlock(milestone: MilestoneEntity)
+
+    // The backup file (PLANNING.md §5).
+
+    @Query("SELECT * FROM notebook ORDER BY language, word")
+    suspend fun allEntries(): List<NotebookEntity>
+
+    @Insert
+    suspend fun insertEntries(entries: List<NotebookEntity>)
+
+    @Insert
+    suspend fun insertMilestones(milestones: List<MilestoneEntity>)
+
+    @Query("DELETE FROM notebook")
+    suspend fun deleteAllEntries()
+
+    @Query("DELETE FROM milestones")
+    suspend fun deleteAllMilestones()
+
+    @Query("SELECT COUNT(*) FROM milestones")
+    fun observeMilestoneCount(): Flow<Int>
 }

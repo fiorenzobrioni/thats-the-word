@@ -18,7 +18,7 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (13 Nov 2026): Phases 0, 1 and 2 are done, Phases 3, 4 and 5 are built**: the words (`tools/words/`,
+**State (13 Nov 2026): Phases 0, 1 and 2 are done, Phases 3, 4, 5 and 6 are built**: the words (`tools/words/`,
 their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) have the
 owner's go; the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
 case tested; the game screen (`:feature:game`) plays a daily, a replay or a free word,
@@ -27,10 +27,13 @@ start page (`:feature:home`) shows today's word in each language, the streak, th
 dailies with the archive, free play at a level and Hard, and sees midnight come; a foreign game has
 its hints (drawn in the rows they spend), the end card explains every word in the interface's
 language and keeps the solution in the notebook (`:feature:notebook`), and the milestones are
-unlocked and said once. Phases 3 to 5 wait for a look on a phone (the reveal with the profiler,
-TalkBack); Phase 6 (progress and your data) is next. The modules in the build are `:app`,
+unlocked and said once; the progress page (`:feature:progress`) counts each language's modes apart,
+with the distribution, the streaks and how near each milestone is; Your data (`:feature:settings`)
+saves a copy to a file and brings one back after the player's yes; a result is shared as a picture
+or as text. Phases 3 to 6 wait for a look on a phone (the reveal with the profiler, TalkBack,
+`bmgr`); Phase 7 (first run, settings and sound) is next. The modules in the build are `:app`,
 `:core:model`, `:core:domain`, `:core:words`, `:core:data`, `:core:designsystem`, `:core:testing`,
-`:feature:game`, `:feature:home` and `:feature:notebook`. The owner answered the review's
+`:feature:game`, `:feature:home`, `:feature:notebook`, `:feature:progress` and `:feature:settings`. The owner answered the review's
 questions 1 to 9 and 11 to 13 on 12 Nov 2026; **four smaller questions are still open** (PLANNING §15, Open: 14 to 17): read them
 before building anything they touch.
 
@@ -106,13 +109,13 @@ that does not match it.
 | Module | Kind | Holds |
 |---|---|---|
 | `:core:model` | pure Kotlin/JVM | data classes shared by everything: the appearance's enums (Phase 0); `Language`, `Letter`, `Word`, `Mark`, `Guess`, `GameMode`, `GameSetup`, `GameState`, `Level`, `HintKind`, `NotebookEntry`, `Milestone`, `UserSettings` (Phase 2) |
-| `:core:domain` | pure Kotlin/JVM (Phase 2) | the game engine: alphabets and folding, the feedback, `Game` (guesses, refusals, Hard, hints, the end), the daily's number and word, the calendar's month (`ArchiveMonth`), free play's draw, streaks, statistics, milestones, the share text, the words' decoder and what a word means (`Lexicon.meaning`), the notebook's rules and search (`Notebook`), `BackupCodec` |
+| `:core:domain` | pure Kotlin/JVM (Phase 2) | the game engine: alphabets and folding, the feedback, `Game` (guesses, refusals, Hard, hints, the end), the daily's number and word, the calendar's month (`ArchiveMonth`), free play's draw, streaks, statistics, milestones, the share text, the words' decoder and what a word means (`Lexicon.meaning`), the notebook's rules and search (`Notebook`), a language's progress (`LanguageProgress`, `ProgressMode`, `Milestones.progress`), the backup file (`BackupCodec`, `Backup`) |
 | `:core:words` | Android library (Phase 2) | the word files in assets, written by `tools/words/`, mapped (`AssetWordFiles`, stored uncompressed: `noCompress` in `:app`) and handed to the decoder |
-| `:core:data` | Android library (Phase 3) | Room (`ThatsTheWordDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories (a daily, its practice replays, free play's game; `NotebookRepository`: the words met and the milestones, written in the move's transaction), `DayTicker` (the change of day, while a page collects it) |
-| `:core:designsystem` | Android library | M3 theme (Chiaro's dresses through the sisters), typography with the game's roles (`wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), shapes, motion (the family's springs and the game's `playful` one), page gutter (`PageWidth.kt`), the feedback (`FeedbackColors`, `markStyle`), `LetterTile`, `GameTile`, the keyboard's keys (`GameKey`), the game's few icons (`GameIcons`: the keys, the hints, the notebook's mark, the search); later the sounds |
+| `:core:data` | Android library (Phase 3) | Room (`ThatsTheWordDatabase`: games, guesses, hints, notebook, milestones; schema exported to `core/data/schemas/`), DataStore (`settings`), the repositories (a daily, its practice replays, free play's game; `NotebookRepository`: the words met and the milestones, written in the move's transaction), `DayTicker` (the change of day, while a page collects it), `BackupRepository` (a copy out, a copy checked against the schedule and brought back) |
+| `:core:designsystem` | Android library | M3 theme (Chiaro's dresses through the sisters), typography with the game's roles (`wordmark`, `eyebrow`, `tileLetter`, `heroNumber`), shapes, motion (the family's springs and the game's `playful` one), page gutter (`PageWidth.kt`), the feedback (`FeedbackColors`, `markStyle`), `LetterTile`, `GameTile`, the keyboard's keys (`GameKey`), a page's parts (`PageGroup`, `Eyebrow`, `PageTopBar`, `inkButtonColors`, `Modifier.arrive`), the shared picture's colours (`PictureColors`), the game's few icons (`GameIcons`: the keys, the hints, the notebook's mark, the search, a check, a copy saved and opened); later the sounds |
 | `:core:testing` | Android library, test-only | `assertAccessible()` (labels, 48dp touch targets) and `walkPage()`, shared by the UI tests as `testImplementation` |
-| `:feature:*` | Android library (from Phase 3) | `game` (Phase 3: the grid, the keyboard, the refusals, the end card with what comes next; Phase 5: the hints in the keyboard's place, the meanings, the notebook's marks, the milestone said); `home` (Phase 4: the start page, the calendar, free play, Hard; the notebook's card); `notebook` (Phase 5: the words met, searched, by language); later `progress`, `onboarding`, `settings` |
-| `:app` | application | `Application`, `MainActivity`, the shell (Navigation 3: the start page, the game, the notebook), the launcher's shortcuts (`TodayShortcuts`), DI entry points; wires everything |
+| `:feature:*` | Android library (from Phase 3) | `game` (Phase 3: the grid, the keyboard, the refusals, the end card with what comes next; Phase 5: the hints in the keyboard's place, the meanings, the notebook's marks, the milestone said); `home` (Phase 4: the start page, the calendar, free play, Hard; the notebook's card); `notebook` (Phase 5: the words met, searched, by language); `progress` (Phase 6: statistics, distribution, streaks, milestones); `settings` (Phase 6: Your data; Phase 7 the rest); later `onboarding`. `game` also shares the result as a picture (`share/`: `ResultPicture`, the sheet, its `FileProvider`) |
+| `:app` | application | `Application`, `MainActivity`, the shell (Navigation 3: the start page, the game, the notebook, the progress, Your data), the launcher's shortcuts (`TodayShortcuts`), DI entry points; wires everything |
 
 Rules: `:core:model` and `:core:domain` stay pure Kotlin/JVM; if a class there needs a `Context`
 or a `Resources`, it is in the wrong module. Feature modules depend on `core:*`, never on each

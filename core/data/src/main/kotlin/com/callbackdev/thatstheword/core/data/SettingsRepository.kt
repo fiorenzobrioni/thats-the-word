@@ -105,6 +105,31 @@ class SettingsRepository @Inject constructor(
         store.edit { it[TIPS_SEEN] = true }
     }
 
+    /**
+     * The player's choices from a backup (PLANNING.md §5), in one edit: every choice the file holds
+     * replaces this phone's, a level the file has none for goes back to Base, and the first run reads
+     * as done. Whether the first-day tips were seen is the phone's, not the player's, and stays.
+     */
+    suspend fun restore(settings: UserSettings) {
+        store.edit { p ->
+            p[GAME_LANGUAGE] = settings.gameLanguage.tag
+            Language.entries.forEach { language ->
+                val level = settings.levels[language]
+                if (level == null) p.remove(levelKey(language)) else p[levelKey(language)] = level.code
+            }
+            p[HARD] = settings.hard
+            p[SOUND] = settings.sound
+            p[HAPTICS] = settings.haptics
+            val reduced = settings.reducedMotion
+            if (reduced == null) p.remove(REDUCED_MOTION) else p[REDUCED_MOTION] = reduced
+            p[THEME] = settings.themeMode.name
+            p[PALETTE] = settings.palette.name
+            p[FONT] = settings.font.name
+            p[WALLPAPER_COLORS] = settings.wallpaperColors
+            p[FIRST_RUN_DONE] = true
+        }
+    }
+
     private companion object {
         // The keys are the file's format, read back after an update and from a backup: never renamed.
         val GAME_LANGUAGE = stringPreferencesKey("game_language")

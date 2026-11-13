@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.luminance
 import com.callbackdev.thatstheword.core.designsystem.theme.FeedbackColors
+import com.callbackdev.thatstheword.core.designsystem.theme.PictureColors
 import com.callbackdev.thatstheword.core.designsystem.theme.schemeFor
 import com.callbackdev.thatstheword.core.model.AppPalette
 import com.google.common.truth.Truth.assertWithMessage
@@ -64,6 +65,13 @@ class ContrastTest {
             // A key not yet tried, and Enter and Delete.
             expect(dress, "an untried key", s.onSurface, s.surfaceContainerHighest)
         }
+    }
+
+    @Test
+    fun `the shared picture reads`() {
+        // One look on every phone (PLANNING.md §7.6): its words and its numbers on its ground.
+        expect(null, "the picture's ink", PictureColors.Ink, PictureColors.Ground)
+        expect(null, "the picture's quiet ink", PictureColors.QuietInk, PictureColors.Ground)
     }
 
     private fun expect(dress: Dress?, what: String, ink: Color, ground: Color) {

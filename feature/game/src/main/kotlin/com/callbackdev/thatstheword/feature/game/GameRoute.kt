@@ -1,21 +1,23 @@
 package com.callbackdev.thatstheword.feature.game
 
-import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.model.GameMode
+import com.callbackdev.thatstheword.feature.game.share.ShareSheet
 
 /**
- * The game of [gameId], on screen: its view model, and the share sheet for its result (no
- * permission: the text goes through the system's chooser, PLANNING.md §10). [onOpenGame] takes
- * the id of the game the end card offers next, which stands in this one's place.
+ * The game of [gameId], on screen: its view model, and the share sheet for its result, the picture
+ * or the text (no permission: both go through the system's chooser, PLANNING.md §7.6, §10).
+ * [onOpenGame] takes the id of the game the end card offers next, which stands in this one's place.
  */
 @Composable
 fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modifier: Modifier = Modifier) {
@@ -26,7 +28,6 @@ fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modi
     val state by viewModel.state.collectAsStateWithLifecycle()
     val haptics by viewModel.haptics.collectAsStateWithLifecycle()
     val current = state ?: return
-    val context = LocalContext.current
     val labels = ShareText.Labels(
         appName = stringResource(R.string.share_app_name),
         languageName = stringResource(languageName(current.language)),
@@ -34,7 +35,8 @@ fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modi
         hard = stringResource(R.string.share_hard),
         hints = hintsLabel(),
     )
-    val shareTitle = stringResource(R.string.end_share)
+    // Saved, so a sheet open when the phone turns is open after.
+    var sharing by rememberSaveable { mutableStateOf(false) }
     GameScreen(
         state = current,
         haptics = haptics,
@@ -46,13 +48,14 @@ fun GameRoute(gameId: Long, onBack: () -> Unit, onOpenGame: (Long) -> Unit, modi
         onNext = { viewModel.next(onOpenGame) },
         onTakeHint = viewModel::takeHint,
         onToggleNotebook = viewModel::toggleNotebook,
-        onShare = {
-            val text = viewModel.shareText(labels) ?: return@GameScreen
-            val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
-            context.startActivity(Intent.createChooser(send, shareTitle))
-        },
+        onShare = { sharing = true },
         modifier = modifier,
     )
+    if (sharing) {
+        viewModel.resultFacts()?.let { facts ->
+            ShareSheet(facts = facts, text = { viewModel.shareText(labels) }, onDismiss = { sharing = false })
+        }
+    }
 }
 
 /** "1 hint", "2 hints", in the interface's plural, for any count. */

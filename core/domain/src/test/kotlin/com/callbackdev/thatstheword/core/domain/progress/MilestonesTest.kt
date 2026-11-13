@@ -59,4 +59,35 @@ class MilestonesTest {
         // A notebook that shrinks below a hundred takes nothing away: nothing new, nothing lost.
         assertThat(Milestones.newlyReached(Milestones.Facts(emptyList(), 50), setOf(Milestone.HUNDRED_WORDS))).isEmpty()
     }
+
+    @Test
+    fun `how near each milestone is, never past it`() {
+        val games = (1L..3L).map { daily(DAY.minusDays(it)) } +
+            listOf(
+                daily(DAY, language = Language.ENGLISH, interfaceLanguage = Language.ENGLISH),
+                daily(DAY, language = Language.SPANISH, interfaceLanguage = Language.SPANISH, state = GameState.LOST),
+            )
+        val progress = Milestones.progress(Milestones.Facts(games, notebookSize = 42))
+        assertThat(progress.getValue(Milestone.SEVEN_DAILIES_IN_A_ROW)).isEqualTo(Milestones.Progress(3, 7))
+        assertThat(progress.getValue(Milestone.HUNDRED_WORDS).reached).isEqualTo(42)
+        // No date has two languages won: English's is today's alone, Spanish's was missed.
+        assertThat(progress.getValue(Milestone.ONE_DAY_THREE_LANGUAGES).reached).isEqualTo(1)
+        assertThat(progress.getValue(Milestone.FIRST_FOREIGN_WIN).done).isFalse()
+
+        val full = Milestones.progress(Milestones.Facts(emptyList(), notebookSize = 140))
+        assertThat(full.getValue(Milestone.HUNDRED_WORDS).reached).isEqualTo(100)
+        assertThat(full.getValue(Milestone.HUNDRED_WORDS).done).isTrue()
+    }
+
+    @Test
+    fun `the three languages' progress counts one date's wins`() {
+        val games = listOf(
+            daily(DAY),
+            daily(DAY, language = Language.ENGLISH),
+            daily(DAY.minusDays(1), language = Language.SPANISH),
+        )
+        val progress = Milestones.progress(Milestones.Facts(games, 0)).getValue(Milestone.ONE_DAY_THREE_LANGUAGES)
+        assertThat(progress.reached).isEqualTo(2)
+        assertThat(progress.target).isEqualTo(3)
+    }
 }

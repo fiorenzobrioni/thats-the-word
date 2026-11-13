@@ -41,6 +41,8 @@
         <item quantity="many">giorni di fila, ogni parola trovata nel suo giorno.</item>
         <item quantity="other">giorni di fila, ogni parola trovata nel suo giorno.</item>
     </plurals>
+    <!-- The way to the progress page (Phase 6): the statistics, the streaks, the milestones, your data. -->
+    <string name="home_progress_open">Vedi i tuoi progressi</string>
     <string name="home_streak_keep">Trova la parola di oggi per tenerla viva.</string>
     <string name="home_streak_none">Nessuna serie in corso. Trova una parola nel suo giorno, e comincia.</string>
     <plurals name="home_streak_description">

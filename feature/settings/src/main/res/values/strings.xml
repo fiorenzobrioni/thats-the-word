@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Your data (PLANNING.md §5, §11 Phase 6): a copy saved to a file, a copy brought back. -->
+    <string name="data_title">Your data</string>
+    <string name="data_back">Back</string>
+    <string name="data_intro">That’s The Word sends nothing: no account, no server. Your games stay on this phone, in Android’s own backup when it is on, and in any copy you save.</string>
+    <string name="data_phone">On this phone</string>
+    <!-- Under each number of what the phone holds. -->
+    <plurals name="data_games_line">
+        <item quantity="one">game played</item>
+        <item quantity="other">games played</item>
+    </plurals>
+    <plurals name="data_words_line">
+        <item quantity="one">word in the notebook</item>
+        <item quantity="other">words in the notebook</item>
+    </plurals>
+    <plurals name="data_milestones_line">
+        <item quantity="one">milestone</item>
+        <item quantity="other">milestones</item>
+    </plurals>
+    <!-- What a copy holds, in a sentence: "27 games played, 41 words in the notebook and 2 milestones". -->
+    <plurals name="data_games">
+        <item quantity="one">%d game played</item>
+        <item quantity="other">%d games played</item>
+    </plurals>
+    <plurals name="data_words">
+        <item quantity="one">%d word in the notebook</item>
+        <item quantity="other">%d words in the notebook</item>
+    </plurals>
+    <plurals name="data_milestones">
+        <item quantity="one">%d milestone</item>
+        <item quantity="other">%d milestones</item>
+    </plurals>
+    <string name="data_nothing">Nothing yet: no game finished, no word kept.</string>
+
+    <string name="data_save">Keep a copy</string>
+    <string name="data_save_line">Your games, your notebook, your milestones and your choices, in one file you keep where you like.</string>
+    <string name="data_save_button">Save a copy</string>
+    <string name="data_restore">Bring one back</string>
+    <string name="data_restore_line">Open a copy saved before. It takes the place of what this phone holds, once you say yes.</string>
+    <string name="data_restore_button">Open a copy</string>
+    <string name="data_saving">Saving the copy…</string>
+    <string name="data_reading">Reading the copy…</string>
+    <string name="data_restoring">Bringing it back…</string>
+
+    <!-- What the last copy came to, on a card until it is put away. -->
+    <string name="data_saved_as">Copy saved as %1$s.</string>
+    <string name="data_saved">Copy saved.</string>
+    <string name="data_holds">It holds %1$s.</string>
+    <string name="data_holds_choices">It holds your choices, and no game yet.</string>
+    <string name="data_restored">The copy is back: %1$s.</string>
+    <string name="data_restored_choices">The copy is back, with your choices.</string>
+    <string name="data_failed_write">The copy could not be written there. Try another place.</string>
+    <string name="data_failed_read">That file could not be opened.</string>
+    <string name="data_failed_not_a_backup">That file is not a copy of That’s The Word.</string>
+    <string name="data_failed_too_new">That copy comes from a newer That’s The Word. Update the app, then open it again.</string>
+    <string name="data_failed_damaged">That copy is damaged, and cannot be brought back. Nothing was changed.</string>
+    <string name="data_failed_restore">The copy could not be brought back. Nothing was changed.</string>
+    <string name="data_close">Close</string>
+
+    <!-- The question before a copy takes the phone's place. -->
+    <string name="data_confirm_title">Bring back this copy?</string>
+    <string name="data_confirm_holds">Saved on %1$s, it holds %2$s.</string>
+    <string name="data_confirm_holds_choices">Saved on %1$s, it holds your choices, and no game yet.</string>
+    <string name="data_confirm_replaces">It will take the place of what this phone holds: %1$s.</string>
+    <string name="data_confirm_nothing_lost">This phone holds nothing yet: nothing is lost.</string>
+    <string name="data_confirm_yes">Bring it back</string>
+    <string name="data_confirm_no">Not now</string>
+</resources>

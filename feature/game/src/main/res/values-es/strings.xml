@@ -67,6 +67,11 @@
     <string name="end_another_word">Otra palabra</string>
     <string name="end_practice">Práctica: el día conserva su primer resultado.</string>
 
+    <string name="share_sheet_line">Tu cuadrícula, sin la palabra.</string>
+    <string name="share_picture">Compartir la imagen</string>
+    <string name="share_as_text">Compartir como texto</string>
+    <string name="share_picture_description">La imagen para compartir: tu cuadrícula, sin la palabra.</string>
+    <string name="share_free_eyebrow">%1$s · %2$s</string>
     <string name="share_hard">Difícil</string>
     <plurals name="share_hints">
         <item quantity="one">%d pista</item>

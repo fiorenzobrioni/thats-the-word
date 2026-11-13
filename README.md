@@ -21,9 +21,9 @@ internet at all.
 </div>
 
 > **Status: in the making.** The foundations are laid (Phase 0), the words are made (Phase 1),
-> the game's rules are written and tested (Phase 2); the game, the start page and the practice of
-> a language (hints, meanings, the notebook) are built (Phases 3 to 5) and wait for a look on a
-> phone. There is nothing to install yet: see [Roadmap](#roadmap).
+> the game's rules are written and tested (Phase 2); the game, the start page, the practice of
+> a language (hints, meanings, the notebook), your progress, your data and sharing are built
+> (Phases 3 to 6) and wait for a look on a phone. There is nothing to install yet: see [Roadmap](#roadmap).
 
 ## What That's The Word is
 
@@ -119,7 +119,8 @@ closed periods in [docs/planning](./docs/planning/README.md)):
   at on a phone.*
 - **Phase 5**, practising a language: hints, meanings and the notebook. *Built; to be looked at
   on a phone.*
-- **Phase 6**, progress, milestones, sharing and your data.
+- **Phase 6**, progress, milestones, sharing and your data. *Built; to be looked at on a
+  phone.*
 - **Phase 7**, the first run (a guided first game), settings and sound.
 - **Phase 8**, the accessibility pass and polish.
 - **Phase 9**, the 1.0 release on GitHub.

@@ -119,6 +119,7 @@ class HomeScreenTest {
     private var free = 0
     private var hard: Boolean? = null
     private var notebook = 0
+    private var progress = 0
 
     private fun draw(state: HomeUiState = state(), dark: Boolean = false) {
         compose.setContent {
@@ -133,6 +134,7 @@ class HomeScreenTest {
                     onPlayFree = { free++ },
                     onHard = { hard = it },
                     onNotebook = { notebook++ },
+                    onProgress = { progress++ },
                 )
             }
         }
@@ -181,7 +183,9 @@ class HomeScreenTest {
     fun `the calendar of a month with solved, missed, unplayed and archive days reads right`() {
         draw()
         compose.onNodeWithText("November 2026").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithText("8 words found, 2 missed. 2 of them caught up later.").assertIsDisplayed()
+        compose.onNodeWithText(
+            "8 words found, 2 missed. 2 of them caught up later.",
+        ).performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription("Thursday 12 November, found").performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription("Saturday 14 November, missed").performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription(
@@ -212,7 +216,7 @@ class HomeScreenTest {
     fun `the calendar in Italian`() {
         draw()
         compose.onNodeWithText("Novembre 2026").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithText("8 parole trovate, 2 sfuggite. 2 recuperate dopo.").assertIsDisplayed()
+        compose.onNodeWithText("8 parole trovate, 2 sfuggite. 2 recuperate dopo.").performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription("giovedì 12 novembre, trovata").performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription(
             "domenica 15 novembre, trovata dopo, dall’archivio",
@@ -230,7 +234,9 @@ class HomeScreenTest {
     fun `the calendar in Spanish`() {
         draw()
         compose.onNodeWithText("Noviembre de 2026").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithText("8 palabras encontradas, 2 se escaparon. 2 recuperadas después.").assertIsDisplayed()
+        compose.onNodeWithText(
+            "8 palabras encontradas, 2 se escaparon. 2 recuperadas después.",
+        ).performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription(
             "jueves, 12 de noviembre, encontrada",
         ).performScrollTo().assertIsDisplayed()
@@ -346,6 +352,14 @@ class HomeScreenTest {
         assertThat(notebook).isEqualTo(1)
         compose.assertAccessible()
         compose.writeScreenshot("home-notebook")
+    }
+
+    @Test
+    fun `the streak's card opens the progress`() {
+        draw()
+        compose.onNodeWithTag(HomeTags.OPEN_PROGRESS).performScrollTo().assertIsDisplayed().performClick()
+        assertThat(progress).isEqualTo(1)
+        compose.writeScreenshot("home-streak")
     }
 
     @Test

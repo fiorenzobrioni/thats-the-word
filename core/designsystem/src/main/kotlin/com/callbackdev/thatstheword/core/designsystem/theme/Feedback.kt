@@ -62,3 +62,27 @@ fun markStyle(mark: Mark): MarkStyle = when (mark) {
         ABSENT_SCALE,
     )
 }
+
+/**
+ * The shared picture's colours (PLANNING.md §7.6): one look on every phone and in every chat, so
+ * it is drawn on the Paper dress's light ground whatever the player wears, with the feedback's own
+ * colours and the app's berry, the launcher mark's ground, as its one accent. Each ink is pinned on
+ * its ground by `ContrastTest`.
+ */
+object PictureColors {
+    val Ground = PaperLightScheme.surface
+    val Ink = PaperLightScheme.onSurface
+    val QuietInk = PaperLightScheme.onSurfaceVariant
+
+    /** A letter absent: the tile sunk on the quietest ground, as on a light phone. */
+    val Absent = PaperLightScheme.surfaceContainerHighest
+
+    /** A row not played: the empty tile's frame. */
+    val EmptyFrame = PaperLightScheme.outlineVariant
+
+    /** A row spent on a hint: a band on the hint's quiet ground. */
+    val HintBand = PaperLightScheme.surfaceContainerHigh
+
+    /** The app's berry (`tools/draw_launcher_icon.py`, `BERRY`'s middle tone). */
+    val Berry = Color(0xFFAE3790)
+}

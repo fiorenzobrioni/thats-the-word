@@ -296,10 +296,15 @@ private fun GameDto.toGame(): BackupGame {
     require(hints.isEmpty() || game.language != game.interfaceLanguage) { "A hint in the interface's language" }
     // No move after the game was over: every shorter replay is still under way.
     require((0 until moves.size).none { game.replay(moves.take(it)).state.finished }) { "A move after the end" }
-    val state = game.state
+    // A free word left for another says lost and replays under way: the one state the moves do not
+    // say (PLANNING.md §4.7). Only free play's, and only a word tried.
+    val conceded = status == name(GameState.LOST) && game.state == GameState.PLAYING
+    require(!conceded || (mode is GameMode.Free && moves.isNotEmpty())) { "A game left that cannot be" }
+    val read = game.copy(conceded = conceded)
+    val state = read.state
     require(name(state) == status) { "A game that says $status and replays as $state" }
     require((finishedAtMillis != null) == state.finished) { "A finish that does not match the game" }
-    return game
+    return read
 }
 
 /**

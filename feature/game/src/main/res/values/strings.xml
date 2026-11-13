@@ -75,6 +75,11 @@
         <item quantity="one">No attempt left.</item>
         <item quantity="other">All %1$d attempts used.</item>
     </plurals>
+    <!-- A free word left for a new one from the start page (PLANNING.md §4.7). -->
+    <plurals name="end_left">
+        <item quantity="one">Left after %1$d attempt of %2$d.</item>
+        <item quantity="other">Left after %1$d attempts of %2$d.</item>
+    </plurals>
     <string name="end_your_words">Your words</string>
     <string name="end_share">Share the result</string>
     <!-- What comes next (PLANNING.md §4.6, §4.7): the day again, not counted; another free word. -->

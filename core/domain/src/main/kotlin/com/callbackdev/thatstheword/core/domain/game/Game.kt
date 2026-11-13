@@ -1,5 +1,6 @@
 package com.callbackdev.thatstheword.core.domain.game
 
+import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameSetup
 import com.callbackdev.thatstheword.core.model.GameState
 import com.callbackdev.thatstheword.core.model.Guess
@@ -56,9 +57,10 @@ sealed interface Submission {
  * A game (PLANNING.md §4.3 to §4.5), immutable: every move gives a new one.
  *
  * Attempts left are the attempts less the guesses and the hints, a hint costing one. Won when a
- * guess has every letter in its right place; lost when no attempt is left.
+ * guess has every letter in its right place; lost when no attempt is left, or when the player left
+ * the word for another ([conceded], free play's only: PLANNING.md §4.7).
  */
-class Game private constructor(val setup: GameSetup, val moves: List<Move>) {
+class Game private constructor(val setup: GameSetup, val moves: List<Move>, val conceded: Boolean = false) {
     val guesses: List<Guess>
     val hints: List<TakenHint>
     val state: GameState
@@ -80,7 +82,7 @@ class Game private constructor(val setup: GameSetup, val moves: List<Move>) {
         this.hints = hints
         state = when {
             guesses.lastOrNull()?.solved == true -> GameState.WON
-            moves.size >= setup.attempts -> GameState.LOST
+            moves.size >= setup.attempts || conceded -> GameState.LOST
             else -> GameState.PLAYING
         }
     }
@@ -143,10 +145,22 @@ class Game private constructor(val setup: GameSetup, val moves: List<Move>) {
     /** The position the letter hint revealed, if it was taken. */
     val revealed: Int? get() = hints.firstOrNull { it.kind == HintKind.LETTER }?.position
 
+    /**
+     * The word left for a new one (PLANNING.md §4.7; the owner, §15, 13 Nov 2026): lost, and over,
+     * whatever attempts were left. Only a free game under way, with a move made: a word never tried
+     * is not a game lost, and a daily is never given up (its day keeps its result).
+     */
+    fun concede(): Game {
+        check(state == GameState.PLAYING) { "only a game under way is left" }
+        check(setup.mode is GameMode.Free) { "only a free word is left for another" }
+        check(moves.isNotEmpty()) { "a word never tried is not a game lost" }
+        return Game(setup, moves, conceded = true)
+    }
+
     /** Hard is chosen before the first guess, and holds for the game (PLANNING.md §4.4). */
     fun withHard(hard: Boolean): Game {
         check(guesses.isEmpty()) { "Hard is chosen before the first guess" }
-        return Game(setup.copy(hard = hard), moves)
+        return Game(setup.copy(hard = hard), moves, conceded)
     }
 
     /**
@@ -187,11 +201,13 @@ class Game private constructor(val setup: GameSetup, val moves: List<Move>) {
 
         /**
          * A game taken up from its saved moves (PLANNING.md §4.3). The moves are replayed, so the
-         * marks and the hint's letter are computed again, never read back.
+         * marks and the hint's letter are computed again, never read back; [conceded] is the one
+         * fact the moves cannot say, a word left for another (see [concede]).
          */
-        fun restore(setup: GameSetup, moves: List<Move>): Game {
+        fun restore(setup: GameSetup, moves: List<Move>, conceded: Boolean = false): Game {
             require(moves.size <= setup.attempts) { "more moves than attempts" }
-            return Game(setup, moves)
+            val game = Game(setup, moves)
+            return if (conceded && game.state == GameState.PLAYING) game.concede() else game
         }
 
         /** The leftmost position no guess has found in its right place, or null. */

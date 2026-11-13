@@ -242,6 +242,26 @@ class GameScreenTest {
     }
 
     @Test
+    fun `a free word left for another shows it, and offers another`() {
+        val alphabet = Alphabet.of(Language.ENGLISH)
+        var game = Game.start(
+            GameSetup(
+                language = Language.ENGLISH,
+                mode = GameMode.Free(com.callbackdev.thatstheword.core.model.Level.ADVANCED),
+                solution = alphabet.parse("train")!!,
+                interfaceLanguage = Language.ENGLISH,
+            ),
+        )
+        game = (game.submit(alphabet.parse("steam")!!, anyWord) as Submission.Accepted).game
+        game = (game.submit(alphabet.parse("plant")!!, anyWord) as Submission.Accepted).game
+        draw(state(game.concede()))
+        compose.onNodeWithText("Not this time.").assertExists()
+        compose.onNodeWithText("Left after 2 attempts of 6.").assertExists()
+        compose.onNodeWithText("Another word").assertExists()
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-left")
+    }
+
+    @Test
     @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
     fun `the Spanish keyboard has its Ñ`() {
         draw(state(game(Language.SPANISH, "arbol", "nubes")))

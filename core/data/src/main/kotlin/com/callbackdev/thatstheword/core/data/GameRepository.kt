@@ -125,6 +125,23 @@ class GameRepository @Inject constructor(
     }
 
     /**
+     * Leaves [language]'s free word under way for a new one (PLANNING.md §4.7; the owner, §15,
+     * 13 Nov 2026): a word tried is lost, over at once, its solution in the notebook as any word
+     * missed, and its id returned, so its end card shows what it was; a word never tried is no game,
+     * and goes without a trace (null). Null too when no free word is under way.
+     */
+    suspend fun leaveFree(language: Language): Long? = database.withTransaction {
+        val entity = dao.freeGames(language.tag).lastOrNull { it.status == STATUS_PLAYING }
+            ?: return@withTransaction null
+        if (dao.moveCount(entity.id) == 0) {
+            dao.deleteGame(entity.id)
+            return@withTransaction null
+        }
+        save(entity.id, load(entity).game.concede())
+        entity.id
+    }
+
+    /**
      * The id of the guided first game in [language] (PLANNING.md §11 Phase 7): the one under way
      * taken up, else a new one on the language's fixed word. Never Hard: it teaches the rules, not
      * the harder one. Started again from Settings ("How to play") as often as the player likes; a
@@ -221,7 +238,8 @@ class GameRepository @Inject constructor(
             ).sortedBy { it.first }.map { it.second }
         return SavedGame(
             id = entity.id,
-            game = Game.restore(setupOf(entity), moves),
+            // Lost with attempts left: a free word left for another (PLANNING.md §4.7).
+            game = Game.restore(setupOf(entity), moves, conceded = entity.status == STATUS_LOST),
             startedOn = LocalDate.ofEpochDay(entity.startedOn),
             practice = entity.practice > 0,
         )

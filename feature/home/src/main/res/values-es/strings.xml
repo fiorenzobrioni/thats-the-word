@@ -18,6 +18,7 @@
     </plurals>
 
     <string name="home_today_eyebrow">La palabra de hoy · #%1$d</string>
+    <string name="home_today_eyebrow_hard">La palabra de hoy · #%1$d · difícil</string>
     <string name="home_today_waiting">Una palabra nueva te espera.</string>
     <string name="home_today_opened">Abierta, espera la primera palabra.</string>
     <plurals name="home_today_under_way">
@@ -92,6 +93,7 @@
     <string name="home_key_later">Recuperada después</string>
 
     <string name="home_free_eyebrow">Juego libre</string>
+    <string name="home_free_eyebrow_hard">Juego libre · difícil</string>
     <string name="home_free_line">Todas las palabras que quieras, al nivel que elijas.</string>
     <string name="home_level_base">Básico</string>
     <string name="home_level_base_line">Las palabras de cada día.</string>
@@ -102,11 +104,25 @@
     <string name="home_level_complete">Completo</string>
     <string name="home_level_complete_line">Todas las palabras que el juego conoce.</string>
     <string name="home_free_under_way">Hay una palabra en curso, en el nivel %1$s.</string>
+    <plurals name="home_free_under_way_tried">
+        <item quantity="one">Hay una palabra en curso, en el nivel %1$s: %2$d intento de %3$d.</item>
+        <item quantity="many">Hay una palabra en curso, en el nivel %1$s: %2$d intentos de %3$d.</item>
+        <item quantity="other">Hay una palabra en curso, en el nivel %1$s: %2$d intentos de %3$d.</item>
+    </plurals>
     <string name="home_free_play">Juega una palabra</string>
     <string name="home_free_take_up">Sigue con tu palabra</string>
+    <string name="home_free_new">Una palabra nueva, nivel %1$s</string>
+    <string name="home_free_leave_title">¿Dejar esta palabra?</string>
+    <string name="home_free_leave_text">Cuenta como una palabra que se escapó. Verás cuál era, y una nueva estará a un toque.</string>
+    <string name="home_free_leave_yes">Déjala</string>
+    <string name="home_free_leave_no">Sigue jugando</string>
 
     <string name="home_hard">Difícil</string>
-    <string name="home_hard_line">Cada pista encontrada debe usarse en las palabras que siguen. Desde la próxima partida.</string>
+    <string name="home_hard_line">Cada pista encontrada debe usarse en las palabras que siguen.</string>
+    <string name="home_hard_applies">Vale para cada palabra aún no empezada.</string>
+    <string name="home_hard_kept_today">La palabra de hoy, ya empezada, mantiene la regla con la que empezó.</string>
+    <string name="home_hard_kept_free">Tu palabra libre, ya empezada, mantiene la regla con la que empezó.</string>
+    <string name="home_hard_kept_both">La palabra de hoy y tu palabra libre, ya empezadas, mantienen la regla con la que empezaron.</string>
     <string name="home_notebook_eyebrow">Tu cuaderno</string>
     <plurals name="home_notebook_line">
         <item quantity="one">Una palabra encontrada, con lo que significa.</item>

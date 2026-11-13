@@ -270,6 +270,39 @@ class GameRepositoryTest {
     }
 
     @Test
+    fun `a free word left for a new one is lost if it was tried, and gone if it was not`() = runTest {
+        // Nothing under way: nothing to leave.
+        assertThat(repository().leaveFree(Language.ENGLISH)).isNull()
+
+        // Never tried: it gives way without a trace.
+        val untried = repository().freeGame(Language.ENGLISH, Level.BASE, Language.ITALIAN, hard = false)
+        assertThat(repository().leaveFree(Language.ENGLISH)).isNull()
+        assertThat(repository().load(untried)).isNull()
+
+        // Tried: lost, over, its id returned for its end card, its word in the notebook.
+        val tried = repository().freeGame(Language.ENGLISH, Level.BASE, Language.ITALIAN, hard = false)
+        val game = repository().load(tried)!!.game
+        val daily = lexicons.of(Language.ENGLISH).daily
+        val guess = (1..daily.size).asSequence().map { daily.word(it) }.first { it != game.setup.solution }
+        val accepted = game.submit(guess, lexicons.of(Language.ENGLISH).accepted) as Submission.Accepted
+        repository().save(tried, accepted.game)
+        assertThat(repository().leaveFree(Language.ENGLISH)).isEqualTo(tried)
+        val left = repository().load(tried)!!.game
+        assertThat(left.state).isEqualTo(GameState.LOST)
+        assertThat(left.conceded).isTrue()
+        assertThat(left.attemptsUsed).isEqualTo(1)
+        val record = repository().records().first().single { it.mode is GameMode.Free }
+        assertThat(record.state).isEqualTo(GameState.LOST)
+        assertThat(record.counted).isTrue()
+        assertThat(NotebookRepository(database) { clock }.size().first()).isEqualTo(1)
+
+        // The next free game is a new word, at the level asked for now.
+        val next = repository().freeGame(Language.ENGLISH, Level.ADVANCED, Language.ITALIAN, hard = false)
+        assertThat(next).isNotEqualTo(tried)
+        assertThat(repository().load(next)!!.game.setup.mode).isEqualTo(GameMode.Free(Level.ADVANCED))
+    }
+
+    @Test
     fun `Hard chosen before the first move holds, and after it the game keeps its own`() = runTest {
         val id = repository().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = false)
         repository().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = true)

@@ -89,6 +89,38 @@ class GameTest {
         assertThat(restored.attemptsLeft).isEqualTo(3)
     }
 
+    // A free word left for another (PLANNING.md §4.7).
+
+    @Test
+    fun `a free word left is lost at once, and takes nothing more`() {
+        val left = Game.start(setup()).play("nacho", "trace").concede()
+        assertThat(left.state).isEqualTo(GameState.LOST)
+        assertThat(left.attemptsUsed).isEqualTo(2)
+        assertThat(left.refusal("crane")).isEqualTo(Refusal.Finished)
+        assertThat(left.hintsOffered).isEmpty()
+    }
+
+    @Test
+    fun `a word left is taken up left, and its moves still say the rest`() {
+        val left = Game.start(setup()).play("nacho").concede()
+        val restored = Game.restore(setup(), left.moves, conceded = true)
+        assertThat(restored.state).isEqualTo(GameState.LOST)
+        assertThat(restored.conceded).isTrue()
+        assertThat(restored.guesses).isEqualTo(left.guesses)
+        // A word won or lost by its moves is that, whatever was said of it.
+        val won = Game.start(setup()).play("nacho", "crane")
+        assertThat(Game.restore(setup(), won.moves, conceded = true).state).isEqualTo(GameState.WON)
+    }
+
+    @Test
+    fun `only a free word under way and tried is left`() {
+        assertThrows(IllegalStateException::class.java) { Game.start(setup()).concede() }
+        val daily = setup().copy(mode = GameMode.Daily(java.time.LocalDate.of(2026, 11, 13), 13))
+        assertThrows(IllegalStateException::class.java) { Game.start(daily).play("nacho").concede() }
+        val won = Game.start(setup()).play("crane")
+        assertThrows(IllegalStateException::class.java) { won.concede() }
+    }
+
     // Hard (PLANNING.md §4.4).
 
     @Test

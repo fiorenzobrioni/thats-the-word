@@ -30,6 +30,7 @@ fun HomeRoute(
         onMonth = viewModel::showMonth,
         onLevel = viewModel::setLevel,
         onPlayFree = { viewModel.openFree(onOpenGame) },
+        onNewFree = { viewModel.newFree(onOpenGame) },
         onHard = viewModel::setHard,
         onNotebook = onOpenNotebook,
         onProgress = onOpenProgress,

@@ -103,7 +103,7 @@
     <string name="settings_level_complete">Completo</string>
     <string name="settings_level_complete_line">Todas las palabras que conoce el juego.</string>
     <string name="settings_hard">Difícil</string>
-    <string name="settings_hard_line">Cada pista encontrada debe usarse en las palabras siguientes. Desde la próxima partida.</string>
+    <string name="settings_hard_line">Cada pista encontrada debe usarse en las palabras siguientes. Para cada palabra aún no empezada.</string>
 
     <string name="settings_app_language_section">Idioma de la app</string>
     <string name="settings_app_language_line">Lo hablan las páginas, las pistas y los significados. La elección queda en los ajustes de idioma del teléfono.</string>

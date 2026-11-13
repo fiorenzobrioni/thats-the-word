@@ -62,6 +62,11 @@
         <item quantity="many">Finiti i %1$d tentativi.</item>
         <item quantity="other">Finiti i %1$d tentativi.</item>
     </plurals>
+    <plurals name="end_left">
+        <item quantity="one">Lasciata dopo %1$d tentativo su %2$d.</item>
+        <item quantity="many">Lasciata dopo %1$d tentativi su %2$d.</item>
+        <item quantity="other">Lasciata dopo %1$d tentativi su %2$d.</item>
+    </plurals>
     <string name="end_your_words">Le tue parole</string>
     <string name="end_share">Condividi il risultato</string>
     <string name="end_play_again">Rigiocala, per esercizio</string>

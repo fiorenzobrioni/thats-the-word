@@ -33,7 +33,9 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,11 +44,13 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -106,6 +110,7 @@ fun HomeScreen(
     onPlayFree: () -> Unit,
     onHard: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    onNewFree: () -> Unit = {},
     onNotebook: () -> Unit = {},
     onProgress: () -> Unit = {},
     onSettings: () -> Unit = {},
@@ -134,9 +139,9 @@ fun HomeScreen(
                 Spacer(Modifier.height(4.dp))
                 Calendar(state.month, onMonth, onDay)
             }
-            FreePlayCard(state, onLevel, onPlayFree, Modifier.arrive(5, arrived))
+            FreePlayCard(state, onLevel, onPlayFree, onNewFree, Modifier.arrive(5, arrived))
             if (state.notebookSize > 0) NotebookCard(state.notebookSize, onNotebook, Modifier.arrive(6, arrived))
-            HardRow(state.hard, onHard, Modifier.arrive(7, arrived))
+            HardRow(state.hard, state.hardStanding, onHard, Modifier.arrive(7, arrived))
         }
     }
 }
@@ -300,7 +305,12 @@ private fun TodayCard(state: HomeUiState, onPlay: () -> Unit, modifier: Modifier
         ) { language ->
             val today = state.languages.first { it.language == language }
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Eyebrow(stringResource(R.string.home_today_eyebrow, state.number))
+                Eyebrow(
+                    stringResource(
+                        if (state.hardStanding.today) R.string.home_today_eyebrow_hard else R.string.home_today_eyebrow,
+                        state.number,
+                    ),
+                )
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = longDate(state.today),
@@ -459,16 +469,27 @@ private fun StreakLines(state: HomeUiState) {
     }
 }
 
-/** Free play (VISION §8, §9): the level of the game language, chosen among four, and a word to play. */
+/**
+ * Free play (VISION §8, §9): the level of the game language, chosen among four, and a word to play.
+ * A word under way is taken up; or left for a new one at the level chosen (PLANNING.md §4.7; the
+ * owner, §15, 13 Nov 2026), after a question when it was tried, since it then counts as missed.
+ */
 @Composable
 private fun FreePlayCard(
     state: HomeUiState,
     onLevel: (Level) -> Unit,
     onPlay: () -> Unit,
+    onNew: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var leaving by rememberSaveable { mutableStateOf(false) }
+    val underWay = state.freeUnderWay
     PageGroup(modifier.testTag(HomeTags.FREE)) {
-        Eyebrow(stringResource(R.string.home_free_eyebrow))
+        Eyebrow(
+            stringResource(
+                if (state.hardStanding.free) R.string.home_free_eyebrow_hard else R.string.home_free_eyebrow,
+            ),
+        )
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.home_free_line),
@@ -486,12 +507,24 @@ private fun FreePlayCard(
             }
         }
         Spacer(Modifier.height(12.dp))
-        state.freeUnderWay?.let { level ->
+        if (underWay != null) {
+            val level = stringResource(levelName(underWay.level))
             Text(
-                text = stringResource(R.string.home_free_under_way, stringResource(levelName(level))),
+                text = if (underWay.attemptsUsed == 0) {
+                    stringResource(R.string.home_free_under_way, level)
+                } else {
+                    pluralStringResource(
+                        R.plurals.home_free_under_way_tried,
+                        underWay.attemptsUsed,
+                        level,
+                        underWay.attemptsUsed,
+                        underWay.attempts,
+                    )
+                },
                 style = MaterialTheme.typography.bodyMedium.balanced(),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
+                modifier = Modifier.testTag(HomeTags.FREE_UNDER_WAY),
             )
             Spacer(Modifier.height(12.dp))
         }
@@ -503,20 +536,63 @@ private fun FreePlayCard(
                 .testTag(HomeTags.PLAY_FREE),
         ) {
             Text(
-                text = stringResource(
-                    if (state.freeUnderWay !=
-                        null
-                    ) {
-                        R.string.home_free_take_up
-                    } else {
-                        R.string.home_free_play
-                    },
-                ),
+                text = stringResource(if (underWay != null) R.string.home_free_take_up else R.string.home_free_play),
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
             )
         }
+        if (underWay != null) {
+            Spacer(Modifier.height(8.dp))
+            // Outlined: the word under way is the first offer; leaving it is the second.
+            OutlinedButton(
+                onClick = { if (underWay.attemptsUsed > 0) leaving = true else onNew() },
+                modifier = Modifier
+                    .heightIn(min = 48.dp)
+                    .testTag(HomeTags.NEW_FREE),
+            ) {
+                Text(
+                    text = stringResource(R.string.home_free_new, stringResource(levelName(state.level))),
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
     }
+    if (leaving) {
+        LeaveWordDialog(
+            onLeave = {
+                leaving = false
+                onNew()
+            },
+            onDismiss = { leaving = false },
+        )
+    }
+}
+
+/** The question before a word tried is left: it counts as missed (PLANNING.md §4.7). */
+@Composable
+private fun LeaveWordDialog(onLeave: () -> Unit, onDismiss: () -> Unit) {
+    val ink = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.home_free_leave_title), textAlign = TextAlign.Center) },
+        text = {
+            Text(
+                text = stringResource(R.string.home_free_leave_text),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onLeave, colors = ink, modifier = Modifier.testTag(HomeTags.LEAVE_YES)) {
+                Text(stringResource(R.string.home_free_leave_yes))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss, colors = ink, modifier = Modifier.testTag(HomeTags.LEAVE_NO)) {
+                Text(stringResource(R.string.home_free_leave_no))
+            }
+        },
+        modifier = Modifier.testTag(HomeTags.LEAVE_DIALOG),
+    )
 }
 
 @Composable
@@ -590,9 +666,19 @@ private fun NotebookCard(size: Int, onOpen: () -> Unit, modifier: Modifier = Mod
     }
 }
 
-/** The Hard option (PLANNING.md §4.4): a switch, for the next game; a game started keeps its own. */
+/**
+ * The Hard option (PLANNING.md §4.4): a switch for every word not yet begun; a word begun keeps the
+ * rule it began with, and the line under the switch says so when one does. The cards above say
+ * which of the page's words are played in Hard.
+ */
 @Composable
-private fun HardRow(hard: Boolean, onHard: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+private fun HardRow(hard: Boolean, standing: HardStanding, onHard: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+    val status = when {
+        standing.todayKept && standing.freeKept -> R.string.home_hard_kept_both
+        standing.todayKept -> R.string.home_hard_kept_today
+        standing.freeKept -> R.string.home_hard_kept_free
+        else -> R.string.home_hard_applies
+    }
     Row(
         modifier
             .fillMaxWidth()
@@ -611,6 +697,13 @@ private fun HardRow(hard: Boolean, onHard: (Boolean) -> Unit, modifier: Modifier
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = stringResource(status),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.testTag(HomeTags.HARD_STATUS),
+            )
         }
         Spacer(Modifier.size(16.dp))
         Switch(checked = hard, onCheckedChange = null)
@@ -626,7 +719,13 @@ object HomeTags {
     const val STREAK = "home_streak"
     const val FREE = "home_free"
     const val PLAY_FREE = "home_play_free"
+    const val FREE_UNDER_WAY = "home_free_under_way"
+    const val NEW_FREE = "home_new_free"
+    const val LEAVE_DIALOG = "home_leave_dialog"
+    const val LEAVE_YES = "home_leave_yes"
+    const val LEAVE_NO = "home_leave_no"
     const val HARD = "home_hard"
+    const val HARD_STATUS = "home_hard_status"
     const val MONTH = "home_month"
     const val NOTEBOOK = "home_notebook"
     const val OPEN_NOTEBOOK = "home_open_notebook"

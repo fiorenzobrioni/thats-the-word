@@ -118,6 +118,8 @@ data class GameUiState(
     val hard: Boolean,
     val hints: Int,
     val attemptsUsed: Int,
+    /** A free word left for another (PLANNING.md §4.7): lost with attempts still unused. */
+    val conceded: Boolean = false,
     /** The solution's capitals, and its written form (*città*), shown once the game is over. */
     val solution: String,
     val solutionWritten: String,
@@ -214,6 +216,7 @@ data class GameUiState(
                 hard = game.setup.hard,
                 hints = game.hints.size,
                 attemptsUsed = game.attemptsUsed,
+                conceded = game.conceded,
                 solution = capitals(game.setup.solution, language).joinToString(""),
                 solutionWritten = forms.solutionDisplay(game.setup.solution),
                 guessesWritten = game.guesses.map { guess -> forms.of(guess.word).joinToString(", ") { it.display } },

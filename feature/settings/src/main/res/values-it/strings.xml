@@ -103,7 +103,7 @@
     <string name="settings_level_complete">Completo</string>
     <string name="settings_level_complete_line">Tutte le parole che il gioco conosce.</string>
     <string name="settings_hard">Difficile</string>
-    <string name="settings_hard_line">Ogni indizio trovato va usato nelle parole seguenti. Dalla prossima partita.</string>
+    <string name="settings_hard_line">Ogni indizio trovato va usato nelle parole seguenti. Per ogni parola non ancora iniziata.</string>
 
     <string name="settings_app_language_section">Lingua dell’app</string>
     <string name="settings_app_language_line">La parlano le pagine, gli aiuti e i significati. La scelta resta nelle impostazioni di lingua del telefono.</string>

@@ -19,6 +19,8 @@ import java.time.LocalDate
  * from the solution and the moves.
  *
  * @property practice 0 for a game that counts, 1, 2… for a day's replays as practice (PLANNING.md §4.6).
+ * @property conceded a free word left for another (PLANNING.md §4.7): lost with attempts still
+ *   left, the one fact its moves cannot say. The file says it as a `lost` that replays under way.
  */
 data class BackupGame(
     val language: Language,
@@ -32,6 +34,7 @@ data class BackupGame(
     val startedOn: LocalDate,
     val finishedAt: Instant?,
     val practice: Int,
+    val conceded: Boolean = false,
 ) {
     /** Where the game stands, by replaying its moves: never read from the file as it says it. */
     val state: GameState get() = replay(moves).state
@@ -48,6 +51,7 @@ data class BackupGame(
             interfaceLanguage = interfaceLanguage,
         ),
         moves,
+        conceded,
     )
 }
 

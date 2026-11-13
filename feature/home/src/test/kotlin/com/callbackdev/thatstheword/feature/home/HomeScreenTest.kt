@@ -121,6 +121,7 @@ class HomeScreenTest {
     private val opened = mutableListOf<LocalDate>()
     private val languages = mutableListOf<Language>()
     private var free = 0
+    private var newFree = 0
     private var hard: Boolean? = null
     private var notebook = 0
     private var progress = 0
@@ -138,6 +139,7 @@ class HomeScreenTest {
                     onMonth = {},
                     onLevel = {},
                     onPlayFree = { free++ },
+                    onNewFree = { newFree++ },
                     onHard = { hard = it },
                     onNotebook = { notebook++ },
                     onProgress = { progress++ },
@@ -269,23 +271,69 @@ class HomeScreenTest {
         compose.writeScreenshot("home-free")
     }
 
+    private fun freeUnderWay(attemptsUsed: Int, hard: Boolean = false) = GameRecord(
+        language = Language.ITALIAN,
+        interfaceLanguage = Language.ENGLISH,
+        mode = GameMode.Free(Level.ADVANCED),
+        solution = Alphabet.of(Language.ITALIAN).parse("cuore")!!,
+        state = GameState.PLAYING,
+        attemptsUsed = attemptsUsed,
+        attempts = 6,
+        hints = 0,
+        hard = hard,
+        startedOn = today,
+    )
+
     @Test
-    fun `a free word under way is taken up`() {
-        val underWay = records + GameRecord(
-            language = Language.ITALIAN,
-            interfaceLanguage = Language.ENGLISH,
-            mode = GameMode.Free(Level.ADVANCED),
-            solution = Alphabet.of(Language.ITALIAN).parse("cuore")!!,
-            state = GameState.PLAYING,
-            attemptsUsed = 1,
-            attempts = 6,
-            hints = 0,
-            hard = false,
-            startedOn = today,
-        )
-        draw(state(records = underWay))
-        compose.onNodeWithText("A word is under way, at Advanced.").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithText("Take up your word").performScrollTo().assertIsDisplayed()
+    fun `a free word under way is taken up, or left for a new one at the level chosen`() {
+        draw(state(records = records + freeUnderWay(attemptsUsed = 1)))
+        compose.onNodeWithText("A word is under way, at Advanced: 1 attempt of 6 used.").performScrollTo()
+            .assertIsDisplayed()
+        compose.onNodeWithText("Take up your word").performScrollTo().performClick()
+        assertThat(free).isEqualTo(1)
+        compose.writeScreenshot("home-free-under-way")
+        // The question, for a word tried, is asked over the word, on its own page.
+        compose.onNodeWithText("A new word, at Intermediate").performScrollTo().performClick()
+        assertThat(newFree).isEqualTo(1)
+        compose.assertAccessible()
+    }
+
+    @Test
+    @Config(qualifiers = "it-rIT-w411dp-h891dp-xxhdpi")
+    fun `a free word under way, in Italian`() {
+        draw(state(records = records + freeUnderWay(attemptsUsed = 2)))
+        compose.onNodeWithText("Una nuova parola, livello Intermedio").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag(HomeTags.FREE_UNDER_WAY).performScrollTo()
+        compose.writeScreenshot("home-free-under-way-it")
+    }
+
+    @Test
+    @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
+    fun `a free word under way, in Spanish`() {
+        draw(state(records = records + freeUnderWay(attemptsUsed = 2)))
+        compose.onNodeWithText("Una palabra nueva, nivel Intermedio").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag(HomeTags.FREE_UNDER_WAY).performScrollTo()
+        compose.writeScreenshot("home-free-under-way-es")
+    }
+
+    @Test
+    fun `Hard on says which words it holds for, and a word begun keeps its own`() {
+        // Today's Italian word not played, and a free word tried without Hard: the switch turned on.
+        val noToday = records.filterNot { it.language == Language.ITALIAN && it.daily?.date == today }
+        draw(state(settings = settings.copy(hard = true), records = noToday + freeUnderWay(attemptsUsed = 2)))
+        compose.onNodeWithContentDescription("Today’s word · #28 · Hard").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Free play").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("Your free word, already begun, keeps the rule it began with.").performScrollTo()
+            .assertIsDisplayed()
+        compose.writeScreenshot("home-hard-kept")
+    }
+
+    @Test
+    fun `Hard on, nothing begun - it holds for every word`() {
+        draw(state(settings = settings.copy(hard = true)))
+        compose.onNodeWithContentDescription("Free play · Hard").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("It holds for every word not yet begun.").performScrollTo().assertIsDisplayed()
+        compose.writeScreenshot("home-hard")
     }
 
     @Test

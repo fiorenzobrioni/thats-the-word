@@ -62,6 +62,15 @@
         <item quantity="many">Se acabaron los %1$d intentos.</item>
         <item quantity="other">Se acabaron los %1$d intentos.</item>
     </plurals>
+    <plurals name="end_left">
+        <item quantity="one">Dejada tras %1$d intento de %2$d.</item>
+        <item quantity="many">Dejada tras %1$d intentos de %2$d.</item>
+        <item quantity="other">Dejada tras %1$d intentos de %2$d.</item>
+    </plurals>
+    <string name="leave_title">¿Dejar esta palabra?</string>
+    <string name="leave_text">Cuenta como una palabra que se escapó. Verás cuál era, y una nueva estará a un toque.</string>
+    <string name="leave_yes">Déjala</string>
+    <string name="leave_no">Sigue jugando</string>
     <string name="end_your_words">Tus palabras</string>
     <string name="end_share">Compartir el resultado</string>
     <string name="end_play_again">Juégala otra vez, de práctica</string>

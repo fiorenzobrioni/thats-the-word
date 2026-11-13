@@ -201,6 +201,32 @@ class BackupCodecTest {
     }
 
     @Test
+    fun `a free word left for another comes back left`() {
+        val left = BackupGame(
+            language = Language.ENGLISH,
+            interfaceLanguage = Language.ENGLISH,
+            mode = GameMode.Free(Level.ADVANCED),
+            solution = word("crane"),
+            attempts = 6,
+            hard = false,
+            moves = listOf(Move.Guessed(word("cream"))),
+            startedAt = at,
+            startedOn = day,
+            finishedAt = at.plusSeconds(60),
+            practice = 0,
+            conceded = true,
+        )
+        val with = backup.copy(games = backup.games + left)
+        val text = BackupCodec.encode(with)
+        val back = ok(text)
+        assertThat(back).isEqualTo(with)
+        assertThat(back.games.last().state).isEqualTo(GameState.LOST)
+        assertThat(back.countedGames).isEqualTo(3)
+        // A daily is never left: one that says lost and replays under way is damaged.
+        assertThat(read(edited("\"status\": \"playing\"", "\"status\": \"lost\""))).isEqualTo(BackupRead.Damaged)
+    }
+
+    @Test
     fun `a move that is neither or both is damaged`() {
         assertThat(read(edited("\"hint\": \"letter\"", "\"hint\": \"phone a friend\""))).isEqualTo(BackupRead.Damaged)
         assertThat(

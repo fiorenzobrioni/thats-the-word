@@ -296,6 +296,57 @@ class GameViewModelTest {
     private fun word(language: Language, key: String) = Alphabet.of(language).parse(key)!!
 
     @Test
+    fun `a free word left is lost, and its end card says the milestone it reached`() {
+        val id = runBlocking {
+            games().freeGame(
+                Language.ENGLISH,
+                com.callbackdev.thatstheword.core.model.Level.BASE,
+                Language.ENGLISH,
+                false,
+            )
+        }
+        val solution = runBlocking { games().load(id)!!.game.setup.solution }
+        val daily = lexicons.of(Language.ENGLISH).daily
+        val others = (1..daily.size).asSequence().map { daily.word(it) }.filter { it != solution }.toList()
+        // 99 words in the notebook: the word left is the hundredth.
+        val notebook = NotebookRepository(database) { clock }
+        runBlocking { others.drop(1).take(99).forEach { notebook.save(Language.ENGLISH, it) } }
+        val model = viewModel(id)
+        model.awaitState()
+        // Nothing to leave before a word is tried.
+        model.leave()
+        assertThat(model.awaitState().finished).isFalse()
+        model.type(others.first())
+        model.submit()
+        model.awaitState { it.rows.size == 1 }
+        settle(id, 1)
+        model.leave()
+        val end = model.awaitState { it.finished && it.milestones.isNotEmpty() }
+        assertThat(end.state).isEqualTo(GameState.LOST)
+        assertThat(end.conceded).isTrue()
+        assertThat(end.attemptsUsed).isEqualTo(1)
+        assertThat(end.milestones).containsExactly(com.callbackdev.thatstheword.core.model.Milestone.HUNDRED_WORDS)
+        assertThat(end.next).isEqualTo(NextGame.ANOTHER_WORD)
+        // Saved left: taken up again, it is over.
+        val again = viewModel(id).awaitState { it.finished }
+        assertThat(again.conceded).isTrue()
+    }
+
+    @Test
+    fun `a daily is never left`() {
+        val id = runBlocking { games().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = false) }
+        val daily = lexicons.of(Language.ENGLISH).daily
+        val solution = daily.word(DailyCalendar(clock).number(today))
+        val model = viewModel(id)
+        model.awaitState()
+        model.type((1..daily.size).asSequence().map { daily.word(it) }.first { it != solution })
+        model.submit()
+        model.awaitState { it.rows.size == 1 }
+        model.leave()
+        assertThat(model.awaitState().finished).isFalse()
+    }
+
+    @Test
     fun `the guided game says each rule once, the first time it happens, and ends with the game`() {
         val id = runBlocking { games().guidedGame(Language.ENGLISH, Language.ENGLISH) }
         val handle = SavedStateHandle()

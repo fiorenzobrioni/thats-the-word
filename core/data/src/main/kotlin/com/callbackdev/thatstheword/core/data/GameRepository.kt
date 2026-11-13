@@ -29,6 +29,17 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.random.Random
 
+/** What asking for a new free word came to (PLANNING.md §4.7). */
+sealed interface NewFree {
+    val id: Long
+
+    /** A new word, drawn at the level asked for. */
+    data class Drawn(override val id: Long) : NewFree
+
+    /** The word under way, tried: it is left only after the player's yes, over it. */
+    data class Tried(override val id: Long) : NewFree
+}
+
 /** A game as it is kept: its row's id, the game replayed from its moves, and the date it was started on. */
 data class SavedGame(val id: Long, val game: Game, val startedOn: LocalDate, val practice: Boolean)
 
@@ -122,6 +133,26 @@ class GameRepository @Inject constructor(
                 practice = 0,
             ),
         )
+    }
+
+    /**
+     * A new free word asked for in [language] (PLANNING.md §4.7; the owner, §15, 13 Nov 2026): a
+     * word under way and tried is not left here, its id returned for the question asked over it
+     * ([NewFree.Tried]); a word under way never tried is no game, and gives way without a trace;
+     * then a new word is drawn at [level] ([NewFree.Drawn]).
+     */
+    suspend fun newFreeGame(
+        language: Language,
+        level: Level,
+        interfaceLanguage: Language,
+        hard: Boolean,
+        random: Random = Random.Default,
+    ): NewFree = database.withTransaction {
+        dao.freeGames(language.tag).lastOrNull { it.status == STATUS_PLAYING }?.let { underWay ->
+            if (dao.moveCount(underWay.id) > 0) return@withTransaction NewFree.Tried(underWay.id)
+            dao.deleteGame(underWay.id)
+        }
+        NewFree.Drawn(freeGame(language, level, interfaceLanguage, hard, random))
     }
 
     /**
@@ -221,7 +252,8 @@ class GameRepository @Inject constructor(
             ).sortedBy { it.first }.map { it.second }
         return SavedGame(
             id = entity.id,
-            game = Game.restore(setupOf(entity), moves),
+            // Lost with attempts left: a free word left for another (PLANNING.md §4.7).
+            game = Game.restore(setupOf(entity), moves, conceded = entity.status == STATUS_LOST),
             startedOn = LocalDate.ofEpochDay(entity.startedOn),
             practice = entity.practice > 0,
         )

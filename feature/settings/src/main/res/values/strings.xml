@@ -105,7 +105,7 @@
     <string name="settings_level_complete">Complete</string>
     <string name="settings_level_complete_line">Every word the game knows.</string>
     <string name="settings_hard">Hard</string>
-    <string name="settings_hard_line">Every clue found must be used in the words that follow. From the next game.</string>
+    <string name="settings_hard_line">Every clue found must be used in the words that follow. For every word not yet begun.</string>
 
     <!-- The app's language: Android's per-app picker, opened (PLANNING §15, Open 14). -->
     <string name="settings_app_language_section">Language of the app</string>

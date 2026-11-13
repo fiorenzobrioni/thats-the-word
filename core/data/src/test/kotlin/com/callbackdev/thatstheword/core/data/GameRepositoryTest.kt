@@ -270,6 +270,43 @@ class GameRepositoryTest {
     }
 
     @Test
+    fun `a new free word - a word never tried gives way, a word tried is asked about, a word left is lost`() = runTest {
+        // Nothing under way: a word drawn.
+        val first = repository().newFreeGame(Language.ENGLISH, Level.BASE, Language.ITALIAN, hard = false)
+        assertThat(first).isInstanceOf(NewFree.Drawn::class.java)
+
+        // Never tried: it gives way without a trace, and the new word is at the level asked for.
+        val second = repository().newFreeGame(Language.ENGLISH, Level.ADVANCED, Language.ITALIAN, hard = false)
+        assertThat(second).isInstanceOf(NewFree.Drawn::class.java)
+        assertThat(repository().load(first.id)).isNull()
+        assertThat(repository().load(second.id)!!.game.setup.mode).isEqualTo(GameMode.Free(Level.ADVANCED))
+
+        // Tried: nothing is left here; its id comes back, for the question over it.
+        val game = repository().load(second.id)!!.game
+        val daily = lexicons.of(Language.ENGLISH).daily
+        val guess = (1..daily.size).asSequence().map { daily.word(it) }.first { it != game.setup.solution }
+        val accepted = game.submit(guess, lexicons.of(Language.ENGLISH).accepted) as Submission.Accepted
+        repository().save(second.id, accepted.game)
+        assertThat(repository().newFreeGame(Language.ENGLISH, Level.BASE, Language.ITALIAN, hard = false))
+            .isEqualTo(NewFree.Tried(second.id))
+        assertThat(repository().load(second.id)!!.game.state).isEqualTo(GameState.PLAYING)
+
+        // Left, as the game page leaves it: lost, over, taken up left, its word in the notebook.
+        repository().save(second.id, accepted.game.concede())
+        val left = repository().load(second.id)!!.game
+        assertThat(left.state).isEqualTo(GameState.LOST)
+        assertThat(left.conceded).isTrue()
+        assertThat(left.attemptsUsed).isEqualTo(1)
+        val record = repository().records().first().single { it.mode is GameMode.Free }
+        assertThat(record.state).isEqualTo(GameState.LOST)
+        assertThat(record.counted).isTrue()
+        assertThat(NotebookRepository(database) { clock }.size().first()).isEqualTo(1)
+        val third = repository().newFreeGame(Language.ENGLISH, Level.BASE, Language.ITALIAN, hard = false)
+        assertThat(third).isInstanceOf(NewFree.Drawn::class.java)
+        assertThat(third.id).isNotEqualTo(second.id)
+    }
+
+    @Test
     fun `Hard chosen before the first move holds, and after it the game keeps its own`() = runTest {
         val id = repository().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = false)
         repository().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = true)

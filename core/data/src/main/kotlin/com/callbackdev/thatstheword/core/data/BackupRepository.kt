@@ -4,6 +4,7 @@ import androidx.room.withTransaction
 import com.callbackdev.thatstheword.core.data.GameRepository.Companion.MODE_DAILY
 import com.callbackdev.thatstheword.core.data.GameRepository.Companion.MODE_FREE
 import com.callbackdev.thatstheword.core.data.GameRepository.Companion.MODE_GUIDED
+import com.callbackdev.thatstheword.core.data.GameRepository.Companion.STATUS_LOST
 import com.callbackdev.thatstheword.core.data.GameRepository.Companion.hintOf
 import com.callbackdev.thatstheword.core.data.GameRepository.Companion.languageOf
 import com.callbackdev.thatstheword.core.data.GameRepository.Companion.parseStored
@@ -97,6 +98,8 @@ class BackupRepository @Inject constructor(
                         startedOn = LocalDate.ofEpochDay(entity.startedOn),
                         finishedAt = entity.finishedAt?.let(Instant::ofEpochMilli),
                         practice = entity.practice,
+                        // Lost with attempts left: a free word left for another (PLANNING.md §4.7).
+                        conceded = entity.status == STATUS_LOST && moves.size < entity.attempts,
                     )
                 },
                 notebook = notebook.allEntries().map(::entryOf),

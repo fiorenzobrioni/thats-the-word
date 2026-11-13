@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.callbackdev.thatstheword.core.data.DayTicker
 import com.callbackdev.thatstheword.core.data.GameRepository
 import com.callbackdev.thatstheword.core.data.InterfaceLanguage
+import com.callbackdev.thatstheword.core.data.NewFree
 import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
@@ -88,9 +89,34 @@ class HomeViewModel @Inject constructor(
     }
 
     /** The game language's free game under way, or a new word at its level. */
-    fun openFree(onOpened: (Long) -> Unit) = open(onOpened) {
+    fun openFree(onOpened: (Long) -> Unit) = open(onOpened) { freeGame() }
+
+    /**
+     * A new free word at the chosen level (PLANNING.md §4.7; the owner, §15, 13 Nov 2026): drawn,
+     * the word under way giving way if it was never tried; or, if it was, that word opened with the
+     * question whether to leave it ([onAsk]), asked over its rows.
+     */
+    fun newFree(onOpened: (Long) -> Unit, onAsk: (Long) -> Unit) {
+        if (opening?.isActive == true) return
+        opening = viewModelScope.launch {
+            val current = settings.current()
+            when (
+                val next = games.newFreeGame(
+                    current.gameLanguage,
+                    current.levelOf(current.gameLanguage),
+                    interfaceLanguage.current(),
+                    current.hard,
+                )
+            ) {
+                is NewFree.Drawn -> onOpened(next.id)
+                is NewFree.Tried -> onAsk(next.id)
+            }
+        }
+    }
+
+    private suspend fun freeGame(): Long {
         val current = settings.current()
-        games.freeGame(
+        return games.freeGame(
             current.gameLanguage,
             current.levelOf(current.gameLanguage),
             interfaceLanguage.current(),

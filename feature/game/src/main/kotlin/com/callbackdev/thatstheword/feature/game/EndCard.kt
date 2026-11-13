@@ -107,6 +107,8 @@ internal fun EndCard(
             Text(
                 text = if (won) {
                     pluralStringResource(R.plurals.end_found_in, state.attemptsUsed, state.attemptsUsed, state.attempts)
+                } else if (state.conceded) {
+                    pluralStringResource(R.plurals.end_left, state.attemptsUsed, state.attemptsUsed, state.attempts)
                 } else {
                     pluralStringResource(R.plurals.end_not_found, state.attempts, state.attempts)
                 },

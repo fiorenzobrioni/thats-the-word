@@ -13,7 +13,9 @@ import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DayStatus
+import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.model.GameMode
+import com.callbackdev.thatstheword.core.model.GameState
 import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.core.model.Level
 import com.callbackdev.thatstheword.core.words.AssetWordFiles
@@ -125,7 +127,8 @@ class HomeViewModelTest {
             assertThat(model.await { it.level == Level.ADVANCED }.level).isEqualTo(Level.ADVANCED)
             val freeId = model.opened { openFree(it) }
             assertThat(runBlocking { games.load(freeId)!!.game.setup.mode }).isEqualTo(GameMode.Free(Level.ADVANCED))
-            assertThat(model.await { it.freeUnderWay != null }.freeUnderWay).isEqualTo(Level.ADVANCED)
+            assertThat(model.await { it.freeUnderWay != null }.freeUnderWay)
+                .isEqualTo(FreeUnderWay(Level.ADVANCED, attemptsUsed = 0, attempts = 6, hard = false))
         } finally {
             keep.cancel()
         }
@@ -153,6 +156,62 @@ class HomeViewModelTest {
             val id = model.opened { openDaily(today, it) }
             assertThat(runBlocking { games.load(id)!!.game.setup.hard }).isTrue()
             assertThat(runBlocking { games.load(id)!!.game.setup.language }).isEqualTo(Language.SPANISH)
+        } finally {
+            keep.cancel()
+        }
+    }
+
+    @Test
+    fun `a new free word at another level - an untried word gives way, a tried one is asked about`() {
+        val model = viewModel()
+        val keep = kotlinx.coroutines.GlobalScope.launch(Dispatchers.Unconfined) { model.state.collect {} }
+        try {
+            model.await()
+            val untried = model.opened { openFree(it) }
+            model.setLevel(Level.ADVANCED)
+            model.await { it.level == Level.ADVANCED }
+            // Never tried: the new word comes at once, at the level chosen.
+            val fresh = model.opened { opened -> newFree(opened) { error("nothing to ask about") } }
+            assertThat(fresh).isNotEqualTo(untried)
+            assertThat(runBlocking { games.load(untried) }).isNull()
+            assertThat(runBlocking { games.load(fresh)!!.game.setup.mode }).isEqualTo(GameMode.Free(Level.ADVANCED))
+
+            // Tried: its own page is asked to open, with the question; it is still under way.
+            val game = runBlocking { games.load(fresh)!!.game }
+            val daily = lexicons.of(Language.ITALIAN).daily
+            val guess = (1..daily.size).asSequence().map { daily.word(it) }.first { it != game.setup.solution }
+            val accepted = game.submit(guess, lexicons.of(Language.ITALIAN).accepted) as Submission.Accepted
+            runBlocking { games.save(fresh, accepted.game) }
+            assertThat(model.await { it.freeUnderWay?.attemptsUsed == 1 }.freeUnderWay?.level).isEqualTo(Level.ADVANCED)
+            val asked = model.opened { ask -> newFree({ error("no word drawn over one tried") }, ask) }
+            assertThat(asked).isEqualTo(fresh)
+            assertThat(runBlocking { games.load(asked)!!.game.state }).isEqualTo(GameState.PLAYING)
+        } finally {
+            keep.cancel()
+        }
+    }
+
+    @Test
+    fun `Hard says which of the page's words it holds for`() {
+        val model = viewModel()
+        val keep = kotlinx.coroutines.GlobalScope.launch(Dispatchers.Unconfined) { model.state.collect {} }
+        try {
+            assertThat(model.await().hardStanding).isEqualTo(HardStanding(today = false, free = false))
+            // Today's word opened, not tried: the switch still decides it.
+            val id = model.opened { openDaily(today, it) }
+            model.setHard(true)
+            assertThat(model.await { it.hard }.hardStanding).isEqualTo(HardStanding(today = true, free = true))
+            // Taken up in Hard and tried, then the switch turned off: today's word keeps Hard, and says so.
+            assertThat(model.opened { openDaily(today, it) }).isEqualTo(id)
+            val game = runBlocking { games.load(id)!!.game }
+            assertThat(game.setup.hard).isTrue()
+            val daily = lexicons.of(Language.ITALIAN).daily
+            val guess = (1..daily.size).asSequence().map { daily.word(it) }.first { it != game.setup.solution }
+            val accepted = game.submit(guess, lexicons.of(Language.ITALIAN).accepted) as Submission.Accepted
+            runBlocking { games.save(id, accepted.game) }
+            model.setHard(false)
+            assertThat(model.await { !it.hard && it.hardStanding.todayKept }.hardStanding)
+                .isEqualTo(HardStanding(today = true, free = false, todayKept = true))
         } finally {
             keep.cancel()
         }

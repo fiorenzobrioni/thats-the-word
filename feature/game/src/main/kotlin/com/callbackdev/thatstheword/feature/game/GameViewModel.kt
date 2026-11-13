@@ -17,6 +17,7 @@ import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
 import com.callbackdev.thatstheword.core.model.GameMode
+import com.callbackdev.thatstheword.core.model.GameState
 import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Letter
 import com.callbackdev.thatstheword.core.model.Milestone
@@ -185,6 +186,21 @@ class GameViewModel @AssistedInject constructor(
         if (kind !in current.game.hintsOffered) return
         refusal.value = null
         play(current, current.game.takeHint(kind))
+    }
+
+    /**
+     * The free word left for a new one (PLANNING.md §4.7; the owner, §15, 13 Nov 2026): lost now,
+     * saved as any move that ends a game, so its end card says it, with the milestones it reached.
+     * Only a free word under way with a move made; anything else is left as it is.
+     */
+    fun leave() {
+        val current = saved.value ?: return
+        val game = current.game
+        if (game.state != GameState.PLAYING || game.setup.mode !is GameMode.Free || game.moves.isEmpty()) return
+        typed.value = emptyList()
+        savedState[TYPED] = IntArray(0)
+        refusal.value = null
+        play(current, game.concede())
     }
 
     /** The move made: on screen at once, saved before the next, its milestones kept for the end card. */

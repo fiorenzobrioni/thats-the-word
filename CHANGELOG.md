@@ -79,3 +79,8 @@ All notable changes to That's The Word are documented here. The format follows
   Silent whenever your phone is.
 - A daily reminder, off until you turn it on: one quiet notification at the hour you choose, only
   while today's word is still to find, gone at midnight. A touch opens the word.
+- A card for your home screen, «Today’s word»: each language’s word of today as the start page
+  draws it (found, missed, under way or waiting) and your streak, in any size from one cell up.
+  A touch on a language opens its word. It changes after every game and at midnight, never on a
+  timer; hold it to choose what it stands on (light, dark, as the phone, or one of six colours)
+  and how solid it is. Settings can add it for you.

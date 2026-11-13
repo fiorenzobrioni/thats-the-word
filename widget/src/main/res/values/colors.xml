@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The picker preview's default dress: the blue card, its white inks and the feedback's ink
+         blue (the only place these are written outside `WidgetPalette.kt` and `Feedback.kt`,
+         because a static layout cannot call Kotlin; `WidgetProviderTest` checks they agree). -->
+    <color name="widget_preview_card">#FF0F3B6B</color>
+    <color name="widget_preview_ink">#FFFFFFFF</color>
+    <color name="widget_preview_ink_dim">#BFFFFFFF</color>
+    <color name="widget_preview_frame">#6BFFFFFF</color>
+    <color name="widget_preview_rim">#99FFFFFF</color>
+    <color name="widget_preview_found">#FF233A7A</color>
+    <color name="widget_preview_amber">#FFFDB528</color>
+</resources>

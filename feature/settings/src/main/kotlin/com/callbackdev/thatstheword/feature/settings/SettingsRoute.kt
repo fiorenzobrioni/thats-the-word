@@ -43,9 +43,12 @@ fun SettingsRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var block by remember { mutableStateOf(ReminderAccess.block(context)) }
-    // Back from the system's pages (the permission, the notifications, the language), read again.
+    var homeCard by remember { mutableStateOf(viewModel.homeCard()) }
+    // Back from the system's pages (the permission, the notifications, the language, the
+    // launcher's question about the card), read again.
     LifecycleResumeEffect(Unit) {
         block = ReminderAccess.block(context)
+        homeCard = viewModel.homeCard()
         viewModel.accessMayHaveChanged()
         onPauseOrDispose {}
     }
@@ -92,6 +95,7 @@ fun SettingsRoute(
             font = viewModel::setFont,
             wallpaperColors = viewModel::setWallpaperColors,
             playGuided = onPlayGuided,
+            addCard = viewModel::addCard,
             data = onOpenData,
             licences = onOpenLicences,
         )
@@ -102,6 +106,7 @@ fun SettingsRoute(
         actions = actions,
         reminderBlock = block,
         version = version,
+        homeCard = homeCard,
         modifier = modifier,
     )
 }

@@ -3,6 +3,7 @@ package com.callbackdev.thatstheword.feature.settings
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.callbackdev.thatstheword.core.data.HomeScreenCards
 import com.callbackdev.thatstheword.core.data.InterfaceLanguage
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.model.AppFont
@@ -43,6 +44,7 @@ class SettingsViewModel @Inject constructor(
     private val settings: SettingsRepository,
     private val interfaceLanguage: InterfaceLanguage,
     private val reminder: DailyReminder,
+    private val cards: HomeScreenCards,
 ) : ViewModel() {
     val state: StateFlow<SettingsUiState?> = settings.settings
         .map { SettingsUiState(it, interfaceLanguage.current()) }
@@ -78,6 +80,18 @@ class SettingsViewModel @Inject constructor(
     fun setReminderTime(time: LocalTime) = write { setReminderTime(time) }
 
     fun setAskedNotifications() = write { setAskedNotifications() }
+
+    /** Where the home-screen card stands now: read again whenever the page comes back. */
+    fun homeCard(): HomeCard = when {
+        cards.placed() -> HomeCard.PLACED
+        cards.canPin() -> HomeCard.ADD
+        else -> HomeCard.BY_HAND
+    }
+
+    /** The launcher's own question, "Add to the home screen?": it places the card on a yes. */
+    fun addCard() {
+        cards.pin()
+    }
 
     /** The permission answered, or the system's page left: the alarm follows what can show now. */
     fun accessMayHaveChanged() {

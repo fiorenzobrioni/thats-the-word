@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_label">La parola di oggi</string>
+    <string name="widget_desc">La parola di oggi in ogni lingua, e la tua serie.</string>
+
+    <string name="widget_eyebrow">La parola di oggi · #%1$d</string>
+    <string name="widget_eyebrow_short">#%1$d</string>
+
+    <string name="widget_language_it">Italiano</string>
+    <string name="widget_language_en">Inglese</string>
+    <string name="widget_language_es">Spagnolo</string>
+    <string name="widget_language_it_in_sentence">italiano</string>
+    <string name="widget_language_en_in_sentence">inglese</string>
+    <string name="widget_language_es_in_sentence">spagnolo</string>
+
+    <string name="widget_status_waiting">Ti aspetta</string>
+    <string name="widget_status_under_way">In corso</string>
+    <string name="widget_status_found">Trovata in %1$d</string>
+    <string name="widget_status_missed">Sfuggita</string>
+
+    <string name="widget_row_description">%1$s: %2$s</string>
+    <plurals name="widget_status_found_description">
+        <item quantity="one">trovata in %d tentativo</item>
+        <item quantity="many">trovata in %d tentativi</item>
+        <item quantity="other">trovata in %d tentativi</item>
+    </plurals>
+    <string name="widget_status_waiting_description">ti aspetta</string>
+    <string name="widget_status_under_way_description">in corso</string>
+    <string name="widget_status_missed_description">sfuggita</string>
+
+    <plurals name="widget_streak_long">
+        <item quantity="one">%1$d giorno di fila in %2$s</item>
+        <item quantity="many">%1$d giorni di fila in %2$s</item>
+        <item quantity="other">%1$d giorni di fila in %2$s</item>
+    </plurals>
+    <plurals name="widget_streak_short">
+        <item quantity="one">%d giorno di fila</item>
+        <item quantity="many">%d giorni di fila</item>
+        <item quantity="other">%d giorni di fila</item>
+    </plurals>
+    <plurals name="widget_streak_word">
+        <item quantity="one">di fila</item>
+        <item quantity="many">di fila</item>
+        <item quantity="other">di fila</item>
+    </plurals>
+
+    <string name="widget_unavailable_title">Non è stato possibile leggere le parole di oggi</string>
+    <string name="widget_unavailable_hint">Un tocco apre il gioco.</string>
+    <string name="widget_failure_title">Non è stato possibile disegnare questa scheda</string>
+
+    <string name="widget_config_title">La scheda</string>
+    <string name="widget_config_back">Indietro</string>
+    <string name="widget_config_preview_desc">La scheda, come sta nella schermata Home</string>
+    <string name="widget_config_size_placed">Come posata</string>
+    <string name="widget_config_resize_hint">Per cambiarne la misura, tieni premuta la scheda nella schermata Home e trascinane i bordi.</string>
+    <string name="widget_config_background">Su che cosa sta</string>
+    <string name="widget_bg_light">Chiaro</string>
+    <string name="widget_bg_dark">Scuro</string>
+    <string name="widget_bg_system">Come il telefono</string>
+    <string name="widget_bg_color">Un colore</string>
+    <string name="widget_color_blue">Blu</string>
+    <string name="widget_color_azure">Azzurro</string>
+    <string name="widget_color_green">Verde</string>
+    <string name="widget_color_teal">Petrolio</string>
+    <string name="widget_color_plum">Prugna</string>
+    <string name="widget_color_clay">Terracotta</string>
+    <string name="widget_config_opacity">Opacità</string>
+    <string name="widget_opacity_full">Piena</string>
+    <string name="widget_opacity_transparent">Trasparente</string>
+    <string name="widget_opacity_percent">%1$d%%</string>
+    <string name="widget_config_opacity_note">Sotto la metà, le parole prendono il colore dallo sfondo.</string>
+    <string name="widget_config_reset">Ripristina questa scheda</string>
+    <string name="widget_config_done">Fatto</string>
+    <!-- The picker's static preview (below Android 15): a sample day, written out. -->
+    <string name="widget_preview_eyebrow">La parola di oggi · #13</string>
+    <string name="widget_preview_status_it">Trovata in 4</string>
+    <string name="widget_preview_streak">6 giorni di fila in italiano</string>
+</resources>

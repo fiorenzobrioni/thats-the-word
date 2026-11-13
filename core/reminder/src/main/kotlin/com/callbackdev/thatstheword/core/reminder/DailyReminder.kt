@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.callbackdev.thatstheword.core.data.GameRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
+import com.callbackdev.thatstheword.core.data.TodayDoor
 import com.callbackdev.thatstheword.core.domain.reminder.ReminderSchedule
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
@@ -139,7 +140,7 @@ class DailyReminder @Inject constructor(
          * The extra that opens a language's word of today, from the reminder's touch and from the
          * launcher's shortcuts alike: its value is the language's tag.
          */
-        const val EXTRA_DAILY_LANGUAGE = "com.callbackdev.thatstheword.extra.DAILY_LANGUAGE"
+        const val EXTRA_DAILY_LANGUAGE = TodayDoor.EXTRA_DAILY_LANGUAGE
 
         private const val TAG = "ThatsTheWordReminder"
 

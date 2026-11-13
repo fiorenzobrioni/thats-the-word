@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The home-screen card (PLANNING.md §7.8, Phase 7b): its name and line in the launcher's picker. -->
+    <string name="widget_label">Today’s word</string>
+    <string name="widget_desc">Today’s word in each language, and your streak.</string>
+
+    <!-- The card's eyebrow, drawn in capitals; its short form on a narrow card. -->
+    <string name="widget_eyebrow">Today’s word · #%1$d</string>
+    <string name="widget_eyebrow_short">#%1$d</string>
+
+    <string name="widget_language_it">Italian</string>
+    <string name="widget_language_en">English</string>
+    <string name="widget_language_es">Spanish</string>
+    <!-- Inside a sentence: "7 days in a row in Italian". -->
+    <string name="widget_language_it_in_sentence">Italian</string>
+    <string name="widget_language_en_in_sentence">English</string>
+    <string name="widget_language_es_in_sentence">Spanish</string>
+    <!-- A language's code, on a card too narrow for its name. -->
+    <string name="widget_code_it" translatable="false">IT</string>
+    <string name="widget_code_en" translatable="false">EN</string>
+    <string name="widget_code_es" translatable="false">ES</string>
+
+    <!-- A language's word of today, in a row's few words: as the start page says it. -->
+    <string name="widget_status_waiting">Waiting</string>
+    <string name="widget_status_under_way">Under way</string>
+    <string name="widget_status_found">Found in %1$d</string>
+    <string name="widget_status_missed">Missed</string>
+
+    <!-- What TalkBack reads for a language's row, which opens its word: "Italian: found in 4 attempts". -->
+    <string name="widget_row_description">%1$s: %2$s</string>
+    <plurals name="widget_status_found_description">
+        <item quantity="one">found in %d attempt</item>
+        <item quantity="other">found in %d attempts</item>
+    </plurals>
+    <string name="widget_status_waiting_description">waiting</string>
+    <string name="widget_status_under_way_description">under way</string>
+    <string name="widget_status_missed_description">missed</string>
+
+    <!-- The game language's streak: the long line, its short form, and the word under its figure. -->
+    <plurals name="widget_streak_long">
+        <item quantity="one">%1$d day in a row in %2$s</item>
+        <item quantity="other">%1$d days in a row in %2$s</item>
+    </plurals>
+    <plurals name="widget_streak_short">
+        <item quantity="one">%d day in a row</item>
+        <item quantity="other">%d days in a row</item>
+    </plurals>
+    <plurals name="widget_streak_word">
+        <item quantity="one">in a row</item>
+        <item quantity="other">in a row</item>
+    </plurals>
+
+    <!-- The card that could not read the games: said, never waited on. -->
+    <string name="widget_unavailable_title">Today’s words could not be read</string>
+    <string name="widget_unavailable_hint">A touch opens the game.</string>
+    <string name="widget_failure_title">This card could not be drawn</string>
+
+    <!-- The card's settings (the launcher's long press, and when it is placed). -->
+    <string name="widget_config_title">The card</string>
+    <string name="widget_config_back">Back</string>
+    <string name="widget_config_preview_desc">The card, as it stands on the home screen</string>
+    <string name="widget_config_size_placed">As placed</string>
+    <string name="widget_config_resize_hint">To change its size, hold the card on the home screen and drag its edges.</string>
+    <string name="widget_config_background">What it stands on</string>
+    <string name="widget_bg_light">Light</string>
+    <string name="widget_bg_dark">Dark</string>
+    <string name="widget_bg_system">As the phone</string>
+    <string name="widget_bg_color">A colour</string>
+    <string name="widget_color_blue">Blue</string>
+    <string name="widget_color_azure">Azure</string>
+    <string name="widget_color_green">Green</string>
+    <string name="widget_color_teal">Teal</string>
+    <string name="widget_color_plum">Plum</string>
+    <string name="widget_color_clay">Clay</string>
+    <string name="widget_config_opacity">Opacity</string>
+    <string name="widget_opacity_full">Solid</string>
+    <string name="widget_opacity_transparent">See-through</string>
+    <string name="widget_opacity_percent">%1$d%%</string>
+    <string name="widget_config_opacity_note">Below half, the words take their colour from the wallpaper.</string>
+    <string name="widget_config_reset">Reset this card</string>
+    <string name="widget_config_done">Done</string>
+    <!-- The picker's static preview (below Android 15): a sample day, written out. -->
+    <string name="widget_preview_eyebrow">Today’s word · #13</string>
+    <string name="widget_preview_status_it">Found in 4</string>
+    <string name="widget_preview_streak">6 days in a row in Italian</string>
+</resources>

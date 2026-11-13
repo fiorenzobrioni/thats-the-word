@@ -206,4 +206,13 @@
     <string name="licences_cc_by_sa" translatable="false">CC BY-SA 4.0</string>
     <string name="settings_font_google_sans" translatable="false">Google Sans</string>
     <string name="settings_font_inter" translatable="false">Inter</string>
+
+    <!-- The home-screen card (PLANNING.md §8, the pin request). -->
+    <string name="settings_card_section">Home screen</string>
+    <string name="settings_card_add">Add the card</string>
+    <string name="settings_card_add_line">Today’s word in each language, and your streak, on your home screen.</string>
+    <string name="settings_card_placed">The card is on your home screen</string>
+    <string name="settings_card_placed_line">Hold it there to choose what it stands on.</string>
+    <string name="settings_card_by_hand">Today’s word, on the home screen</string>
+    <string name="settings_card_by_hand_line">Add it from the home screen’s widgets: hold an empty spot, then Widgets.</string>
 </resources>

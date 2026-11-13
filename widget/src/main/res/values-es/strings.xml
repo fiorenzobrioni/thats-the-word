@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_label">La palabra de hoy</string>
+    <string name="widget_desc">La palabra de hoy en cada idioma, y tu racha.</string>
+
+    <string name="widget_eyebrow">La palabra de hoy · #%1$d</string>
+    <string name="widget_eyebrow_short">#%1$d</string>
+
+    <string name="widget_language_it">Italiano</string>
+    <string name="widget_language_en">Inglés</string>
+    <string name="widget_language_es">Español</string>
+    <string name="widget_language_it_in_sentence">italiano</string>
+    <string name="widget_language_en_in_sentence">inglés</string>
+    <string name="widget_language_es_in_sentence">español</string>
+
+    <string name="widget_status_waiting">Te espera</string>
+    <string name="widget_status_under_way">En curso</string>
+    <string name="widget_status_found">Hallada en %1$d</string>
+    <string name="widget_status_missed">Se escapó</string>
+
+    <string name="widget_row_description">%1$s: %2$s</string>
+    <plurals name="widget_status_found_description">
+        <item quantity="one">encontrada en %d intento</item>
+        <item quantity="many">encontrada en %d intentos</item>
+        <item quantity="other">encontrada en %d intentos</item>
+    </plurals>
+    <string name="widget_status_waiting_description">te espera</string>
+    <string name="widget_status_under_way_description">en curso</string>
+    <string name="widget_status_missed_description">se escapó</string>
+
+    <plurals name="widget_streak_long">
+        <item quantity="one">%1$d día seguido en %2$s</item>
+        <item quantity="many">%1$d días seguidos en %2$s</item>
+        <item quantity="other">%1$d días seguidos en %2$s</item>
+    </plurals>
+    <plurals name="widget_streak_short">
+        <item quantity="one">%d día seguido</item>
+        <item quantity="many">%d días seguidos</item>
+        <item quantity="other">%d días seguidos</item>
+    </plurals>
+    <plurals name="widget_streak_word">
+        <item quantity="one">seguido</item>
+        <item quantity="many">seguidos</item>
+        <item quantity="other">seguidos</item>
+    </plurals>
+
+    <string name="widget_unavailable_title">No se pudieron leer las palabras de hoy</string>
+    <string name="widget_unavailable_hint">Un toque abre el juego.</string>
+    <string name="widget_failure_title">No se pudo dibujar esta tarjeta</string>
+
+    <string name="widget_config_title">La tarjeta</string>
+    <string name="widget_config_back">Atrás</string>
+    <string name="widget_config_preview_desc">La tarjeta, tal como está en la pantalla de inicio</string>
+    <string name="widget_config_size_placed">Como está</string>
+    <string name="widget_config_resize_hint">Para cambiar su tamaño, mantén pulsada la tarjeta en la pantalla de inicio y arrastra sus bordes.</string>
+    <string name="widget_config_background">Sobre qué está</string>
+    <string name="widget_bg_light">Claro</string>
+    <string name="widget_bg_dark">Oscuro</string>
+    <string name="widget_bg_system">Como el teléfono</string>
+    <string name="widget_bg_color">Un color</string>
+    <string name="widget_color_blue">Azul</string>
+    <string name="widget_color_azure">Celeste</string>
+    <string name="widget_color_green">Verde</string>
+    <string name="widget_color_teal">Petróleo</string>
+    <string name="widget_color_plum">Ciruela</string>
+    <string name="widget_color_clay">Arcilla</string>
+    <string name="widget_config_opacity">Opacidad</string>
+    <string name="widget_opacity_full">Opaca</string>
+    <string name="widget_opacity_transparent">Transparente</string>
+    <string name="widget_opacity_percent">%1$d%%</string>
+    <string name="widget_config_opacity_note">Por debajo de la mitad, las palabras toman su color del fondo.</string>
+    <string name="widget_config_reset">Restablecer esta tarjeta</string>
+    <string name="widget_config_done">Hecho</string>
+    <!-- The picker's static preview (below Android 15): a sample day, written out. -->
+    <string name="widget_preview_eyebrow">La palabra de hoy · #13</string>
+    <string name="widget_preview_status_it">Hallada en 4</string>
+    <string name="widget_preview_streak">6 días seguidos en italiano</string>
+</resources>

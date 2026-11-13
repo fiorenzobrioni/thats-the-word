@@ -157,6 +157,21 @@ internal fun LinkRow(title: String, line: String?, onClick: () -> Unit, tag: Str
     }
 }
 
+/** A row that only says something: its words, no control. */
+@Composable
+internal fun TextRow(title: String, line: String?, tag: String) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 64.dp)
+            .testTag(tag)
+            .padding(horizontal = 20.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RowWords(title, line, Modifier.weight(1f))
+    }
+}
+
 /** One of a few choices, each with its line: a radio row, the whole row its target. */
 @Composable
 internal fun RadioRow(

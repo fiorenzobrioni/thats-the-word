@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.callbackdev.thatstheword.core.domain.reminder.ReminderSchedule
 import com.callbackdev.thatstheword.core.model.AppFont
 import com.callbackdev.thatstheword.core.model.AppPalette
 import com.callbackdev.thatstheword.core.model.Language
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.time.LocalTime
 import javax.inject.Inject
 
 /**
@@ -27,7 +29,8 @@ import javax.inject.Inject
  * - sound and haptics on, the phone's silent mode and touch-feedback setting still followed (the
  *   owner, PLANNING §15, Open 13);
  * - the look the theme has worn since Phase 0: the phone's light or dark, the Vivid dress, Google
- *   Sans, the dress's own colours (whether Settings offers more is Open 14).
+ *   Sans, the dress's own colours (Settings offers the family's choices: the owner, Open 14);
+ * - the daily reminder off, at eight in the evening once it is on (PLANNING.md §8).
  */
 class SettingsRepository @Inject constructor(
     private val store: DataStore<Preferences>,
@@ -54,6 +57,10 @@ class SettingsRepository @Inject constructor(
         wallpaperColors = p[WALLPAPER_COLORS] ?: false,
         firstRunDone = p[FIRST_RUN_DONE] ?: false,
         tipsSeen = p[TIPS_SEEN] ?: false,
+        reminder = p[REMINDER] ?: false,
+        reminderTime = p[REMINDER_MINUTE]?.let { LocalTime.ofSecondOfDay(it.coerceIn(0, MINUTES_A_DAY - 1) * 60L) }
+            ?: ReminderSchedule.DEFAULT_TIME,
+        askedNotifications = p[ASKED_NOTIFICATIONS] ?: false,
     )
 
     suspend fun setGameLanguage(language: Language) {
@@ -105,10 +112,24 @@ class SettingsRepository @Inject constructor(
         store.edit { it[TIPS_SEEN] = true }
     }
 
+    suspend fun setReminder(on: Boolean) {
+        store.edit { it[REMINDER] = on }
+    }
+
+    /** The reminder's hour, to the minute: an alarm is no finer, and the picker offers no seconds. */
+    suspend fun setReminderTime(time: LocalTime) {
+        store.edit { it[REMINDER_MINUTE] = time.hour * 60 + time.minute }
+    }
+
+    suspend fun setAskedNotifications() {
+        store.edit { it[ASKED_NOTIFICATIONS] = true }
+    }
+
     /**
      * The player's choices from a backup (PLANNING.md §5), in one edit: every choice the file holds
      * replaces this phone's, a level the file has none for goes back to Base, and the first run reads
-     * as done. Whether the first-day tips were seen is the phone's, not the player's, and stays.
+     * as done. Whether the first-day tips were seen, and whether the phone was asked for
+     * notifications, are the phone's, not the player's, and stay.
      */
     suspend fun restore(settings: UserSettings) {
         store.edit { p ->
@@ -126,6 +147,8 @@ class SettingsRepository @Inject constructor(
             p[PALETTE] = settings.palette.name
             p[FONT] = settings.font.name
             p[WALLPAPER_COLORS] = settings.wallpaperColors
+            p[REMINDER] = settings.reminder
+            p[REMINDER_MINUTE] = settings.reminderTime.hour * 60 + settings.reminderTime.minute
             p[FIRST_RUN_DONE] = true
         }
     }
@@ -143,6 +166,11 @@ class SettingsRepository @Inject constructor(
         val WALLPAPER_COLORS = booleanPreferencesKey("wallpaper_colors")
         val FIRST_RUN_DONE = booleanPreferencesKey("first_run_done")
         val TIPS_SEEN = booleanPreferencesKey("tips_seen")
+        val REMINDER = booleanPreferencesKey("reminder")
+        val REMINDER_MINUTE = intPreferencesKey("reminder_minute")
+        val ASKED_NOTIFICATIONS = booleanPreferencesKey("asked_notifications")
+
+        const val MINUTES_A_DAY = 24 * 60
 
         fun levelKey(language: Language) = intPreferencesKey("level_${language.tag}")
 

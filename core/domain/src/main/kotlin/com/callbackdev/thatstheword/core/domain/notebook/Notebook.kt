@@ -18,10 +18,10 @@ object Notebook {
     /**
      * The solution's entry after a game finished on [date]: met once more, found or missed, with
      * hints or without. A replay as practice leaves the notebook as it was (PLANNING.md §4.6), as
-     * does a game not finished: null then.
+     * do the guided first game, a lesson, and a game not finished: null then.
      */
     fun afterGame(entry: NotebookEntry?, record: GameRecord, date: LocalDate): NotebookEntry? {
-        if (record.practice || !record.state.finished) return null
+        if (!record.counted) return null
         val won = record.state == GameState.WON
         val hinted = record.hints > 0
         val base = entry ?: NotebookEntry(

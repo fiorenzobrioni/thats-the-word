@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.callbackdev.thatstheword.core.data.db.GameEntity
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
+import com.callbackdev.thatstheword.core.domain.game.GuidedGame
 import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameState
@@ -281,5 +282,34 @@ class GameRepositoryTest {
         repository().save(id, accepted.game)
         repository().dailyGame(Language.ENGLISH, today, Language.ENGLISH, hard = false)
         assertThat(repository().load(id)!!.game.setup.hard).isTrue()
+    }
+
+    @Test
+    fun `the guided game is the language's fixed word, taken up, then started afresh, and counted nowhere`() = runTest {
+        val id = repository().guidedGame(Language.SPANISH, Language.ITALIAN)
+        val game = repository().load(id)!!.game
+        assertThat(game.setup.mode).isEqualTo(GameMode.Guided)
+        assertThat(game.setup.solution).isEqualTo(GuidedGame.solution(Language.SPANISH))
+        assertThat(game.setup.hard).isFalse()
+        // A foreign game has its hints, a lesson's too.
+        assertThat(game.setup.hintKinds).contains(HintKind.LETTER)
+        assertThat(repository().guidedGame(Language.SPANISH, Language.ITALIAN)).isEqualTo(id)
+        finish(id, won = true)
+        val again = repository().guidedGame(Language.SPANISH, Language.ITALIAN)
+        assertThat(again).isNotEqualTo(id)
+        // A lesson: no word kept, no milestone (a first win in another language would have been one).
+        assertThat(NotebookRepository(database) { clock }.entries().first()).isEmpty()
+        assertThat(NotebookRepository(database) { clock }.milestones().first()).isEmpty()
+        assertThat(repository().records().first().none { it.counted }).isTrue()
+    }
+
+    @Test
+    fun `today's word is finished once its counted game is won or lost`() = runTest {
+        assertThat(repository().dailyFinished(Language.ITALIAN, today)).isFalse()
+        val id = repository().dailyGame(Language.ITALIAN, today, Language.ITALIAN, hard = false)
+        assertThat(repository().dailyFinished(Language.ITALIAN, today)).isFalse()
+        finish(id, won = false)
+        assertThat(repository().dailyFinished(Language.ITALIAN, today)).isTrue()
+        assertThat(repository().dailyFinished(Language.ENGLISH, today)).isFalse()
     }
 }

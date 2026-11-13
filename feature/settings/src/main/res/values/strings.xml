@@ -66,4 +66,144 @@
     <string name="data_confirm_nothing_lost">This phone holds nothing yet: nothing is lost.</string>
     <string name="data_confirm_yes">Bring it back</string>
     <string name="data_confirm_no">Not now</string>
+    <!-- Settings (VISION §7, PLANNING.md §11 Phase 7). -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_back">Back</string>
+
+    <!-- How to play (the owner, PLANNING §15, Open 17): three lines and a sample row. -->
+    <string name="how_title">How to play</string>
+    <!-- The sample row's word: five letters, written in lower case; the page draws its capitals. -->
+    <string name="how_sample_word">plant</string>
+    <string name="how_sample_description">An example row: %1$s</string>
+    <string name="letter_mark">%1$s, %2$s</string>
+    <string name="mark_right_place">right place</string>
+    <string name="mark_elsewhere">elsewhere</string>
+    <string name="mark_absent">not in the word</string>
+    <string name="how_line_1">Find the hidden word in six attempts. Each try must be a real word.</string>
+    <string name="how_line_2">Each letter answers. Square in ink: in its place. Round in amber: elsewhere. Sunk: not in the word.</string>
+    <string name="how_line_3">A new word every day, in each language. Played in another language, hints and meanings come in yours.</string>
+    <string name="how_again">Play the first game again</string>
+
+    <!-- The game. -->
+    <string name="settings_game">The game</string>
+    <string name="settings_game_language">Game language</string>
+    <string name="settings_game_language_line">The language of the words you look for. The start page changes it too.</string>
+    <string name="settings_language_it">Italian</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_es">Spanish</string>
+    <string name="settings_language_it_in_sentence">Italian</string>
+    <string name="settings_language_en_in_sentence">English</string>
+    <string name="settings_language_es_in_sentence">Spanish</string>
+    <string name="settings_level">Free play’s level</string>
+    <string name="settings_level_line">In %1$s. Each language keeps its own; today’s word is the same for everyone.</string>
+    <string name="settings_level_base">Base</string>
+    <string name="settings_level_base_line">The words of every day.</string>
+    <string name="settings_level_intermediate">Intermediate</string>
+    <string name="settings_level_intermediate_line">Common words, a step further.</string>
+    <string name="settings_level_advanced">Advanced</string>
+    <string name="settings_level_advanced_line">Rarer words, for a practised ear.</string>
+    <string name="settings_level_complete">Complete</string>
+    <string name="settings_level_complete_line">Every word the game knows.</string>
+    <string name="settings_hard">Hard</string>
+    <string name="settings_hard_line">Every clue found must be used in the words that follow. From the next game.</string>
+
+    <!-- The app's language: Android's per-app picker, opened (PLANNING §15, Open 14). -->
+    <string name="settings_app_language_section">Language of the app</string>
+    <string name="settings_app_language_line">Pages, hints and meanings speak it. Your phone’s language settings keep the choice.</string>
+
+    <!-- The daily reminder (PLANNING.md §8). -->
+    <string name="settings_reminder_section">Daily reminder</string>
+    <string name="settings_reminder">Remind me of today’s word</string>
+    <string name="settings_reminder_line">One quiet notification, only while the word is still to find. Gone at midnight.</string>
+    <string name="settings_reminder_time">Time</string>
+    <string name="settings_reminder_time_line">Every day at %1$s</string>
+    <string name="settings_reminder_blocked_app">Notifications are off for That’s The Word, so the reminder cannot come.</string>
+    <string name="settings_reminder_blocked_channel">The reminder’s notifications are turned off in your phone’s settings.</string>
+    <string name="settings_reminder_fix">Open notification settings</string>
+    <string name="settings_time_title">Remind me at</string>
+    <string name="settings_time_done">Done</string>
+    <string name="settings_time_cancel">Cancel</string>
+
+    <!-- Sound, touch and motion (VISION §12; the owner, PLANNING §15, Open 13). -->
+    <string name="settings_feel">Sound and touch</string>
+    <string name="settings_sound">Sounds</string>
+    <string name="settings_sound_line">Short and soft, while you play. Silent whenever your phone is.</string>
+    <string name="settings_haptics">Vibration</string>
+    <string name="settings_haptics_line">A light touch under each key. It follows your phone’s touch feedback.</string>
+    <string name="settings_motion">Motion</string>
+    <!-- "Less motion turns every movement into a fade. Your phone asks for full motion now." -->
+    <string name="settings_motion_line">Less motion turns every movement into a fade. %1$s</string>
+    <string name="settings_motion_phone_full">Your phone asks for full motion now.</string>
+    <string name="settings_motion_phone_less">Your phone asks for less motion now.</string>
+    <string name="settings_motion_as_phone">As the phone</string>
+    <string name="settings_motion_less">Less</string>
+    <string name="settings_motion_full">Full</string>
+
+    <!-- The appearance, as the family's (PLANNING §15, Open 14). -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">As the phone</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_dress">Dress</string>
+    <string name="settings_dress_line">The pages’ colours. The letters’ colours are always the game’s.</string>
+    <string name="settings_dress_line_wallpaper">Your wallpaper’s colours are in use now. The dress returns when they are off.</string>
+    <string name="settings_dress_paper">Paper</string>
+    <string name="settings_dress_paper_line">Warm paper, amber</string>
+    <string name="settings_dress_vivid">Vivid</string>
+    <string name="settings_dress_vivid_line">Daylight white, azure</string>
+    <string name="settings_font">Typeface</string>
+    <string name="settings_font_google_sans_line">Round and open, the family’s own.</string>
+    <string name="settings_font_inter_line">Crisp and even, made for screens.</string>
+    <string name="settings_font_system">Your phone’s</string>
+    <string name="settings_font_system_line">Whatever face your phone uses.</string>
+    <string name="settings_wallpaper">Wallpaper colours</string>
+    <string name="settings_wallpaper_line">The pages take your wallpaper’s colours. The letters keep the game’s.</string>
+
+    <!-- Your data and About. -->
+    <string name="settings_data_section">Copies</string>
+    <string name="settings_data">Your data</string>
+    <string name="settings_data_line">Save a copy of your games and notebook, or bring one back.</string>
+    <string name="settings_about">About</string>
+    <string name="settings_privacy_title">That’s The Word sends nothing</string>
+    <string name="settings_privacy_line">No internet permission, no account, no ads, no tracking. A copy leaves this phone only when you save one, or when Android’s own backup takes it.</string>
+    <string name="settings_licences">Licences and sources</string>
+    <string name="settings_licences_line">The code, the typefaces and the words, each with its credit.</string>
+    <string name="settings_version">Version %1$s</string>
+
+    <!-- Licences and sources (VISION §10, PLANNING.md §6.7). -->
+    <string name="licences_title">Licences and sources</string>
+    <string name="licences_intro">That’s The Word is free software, and its words come from free sources. Each is credited here, as its licence asks.</string>
+    <string name="licences_section_game">The game</string>
+    <string name="licences_game_gives">Its code. The name and the mark are not covered by the licence.</string>
+    <string name="licences_section_typefaces">Typefaces</string>
+    <string name="licences_google_sans_gives">The default typeface, bundled, cut down to the letters the game prints.</string>
+    <string name="licences_inter_gives">The second typeface, bundled.</string>
+    <string name="licences_section_words">The words</string>
+    <string name="licences_hunspell_it_gives">The Italian words a guess may be.</string>
+    <string name="licences_hunspell_es_gives">The Spanish words a guess may be.</string>
+    <string name="licences_hunspell_es_licence">GPL-3.0-or-later, chosen among its three licences</string>
+    <string name="licences_scowl_gives">The English words a guess may be, and which are spelled two ways.</string>
+    <string name="licences_scowl_licence">SCOWL’s own permissive licence</string>
+    <string name="licences_wordfreq_gives">How common each word is: the levels.</string>
+    <string name="licences_wiktionary_gives">The solutions, their written forms, meanings and translations.</string>
+    <string name="licences_meanings_note">Meanings and translations are Wiktionary’s text, cut to a line, credited to its contributors and shared under CC BY-SA 4.0.</string>
+    <string name="licences_section_sounds">Sounds</string>
+    <string name="licences_sounds">Made by the game’s own code, from a few lines of arithmetic. No recording, nothing borrowed.</string>
+
+    <!-- Proper names and licences' names: the same in every language. -->
+    <string name="licences_game_name" translatable="false">That’s The Word</string>
+    <string name="licences_game_licence" translatable="false">GNU General Public License v3.0 or later</string>
+    <string name="licences_google_sans" translatable="false">Google Sans</string>
+    <string name="licences_inter" translatable="false">Inter, by Rasmus Andersson</string>
+    <string name="licences_ofl" translatable="false">SIL Open Font License 1.1</string>
+    <string name="licences_hunspell_it" translatable="false">Hunspell Italian dictionary, LibreItalia (5.1.1)</string>
+    <string name="licences_hunspell_es" translatable="false">Hunspell Spanish dictionaries, RLA-ES (2.9)</string>
+    <string name="licences_gpl3" translatable="false">GNU General Public License v3.0</string>
+    <string name="licences_scowl" translatable="false">SCOWL, by Kevin Atkinson (2020.12.07)</string>
+    <string name="licences_wordfreq" translatable="false">wordfreq, by Robyn Speer (3.1.1)</string>
+    <string name="licences_wiktionary" translatable="false">Wiktionary, through wiktextract and kaikki.org</string>
+    <string name="licences_cc_by_sa" translatable="false">CC BY-SA 4.0</string>
+    <string name="settings_font_google_sans" translatable="false">Google Sans</string>
+    <string name="settings_font_inter" translatable="false">Inter</string>
 </resources>

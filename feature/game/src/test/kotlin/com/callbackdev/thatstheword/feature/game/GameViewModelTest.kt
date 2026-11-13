@@ -12,6 +12,8 @@ import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.data.db.ThatsTheWordDatabase
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
+import com.callbackdev.thatstheword.core.domain.game.GuidedGame
+import com.callbackdev.thatstheword.core.domain.game.Lesson
 import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.share.ShareText
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
@@ -80,9 +82,13 @@ class GameViewModelTest {
 
     private fun games() = GameRepository(database, lexicons) { clock }
 
-    private fun viewModel(id: Long, speaks: Language = Language.ENGLISH) = GameViewModel(
+    private fun viewModel(
+        id: Long,
+        speaks: Language = Language.ENGLISH,
+        savedState: SavedStateHandle = SavedStateHandle(),
+    ) = GameViewModel(
         gameId = id,
-        savedState = SavedStateHandle(),
+        savedState = savedState,
         games = games(),
         lexicons = lexicons,
         settings = settings,
@@ -285,5 +291,51 @@ class GameViewModelTest {
         assertThat(added.removable).isTrue()
         model.toggleNotebook(0)
         assertThat(model.awaitState { !it.tried.single().inNotebook }.tried.single().inNotebook).isFalse()
+    }
+
+    private fun word(language: Language, key: String) = Alphabet.of(language).parse(key)!!
+
+    @Test
+    fun `the guided game says each rule once, the first time it happens, and ends with the game`() {
+        val id = runBlocking { games().guidedGame(Language.ENGLISH, Language.ENGLISH) }
+        val handle = SavedStateHandle()
+        val model = viewModel(id, savedState = handle)
+        assertThat(model.awaitState { it.lessons.isNotEmpty() }.lessons).containsExactly(Lesson.FIRST_GUESS)
+
+        // Too short, then not a word: each refusal teaches its rule once.
+        model.type(word(Language.ENGLISH, "hea"))
+        model.submit()
+        assertThat(model.awaitState { Lesson.FIVE_LETTERS in it.lessons }.lessons).containsExactly(Lesson.FIVE_LETTERS)
+        model.delete()
+        model.delete()
+        model.delete()
+        model.type(word(Language.ENGLISH, "qqqqq"))
+        model.submit()
+        assertThat(model.awaitState { Lesson.ONLY_WORDS in it.lessons }.lessons).containsExactly(Lesson.ONLY_WORDS)
+        repeat(5) { model.delete() }
+
+        // EARTH against HEART: every letter elsewhere.
+        model.type(word(Language.ENGLISH, "earth"))
+        model.submit()
+        assertThat(model.awaitState { it.rows.size == 1 }.lessons).containsExactly(Lesson.ELSEWHERE)
+        settle(id, 1)
+
+        // The page closed and opened again: what was said is not said again.
+        val again = viewModel(id, savedState = SavedStateHandle())
+        assertThat(again.awaitState().lessons).isEmpty()
+        again.type(word(Language.ENGLISH, "board"))
+        again.submit()
+        assertThat(again.awaitState { it.rows.size == 2 }.lessons)
+            .containsExactly(Lesson.RIGHT_PLACE, Lesson.ABSENT).inOrder()
+
+        again.type(GuidedGame.solution(Language.ENGLISH))
+        again.submit()
+        val end = again.awaitState { it.finished }
+        assertThat(end.lessons).isEmpty()
+        assertThat(end.next).isEqualTo(NextGame.START_PLAYING)
+        assertThat(end.shareable).isFalse()
+        var done = false
+        again.next(onGuidedDone = { done = true }) { error("the guided game opens no other game") }
+        assertThat(done).isTrue()
     }
 }

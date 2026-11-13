@@ -20,6 +20,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordTheme
 import com.callbackdev.thatstheword.core.domain.game.Game
+import com.callbackdev.thatstheword.core.domain.game.GuidedGame
+import com.callbackdev.thatstheword.core.domain.game.Lesson
 import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.domain.game.WordList
@@ -82,6 +84,23 @@ class GameScreenTest {
         return game
     }
 
+    /** The guided first game in [language], played to [guesses], for a player speaking [ui]. */
+    private fun guided(language: Language, vararg guesses: String, ui: Language = language): Game {
+        val alphabet = Alphabet.of(language)
+        val solution = GuidedGame.solution(language)
+        var game = Game.start(
+            GameSetup(
+                language = language,
+                mode = GameMode.Guided,
+                solution = solution,
+                interfaceLanguage = ui,
+                hintKinds = Lexicon(files, language).hintKinds(solution, ui),
+            ),
+        )
+        for (guess in guesses) game = (game.submit(alphabet.parse(guess)!!, anyWord) as Submission.Accepted).game
+        return game
+    }
+
     private fun state(
         game: Game,
         typed: String = "",
@@ -90,6 +109,7 @@ class GameScreenTest {
         practice: Boolean = false,
         notebook: Map<Word, NotebookEntry> = emptyMap(),
         milestones: List<Milestone> = emptyList(),
+        lessons: List<Lesson> = emptyList(),
     ): GameUiState {
         val alphabet = Alphabet.of(game.setup.language)
         return GameUiState.of(
@@ -100,6 +120,7 @@ class GameScreenTest {
             practice = practice,
             notebook = notebook,
             milestones = milestones,
+            lessons = lessons,
         )
     }
 
@@ -398,4 +419,61 @@ class GameScreenTest {
         withHints = 0,
         savedByHand = savedByHand,
     )
+
+    @Test
+    fun `the guided game asks for its first word under the grid, in place of the key`() {
+        draw(state(guided(Language.ENGLISH), lessons = listOf(Lesson.FIRST_GUESS)))
+        compose.onNodeWithText("First game", useUnmergedTree = true).assertExists()
+        compose.onNodeWithTag(GameTags.COACH).assertExists()
+        compose.onNodeWithContentDescription(
+            "Find the hidden word in 6 attempts. Start with any word of 5 letters.",
+        ).assertIsDisplayed()
+        compose.onNodeWithText("Right place").assertDoesNotExist()
+        compose.assertAccessible()
+        compose.writeScreenshot("game-guided-start")
+    }
+
+    @Test
+    @Config(qualifiers = "it-rIT-w411dp-h891dp-xxhdpi")
+    fun `a guided row says each new mark beside its tile, in Italian`() {
+        // RUOTA against CUORE: U and O in their places, R elsewhere, T and A absent.
+        val game = guided(Language.ITALIAN, "ruota")
+        draw(state(game, lessons = listOf(Lesson.RIGHT_PLACE, Lesson.ELSEWHERE, Lesson.ABSENT)))
+        compose.onNodeWithText("Quadrata, in inchiostro: la lettera è al suo posto.", useUnmergedTree = true)
+            .assertIsDisplayed()
+        compose.onNodeWithText("Tonda, in ambra: è nella parola, ma altrove.", useUnmergedTree = true)
+            .assertIsDisplayed()
+        compose.onNodeWithText("Affondata: la lettera non è nella parola.", useUnmergedTree = true)
+            .assertIsDisplayed()
+        compose.assertAccessible()
+        compose.writeScreenshot("game-guided-marks-it")
+    }
+
+    @Test
+    fun `with nothing new to say, the guided game shows the key of the marks`() {
+        draw(state(guided(Language.ENGLISH, "pious", "lymph")))
+        compose.onNodeWithTag(GameTags.COACH).assertDoesNotExist()
+        compose.onNodeWithText("Right place").assertIsDisplayed()
+    }
+
+    @Test
+    fun `a foreign guided game points at the hints`() {
+        draw(state(guided(Language.SPANISH, "playa", "mundo", ui = Language.ENGLISH), lessons = listOf(Lesson.HINTS)))
+        compose.onNodeWithContentDescription("Stuck? The bulb above gives a hint, for one attempt.").assertIsDisplayed()
+        compose.onNodeWithTag(GameTags.HINTS).assertIsDisplayed()
+        compose.assertAccessible()
+        compose.writeScreenshot("game-guided-hints")
+    }
+
+    @Test
+    @Config(qualifiers = "es-rES-w411dp-h891dp-xxhdpi")
+    fun `the guided game ends with the game itself, nothing to share, in Spanish`() {
+        draw(state(guided(Language.SPANISH, "mundo", "amigo")))
+        compose.onNodeWithText("Esa es la palabra.").assertExists()
+        compose.onNodeWithTag(GameTags.LESSON_DONE).assertExists()
+        compose.onNodeWithText("Eso es todo. Una palabra nueva cada día, en cada idioma.").assertExists()
+        compose.onNodeWithText("Empezar a jugar").assertExists()
+        compose.onNodeWithText("Compartir el resultado").assertDoesNotExist()
+        compose.walkPage(hasTestTag(GameTags.PAGE), "game-guided-end-es")
+    }
 }

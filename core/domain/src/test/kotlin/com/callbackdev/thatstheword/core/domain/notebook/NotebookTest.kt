@@ -4,6 +4,7 @@ import com.callbackdev.thatstheword.core.domain.DAY
 import com.callbackdev.thatstheword.core.domain.daily
 import com.callbackdev.thatstheword.core.domain.free
 import com.callbackdev.thatstheword.core.domain.word
+import com.callbackdev.thatstheword.core.model.GameMode
 import com.callbackdev.thatstheword.core.model.GameState
 import com.callbackdev.thatstheword.core.model.Language
 import com.google.common.truth.Truth.assertThat
@@ -45,6 +46,13 @@ class NotebookTest {
     fun `practice and a game not finished leave the notebook as it was`() {
         assertThat(Notebook.afterGame(null, daily(DAY, practice = true), DAY)).isNull()
         assertThat(Notebook.afterGame(null, daily(DAY, GameState.PLAYING), DAY)).isNull()
+    }
+
+    @Test
+    fun `the guided first game is a lesson, and keeps nothing`() {
+        val lesson = daily(DAY).copy(mode = GameMode.Guided, interfaceLanguage = Language.ENGLISH)
+        assertThat(lesson.counted).isFalse()
+        assertThat(Notebook.afterGame(null, lesson, DAY)).isNull()
     }
 
     @Test

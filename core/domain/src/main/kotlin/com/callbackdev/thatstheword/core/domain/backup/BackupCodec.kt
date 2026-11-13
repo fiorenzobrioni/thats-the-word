@@ -2,6 +2,7 @@ package com.callbackdev.thatstheword.core.domain.backup
 
 import com.callbackdev.thatstheword.core.domain.daily.DailyCalendar
 import com.callbackdev.thatstheword.core.domain.game.Move
+import com.callbackdev.thatstheword.core.domain.reminder.ReminderSchedule
 import com.callbackdev.thatstheword.core.domain.words.Alphabet
 import com.callbackdev.thatstheword.core.model.AppFont
 import com.callbackdev.thatstheword.core.model.AppPalette
@@ -24,6 +25,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import java.time.DateTimeException
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.Locale
 
 /** What reading a file came to. */
@@ -142,6 +144,8 @@ private fun Backup.toFile() = BackupFile(
         palette = name(settings.palette),
         font = name(settings.font),
         wallpaperColors = settings.wallpaperColors,
+        reminder = settings.reminder,
+        reminderTime = settings.reminderTime.toString(),
     ),
     games = games.map { game ->
         GameDto(
@@ -207,6 +211,11 @@ private fun BackupFile.toBackup(): Backup {
         wallpaperColors = chosen.wallpaperColors,
         firstRunDone = true,
         tipsSeen = false,
+        reminder = chosen.reminder,
+        // An hour this build cannot read is the hour not chosen: the reminder's own.
+        reminderTime = runCatching { LocalTime.parse(chosen.reminderTime) }.getOrDefault(ReminderSchedule.DEFAULT_TIME),
+        // Whether this phone asked for the permission is this phone's: the restoring phone decides.
+        askedNotifications = false,
     )
     val games = games.map { it.toGame() }
     checkDays(games)
@@ -359,6 +368,8 @@ internal data class SettingsDto(
     val palette: String = "vivid",
     val font: String = "google_sans",
     val wallpaperColors: Boolean = false,
+    val reminder: Boolean = false,
+    val reminderTime: String = "20:00",
 )
 
 @Serializable

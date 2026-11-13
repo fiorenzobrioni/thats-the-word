@@ -118,6 +118,49 @@ object GameIcons {
         }
     }
 
+    /** Settings: three sliders, each with its knob at another place. */
+    val Settings: ImageVector by lazy {
+        icon("Settings") {
+            moveTo(4f, 6f)
+            horizontalLineTo(11f)
+            moveTo(15f, 6f)
+            horizontalLineTo(20f)
+            moveTo(15f, 4f)
+            verticalLineTo(8f)
+            moveTo(4f, 12f)
+            horizontalLineTo(7f)
+            moveTo(11f, 12f)
+            horizontalLineTo(20f)
+            moveTo(7f, 10f)
+            verticalLineTo(14f)
+            moveTo(4f, 18f)
+            horizontalLineTo(13f)
+            moveTo(17f, 18f)
+            horizontalLineTo(20f)
+            moveTo(17f, 16f)
+            verticalLineTo(20f)
+        }
+    }
+
+    /** A page outside the app (the system's settings): an arrow leaving its box. */
+    val External: ImageVector by lazy {
+        icon("External") {
+            moveTo(14f, 4f)
+            horizontalLineTo(20f)
+            verticalLineTo(10f)
+            moveTo(20f, 4f)
+            lineTo(11f, 13f)
+            moveTo(18f, 14f)
+            verticalLineTo(18f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 16f, y1 = 20f)
+            horizontalLineTo(6f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 4f, y1 = 18f)
+            verticalLineTo(8f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = true, x1 = 6f, y1 = 6f)
+            horizontalLineTo(10f)
+        }
+    }
+
     /** The hints: a light bulb. */
     val Hint: ImageVector by lazy {
         icon("Hint") {

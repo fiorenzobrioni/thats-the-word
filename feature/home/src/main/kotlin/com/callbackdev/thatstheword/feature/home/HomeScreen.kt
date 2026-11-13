@@ -10,6 +10,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,8 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
@@ -64,6 +67,7 @@ import com.callbackdev.thatstheword.core.designsystem.components.GameTile
 import com.callbackdev.thatstheword.core.designsystem.components.PageGroup
 import com.callbackdev.thatstheword.core.designsystem.components.arrive
 import com.callbackdev.thatstheword.core.designsystem.components.inkButtonColors
+import com.callbackdev.thatstheword.core.designsystem.icons.GameIcons
 import com.callbackdev.thatstheword.core.designsystem.theme.GroupShape
 import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
@@ -104,6 +108,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onNotebook: () -> Unit = {},
     onProgress: () -> Unit = {},
+    onSettings: () -> Unit = {},
 ) {
     // Saveable, so the sections arrive once in the page's life, not at every return from a game.
     val arrived = rememberSaveable { mutableStateOf(false) }
@@ -116,11 +121,11 @@ fun HomeScreen(
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Vertical))
                 .padding(pageGutter())
                 .padding(horizontal = ScreenMargin)
-                .padding(top = 32.dp, bottom = 32.dp),
+                .padding(top = 8.dp, bottom = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(SECTION_GAP),
         ) {
-            Header(Modifier.arrive(0, arrived))
+            Header(onSettings, Modifier.arrive(0, arrived))
             LanguageSwitch(state, onLanguage, Modifier.arrive(1, arrived))
             TodayCard(state, onPlayToday, Modifier.arrive(2, arrived))
             StreakCard(state, onProgress, Modifier.arrive(3, arrived))
@@ -136,13 +141,25 @@ fun HomeScreen(
     }
 }
 
-/** The name, and the line under it: capitals drawn, the words kept for TalkBack. */
+/**
+ * The name, and the line under it: capitals drawn, the words kept for TalkBack. Settings is the
+ * quiet button in the page's upper corner, above the name, so the name keeps the page's middle.
+ */
 @Composable
-private fun Header(modifier: Modifier = Modifier) {
+private fun Header(onSettings: () -> Unit, modifier: Modifier = Modifier) {
     val locale = LocalConfiguration.current.locales[0]
     val name = stringResource(R.string.home_name)
     val tagline = stringResource(R.string.home_tagline)
     Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+            IconButton(onClick = onSettings, modifier = Modifier.testTag(HomeTags.SETTINGS)) {
+                Icon(
+                    GameIcons.Settings,
+                    contentDescription = stringResource(R.string.home_settings),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
         Text(
             text = name.uppercase(locale),
             style = ThatsTheWordTheme.type.wordmark,
@@ -603,6 +620,7 @@ private fun HardRow(hard: Boolean, onHard: (Boolean) -> Unit, modifier: Modifier
 /** What the tests find the page's parts by. */
 object HomeTags {
     const val PAGE = "home_page"
+    const val SETTINGS = "home_settings"
     const val TODAY = "home_today"
     const val PLAY_TODAY = "home_play_today"
     const val STREAK = "home_streak"

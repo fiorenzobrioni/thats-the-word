@@ -13,7 +13,9 @@ import java.time.LocalDate
  *
  * [startedOn] is the local date it was started on: a daily started on its own date is the day's,
  * one started later is from the archive. [practice] is a replay of a day already finished (the
- * owner, PLANNING §15, Open 9): not counted, not in the calendar.
+ * owner, PLANNING §15, Open 9): not counted, not in the calendar. The guided first game is a lesson,
+ * not a result (PLANNING.md §11 Phase 7): never counted either, so no milestone and no notebook
+ * entry comes of it.
  */
 data class GameRecord(
     val language: Language,
@@ -33,7 +35,7 @@ data class GameRecord(
     /** A daily played on its own date, not from the archive: what a streak is made of. */
     val onItsDate: Boolean get() = daily?.date == startedOn
 
-    val counted: Boolean get() = !practice && state.finished
+    val counted: Boolean get() = !practice && state.finished && mode != GameMode.Guided
 
     companion object {
         fun of(game: Game, startedOn: LocalDate, practice: Boolean = false): GameRecord = GameRecord(

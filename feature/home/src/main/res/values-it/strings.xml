@@ -114,4 +114,6 @@
         <item quantity="other">%d parole incontrate, con il loro significato.</item>
     </plurals>
     <string name="home_notebook_open">Apri il quaderno</string>
+    <!-- The start page's way to Settings (PLANNING.md §11 Phase 7), as TalkBack reads it. -->
+    <string name="home_settings">Impostazioni</string>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Il promemoria quotidiano: il suo canale, come lo elencano le impostazioni del sistema. -->
+    <string name="reminder_channel_name">Promemoria quotidiano</string>
+    <string name="reminder_channel_description">All’ora che scegli, solo nei giorni in cui la parola non è ancora stata giocata.</string>
+
+    <!-- La notifica: una frase sulla parola di oggi, e che cosa fa un tocco. -->
+    <string name="reminder_title">La parola di oggi ti aspetta</string>
+    <string name="reminder_text">In %1$s, ancora da trovare. Un tocco la apre.</string>
+    <string name="reminder_language_it">italiano</string>
+    <string name="reminder_language_en">inglese</string>
+    <string name="reminder_language_es">spagnolo</string>
+</resources>

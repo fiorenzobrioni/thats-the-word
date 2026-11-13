@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The first run (PLANNING.md §11 Phase 7). Short, calm, a little theatrical; the page draws
+         its capitals. The name stays in English in every language (VISION §2). -->
+    <string name="onboarding_name" translatable="false">That’s The Word</string>
+    <string name="onboarding_tagline">One word a day. Three languages.</string>
+    <!-- The word set down tile by tile on the welcome: "word", in the interface's language. -->
+    <string name="onboarding_word">word</string>
+    <!-- "Step 2 of 3", said with each page's heading. -->
+    <string name="onboarding_progress">Step %1$d of %2$d</string>
+
+    <string name="onboarding_promise_daily">A word a day</string>
+    <string name="onboarding_promise_daily_line">The same for everyone, in Italian, English and Spanish.</string>
+    <string name="onboarding_promise_learn">A language to practise</string>
+    <string name="onboarding_promise_learn_line">Play in one you are learning: hints and meanings come in yours.</string>
+    <string name="onboarding_promise_private">Nothing else</string>
+    <string name="onboarding_promise_private_line">No account, no ads. That’s The Word sends nothing.</string>
+
+    <string name="onboarding_language_title">Which language will you play in?</string>
+    <string name="onboarding_language_body">You can change it any time, and play all three.</string>
+    <string name="onboarding_language_it">Italian</string>
+    <string name="onboarding_language_en">English</string>
+    <string name="onboarding_language_es">Spanish</string>
+    <string name="onboarding_language_it_in_sentence">Italian</string>
+    <string name="onboarding_language_en_in_sentence">English</string>
+    <string name="onboarding_language_es_in_sentence">Spanish</string>
+    <string name="onboarding_language_own">Your language: the classic game.</string>
+    <!-- "To practise, with hints and meanings in English." -->
+    <string name="onboarding_language_foreign">To practise, with hints and meanings in %1$s.</string>
+
+    <string name="onboarding_level_title">Where shall we start?</string>
+    <!-- "In Spanish, the words are sorted by how common they are. Base is the place to begin." -->
+    <string name="onboarding_level_body">In %1$s, the words are sorted by how common they are. Base is the place to begin.</string>
+    <string name="onboarding_level_base">Base</string>
+    <string name="onboarding_level_base_line">The words of every day.</string>
+    <string name="onboarding_level_intermediate">Intermediate</string>
+    <string name="onboarding_level_intermediate_line">Common words, a step further.</string>
+    <string name="onboarding_level_advanced">Advanced</string>
+    <string name="onboarding_level_advanced_line">Rarer words, for a practised ear.</string>
+    <string name="onboarding_level_complete">Complete</string>
+    <string name="onboarding_level_complete_line">Every word the game knows.</string>
+
+    <string name="onboarding_begin">Begin</string>
+    <string name="onboarding_next">Continue</string>
+    <string name="onboarding_play_first">Play the first game</string>
+    <string name="onboarding_skip">I know how to play</string>
+</resources>

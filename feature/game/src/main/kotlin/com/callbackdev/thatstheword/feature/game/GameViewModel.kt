@@ -10,6 +10,8 @@ import com.callbackdev.thatstheword.core.data.NotebookRepository
 import com.callbackdev.thatstheword.core.data.SavedGame
 import com.callbackdev.thatstheword.core.data.SettingsRepository
 import com.callbackdev.thatstheword.core.domain.game.Game
+import com.callbackdev.thatstheword.core.domain.game.GuidedLessons
+import com.callbackdev.thatstheword.core.domain.game.Lesson
 import com.callbackdev.thatstheword.core.domain.game.Refusal
 import com.callbackdev.thatstheword.core.domain.game.Submission
 import com.callbackdev.thatstheword.core.domain.share.ShareText
@@ -42,7 +44,7 @@ import kotlinx.coroutines.sync.withLock
  * costing nothing. The game is the database's: taken up from its moves, wherever it was left.
  *
  * The letters typed and not yet submitted live in [SavedStateHandle], so a page the system took
- * away comes back with them.
+ * away comes back with them; so do the guided game's lessons already said, so none is said twice.
  */
 @HiltViewModel(assistedFactory = GameViewModel.Factory::class)
 class GameViewModel @AssistedInject constructor(
@@ -68,6 +70,10 @@ class GameViewModel @AssistedInject constructor(
     /** The milestones the game reached while the page was open: said once, on its end card. */
     private val reached = MutableStateFlow<List<Milestone>>(emptyList())
 
+    /** The guided game's lessons said, and those said now (PLANNING.md §11 Phase 7). */
+    private val said = savedState.get<IntArray>(SAID)?.mapTo(LinkedHashSet()) { Lesson.entries[it] } ?: LinkedHashSet()
+    private val lessons = MutableStateFlow<List<Lesson>>(emptyList())
+
     /** The game language's words in the notebook, for the end card's marks. */
     private val kept = combine(saved.map { it?.game?.setup?.language }.distinctUntilChanged(), notebook.entries()) {
             language,
@@ -80,7 +86,8 @@ class GameViewModel @AssistedInject constructor(
     private val speaks = interfaceLanguage.current()
 
     val state: StateFlow<GameUiState?> =
-        combine(saved, typed, refusal, kept, reached) { saved, typed, refusal, kept, reached ->
+        combine(saved, typed, refusal, kept, combine(reached, lessons, ::Pair)) { saved, typed, refusal, kept, said ->
+            val (reached, lessons) = said
             saved?.let {
                 GameUiState.of(
                     game = it.game,
@@ -91,6 +98,7 @@ class GameViewModel @AssistedInject constructor(
                     interfaceLanguage = speaks,
                     notebook = kept,
                     milestones = reached,
+                    lessons = lessons,
                 )
             }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
@@ -99,8 +107,27 @@ class GameViewModel @AssistedInject constructor(
     val haptics: StateFlow<Boolean> = settings.settings.map { it.haptics }
         .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
+    /** Sound on or off (the same answer: on, silent whenever the phone is). */
+    val sound: StateFlow<Boolean> = settings.settings.map { it.sound }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
     init {
-        viewModelScope.launch { saved.value = games.load(gameId) }
+        viewModelScope.launch {
+            val loaded = games.load(gameId)
+            loaded?.game?.takeIf { it.setup.mode == GameMode.Guided }?.let { game ->
+                // A guided game taken up has taught what its rows showed already.
+                say(GuidedLessons.taught(game).toList(), show = false)
+                say(GuidedLessons.atStart(game, said))
+            }
+            saved.value = loaded
+        }
+    }
+
+    /** Lessons said now (shown, unless [show] is false) and remembered as said. */
+    private fun say(new: List<Lesson>, show: Boolean = true) {
+        if (show) lessons.value = new
+        said += new
+        savedState[SAID] = said.map { it.ordinal }.toIntArray()
     }
 
     fun type(letter: Letter) {
@@ -133,12 +160,17 @@ class GameViewModel @AssistedInject constructor(
         } else {
             game.submit(word, lexicons.of(game.setup.language).accepted)
         }
+        val guided = game.setup.mode == GameMode.Guided
         when (submission) {
-            is Submission.Refused -> refusal.value = refusalOf(submission.reason, current)
+            is Submission.Refused -> {
+                refusal.value = refusalOf(submission.reason, current)
+                if (guided) GuidedLessons.afterRefusal(submission.reason, said).takeIf { it.isNotEmpty() }?.let(::say)
+            }
 
             is Submission.Accepted -> {
                 refusal.value = null
                 setTyped(emptyList())
+                if (guided) say(GuidedLessons.afterGuess(submission.game, said))
                 play(current, submission.game)
             }
         }
@@ -191,8 +223,9 @@ class GameViewModel @AssistedInject constructor(
      * again as practice (PLANNING.md §4.6), or another free word at the game language's level
      * (PLANNING.md §4.7). Hard and the interface are read now, for the new game.
      */
-    fun next(onOpened: (Long) -> Unit) {
+    fun next(onGuidedDone: () -> Unit = {}, onOpened: (Long) -> Unit) {
         val game = saved.value?.game?.takeIf { it.state.finished } ?: return
+        if (game.setup.mode == GameMode.Guided) return onGuidedDone()
         if (opening?.isActive == true) return
         opening = viewModelScope.launch {
             val current = settings.current()
@@ -238,5 +271,6 @@ class GameViewModel @AssistedInject constructor(
 
     private companion object {
         const val TYPED = "typed"
+        const val SAID = "lessons_said"
     }
 }

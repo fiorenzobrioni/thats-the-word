@@ -36,6 +36,10 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE language = :language AND daily_date = :date AND practice > 0 ORDER BY practice")
     suspend fun practiceDailies(language: String, date: Long): List<GameEntity>
 
+    /** A language's guided first games, oldest first (PLANNING.md §11 Phase 7). */
+    @Query("SELECT * FROM games WHERE language = :language AND mode = 'guided' ORDER BY id")
+    suspend fun guidedGames(language: String): List<GameEntity>
+
     /** A language's free games, oldest first: free play's history (PLANNING.md §4.7). */
     @Query("SELECT * FROM games WHERE language = :language AND mode = 'free' ORDER BY id")
     suspend fun freeGames(language: String): List<GameEntity>
@@ -95,7 +99,7 @@ interface GameDao {
     @Query("DELETE FROM games")
     suspend fun deleteAllGames()
 
-    /** The games that count, finished and not practice: what Your data says the phone holds. */
-    @Query("SELECT COUNT(*) FROM games WHERE practice = 0 AND status != 'playing'")
+    /** The games that count, finished, not practice, not the guided lesson: what Your data says the phone holds. */
+    @Query("SELECT COUNT(*) FROM games WHERE practice = 0 AND status != 'playing' AND mode != 'guided'")
     fun observeCountedCount(): Flow<Int>
 }

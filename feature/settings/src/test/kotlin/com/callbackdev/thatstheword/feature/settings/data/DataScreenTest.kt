@@ -29,6 +29,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * Your data drawn from its states (PLANNING.md §12): what the phone holds, a copy saved, a copy
@@ -63,6 +64,9 @@ class DataScreenTest {
             wallpaperColors = false,
             firstRunDone = true,
             tipsSeen = false,
+            reminder = false,
+            reminderTime = LocalTime.of(20, 0),
+            askedNotifications = false,
         ),
         games = emptyList(),
         notebook = emptyList(),

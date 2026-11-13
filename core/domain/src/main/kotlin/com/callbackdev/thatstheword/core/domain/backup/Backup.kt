@@ -36,7 +36,7 @@ data class BackupGame(
     /** Where the game stands, by replaying its moves: never read from the file as it says it. */
     val state: GameState get() = replay(moves).state
 
-    val counted: Boolean get() = practice == 0 && state.finished
+    val counted: Boolean get() = practice == 0 && state.finished && mode != GameMode.Guided
 
     internal fun replay(moves: List<Move>): Game = Game.restore(
         GameSetup(

@@ -107,9 +107,11 @@ dependencies {
     implementation(project(":core:words"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
+    implementation(project(":core:reminder"))
     implementation(project(":feature:game"))
     implementation(project(":feature:home"))
     implementation(project(":feature:notebook"))
+    implementation(project(":feature:onboarding"))
     implementation(project(":feature:progress"))
     implementation(project(":feature:settings"))
 

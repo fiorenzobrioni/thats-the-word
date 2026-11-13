@@ -8,6 +8,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.callbackdev.thatstheword.R
 import com.callbackdev.thatstheword.core.model.Language
+import com.callbackdev.thatstheword.core.reminder.DailyReminder
 
 /**
  * "Today's word" in each game language on the launcher's long press (PLANNING.md §8): each opens
@@ -19,7 +20,8 @@ import com.callbackdev.thatstheword.core.model.Language
  * language, or the game language), and left alone otherwise.
  */
 object TodayShortcuts {
-    const val EXTRA_DAILY_LANGUAGE = "com.callbackdev.thatstheword.extra.DAILY_LANGUAGE"
+    /** The daily reminder's touch asks with the same extra: one door into today's word. */
+    const val EXTRA_DAILY_LANGUAGE = DailyReminder.EXTRA_DAILY_LANGUAGE
 
     fun publish(context: Context, gameLanguage: Language) {
         val order = listOf(gameLanguage) + Language.entries.filter { it != gameLanguage }

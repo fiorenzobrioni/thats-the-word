@@ -40,6 +40,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.callbackdev.thatstheword.core.designsystem.components.ChoiceSegments
 import com.callbackdev.thatstheword.core.designsystem.components.Eyebrow
 import com.callbackdev.thatstheword.core.designsystem.components.GameTile
 import com.callbackdev.thatstheword.core.designsystem.components.PageGroup
@@ -103,7 +104,7 @@ fun ProgressScreen(
                 verticalArrangement = Arrangement.spacedBy(SECTION_GAP),
             ) {
                 if (state.languages.size > 1) {
-                    Segments(
+                    ChoiceSegments(
                         options = state.languages,
                         selected = state.language,
                         label = { stringResource(languageName(it)) },
@@ -144,7 +145,7 @@ private fun StatisticsCard(state: ProgressUiState, onMode: (ProgressMode) -> Uni
         }
         val language = stringResource(languageName(state.language))
         if (state.modes.size > 1) {
-            Segments(
+            ChoiceSegments(
                 options = state.modes,
                 selected = state.mode,
                 label = { stringResource(modeName(it)) },

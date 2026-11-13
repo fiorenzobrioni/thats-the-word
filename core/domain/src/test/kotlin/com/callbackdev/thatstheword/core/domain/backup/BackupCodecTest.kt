@@ -18,6 +18,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * The backup file (PLANNING.md §5, §11 Phase 6): the round trip, and every file that must not be
@@ -68,6 +69,9 @@ class BackupCodecTest {
         wallpaperColors = true,
         firstRunDone = true,
         tipsSeen = false,
+        reminder = true,
+        reminderTime = LocalTime.of(21, 15),
+        askedNotifications = false,
     )
 
     private val backup = Backup(
@@ -266,6 +270,27 @@ class BackupCodecTest {
         assertThat(milestone.milestones).isEmpty()
         val level = ok(edited("\"it\": \"advanced\"", "\"it\": \"legendary\""))
         assertThat(level.settings.levels).doesNotContainKey(Language.ITALIAN)
+        val hour = ok(edited("\"reminderTime\": \"21:15\"", "\"reminderTime\": \"teatime\""))
+        assertThat(hour.settings.reminderTime).isEqualTo(LocalTime.of(20, 0))
+    }
+
+    @Test
+    fun `the reminder and its hour travel, whether this phone asked for notifications does not`() {
+        val back = ok(BackupCodec.encode(backup.copy(settings = settings.copy(askedNotifications = true))))
+        assertThat(back.settings.reminder).isTrue()
+        assertThat(back.settings.reminderTime).isEqualTo(LocalTime.of(21, 15))
+        assertThat(back.settings.askedNotifications).isFalse()
+    }
+
+    @Test
+    fun `a backup written before the reminder reads with it off`() {
+        val text = BackupCodec.encode(backup)
+            .replace(",\n    \"reminder\": true", "")
+            .replace(",\n    \"reminderTime\": \"21:15\"", "")
+        assertThat(text).doesNotContain("reminder")
+        val back = ok(text)
+        assertThat(back.settings.reminder).isFalse()
+        assertThat(back.settings.reminderTime).isEqualTo(LocalTime.of(20, 0))
     }
 
     @Test

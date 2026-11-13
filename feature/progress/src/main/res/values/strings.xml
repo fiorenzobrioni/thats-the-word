@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The progress page (VISION §11, PLANNING.md §11 Phase 6). Capitals are drawn, never written. -->
+    <string name="progress_title">Your progress</string>
+    <string name="progress_back">Back</string>
+    <string name="progress_language_it">Italian</string>
+    <string name="progress_language_en">English</string>
+    <string name="progress_language_es">Spanish</string>
+    <string name="progress_mode_daily">The daily word</string>
+    <string name="progress_mode_free">Free play</string>
+    <!-- "The daily word · Italian", above the statistics. -->
+    <string name="progress_mode_language">%1$s · %2$s</string>
+    <string name="progress_nothing">Nothing played yet. Your statistics gather here, one game after another.</string>
+
+    <!-- The sentence before the numbers, by how many were found: "Daily words: 23 found out of 27." -->
+    <plurals name="progress_daily_sentence">
+        <item quantity="one">Daily words: %1$d found out of %2$d.</item>
+        <item quantity="other">Daily words: %1$d found out of %2$d.</item>
+    </plurals>
+    <plurals name="progress_free_sentence">
+        <item quantity="one">Free words: %1$d found out of %2$d.</item>
+        <item quantity="other">Free words: %1$d found out of %2$d.</item>
+    </plurals>
+    <!-- Under the share found, "85%". -->
+    <string name="progress_share_daily">of the daily words found</string>
+    <string name="progress_share_free">of the free words found</string>
+    <string name="progress_streak_now">current streak</string>
+    <string name="progress_streak_longest">longest streak</string>
+
+    <!-- The distribution of the games won by the attempts they used, a hint being one. -->
+    <string name="progress_found_in">Found in</string>
+    <string name="progress_not_found_mark" translatable="false">X</string>
+    <plurals name="progress_row_attempts">
+        <item quantity="one">In %d attempt</item>
+        <item quantity="other">In %d attempts</item>
+    </plurals>
+    <string name="progress_row_not_found">Not found</string>
+    <plurals name="progress_row_games">
+        <item quantity="one">%d game</item>
+        <item quantity="other">%d games</item>
+    </plurals>
+    <!-- A row as TalkBack reads it: "In 4 attempts: 9 games." -->
+    <string name="progress_row">%1$s: %2$s.</string>
+    <string name="progress_row_latest">%1$s Your latest game.</string>
+
+    <!-- Hints and Hard, counted apart (VISION §9). -->
+    <string name="progress_apart">Counted apart</string>
+    <string name="progress_with_hints">with hints</string>
+    <string name="progress_in_hard">in Hard</string>
+
+    <!-- The milestones (PLANNING.md §4.8): recognition, never a key. -->
+    <string name="progress_milestones">Milestones</string>
+    <string name="progress_milestones_none">None reached yet. Each one stays, once it is.</string>
+    <plurals name="progress_milestones_sentence">
+        <item quantity="one">%1$d of %2$d reached. It stays for good.</item>
+        <item quantity="other">%1$d of %2$d reached. They stay for good.</item>
+    </plurals>
+    <string name="progress_milestone_seven">Seven in a row</string>
+    <string name="progress_milestone_seven_line">Today’s word found seven days running, in one language.</string>
+    <string name="progress_milestone_foreign">Another language</string>
+    <string name="progress_milestone_foreign_line">A first word found in a language other than yours.</string>
+    <string name="progress_milestone_hundred">A hundred words</string>
+    <string name="progress_milestone_hundred_line">A hundred words met, kept in your notebook.</string>
+    <string name="progress_milestone_three">Three in a day</string>
+    <string name="progress_milestone_three_line">One day’s word found in all three languages.</string>
+    <string name="progress_reached_on">Reached on %1$s</string>
+    <!-- How near a milestone is: "3 of 7". -->
+    <string name="progress_near">%1$d of %2$d</string>
+    <string name="progress_not_yet">Not yet</string>
+
+    <!-- Your data (PLANNING.md §5), from the foot of the page. -->
+    <string name="progress_data">Your data</string>
+    <string name="progress_data_line">Your games, your notebook and your milestones, copied to a file to keep, or brought back from one.</string>
+    <string name="progress_data_open">Open your data</string>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_title">Tus datos</string>
+    <string name="data_back">Atrás</string>
+    <string name="data_intro">That’s The Word no envía nada: ni cuenta ni servidor. Tus partidas se quedan en este teléfono, en la copia de seguridad de Android cuando está activa, y en cada copia que guardes.</string>
+    <string name="data_phone">En este teléfono</string>
+    <plurals name="data_games_line">
+        <item quantity="one">partida jugada</item>
+        <item quantity="many">partidas jugadas</item>
+        <item quantity="other">partidas jugadas</item>
+    </plurals>
+    <plurals name="data_words_line">
+        <item quantity="one">palabra en el cuaderno</item>
+        <item quantity="many">palabras en el cuaderno</item>
+        <item quantity="other">palabras en el cuaderno</item>
+    </plurals>
+    <plurals name="data_milestones_line">
+        <item quantity="one">hito</item>
+        <item quantity="many">hitos</item>
+        <item quantity="other">hitos</item>
+    </plurals>
+    <plurals name="data_games">
+        <item quantity="one">%d partida jugada</item>
+        <item quantity="many">%d partidas jugadas</item>
+        <item quantity="other">%d partidas jugadas</item>
+    </plurals>
+    <plurals name="data_words">
+        <item quantity="one">%d palabra en el cuaderno</item>
+        <item quantity="many">%d palabras en el cuaderno</item>
+        <item quantity="other">%d palabras en el cuaderno</item>
+    </plurals>
+    <plurals name="data_milestones">
+        <item quantity="one">%d hito</item>
+        <item quantity="many">%d hitos</item>
+        <item quantity="other">%d hitos</item>
+    </plurals>
+    <string name="data_nothing">Nada todavía: ninguna partida terminada, ninguna palabra guardada.</string>
+
+    <string name="data_save">Guarda una copia</string>
+    <string name="data_save_line">Tus partidas, tu cuaderno, tus hitos y tus preferencias, en un archivo que guardas donde quieras.</string>
+    <string name="data_save_button">Guardar una copia</string>
+    <string name="data_restore">Recupera una</string>
+    <string name="data_restore_line">Abre una copia guardada antes. Ocupa el lugar de lo que hay en este teléfono, cuando digas que sí.</string>
+    <string name="data_restore_button">Abrir una copia</string>
+    <string name="data_saving">Guardando la copia…</string>
+    <string name="data_reading">Leyendo la copia…</string>
+    <string name="data_restoring">Recuperándola…</string>
+
+    <string name="data_saved_as">Copia guardada como %1$s.</string>
+    <string name="data_saved">Copia guardada.</string>
+    <string name="data_holds">Contiene %1$s.</string>
+    <string name="data_holds_choices">Contiene tus preferencias, y aún ninguna partida.</string>
+    <string name="data_restored">La copia ha vuelto: %1$s.</string>
+    <string name="data_restored_choices">La copia ha vuelto, con tus preferencias.</string>
+    <string name="data_failed_write">No se pudo escribir la copia ahí. Prueba en otro sitio.</string>
+    <string name="data_failed_read">No se pudo abrir ese archivo.</string>
+    <string name="data_failed_not_a_backup">Ese archivo no es una copia de That’s The Word.</string>
+    <string name="data_failed_too_new">Esa copia viene de un That’s The Word más reciente. Actualiza la aplicación y vuelve a abrirla.</string>
+    <string name="data_failed_damaged">Esa copia está dañada y no se puede recuperar. No ha cambiado nada.</string>
+    <string name="data_failed_restore">No se pudo recuperar la copia. No ha cambiado nada.</string>
+    <string name="data_close">Cerrar</string>
+
+    <string name="data_confirm_title">¿Recuperar esta copia?</string>
+    <string name="data_confirm_holds">Guardada el %1$s, contiene %2$s.</string>
+    <string name="data_confirm_holds_choices">Guardada el %1$s, contiene tus preferencias, y aún ninguna partida.</string>
+    <string name="data_confirm_replaces">Ocupará el lugar de lo que hay en este teléfono: %1$s.</string>
+    <string name="data_confirm_nothing_lost">En este teléfono aún no hay nada: no se pierde nada.</string>
+    <string name="data_confirm_yes">Recuperarla</string>
+    <string name="data_confirm_no">Ahora no</string>
+</resources>

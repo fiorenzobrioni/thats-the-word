@@ -110,6 +110,8 @@ dependencies {
     implementation(project(":feature:game"))
     implementation(project(":feature:home"))
     implementation(project(":feature:notebook"))
+    implementation(project(":feature:progress"))
+    implementation(project(":feature:settings"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

@@ -4,7 +4,6 @@ import android.text.format.DateFormat
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -34,16 +33,13 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,7 +48,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
@@ -64,7 +59,11 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.callbackdev.thatstheword.core.designsystem.components.Eyebrow
 import com.callbackdev.thatstheword.core.designsystem.components.GameTile
+import com.callbackdev.thatstheword.core.designsystem.components.PageGroup
+import com.callbackdev.thatstheword.core.designsystem.components.arrive
+import com.callbackdev.thatstheword.core.designsystem.components.inkButtonColors
 import com.callbackdev.thatstheword.core.designsystem.theme.GroupShape
 import com.callbackdev.thatstheword.core.designsystem.theme.ScreenMargin
 import com.callbackdev.thatstheword.core.designsystem.theme.ThatsTheWordMotion
@@ -78,11 +77,9 @@ import com.callbackdev.thatstheword.core.model.GameSetup
 import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.core.model.Level
 import com.callbackdev.thatstheword.core.model.Mark
-import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 /**
  * The start page (VISION §7, PLANNING.md §11 Phase 4), drawn from its state alone: the name; the
@@ -106,6 +103,7 @@ fun HomeScreen(
     onHard: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     onNotebook: () -> Unit = {},
+    onProgress: () -> Unit = {},
 ) {
     // Saveable, so the sections arrive once in the page's life, not at every return from a game.
     val arrived = rememberSaveable { mutableStateOf(false) }
@@ -125,9 +123,9 @@ fun HomeScreen(
             Header(Modifier.arrive(0, arrived))
             LanguageSwitch(state, onLanguage, Modifier.arrive(1, arrived))
             TodayCard(state, onPlayToday, Modifier.arrive(2, arrived))
-            StreakCard(state, Modifier.arrive(3, arrived))
-            Group(Modifier.arrive(4, arrived)) {
-                Eyebrow(R.string.home_calendar_eyebrow)
+            StreakCard(state, onProgress, Modifier.arrive(3, arrived))
+            PageGroup(Modifier.arrive(4, arrived)) {
+                Eyebrow(stringResource(R.string.home_calendar_eyebrow))
                 Spacer(Modifier.height(4.dp))
                 Calendar(state.month, onMonth, onDay)
             }
@@ -135,27 +133,6 @@ fun HomeScreen(
             if (state.notebookSize > 0) NotebookCard(state.notebookSize, onNotebook, Modifier.arrive(6, arrived))
             HardRow(state.hard, onHard, Modifier.arrive(7, arrived))
         }
-    }
-}
-
-/**
- * A section arriving: it rises a little and appears, [index] steps after the first, the first
- * time the page is drawn; a fade under reduced motion; at rest when it already arrived once.
- */
-@Composable
-private fun Modifier.arrive(index: Int, arrived: MutableState<Boolean>): Modifier {
-    val reduced = reducedMotion()
-    val progress = remember { Animatable(if (arrived.value) 1f else 0f) }
-    LaunchedEffect(Unit) {
-        if (progress.value < 1f) {
-            delay(index * SECTION_STAGGER_MILLIS)
-            progress.animateTo(1f, ThatsTheWordMotion.spatial(reduced))
-            arrived.value = true
-        }
-    }
-    return graphicsLayer {
-        alpha = progress.value.coerceIn(0f, 1f)
-        if (!reduced) translationY = (1f - progress.value) * ARRIVAL_RISE.toPx()
     }
 }
 
@@ -295,7 +272,7 @@ private fun statusSentence(today: LanguageToday): String = when (today.status) {
 @Composable
 private fun TodayCard(state: HomeUiState, onPlay: () -> Unit, modifier: Modifier = Modifier) {
     val reduced = reducedMotion()
-    Group(modifier.testTag(HomeTags.TODAY)) {
+    PageGroup(modifier.testTag(HomeTags.TODAY)) {
         AnimatedContent(
             targetState = state.gameLanguage,
             transitionSpec = {
@@ -410,18 +387,36 @@ private fun longDate(date: LocalDate): String {
  * over the line that says what it counts.
  */
 @Composable
-private fun StreakCard(state: HomeUiState, modifier: Modifier = Modifier) {
-    val streak = state.streak
-    Group(modifier.testTag(HomeTags.STREAK)) {
-        Eyebrow(R.string.home_streak_eyebrow)
+private fun StreakCard(state: HomeUiState, onProgress: () -> Unit, modifier: Modifier = Modifier) {
+    PageGroup(modifier.testTag(HomeTags.STREAK)) {
+        Eyebrow(stringResource(R.string.home_streak_eyebrow))
         Spacer(Modifier.height(8.dp))
+        StreakLines(state)
+        Spacer(Modifier.height(16.dp))
+        // Outlined: the page's filled buttons are the games'; this one opens a page to read.
+        OutlinedButton(
+            onClick = onProgress,
+            modifier = Modifier
+                .heightIn(min = 48.dp)
+                .testTag(HomeTags.OPEN_PROGRESS),
+        ) {
+            Text(stringResource(R.string.home_progress_open), textAlign = TextAlign.Center)
+        }
+    }
+}
+
+/** The streak's number with its lines, or the line that says none is running. */
+@Composable
+private fun StreakLines(state: HomeUiState) {
+    val streak = state.streak
+    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         if (streak == 0) {
             Text(
                 text = stringResource(R.string.home_streak_none),
                 style = MaterialTheme.typography.bodyLarge.balanced(),
                 textAlign = TextAlign.Center,
             )
-            return@Group
+            return@Column
         }
         val description = pluralStringResource(R.plurals.home_streak_description, streak, streak)
         Text(
@@ -455,8 +450,8 @@ private fun FreePlayCard(
     onPlay: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Group(modifier.testTag(HomeTags.FREE)) {
-        Eyebrow(R.string.home_free_eyebrow)
+    PageGroup(modifier.testTag(HomeTags.FREE)) {
+        Eyebrow(stringResource(R.string.home_free_eyebrow))
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.home_free_line),
@@ -553,8 +548,8 @@ private fun levelLine(level: Level): Int = when (level) {
  */
 @Composable
 private fun NotebookCard(size: Int, onOpen: () -> Unit, modifier: Modifier = Modifier) {
-    Group(modifier.testTag(HomeTags.NOTEBOOK)) {
-        Eyebrow(R.string.home_notebook_eyebrow)
+    PageGroup(modifier.testTag(HomeTags.NOTEBOOK)) {
+        Eyebrow(stringResource(R.string.home_notebook_eyebrow))
         Spacer(Modifier.height(8.dp))
         Text(
             text = pluralStringResource(R.plurals.home_notebook_line, size, size),
@@ -605,47 +600,6 @@ private fun HardRow(hard: Boolean, onHard: (Boolean) -> Unit, modifier: Modifier
     }
 }
 
-/** A section of the page on the family's group ground. */
-@Composable
-private fun Group(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    Column(
-        modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceContainer, GroupShape)
-            .padding(horizontal = 20.dp, vertical = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        content()
-    }
-}
-
-@Composable
-private fun Eyebrow(@StringRes text: Int) = Eyebrow(stringResource(text))
-
-/** A short line in capitals above a section: drawn so, read as words. */
-@Composable
-private fun Eyebrow(text: String) {
-    val locale: Locale = LocalConfiguration.current.locales[0]
-    Text(
-        text = text.uppercase(locale),
-        style = ThatsTheWordTheme.type.eyebrow,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.clearAndSetSemantics { contentDescription = text },
-    )
-}
-
-/**
- * The page's buttons in the dress's ink rather than its primary: the Vivid dress's azure would
- * stand beside the marks' ink blue and amber (PLANNING.md §15, 12 Nov 2026, «Phase 3»), and a
- * neutral ink reads as the one thing to do without taking a colour of the game's.
- */
-@Composable
-private fun inkButtonColors(): ButtonColors = ButtonDefaults.buttonColors(
-    containerColor = MaterialTheme.colorScheme.inverseSurface,
-    contentColor = MaterialTheme.colorScheme.inverseOnSurface,
-)
-
 /** What the tests find the page's parts by. */
 object HomeTags {
     const val PAGE = "home_page"
@@ -658,6 +612,7 @@ object HomeTags {
     const val MONTH = "home_month"
     const val NOTEBOOK = "home_notebook"
     const val OPEN_NOTEBOOK = "home_open_notebook"
+    const val OPEN_PROGRESS = "home_open_progress"
 
     fun language(language: Language) = "home_language_${language.tag}"
 
@@ -667,8 +622,6 @@ object HomeTags {
 private val SECTION_GAP = 16.dp
 private val ChoiceShape = RoundedCornerShape(20.dp)
 private val TODAY_TILE = 40.dp
-private val ARRIVAL_RISE = 16.dp
-private const val SECTION_STAGGER_MILLIS = 60L
 
 /** The tiles fill once the card has arrived. */
 private const val TILES_DELAY_MILLIS = 350L

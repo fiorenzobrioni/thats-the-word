@@ -67,6 +67,11 @@
     <string name="end_another_word">Un’altra parola</string>
     <string name="end_practice">Esercizio: il giorno tiene il suo primo risultato.</string>
 
+    <string name="share_sheet_line">La tua griglia, senza la parola.</string>
+    <string name="share_picture">Condividi l’immagine</string>
+    <string name="share_as_text">Condividi come testo</string>
+    <string name="share_picture_description">L’immagine da condividere: la tua griglia, senza la parola.</string>
+    <string name="share_free_eyebrow">%1$s · %2$s</string>
     <string name="share_hard">Difficile</string>
     <plurals name="share_hints">
         <item quantity="one">%d aiuto</item>

@@ -9,6 +9,9 @@ android {
 }
 
 dependencies {
+    // The shared picture's FileProvider (PLANNING.md §7.6).
+    implementation(libs.androidx.core.ktx)
+
     // The tests read the real words' files, as the game does.
     testImplementation(project(":core:words"))
     testImplementation(libs.androidx.junit)

@@ -18,6 +18,9 @@ data class Statistics(
     val withHints: Int,
     val withHard: Int,
 ) {
+    /** The games not found: an X in a shared result. */
+    val lost: Int get() = played - won
+
     /** The share won, from 0 to 1; 0 when nothing was played. */
     val winShare: Double get() = if (played == 0) 0.0 else won.toDouble() / played
 

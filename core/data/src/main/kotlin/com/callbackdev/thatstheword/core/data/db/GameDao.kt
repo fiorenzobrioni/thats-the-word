@@ -73,4 +73,29 @@ interface GameDao {
 
     @Query("DELETE FROM games WHERE id = :id")
     suspend fun deleteGame(id: Long)
+
+    // The backup file (PLANNING.md §5): every game with its moves, out and in, in one transaction.
+
+    @Query("SELECT * FROM games ORDER BY id")
+    suspend fun allGames(): List<GameEntity>
+
+    @Query("SELECT * FROM guesses ORDER BY game_id, position")
+    suspend fun allGuesses(): List<GuessEntity>
+
+    @Query("SELECT * FROM hints ORDER BY game_id, position")
+    suspend fun allHints(): List<HintEntity>
+
+    @Insert
+    suspend fun insertGuesses(guesses: List<GuessEntity>)
+
+    @Insert
+    suspend fun insertHints(hints: List<HintEntity>)
+
+    /** Every game; their guesses and hints go with them (the foreign keys' cascade). */
+    @Query("DELETE FROM games")
+    suspend fun deleteAllGames()
+
+    /** The games that count, finished and not practice: what Your data says the phone holds. */
+    @Query("SELECT COUNT(*) FROM games WHERE practice = 0 AND status != 'playing'")
+    fun observeCountedCount(): Flow<Int>
 }

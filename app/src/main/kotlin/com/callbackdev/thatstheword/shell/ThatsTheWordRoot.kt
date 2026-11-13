@@ -25,9 +25,11 @@ import com.callbackdev.thatstheword.core.model.Language
 import com.callbackdev.thatstheword.feature.game.GameRoute
 import com.callbackdev.thatstheword.feature.home.HomeRoute
 import com.callbackdev.thatstheword.feature.notebook.NotebookRoute
+import com.callbackdev.thatstheword.feature.progress.ProgressRoute
+import com.callbackdev.thatstheword.feature.settings.data.DataRoute
 import kotlinx.serialization.Serializable
 
-/** Where the shell can go: the start page, a game by its id, the notebook. Saved with the activity's state. */
+/** Where the shell can go: the start page, a game by its id, the notebook, the progress, your data. Saved with the activity's state. */
 @Serializable
 data object StartKey : NavKey
 
@@ -37,8 +39,15 @@ data class GameKey(val gameId: Long) : NavKey
 @Serializable
 data object NotebookKey : NavKey
 
+@Serializable
+data object ProgressKey : NavKey
+
+@Serializable
+data object DataKey : NavKey
+
 /**
- * The app's pages (Navigation 3): the start page, and the game page or the notebook above it. Each page's view
+ * The app's pages (Navigation 3): the start page, and the game page, the notebook or the progress
+ * above it; your data above the progress. Each page's view
  * models live as long as its entry on the back stack; predictive back pops it.
  *
  * [dailyRequest] is a language whose daily of today a launcher shortcut asked for (PLANNING.md
@@ -73,9 +82,17 @@ fun ThatsTheWordRoot(dailyRequest: Language? = null, onDailyRequestHandled: () -
                     HomeRoute(
                         onOpenGame = { backStack.add(GameKey(it)) },
                         onOpenNotebook = { backStack.add(NotebookKey) },
+                        onOpenProgress = { backStack.add(ProgressKey) },
                     )
                 }
                 entry<NotebookKey> { NotebookRoute(onBack = { backStack.removeLastOrNull() }) }
+                entry<ProgressKey> {
+                    ProgressRoute(
+                        onBack = { backStack.removeLastOrNull() },
+                        onOpenData = { backStack.add(DataKey) },
+                    )
+                }
+                entry<DataKey> { DataRoute(onBack = { backStack.removeLastOrNull() }) }
                 entry<GameKey> { key ->
                     GameRoute(
                         gameId = key.gameId,

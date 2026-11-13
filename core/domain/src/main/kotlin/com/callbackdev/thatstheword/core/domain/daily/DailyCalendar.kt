@@ -54,6 +54,9 @@ class DailyCalendar(private val clock: Clock, val epoch: LocalDate = EPOCH) {
     }
 
     companion object {
+        /** The daily's number of a [date] counted from the [EPOCH], with no clock: a date's number is fixed. */
+        fun numberOf(date: LocalDate): Int = (ChronoUnit.DAYS.between(EPOCH, date) + 1).toInt()
+
         /**
          * Daily number 1 (PLANNING.md §4.6), fixed by the owner on 12 Nov 2026 (PLANNING §15, Open
          * 10) and never moved again: before the release, so the archive already holds days to play

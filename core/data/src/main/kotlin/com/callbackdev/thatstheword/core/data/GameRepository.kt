@@ -247,9 +247,9 @@ class GameRepository @Inject constructor(
 
         internal fun languageOf(tag: String): Language = Language.ofTag(tag) ?: error("no language is $tag")
 
-        private fun hintOf(kind: String): HintKind = HintKind.valueOf(kind.uppercase())
+        internal fun hintOf(kind: String): HintKind = HintKind.valueOf(kind.uppercase())
 
-        private fun statusOf(state: GameState): String = when (state) {
+        internal fun statusOf(state: GameState): String = when (state) {
             GameState.PLAYING -> STATUS_PLAYING
             GameState.WON -> STATUS_WON
             GameState.LOST -> STATUS_LOST

@@ -19,6 +19,7 @@ import com.callbackdev.thatstheword.core.model.HintKind
 import com.callbackdev.thatstheword.core.model.Letter
 import com.callbackdev.thatstheword.core.model.Milestone
 import com.callbackdev.thatstheword.core.model.Word
+import com.callbackdev.thatstheword.feature.game.share.ResultFacts
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -211,6 +212,10 @@ class GameViewModel @AssistedInject constructor(
             onOpened(id)
         }
     }
+
+    /** What the shared picture is drawn from (PLANNING.md §7.6), once the game is over; never a replay's. */
+    fun resultFacts(): ResultFacts? =
+        saved.value?.takeIf { it.game.state.finished && !it.practice }?.let { ResultFacts.of(it.game, it.startedOn) }
 
     /** The result as text, without the word (PLANNING.md §7.6), once the game is over. */
     fun shareText(labels: ShareText.Labels): String? =

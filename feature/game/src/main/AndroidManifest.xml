@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The shared picture (PLANNING.md §7.6, §10): handed to the system's chooser through a FileProvider,
+  which needs no permission. It serves one folder of the cache (res/xml/share_paths.xml), never in
+  a backup, and only to the app the player picks, with a read grant for that one file.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.share"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/share_paths" />
+        </provider>
+    </application>
+
+</manifest>

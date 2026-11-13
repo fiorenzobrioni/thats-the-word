@@ -56,3 +56,12 @@ All notable changes to That's The Word are documented here. The format follows
 - Milestones: seven days in a row, a first word in another language, a hundred words in the
   notebook, the day's word in all three languages. Each is said once, on the card of the game
   that reached it.
+- Your progress, from the start page: for each language, the daily word and free play apart, the
+  share of words found, your streak and your longest, where your attempts went (your latest game
+  marked), the games with hints and in Hard counted apart, and every milestone, with the day it
+  was reached or how near it is.
+- Your data: save a copy of your games, your notebook, your milestones and your choices to a file
+  you keep where you like, and bring it back on another phone. A copy is read and checked whole,
+  and shown with what it will replace, before anything changes.
+- Share your result as a picture, the grid's shapes and colours without a letter, or as text; the
+  sheet shows the picture as it will be sent.

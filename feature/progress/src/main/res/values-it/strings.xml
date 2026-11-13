@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progress_title">I tuoi progressi</string>
+    <string name="progress_back">Indietro</string>
+    <string name="progress_language_it">Italiano</string>
+    <string name="progress_language_en">Inglese</string>
+    <string name="progress_language_es">Spagnolo</string>
+    <string name="progress_mode_daily">La parola del giorno</string>
+    <string name="progress_mode_free">Gioco libero</string>
+    <string name="progress_mode_language">%1$s · %2$s</string>
+    <string name="progress_nothing">Ancora nessuna partita. Le tue statistiche si raccolgono qui, una partita dopo l’altra.</string>
+
+    <plurals name="progress_daily_sentence">
+        <item quantity="one">Parole del giorno: %1$d trovata su %2$d.</item>
+        <item quantity="many">Parole del giorno: %1$d trovate su %2$d.</item>
+        <item quantity="other">Parole del giorno: %1$d trovate su %2$d.</item>
+    </plurals>
+    <plurals name="progress_free_sentence">
+        <item quantity="one">Parole libere: %1$d trovata su %2$d.</item>
+        <item quantity="many">Parole libere: %1$d trovate su %2$d.</item>
+        <item quantity="other">Parole libere: %1$d trovate su %2$d.</item>
+    </plurals>
+    <string name="progress_share_daily">delle parole del giorno trovate</string>
+    <string name="progress_share_free">delle parole libere trovate</string>
+    <string name="progress_streak_now">la serie in corso</string>
+    <string name="progress_streak_longest">la serie più lunga</string>
+
+    <string name="progress_found_in">Trovate in</string>
+    <plurals name="progress_row_attempts">
+        <item quantity="one">In %d tentativo</item>
+        <item quantity="many">In %d tentativi</item>
+        <item quantity="other">In %d tentativi</item>
+    </plurals>
+    <string name="progress_row_not_found">Non trovate</string>
+    <plurals name="progress_row_games">
+        <item quantity="one">%d partita</item>
+        <item quantity="many">%d partite</item>
+        <item quantity="other">%d partite</item>
+    </plurals>
+    <string name="progress_row">%1$s: %2$s.</string>
+    <string name="progress_row_latest">%1$s La tua ultima partita.</string>
+
+    <string name="progress_apart">Contate a parte</string>
+    <string name="progress_with_hints">con gli aiuti</string>
+    <string name="progress_in_hard">in Difficile</string>
+
+    <string name="progress_milestones">Traguardi</string>
+    <string name="progress_milestones_none">Nessuno ancora. Ognuno resta, una volta raggiunto.</string>
+    <plurals name="progress_milestones_sentence">
+        <item quantity="one">%1$d su %2$d raggiunto. Resta per sempre.</item>
+        <item quantity="many">%1$d su %2$d raggiunti. Restano per sempre.</item>
+        <item quantity="other">%1$d su %2$d raggiunti. Restano per sempre.</item>
+    </plurals>
+    <string name="progress_milestone_seven">Sette di fila</string>
+    <string name="progress_milestone_seven_line">La parola di oggi trovata sette giorni di fila, in una lingua.</string>
+    <string name="progress_milestone_foreign">Un’altra lingua</string>
+    <string name="progress_milestone_foreign_line">Una prima parola trovata in una lingua che non è la tua.</string>
+    <string name="progress_milestone_hundred">Cento parole</string>
+    <string name="progress_milestone_hundred_line">Cento parole incontrate, tenute nel tuo quaderno.</string>
+    <string name="progress_milestone_three">Tre in un giorno</string>
+    <string name="progress_milestone_three_line">La parola di un giorno trovata in tutte e tre le lingue.</string>
+    <string name="progress_reached_on">Raggiunto il %1$s</string>
+    <string name="progress_near">%1$d su %2$d</string>
+    <string name="progress_not_yet">Non ancora</string>
+
+    <string name="progress_data">I tuoi dati</string>
+    <string name="progress_data_line">Le tue partite, il quaderno e i traguardi, copiati in un file da tenere, o ripresi da uno.</string>
+    <string name="progress_data_open">Apri i tuoi dati</string>
+</resources>

@@ -222,4 +222,47 @@ object GameIcons {
             lineTo(6f, 18f)
         }
     }
+
+    /** A milestone reached, a thing done: a check. */
+    val Check: ImageVector by lazy {
+        icon("Check") {
+            moveTo(5f, 12.5f)
+            lineTo(10f, 17.5f)
+            lineTo(19f, 7f)
+        }
+    }
+
+    /** A copy saved: an arrow down into a tray. */
+    val SaveCopy: ImageVector by lazy {
+        icon("SaveCopy") {
+            moveTo(12f, 4f)
+            verticalLineTo(14.5f)
+            moveTo(7.5f, 10f)
+            lineTo(12f, 14.5f)
+            lineTo(16.5f, 10f)
+            moveTo(4.5f, 15f)
+            verticalLineTo(18f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = false, x1 = 6.5f, y1 = 20f)
+            horizontalLineTo(17.5f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = false, x1 = 19.5f, y1 = 18f)
+            verticalLineTo(15f)
+        }
+    }
+
+    /** A copy brought back: an arrow up out of the tray. */
+    val OpenCopy: ImageVector by lazy {
+        icon("OpenCopy") {
+            moveTo(12f, 14.5f)
+            verticalLineTo(4f)
+            moveTo(7.5f, 8.5f)
+            lineTo(12f, 4f)
+            lineTo(16.5f, 8.5f)
+            moveTo(4.5f, 15f)
+            verticalLineTo(18f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = false, x1 = 6.5f, y1 = 20f)
+            horizontalLineTo(17.5f)
+            arcTo(2f, 2f, 0f, isMoreThanHalf = false, isPositiveArc = false, x1 = 19.5f, y1 = 18f)
+            verticalLineTo(15f)
+        }
+    }
 }

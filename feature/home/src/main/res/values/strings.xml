@@ -45,6 +45,8 @@
         <item quantity="one">day in a row, the word found on its own day.</item>
         <item quantity="other">days in a row, each word found on its own day.</item>
     </plurals>
+    <!-- The way to the progress page (Phase 6): the statistics, the streaks, the milestones, your data. -->
+    <string name="home_progress_open">See your progress</string>
     <string name="home_streak_keep">Find today’s word to keep it going.</string>
     <string name="home_streak_none">No streak running. Find a word on its own day, and one begins.</string>
     <!-- The same, for TalkBack: "A streak of 4 days". -->

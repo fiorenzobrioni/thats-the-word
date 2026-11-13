@@ -85,7 +85,7 @@ class NotebookRepository @Inject constructor(
 
     private fun today(): LocalDate = LocalDate.now(clock.get())
 
-    private companion object {
+    internal companion object {
         fun milestoneOf(id: String): Milestone? = Milestone.entries.firstOrNull { it.name.lowercase() == id }
 
         fun entryOf(row: NotebookEntity): NotebookEntry {

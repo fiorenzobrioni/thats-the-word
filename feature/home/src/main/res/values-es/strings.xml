@@ -41,6 +41,8 @@
         <item quantity="many">días seguidos, cada palabra encontrada en su día.</item>
         <item quantity="other">días seguidos, cada palabra encontrada en su día.</item>
     </plurals>
+    <!-- The way to the progress page (Phase 6): the statistics, the streaks, the milestones, your data. -->
+    <string name="home_progress_open">Ver tu progreso</string>
     <string name="home_streak_keep">Encuentra la palabra de hoy para no cortarla.</string>
     <string name="home_streak_none">Ninguna racha en curso. Encuentra una palabra en su día, y empieza.</string>
     <plurals name="home_streak_description">

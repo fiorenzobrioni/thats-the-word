@@ -23,7 +23,8 @@
 - **Built**: Phase 3, the game screen (12 Nov 2026): the feedback chosen by the owner (ink and amber), `:core:data` (Room version 1, the settings), the shell on Navigation 3, `:feature:game` (the grid, the keyboard, the refusals, the end card, the motion, the haptics), today's daily from a provisional start page. Its acceptance on a phone (the reveal at the phone's refresh rate with the profiler, TalkBack through a game) is still to be looked at.
 - **Built**: Phase 4, the start page (12 Nov 2026): `:feature:home` (today's word in each language with the quick switch, the streak, the calendar of the dailies with the archive's games, free play at a level, Hard), practice replays and another free word from the end card, the change of day seen live, the launcher's shortcuts. Its look on a phone is still to be had, with Phase 3's.
 - **Built**: Phase 5, practising a language (13 Nov 2026): the hints in a foreign game, drawn in the rows they spend; the end card's meanings and its notebook marks; `:feature:notebook`; the milestones unlocked and said on the end card. Its look on a phone is still to be had, with Phases 3 and 4.
-- **Next**: Phase 6, progress and your data. What is still open (§15) is needed by the phases it names.
+- **Built**: Phase 6, progress and your data (13 Nov 2026): `:feature:progress` (each language's statistics by mode, the distribution with its latest game, the streaks, hints and Hard counted apart, the milestones reached or how near); the backup file (`BackupCodec`) with Your data's page in `:feature:settings` (a copy saved, a copy read, checked, shown and brought back on the player's yes); the shared picture beside the text. Android's backup with `bmgr`, and the look on a phone, are still to be had.
+- **Next**: Phase 7, first run, settings and sound. What is still open (§15) is needed by the phases it names.
 - **Later, and optional**: Google Play, F-Droid (§11).
 
 ---
@@ -76,7 +77,7 @@ thats-the-word/
 │   ├── notebook/           # The notebook: the words met, searchable
 │   ├── progress/           # Statistics, streaks, milestones
 │   ├── onboarding/         # Welcome, the languages, the level (the guided first game is :feature:game's)
-│   └── settings/           # Languages, level, the Hard option, sound, haptics, motion, appearance, your data, about
+│   └── settings/           # Your data (Phase 6); then languages, level, the Hard option, sound, haptics, motion, appearance, about
 ├── tools/                  # the words' script, the sounds' script, the launcher icon script, the planning index script
 ├── docs/                   # ADRs, the planning archive, the words' report, screenshots
 ├── keystore/               # the shared debug key (deliberately committed)
@@ -259,7 +260,7 @@ The game language; the level per language; Hard; sound, haptics, reduced motion 
 ### Backup
 
 - **Android's backup** (`data_extraction_rules.xml`, an allowlist from Phase 0): the database and the settings file. The words ship in the APK and are never copied.
-- **The backup file** (VISION §11): the games, the notebook, the milestones and the settings, as versioned JSON (`BackupCodec`, kotlinx.serialization), written and read through the Storage Access Framework. A restore is read whole and checked (not a backup, a newer version, damaged) before anything is written, says what it holds, and replaces only after the player's confirmation, as the family's.
+- **The backup file** (VISION §11): the games (each with its moves in order), the notebook, the milestones and the settings, as versioned JSON (`BackupCodec`, kotlinx.serialization, `format` `thatstheword-backup`, version 1), written and read through the Storage Access Framework. A restore is read whole and checked (not a backup, a newer version, damaged) before anything is written: every word typed in its language's keys, every game replayed into the state it says, no move after the end, a day's counted game once and its replays after it, one free game under way a language, and every daily the frozen schedule's word of its date (`BackupRepository.fits`). It says what it holds and what it replaces, and replaces only after the player's confirmation, in one transaction, then the choices (the first-day tips stay the phone's), as the family's.
 
 ---
 
@@ -359,7 +360,7 @@ Every moment has its movement, every movement collapses to a fade under reduced 
 
 ### 7.6 Sharing a result (VISION §11)
 
-Without the word, in the app's own format: a **text** for any messaging app ("That's The Word · #123 · Italian · 4/6", Hard and hints said), with a row of symbols per guess that keep the shapes (🟦 right place, in the right place's ink, 🟠 elsewhere, ▫️ absent: the owner, §15, 12 Nov 2026, «Open 21 and VISION Q1 answered»; never the genre's coloured squares), and an **image** card (the grid's shapes and colours, the date, the language, no letter), shared through a `FileProvider`, which needs no permission.
+Without the word, in the app's own format, from a sheet that shows the picture as it will be sent: a **text** for any messaging app ("That's The Word · #123 · Italian · 4/6", Hard and hints said), with a row of symbols per guess that keep the shapes (🟦 right place, in the right place's ink, 🟠 elsewhere, ▫️ absent: the owner, §15, 12 Nov 2026, «Open 21 and VISION Q1 answered»; never the genre's coloured squares), and an **image** card (the grid's shapes and colours, the date, the language, no letter), shared through a `FileProvider`, which needs no permission. The picture (`ResultPicture`, 1080 × 1350) is drawn on the Paper dress's light ground whatever the player wears (`PictureColors`), the name in its tracked capitals over a short berry rule, the language with the daily's number (or free play), the date, the full grid (the rows not played as empty frames, a row spent on a hint as a quiet band at the foot, as the game draws it), the score and Hard and the hints; written to the cache's `shared/` only, the one folder the provider serves.
 
 ### 7.7 Accessibility (VISION §12)
 
@@ -497,10 +498,13 @@ Each phase ends with a merged PR, green CI and its acceptance criteria met. Phas
 
 ### Phase 6 — Progress and your data
 
-- [ ] `:feature:progress`: statistics per language and mode, the distribution, hints and Hard counted apart, the streaks, the milestones
-- [ ] The backup file: `BackupCodec` with its tests (damaged, newer, not a backup, the round trip), export and restore with the confirmation
-- [ ] Android's backup checked with `bmgr` on a device
-- [ ] Sharing: the text and the image card (§7.6)
+- [x] `:feature:progress`: statistics per language and mode, the distribution, hints and Hard counted apart, the streaks, the milestones (13 Nov 2026: from the start page's streak card; the milestones with how near each is)
+- [x] The backup file: `BackupCodec` with its tests (damaged, newer, not a backup, the round trip), export and restore with the confirmation (13 Nov 2026: Your data, `:feature:settings`, from the progress page)
+- [ ] Android's backup checked with `bmgr` on a device (a phone's: the allowlist is unchanged since Phase 0)
+- [x] Sharing: the text and the image card (§7.6) (13 Nov 2026: a sheet with the picture as it will be sent, and the text)
+
+**Acceptance:**
+- [ ] A phone's games, notebook and milestones saved to a file, the app uninstalled, the file brought back on the clean install, every game taken up where it was; `bmgr` the same. On the JVM (13 Nov 2026: `BackupRepositoryTest`, `DataViewModelTest` on real files); on a phone, with Phases 3 to 5's look.
 
 ### Phase 7 — First run, settings and sound
 
@@ -824,4 +828,17 @@ None of the open questions touches the phase (14 to 17 are Settings', the remind
 - **Not done here**: the milestones' list on the progress page (Phase 6, with the statistics); the notebook's backup (Phase 6). A test phone's games finished before this phase are not in its notebook: nothing is released, and no backfill was written for them.
 - **Checked**: `spotlessCheck`, `checkForbiddenPermissions`, `test` (every module green: `:core:domain` 115, `:core:data` 19, `:feature:game` 29, `:feature:notebook` 10, the others as before plus the start page's two), `:app:lintDebug` (no issue), the debug APK. The screenshots looked at: the hints' panel in the three languages and at twice the text size, the rows spent, the end card with its meanings and a milestone, the notebook (closed, opened, searched, empty, dark, Italian, Spanish, an open foldable), the start page's card. The meaning repeating the translations was seen on the end card and dropped; a solution was written "città, citta" in the notebook and is written as itself now.
 - **Not done here, a phone's to say**: the hint's row and the milestone's light at the phone's refresh rate, TalkBack through the hints' panel and the notebook.
+
+### 13 Nov 2026 — Phase 6: progress and your data (owner: "Procedi con la fase 6 di thats-the-word. Fai sempre implementazioni di funzionalità, grafica, UI/UX di livello premium.")
+
+None of the open questions touches the phase (14 to 17 are Settings', the reminder's, the native speaker's and the rules' reference). Built the domain first:
+
+- **The domain**: `LanguageProgress` and `ModeProgress` (a language's statistics in each mode, the latest counted game, the streak running and the longest; `ProgressMode`: the daily and free play, the guided game counted in neither, a lesson and not a result); `Statistics.lost`; `Milestones.progress` (how near each milestone is, never past it: the longest streak in any language of seven, the notebook's words of a hundred, the most languages won on one date of three, a foreign win one or none); `DailyCalendar.numberOf`. `BackupCodec` and `Backup`, `BackupGame` (the round trip; not a backup; newer; damaged: cut short, a field missing, a word no keyboard types, a game replaying into another state, a move after the end or neither a guess nor a hint, a hint in the interface's language or twice, a day's game twice or a replay without its day, a daily before the epoch or before its day, two free games under way, a notebook row that could not be; lenient on a look, a level or a milestone a later version may add). kotlinx.serialization joins `:core:domain`, already the shell's. 31 new tests.
+- **The data**: `BackupRepository` (what the phone holds, as it changes; the backup in one transaction; `fits`, every daily the schedule's word of its date and every free word a solution; the restore in one transaction, then the choices by `SettingsRepository.restore`, one edit, the tips the phone's). Room's schema is unchanged: the DAOs only read and write the tables of version 1.
+- **`:feature:progress`**: the language (when two or more were played) and the mode (when both were) on a sliding segmented control; one sentence ("Daily words: 20 found out of 21."), the share found as the page's one large number, the streak running and the longest for the daily; the distribution of the attempts with an X row for the words not found, each row's label a small tile, the latest game's filled as a letter found is, the bars growing in turn the first time; hints and Hard counted apart; the milestones, each with its badge (an empty tile, filled with a check once reached), its name and what it asks, then its date or how near it is (its tiles for seven and three, a line for a hundred). A phone with nothing played shows a row of empty tiles and its sentence, and keeps the milestones and the way to your data. It opens from the start page's streak card ("See your progress"), the one way in until Settings comes.
+- **Your data** is `:feature:settings`'s first page (PLANNING §2 puts it there; Phase 7 builds Settings around it, the shell opening it from both): why nothing leaves ("That's The Word sends nothing"), what the phone holds, a copy saved (the system's file picker, dated name), a copy opened (read whole, at most 32 MB, checked, its date and contents shown with what it replaces, in a dialog in the dress's ink), the outcome on a card until put away, a task under way said on its button. Erasing everything was not asked for and is not built.
+- **Sharing** (§7.6): the end card's button opens a sheet with the picture exactly as it will be sent, "Share the picture" (a `FileProvider` on the cache's `shared/`, `${applicationId}.share`, no permission) and "Share as text" (as before). The picture's colours are `PictureColors` in `:core:designsystem`, its inks pinned by `ContrastTest`.
+- **The design system** takes the page parts the start page kept to itself (`PageGroup`, `Eyebrow`, `inkButtonColors`, `Modifier.arrive`) and a top bar (`PageTopBar`), and three icons (`Check`, `SaveCopy`, `OpenCopy`).
+- **Checked**: `spotlessCheck`, `checkForbiddenPermissions`, `test` (every module green: `:core:domain` 140, `:core:data` 23, `:feature:progress` 12, `:feature:settings` 18, `:feature:game` 34, `:feature:home` 21, the others as before), `:app:lintDebug` (no issue), the debug APK. The screenshots looked at: the progress page (both modes, the milestones, nothing played, dark, Italian, Spanish, twice the text size, an open foldable), Your data (its states, the question, the outcomes, the three languages, dark, large text, foldable), the picture in the three languages and a word not found, the share sheet, the start page's streak card. Seen and changed before this commit: the distribution's figures cut at twice the text size (sized by their tile now), milestone lines ending on one word (balanced), the empty page's eyebrow repeating the title (a row of empty tiles now), the restore question's buttons in the dress's azure (its ink now).
+- **Not done here, a phone's to say**: Android's backup with `bmgr` and a copy brought back on a clean install; the bars and the sliding choice at the phone's refresh rate; TalkBack through the progress page and Your data; the picture in a real chat.
 

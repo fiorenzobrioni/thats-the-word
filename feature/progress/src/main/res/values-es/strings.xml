@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progress_title">Tu progreso</string>
+    <string name="progress_back">Atrás</string>
+    <string name="progress_language_it">Italiano</string>
+    <string name="progress_language_en">Inglés</string>
+    <string name="progress_language_es">Español</string>
+    <string name="progress_mode_daily">La palabra del día</string>
+    <string name="progress_mode_free">Juego libre</string>
+    <string name="progress_mode_language">%1$s · %2$s</string>
+    <string name="progress_nothing">Aún no has jugado. Tus estadísticas se reúnen aquí, partida tras partida.</string>
+
+    <plurals name="progress_daily_sentence">
+        <item quantity="one">Palabras del día: %1$d encontrada de %2$d.</item>
+        <item quantity="many">Palabras del día: %1$d encontradas de %2$d.</item>
+        <item quantity="other">Palabras del día: %1$d encontradas de %2$d.</item>
+    </plurals>
+    <plurals name="progress_free_sentence">
+        <item quantity="one">Palabras libres: %1$d encontrada de %2$d.</item>
+        <item quantity="many">Palabras libres: %1$d encontradas de %2$d.</item>
+        <item quantity="other">Palabras libres: %1$d encontradas de %2$d.</item>
+    </plurals>
+    <string name="progress_share_daily">de las palabras del día encontradas</string>
+    <string name="progress_share_free">de las palabras libres encontradas</string>
+    <string name="progress_streak_now">la racha actual</string>
+    <string name="progress_streak_longest">la racha más larga</string>
+
+    <string name="progress_found_in">Encontradas en</string>
+    <plurals name="progress_row_attempts">
+        <item quantity="one">En %d intento</item>
+        <item quantity="many">En %d intentos</item>
+        <item quantity="other">En %d intentos</item>
+    </plurals>
+    <string name="progress_row_not_found">No encontradas</string>
+    <plurals name="progress_row_games">
+        <item quantity="one">%d partida</item>
+        <item quantity="many">%d partidas</item>
+        <item quantity="other">%d partidas</item>
+    </plurals>
+    <string name="progress_row">%1$s: %2$s.</string>
+    <string name="progress_row_latest">%1$s Tu última partida.</string>
+
+    <string name="progress_apart">Contadas aparte</string>
+    <string name="progress_with_hints">con pistas</string>
+    <string name="progress_in_hard">en Difícil</string>
+
+    <string name="progress_milestones">Hitos</string>
+    <string name="progress_milestones_none">Aún ninguno. Cada uno se queda, una vez alcanzado.</string>
+    <plurals name="progress_milestones_sentence">
+        <item quantity="one">%1$d de %2$d alcanzado. Se queda para siempre.</item>
+        <item quantity="many">%1$d de %2$d alcanzados. Se quedan para siempre.</item>
+        <item quantity="other">%1$d de %2$d alcanzados. Se quedan para siempre.</item>
+    </plurals>
+    <string name="progress_milestone_seven">Siete seguidas</string>
+    <string name="progress_milestone_seven_line">La palabra de hoy hallada siete días seguidos, en un idioma.</string>
+    <string name="progress_milestone_foreign">Otro idioma</string>
+    <string name="progress_milestone_foreign_line">Una primera palabra hallada en un idioma que no es el tuyo.</string>
+    <string name="progress_milestone_hundred">Cien palabras</string>
+    <string name="progress_milestone_hundred_line">Cien palabras conocidas, guardadas en tu cuaderno.</string>
+    <string name="progress_milestone_three">Tres en un día</string>
+    <string name="progress_milestone_three_line">La palabra de un día hallada en los tres idiomas.</string>
+    <string name="progress_reached_on">Alcanzado el %1$s</string>
+    <string name="progress_near">%1$d de %2$d</string>
+    <string name="progress_not_yet">Todavía no</string>
+
+    <string name="progress_data">Tus datos</string>
+    <string name="progress_data_line">Tus partidas, tu cuaderno y tus hitos, copiados en un archivo para guardar, o recuperados de uno.</string>
+    <string name="progress_data_open">Abrir tus datos</string>
+</resources>

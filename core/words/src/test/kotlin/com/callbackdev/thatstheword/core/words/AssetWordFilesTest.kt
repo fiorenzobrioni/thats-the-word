@@ -38,6 +38,27 @@ class AssetWordFilesTest {
     }
 
     @Test
+    fun `every length from 3 to 8 ships, each solution accepted and explained in the three languages`() {
+        // PLANNING.md §6.6 (§15, 14 Nov 2026): 1.1's and 1.2's lengths are in the app already, read
+        // by the same decoder; one glossary per interface language describes them all.
+        for (language in Language.entries) {
+            for (length in 3..8) {
+                val lexicon = Lexicon(files, language, length)
+                val words = lexicon.solutions.at(Level.COMPLETE)
+                assertThat(words).isNotEmpty()
+                assertThat(words.size).isEqualTo(lexicon.solutions.size)
+                for (word in words) {
+                    assertThat(word.length).isEqualTo(length)
+                    assertThat(word in lexicon.accepted).isTrue()
+                    for (speaks in Language.entries) {
+                        assertThat(lexicon.gloss(word, speaks)?.meaning).isNotNull()
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
     fun `common words are accepted, and nonsense is not`() {
         val it = lexicon(Language.ITALIAN).accepted
         assertThat(key(Language.ITALIAN, "cuore") in it).isTrue()

@@ -136,16 +136,17 @@ def _readme(built) -> str:
 
     w("## The lengths (for 1.1 and 1.2)\n")
     w("Every length the later versions may play (VISION §8: Bridge in 1.1, variable length in 1.2),")
-    w("built with the same rules and measured; only five letters ship in 1.0. The glossary column is")
-    w("the solutions' meanings and translations in the three interface languages, what a length would")
-    w("add at least.\n")
+    w("built with the same rules and shipped in the app already (§15, 14 Nov 2026); five letters are")
+    w("1.0's game and have its daily schedule. The glossary column is the solutions' meanings and")
+    w("translations in the three interface languages (the glossary files hold them with every guess's")
+    w("lemma, all lengths together).\n")
     w("| | Letters | Accepted | Refused | Solutions | Daily pool (Base and Intermediate) | Solutions' glossaries |")
     w("|---|---|---|---|---|---|---|")
     for g in config.LANGUAGES:
         for length in config.LENGTHS:
             lw = built.lengths[(g, length)]
             pool = sum(1 for s in lw.solutions if s.level in config.DAILY_LEVELS)
-            shipped = " (ships)" if length in config.SHIPPED_LENGTHS else ""
+            shipped = " (1.0's game)" if length == config.LENGTH else ("" if length in config.SHIPPED_LENGTHS else " (not shipped)")
             w(f"| {NAMES[g]} | {length}{shipped} | {len(lw.accepted):,} | {lw.refused:,} | {len(lw.solutions):,} | {pool:,} | {_kb(built.measured[(g, length)])} |")
     w("")
 

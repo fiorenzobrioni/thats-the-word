@@ -22,7 +22,7 @@ Passo's).
 their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) were
 rebuilt in Phase 1b with no list of words kept anywhere (the editions' labels decide,
 `tools/words/pipeline/register.py`, ADR 0005) and a whole meaning of two lines in the three
-languages for every solution, every length from 3 to 8 measured and five shipped; the owner's go
+languages for every solution, every length from 3 to 8 built and shipped (five letters are 1.0's game); the owner's go
 on the new samples and the daily pool's size is awaited (PLANNING §15, Open 23 to 26); the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
 case tested; the game screen (`:feature:game`) plays a daily, a replay or a free word,
 saved in Room (`:core:data`) after every move, its feedback the owner's choice (ink and amber); the

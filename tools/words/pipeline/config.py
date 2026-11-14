@@ -14,16 +14,16 @@ ASSETS = ROOT / "core" / "words" / "src" / "main" / "assets" / "words"
 REPORT = ROOT / "docs" / "words"
 
 LANGUAGES = ("it", "en", "es")
-# The length 1.0 plays, and the only one whose files ship (PLANNING.md §6.6).
+# The length 1.0 plays, and its daily schedule's (PLANNING.md §6.5).
 LENGTH = 5
 ATTEMPTS = 6
-# The lengths the pipeline builds and measures: 1.1's Bridge (*gatto / cat / gato*) and 1.2's
-# variable length (VISION §8: 4 to 7 letters) need them. Each is built and counted in the report
-# with the same rules, so a later version adds a length by shipping it, not by writing the rules
-# again (§15, 14 Nov 2026). Only `SHIPPED_LENGTHS` become files in the app: the others would weigh
-# on 1.0 for nothing, and a daily schedule is frozen only when its mode ships.
+# The lengths the pipeline builds, measures and ships: 1.1's Bridge (*gatto / cat / gato*) and
+# 1.2's variable length (VISION §8: 4 to 7 letters) need them, and the owner wanted them in the app
+# already (§15, 14 Nov 2026, «Every length in the app»). Each has its accepted words, solutions and
+# written forms; one glossary per interface language describes them all. A length's daily schedule
+# is written with the mode that plays its dailies: once written it never changes.
 LENGTHS = (3, 4, 5, 6, 7, 8)
-SHIPPED_LENGTHS = (LENGTH,)
+SHIPPED_LENGTHS = LENGTHS
 
 # The Spanish dictionaries read: Spain's, Mexico's and the Río de la Plata's (its voseo).
 HUNSPELL = {"it": ("it_IT",), "es": ("es_ES", "es_MX", "es_AR")}

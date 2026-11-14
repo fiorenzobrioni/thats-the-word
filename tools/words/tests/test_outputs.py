@@ -10,21 +10,26 @@ def read(language, name):
     return (config.ASSETS / language / name).read_bytes()
 
 
-def accepted(language):
-    return set(pack.read_words(read(language, f"accepted-{config.LENGTH}.bin")))
+def accepted(language, length=config.LENGTH):
+    return set(pack.read_words(read(language, f"accepted-{length}.bin")))
 
 
-def solutions(language):
-    return {v >> 2: v & 3 for v in pack.read_words(read(language, f"solutions-{config.LENGTH}.bin"))}
+def solutions(language, length=config.LENGTH):
+    return {v >> 2: v & 3 for v in pack.read_words(read(language, f"solutions-{length}.bin"))}
 
 
 @unittest.skipUnless(config.ASSETS.exists(), "the words are not built")
 class OutputsTest(unittest.TestCase):
     def test_every_header_names_its_language_and_kind(self):
         for g in config.LANGUAGES:
-            for name, kind in (("accepted-5.bin", "accepted"), ("solutions-5.bin", "solutions"), ("daily.bin", "daily"), ("forms-5.bin", "forms")):
-                h = pack.read_header(read(g, name))
-                self.assertEqual((h["kind"], h["language"], h["version"]), (kind, folding.LANGUAGE_CODE[g], 1), name)
+            h = pack.read_header(read(g, "daily.bin"))
+            self.assertEqual((h["kind"], h["language"], h["length"]), ("daily", folding.LANGUAGE_CODE[g], config.LENGTH))
+            for n in config.SHIPPED_LENGTHS:
+                for name, kind in ((f"accepted-{n}.bin", "accepted"), (f"solutions-{n}.bin", "solutions"), (f"forms-{n}.bin", "forms")):
+                    h = pack.read_header(read(g, name))
+                    self.assertEqual(
+                        (h["kind"], h["language"], h["version"], h["length"]), (kind, folding.LANGUAGE_CODE[g], 1, n), name
+                    )
             for u in config.LANGUAGES:
                 h = pack.read_header(read(g, f"gloss-{u}.bin"))
                 self.assertEqual((h["kind"], h["language"], h["extra"]), ("glossary", folding.LANGUAGE_CODE[g], folding.LANGUAGE_CODE[u]))
@@ -48,11 +53,14 @@ class OutputsTest(unittest.TestCase):
 
     def test_every_solution_is_accepted_and_italian_ones_keep_to_its_alphabet(self):
         for g in config.LANGUAGES:
-            acc = accepted(g)
-            for value in solutions(g):
-                self.assertIn(value, acc)
-                if g == "it":
-                    self.assertTrue(folding.within_italian_alphabet(folding.unpack(value, 5, g)))
+            for n in config.SHIPPED_LENGTHS:
+                acc = accepted(g, n)
+                sols = solutions(g, n)
+                self.assertTrue(sols, f"{g}-{n}")
+                for value in sols:
+                    self.assertIn(value, acc)
+                    if g == "it":
+                        self.assertTrue(folding.within_italian_alphabet(folding.unpack(value, n, g)))
 
     def test_the_common_words_are_accepted(self):
         for g in config.LANGUAGES:
@@ -63,20 +71,25 @@ class OutputsTest(unittest.TestCase):
             self.assertEqual(missing, [], g)
 
     def test_every_solution_has_a_whole_short_meaning_in_the_three_languages(self):
-        # PLANNING.md §6.4, §15 (14 Nov 2026): a definition of two lines at most, never cut.
+        # PLANNING.md §6.4, §15 (14 Nov 2026): a definition of two lines at most, never cut; every
+        # shipped length's solutions, in the one glossary.
         for g in config.LANGUAGES:
-            forms = pack.read_table(read(g, f"forms-{config.LENGTH}.bin"))
             glossaries = {u: pack.read_table(read(g, f"gloss-{u}.bin")) for u in config.LANGUAGES}
-            for value in solutions(g):
-                key = folding.unpack(value, config.LENGTH, g)
-                record = forms.get(key)
-                display = (record[0] if isinstance(record[0], str) else record[0][0]) if record else key
-                for u in config.LANGUAGES:
-                    entry = glossaries[u].get(display)
-                    self.assertIsNotNone(entry, f"{g} {display} in {u}")
-                    meaning = entry[1]
-                    self.assertTrue(meaning, f"{g} {display}: no meaning in {u}")
-                    self.assertLessEqual(len(meaning), config.MEANING_MAX, f"{g} {display} in {u}")
+            for n in config.SHIPPED_LENGTHS:
+                self.check_meanings(g, n, glossaries)
+
+    def check_meanings(self, g, n, glossaries):
+        forms = pack.read_table(read(g, f"forms-{n}.bin"))
+        for value in solutions(g, n):
+            key = folding.unpack(value, n, g)
+            record = forms.get(key)
+            display = (record[0] if isinstance(record[0], str) else record[0][0]) if record else key
+            for u in config.LANGUAGES:
+                entry = glossaries[u].get(display)
+                self.assertIsNotNone(entry, f"{g} {display} in {u}")
+                meaning = entry[1]
+                self.assertTrue(meaning, f"{g} {display}: no meaning in {u}")
+                self.assertLessEqual(len(meaning), config.MEANING_MAX, f"{g} {display} in {u}")
 
     def test_no_meaning_is_cut(self):
         for g in config.LANGUAGES:

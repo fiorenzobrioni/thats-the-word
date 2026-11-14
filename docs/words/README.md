@@ -55,9 +55,9 @@ guess may be or belong to.
 
 | | Accepted | from the spelling dictionary | from Wiktionary only | Refused | Solutions | Glossary words |
 |---|---|---|---|---|---|---|
-| Italian | 8,260 | 6,067 | 2,193 | 54 | 717 | 3,356 |
-| English | 22,528 | 6,516 | 16,012 | 391 | 1,355 | 6,388 |
-| Spanish | 13,105 | 8,922 | 4,183 | 176 | 1,068 | 5,510 |
+| Italian | 8,260 | 6,067 | 2,193 | 54 | 717 | 26,915 |
+| English | 22,528 | 6,516 | 16,012 | 391 | 1,355 | 37,211 |
+| Spanish | 13,105 | 8,922 | 4,183 | 176 | 1,068 | 32,312 |
 
 **The common words that must be accepted** (`tools/words/lists/common_*.txt`, 200 a language,
 lemmas and inflected forms): 
@@ -101,27 +101,28 @@ Examples, the most common of each level:
 ## The lengths (for 1.1 and 1.2)
 
 Every length the later versions may play (VISION §8: Bridge in 1.1, variable length in 1.2),
-built with the same rules and measured; only five letters ship in 1.0. The glossary column is
-the solutions' meanings and translations in the three interface languages, what a length would
-add at least.
+built with the same rules and shipped in the app already (§15, 14 Nov 2026); five letters are
+1.0's game and have its daily schedule. The glossary column is the solutions' meanings and
+translations in the three interface languages (the glossary files hold them with every guess's
+lemma, all lengths together).
 
 | | Letters | Accepted | Refused | Solutions | Daily pool (Base and Intermediate) | Solutions' glossaries |
 |---|---|---|---|---|---|---|
 | Italian | 3 | 541 | 1 | 65 | 53 | 13 KB |
 | Italian | 4 | 2,618 | 12 | 297 | 212 | 64 KB |
-| Italian | 5 (ships) | 8,260 | 54 | 717 | 436 | 155 KB |
+| Italian | 5 (1.0's game) | 8,260 | 54 | 717 | 436 | 155 KB |
 | Italian | 6 | 20,399 | 86 | 1,037 | 517 | 230 KB |
 | Italian | 7 | 47,569 | 204 | 1,601 | 644 | 356 KB |
 | Italian | 8 | 87,072 | 272 | 1,736 | 657 | 390 KB |
 | English | 3 | 2,516 | 39 | 283 | 217 | 60 KB |
 | English | 4 | 9,372 | 167 | 957 | 664 | 212 KB |
-| English | 5 (ships) | 22,528 | 391 | 1,355 | 764 | 297 KB |
+| English | 5 (1.0's game) | 22,528 | 391 | 1,355 | 764 | 297 KB |
 | English | 6 | 42,763 | 671 | 1,878 | 846 | 414 KB |
 | English | 7 | 67,571 | 1,099 | 1,965 | 815 | 439 KB |
 | English | 8 | 90,890 | 1,378 | 1,959 | 715 | 439 KB |
 | Spanish | 3 | 841 | 16 | 96 | 74 | 20 KB |
 | Spanish | 4 | 3,912 | 68 | 458 | 280 | 101 KB |
-| Spanish | 5 (ships) | 13,105 | 176 | 1,068 | 559 | 233 KB |
+| Spanish | 5 (1.0's game) | 13,105 | 176 | 1,068 | 559 | 233 KB |
 | Spanish | 6 | 31,055 | 405 | 1,507 | 621 | 329 KB |
 | Spanish | 7 | 61,701 | 621 | 1,871 | 699 | 417 KB |
 | Spanish | 8 | 98,522 | 831 | 1,895 | 672 | 428 KB |
@@ -173,13 +174,28 @@ The files, stored uncompressed in the APK so they are read in place (§6.6, ADR 
 
 | File | Italian | English | Spanish |
 |---|---|---|---|
+| `accepted-3.bin` | 2 KB | 10 KB | 3 KB |
+| `accepted-4.bin` | 10 KB | 37 KB | 15 KB |
 | `accepted-5.bin` | 32 KB | 88 KB | 51 KB |
+| `accepted-6.bin` | 80 KB | 167 KB | 121 KB |
+| `accepted-7.bin` | 372 KB | 528 KB | 482 KB |
+| `accepted-8.bin` | 680 KB | 710 KB | 770 KB |
 | `daily.bin` | 14 KB | 14 KB | 14 KB |
+| `forms-3.bin` | 4 KB | 21 KB | 7 KB |
+| `forms-4.bin` | 31 KB | 74 KB | 53 KB |
 | `forms-5.bin` | 123 KB | 215 KB | 239 KB |
-| `gloss-en.bin` | 222 KB | 343 KB | 348 KB |
-| `gloss-es.bin` | 131 KB | 277 KB | 251 KB |
-| `gloss-it.bin` | 131 KB | 261 KB | 188 KB |
+| `forms-6.bin` | 337 KB | 467 KB | 680 KB |
+| `forms-7.bin` | 838 KB | 871 KB | 1,524 KB |
+| `forms-8.bin` | 1,478 KB | 1,249 KB | 2,709 KB |
+| `gloss-en.bin` | 1,716 KB | 1,955 KB | 1,738 KB |
+| `gloss-es.bin` | 782 KB | 1,236 KB | 1,231 KB |
+| `gloss-it.bin` | 870 KB | 1,184 KB | 829 KB |
+| `solutions-3.bin` | 276 B | 1 KB | 400 B |
+| `solutions-4.bin` | 1 KB | 4 KB | 2 KB |
 | `solutions-5.bin` | 3 KB | 5 KB | 4 KB |
-| **Total** | **656 KB** | **1,203 KB** | **1,096 KB** |
+| `solutions-6.bin` | 4 KB | 7 KB | 6 KB |
+| `solutions-7.bin` | 13 KB | 15 KB | 15 KB |
+| `solutions-8.bin` | 14 KB | 15 KB | 15 KB |
+| **Total** | **7,405 KB** | **8,875 KB** | **10,509 KB** |
 
-All three languages: **2.9 MB** in the APK.
+All three languages: **26.2 MB** in the APK.

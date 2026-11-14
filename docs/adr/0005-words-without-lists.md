@@ -49,9 +49,12 @@ reuse. Wiktionary's editions label their senses, each in its own way.
    a foreign word or its stem (the definition is a hint). A foreign word's meaning is its
    translation's definition first, the interface edition's own gloss only when it defines rather
    than translates. Every solution has one in each of the three languages, or is not a solution.
-6. **Every length from 3 to 8 is built and measured; five ship.** The rules do not depend on the
-   length (`config.LENGTHS`), so 1.1's Bridge and 1.2's variable length add a length by shipping
-   its files (`config.SHIPPED_LENGTHS`), and freeze its daily schedule then.
+6. **Every length from 3 to 8 is built, measured and shipped.** The rules do not depend on the
+   length (`config.LENGTHS`); each length has its accepted words, solutions and written forms, and
+   one glossary per interface language describes every length (the owner wanted them in the app
+   already, PLANNING §15, 14 Nov 2026, «Every length in the app»). Only five letters, 1.0's game,
+   have a daily schedule: a length's is written with the mode that plays its dailies, and is
+   frozen from then.
 7. **The daily schedules were written anew once**, before 1.0, with these rules (the owner's
    answer); they are append-only again from now.
 
@@ -61,6 +64,7 @@ reuse. Wiktionary's editions label their senses, each in its own way.
   smaller daily pool (436, 764, 559), most for want of a reliable translation between Italian or
   Spanish and the other languages, or of a short first gloss: Open 24 asks the owner how large the
   pool should be.
-- The files keep ADR 0003's formats; 2.7 MB for the three languages.
+- The files keep ADR 0003's formats (the slot of eight bytes from seven letters, decided then);
+  26.2 MB for the three languages and six lengths, 2.7 MB of them five letters'.
 - What the labels miss is not caught: a word the editions do not label is a word of the game.
   The rule is read and changed in `register.py` and `lexicon.py`, never by listing a word.

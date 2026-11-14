@@ -65,10 +65,11 @@ and record it in PLANNING.md §15.
 
 ## The lengths
 
-Every length in `config.LENGTHS` (3 to 8) is built with the same rules and measured in the
-report's «The lengths»; only `config.SHIPPED_LENGTHS` (five letters, 1.0's) become files in
-`core/words/src/main/assets/words/`. A later version ships a length by adding it there; its daily
-schedule is written then, and is append-only from its first build.
+Every length in `config.LENGTHS` (3 to 8) is built with the same rules, measured in the report's
+«The lengths», and shipped (`config.SHIPPED_LENGTHS`): `accepted-<n>.bin`, `solutions-<n>.bin`
+and `forms-<n>.bin` per length, and one `gloss-<interface>.bin` for every length. Only five letters
+have a daily schedule (`daily.bin`): a length's is written with the mode that plays its dailies,
+and is append-only from its first build.
 
 ## When a source moves
 

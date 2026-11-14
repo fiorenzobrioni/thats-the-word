@@ -150,6 +150,43 @@ def _readme(built) -> str:
             w(f"| {NAMES[g]} | {length}{shipped} | {len(lw.accepted):,} | {lw.refused:,} | {len(lw.solutions):,} | {pool:,} | {_kb(built.measured[(g, length)])} |")
     w("")
 
+    w("## Three of the owner's ideas, measured\n")
+    w("Asked by the owner on 14 Nov 2026 (PLANNING §15, «Three ideas»).\n")
+    w(f"**A solution is a noun, an adjective or a verb**, by its first entry ({', '.join(config.SOLUTION_KINDS)}). What it")
+    w("leaves out: the words that would otherwise have been solutions (a whole meaning in the three")
+    w("languages, in wordfreq's list), with those of the daily's levels; the most frequent named.\n")
+    w("| | Letters | Left out | of them daily | The most frequent |")
+    w("|---|---|---|---|---|")
+    for g in config.LANGUAGES:
+        for length in config.LENGTHS:
+            n, daily, top = built.kinds_cost[(g, length)]
+            w(f"| {NAMES[g]} | {length} | {n:,} | {daily:,} | {', '.join(f'*{d}*' for d in top)} |")
+    w("")
+    w("**At most so many solutions a length**, the most frequent kept ("
+      + ", ".join(f"{k} letters {v:,}" for k, v in config.MAX_SOLUTIONS.items()) + "). What it leaves out:\n")
+    w("| | " + " | ".join(f"{n} letters" for n in config.LENGTHS) + " |")
+    w("|---|" + "---|" * len(config.LENGTHS))
+    for g in config.LANGUAGES:
+        cells = []
+        for length in config.LENGTHS:
+            lw = built.lengths[(g, length)]
+            cap = config.MAX_SOLUTIONS.get(length)
+            cells.append(f"{len(lw.excluded.get(f'beyond the {cap:,} most frequent of its length', [])):,}" if cap else "–")
+        w(f"| {NAMES[g]} | " + " | ".join(cells) + " |")
+    w("")
+    w("**The part of speech beside the meaning**, in the interface language (sostantivo, noun,")
+    w("sustantivo...), when the meaning was read in an entry of the word's own part of speech. The")
+    w("share of five-letter solutions whose meaning carries it:\n")
+    w("| Game → interface | With the part of speech |")
+    w("|---|---|")
+    for g in config.LANGUAGES:
+        sols = built.words[g].solutions
+        for u in config.LANGUAGES:
+            table = built.glosses[(g, u)]
+            n = sum(1 for s in sols if table[s.display].pos == s.pos)
+            w(f"| {NAMES[g]} → {NAMES[u]} | {_pct(n, len(sols))} |")
+    w("")
+
     w("## The meanings and translations (VISION Q4)\n")
     w("On the solutions, for each pair (game language → interface language): a **translation** is")
     w("shown when two sources agree on it, or when one translation table gives it for the word's first")
@@ -220,6 +257,11 @@ def _samples(built, g: str, u: str) -> str:
     rest = sorted(s.display for s in sols if s.level not in config.DAILY_LEVELS)
     picked = sorted(rng.sample(pool, min(35, len(pool)))) + sorted(rng.sample(rest, min(15, len(rest))))
     level = {s.display: config.LEVEL_NAMES[s.level] for s in sols}
+    kind = {s.display: s.pos for s in sols}
+
+    def labelled_meaning(x, d):
+        label = config.PART_OF_SPEECH[u].get(kind[d]) if x.pos == kind[d] else None
+        return (f"*{label}* · " if label and x.meaning else "") + (x.meaning or "")
     table = built.glosses[(g, u)]
     out = [f"# {NAMES[g]} words, read in {NAMES[u]}\n"]
     out.append("Written by `tools/words/build.py`: 50 solutions drawn at random (35 from the daily pool, 15")
@@ -231,7 +273,7 @@ def _samples(built, g: str, u: str) -> str:
         out.append("|---|---|---|")
         for d in picked:
             x = table[d]
-            out.append(f"| *{d}* | {level[d]} | {_cell(x.meaning) or '—'} |")
+            out.append(f"| *{d}* | {level[d]} | {_cell(labelled_meaning(x, d)) or '—'} |")
     else:
         out.append("| Word | Level | Translation | Meaning |")
         out.append("|---|---|---|---|")
@@ -240,7 +282,7 @@ def _samples(built, g: str, u: str) -> str:
             tr = ", ".join(x.translations)
             if tr and not x.agreed:
                 tr += " *(single)*"
-            meaning = x.meaning or ""
+            meaning = labelled_meaning(x, d)
             if meaning and x.meaning_via:
                 meaning = f"({x.meaning_via}) {meaning}"
             out.append(f"| *{d}* | {level[d]} | {_cell(tr) or '—'} | {_cell(meaning) or '—'} |")

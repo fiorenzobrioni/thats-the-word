@@ -31,6 +31,7 @@ data class NotebookWordUi(
     val lemma: String?,
     val translations: String?,
     val meaning: String?,
+    val partOfSpeech: String? = null,
     val standing: WordStanding,
     val withHints: Boolean,
     val timesMet: Int,
@@ -53,6 +54,7 @@ data class NotebookWordUi(
                 lemma = meaning.lemma,
                 translations = meaning.translations.takeIf { it.isNotEmpty() }?.joinToString(", "),
                 meaning = meaning.meaning,
+                partOfSpeech = meaning.partOfSpeech,
                 standing = when {
                     games == 0 -> WordStanding.KEPT
                     entry.missed == 0 -> WordStanding.FOUND

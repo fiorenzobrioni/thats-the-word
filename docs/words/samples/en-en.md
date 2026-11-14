@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Definition |
 |---|---|---|
-| *above* | Base | Physically over; on top of; worn on top of, said of clothing |
-| *alter* | Intermediate | To change the form or structure of |
-| *awful* | Intermediate | Very bad |
-| *build* | Base | To form (something) by combining materials or parts |
-| *bully* | Intermediate | A person who is intentionally physically or emotionally cruel to others |
-| *catch* | Base | The act of seizing or capturing |
-| *chase* | Intermediate | The act of one who chases another; a pursuit |
-| *crowd* | Base | To press forward; to advance by pushing |
-| *delay* | Intermediate | A period of time before an event occurs; the act of delaying; procrastination; lingering inactivity |
-| *donor* | Intermediate | One who makes a donation |
-| *elite* | Intermediate | Of high birth or social position; aristocratic or patrician |
-| *extra* | Base | Beyond what is due, usual, expected, or necessary; extraneous; additional; supernumerary |
-| *flesh* | Intermediate | The soft tissue of the body, especially muscle and fat |
-| *guest* | Base | A recipient of hospitality, especially someone staying by invitation at the house of another |
-| *irony* | Intermediate | The quality of a statement that |
-| *maker* | Intermediate | Someone who makes; a person or thing that makes or produces something |
-| *match* | Base | Any contest or trial of strength or skill, or to determine superiority |
-| *pasta* | Intermediate | Dough made from wheat and water and sometimes mixed with egg and formed into various shapes |
-| *phone* | Base | A device for transmitting conversations and other sounds in real time across distances |
-| *plant* | Base | Organism capable of photosynthesis |
-| *porch* | Intermediate | A covered entrance to a building |
-| *quota* | Intermediate | A proportional part or share; the share or proportion assigned to each in a division |
-| *ratio* | Intermediate | A number representing a comparison between two named things |
-| *skull* | Intermediate | The main bones of the head considered as a unit; including the cranium, facial bones, and mandible |
-| *spice* | Intermediate | Aromatic or pungent plant matter (usually dried) used to season or flavor food |
-| *swamp* | Intermediate | Type of wetland |
-| *swift* | Intermediate | Fast; quick; rapid |
-| *syrup* | Intermediate | Thick liquid that has a high sugar content |
-| *thank* | Base | To express appreciation or gratitude toward (someone or something) |
-| *throw* | Base | Computing: to send an error to an exception-handling mechanism |
-| *torch* | Intermediate | A stick of wood or plant fibres twisted together |
-| *trail* | Intermediate | To follow behind (someone or something); to tail (someone or something) |
-| *venue* | Intermediate | A theater, auditorium, arena, or other area designated for sporting or entertainment events |
-| *villa* | Intermediate | A house used as a retreat |
-| *wrong* | Base | Incorrect or untrue |
-| *avian* | Advanced | Characteristic of or pertaining to birds, or to bird-like or flying creatures |
-| *cello* | Advanced | A bowed bass instrument held between the knees |
-| *cumin* | Advanced | The flowering plant Cuminum cyminum, in the family Apiaceae |
-| *egret* | Complete | Any of various wading birds of the genera Egretta or Ardea that includes herons |
-| *ensue* | Advanced | To follow (a leader, inclination etc.) |
-| *foyer* | Advanced | Lobby, corridor, or waiting room |
-| *gluey* | Complete | Viscous and adhesive, as glue |
-| *grump* | Complete | A habitually grumpy or complaining person |
-| *inane* | Advanced | Lacking sense or meaning, often to the point of boredom or annoyance |
-| *joust* | Complete | A mock combat between two mounted knights or men-at-arms |
-| *scram* | Complete | To leave in a hurry; to go away |
-| *shaky* | Advanced | Shaking or trembling |
-| *shawl* | Advanced | A square or rectangular piece of cloth worn as a covering for the head |
-| *visor* | Advanced | A part of a helmet, arranged so as to lift or open, and so show the face |
-| *winch* | Advanced | A machine consisting of a drum on an axle |
+| *acute* | Intermediate | *adjective* · Brief, quick, short |
+| *apply* | Base | *verb* · To lay or place; to put |
+| *being* | Base | *noun* · A living creature |
+| *charm* | Intermediate | *noun* · An object, act or words believed to have magic power |
+| *chart* | Intermediate | *noun* · A map illustrating the geography of a specific phenomenon |
+| *chunk* | Intermediate | *noun* · A part of something that has been separated |
+| *clear* | Base | *adjective* · Transparent in colour |
+| *dense* | Intermediate | *adjective* · Having relatively high density |
+| *drink* | Base | *verb* · To consume through the mouth |
+| *elder* | Intermediate | *adjective* · Closer to the dealer, i.e. receiving cards earlier than others |
+| *fifth* | Base | *adjective* · The ordinal form of the number five |
+| *flock* | Intermediate | *noun* · A large number of animals associated together in a group |
+| *glove* | Intermediate | *noun* · Item of clothing |
+| *inner* | Base | *adjective* · Being or occurring inside |
+| *knock* | Intermediate | *noun* · An abrupt rapping sound, as from an impact of a hard object against wood |
+| *major* | Base | *adjective* · Greater in dignity, rank, importance, significance, or interest |
+| *naive* | Intermediate | *adjective* · Lacking worldly experience, wisdom, or judgement |
+| *noble* | Intermediate | *noun* · An aristocrat; one of aristocratic blood |
+| *proud* | Base | *adjective* · Feeling honoured; feeling happy or satisfied about an event or fact; gratified |
+| *queue* | Intermediate | *noun* · Line of people |
+| *quota* | Intermediate | *noun* · A proportional part or share |
+| *ratio* | Intermediate | *noun* · A number representing a comparison between two named things |
+| *refer* | Intermediate | *verb* · To direct the attention of (someone toward something) |
+| *salad* | Intermediate | *noun* · A food consisting principally of raw vegetables, other savoury ingredients, fruit, or confectionary |
+| *scope* | Intermediate | *noun* · The breadth, depth or reach of a subject |
+| *stall* | Intermediate | *noun* · A compartment for a single animal in a stable or cattle shed |
+| *stunt* | Intermediate | *noun* · A daring or dangerous feat, often involving the display of gymnastic skills |
+| *tread* | Intermediate | *verb* · To step or walk; to trample |
+| *trial* | Base | *noun* · The testing of a product or procedure |
+| *truck* | Base | *noun* · A small wheel or roller, specifically the wheel of a gun carriage |
+| *truth* | Base | *noun* · True facts, genuine depiction or statements of reality |
+| *unity* | Intermediate | *noun* · Oneness: the state or fact of being one undivided entity |
+| *vault* | Intermediate | *noun* · An arched masonry structure supporting and forming a ceiling |
+| *viral* | Intermediate | *adjective* · Relating to a virus in biological sense |
+| *watch* | Base | *noun* · A portable or wearable timepiece |
+| *bangs* | Advanced | *noun* · Hair hanging over the forehead |
+| *clamp* | Advanced | *noun* · A brace, band, or clasp for strengthening or holding things that are apart together |
+| *crone* | Complete | *noun* · An old woman |
+| *davit* | Complete | *noun* · A spar formerly used on board of ships |
+| *evoke* | Advanced | *verb* · To call out; to draw out or bring forth |
+| *fable* | Advanced | *noun* · A fictitious narrative intended to enforce some useful truth or precept |
+| *gamut* | Advanced | *noun* · A (normally) complete range |
+| *gully* | Advanced | *noun* · A trench, ravine or narrow channel which was worn by water flow, especially on a hillside |
+| *irate* | Advanced | *adjective* · Extremely angry; wrathful; enraged |
+| *ovary* | Advanced | *noun* · A female reproductive organ |
+| *ramen* | Advanced | *noun* · Soup noodles of wheat, with various ingredients |
+| *shirk* | Complete | *verb* · To avoid, especially a duty, responsibility, etc |
+| *shred* | Advanced | *noun* · A fragment of something; a particle; a piece; also, a very small amount |
+| *vetch* | Complete | *noun* · Any of several leguminous plants |
+| *wharf* | Advanced | *noun* · An artificial landing place for ships on a riverbank or shore |

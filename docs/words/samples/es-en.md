@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *abril* | Base | April | (April) Fourth month of the Gregorian calendar |
-| *araña* | Intermediate | spider, chandelier | (spider) Any of various eight-legged |
-| *casar* | Intermediate | marry, wed, fit | (marry) To take as husband or wife |
-| *censo* | Intermediate | census | (census) An official count or enumeration of members of a population |
-| *corte* | Base | cut, court, embarrassment | (cut) The act of cutting |
-| *crema* | Intermediate | cream, creamy, dieresis | (cream) The butterfat or milkfat part of milk which rises to the top |
-| *cruce* | Intermediate | crossing, crossroads, intersection | (crossing) An intersection where roads, lines, or tracks cross |
-| *droga* | Intermediate | drug | (drug) Any commodity that lies on hand, or is not salable; an article of slow sale, or in no demand |
-| *extra* | Intermediate | extra, additional | (extra) Beyond what is due, usual, expected, or necessary |
-| *falda* | Intermediate | skirt, brisket | (skirt) A separate article of clothing |
-| *firma* | Base | signature, company | (signature) Person’s autograph name |
-| *fumar* | Intermediate | smoke | (smoke) To inhale and exhale the smoke from a burning cigarette or cigar, burning material in a pipe, etc |
-| *lento* | Intermediate | slow | (slow) Taking a long time to move or go a short distance, or to perform an action |
-| *lugar* | Base | place | (place) A location or position in space |
-| *malta* | Intermediate | malt | (malt) Sprouted grain used in brewing |
-| *micro* | Intermediate | bus | (bus) Any motorized vehicle, such as a motorbike or car |
-| *nunca* | Base | never | (never) At no time; on no occasion; in no circumstance |
-| *omega* | Intermediate | omega | (omega) The twenty-fourth letter of the Classical and the Modern Greek alphabet |
-| *otoño* | Intermediate | autumn, fall | (autumn) Traditionally the third of the four seasons |
-| *pagar* | Base | pay | (pay) To give money or other compensation to in exchange for goods or services |
-| *pauta* | Intermediate | pattern, guideline | (pattern) A particular sequence of events |
-| *piano* | Intermediate | piano | (piano) A percussive keyboard musical instrument |
-| *plaza* | Base | plaza, square, place | (plaza) A town's public square |
-| *plazo* | Base | deadline, term, installment | (deadline) A time limit in the form of a date on or before which something must be completed |
-| *plomo* | Intermediate | lead, grey, bore | (lead) A heavy, pliable, inelastic metal element, having a bright, bluish color, but easily tarnished |
-| *quien* | Base | who, whom, anyone | (who) Whoever, he who, they who |
-| *reloj* | Intermediate | clock, watch, wristwatch | (clock) A time clock |
-| *robar* | Intermediate | steal, rob, draw | (steal) To illegally take possession of |
-| *saber* | Base | know, taste | (know) To perceive the truth or factuality of; to be certain of; to be certain that |
-| *sobra* | Intermediate | surplus, plentifulness | (surplus) That which remains when use or need is satisfied, or when a limit is reached |
-| *sonda* | Intermediate | probe | (probe) Any of various medical instruments used to explore wounds, organs, etc |
-| *tigre* | Intermediate | tiger, jaguar | (tiger) A male tiger |
-| *tomar* | Base | take, drink | (take) To get into one's hands, possession, or control, with or without force |
-| *tumba* | Intermediate | tomb | (tomb) A small building, or a room within one, for the remains of the dead, with walls, a roof, and a door |
-| *ídolo* | Intermediate | idol | (idol) A graven image or representation of anything that is revered, or believed to convey spiritual power |
-| *aleta* | Advanced | fin, flipper, blade | (fin) One of the appendages of a fish, used to propel itself and to manoeuvre/maneuver |
-| *arete* | Complete | earring | (earring) A piece of jewelry worn on the ear |
-| *arilo* | Complete | aril, aryl | (aril) A tissue surrounding the seed in certain fruits such as pomegranates |
-| *balar* | Complete | bleat | (bleat) Of a sheep, goat, or calf: to make its characteristic cry; of a human, to mimic this sound |
-| *beodo* | Complete | drunk, drunkard | (drunk) Intoxicated as a result of excessive alcohol consumption, usually by drinking alcoholic beverages |
-| *buril* | Complete | burin | (burin) A chisel with a sharp point, used for engraving; a graver |
-| *catar* | Advanced | taste, look | (taste) To sample the flavor of something orally |
-| *dátil* | Complete | date | (date) The date palm |
-| *forja* | Advanced | forge, foundry | (forge) A furnace or hearth where metals are heated prior to hammering them into shape |
-| *gacho* | Complete | fedora | (fedora) A felt hat with a fairly low, creased crown with a brim that can be turned up or down |
-| *obeso* | Advanced | obese | (obese) Extremely overweight |
-| *pando* | Advanced | — | (bent) Folded or dented out of its usual shape |
-| *rupia* | Complete | rupee | (rupee) Any of the monetary currencies used in modern India |
-| *tordo* | Complete | thrush | (thrush) Any of numerous species of songbirds of the cosmopolitan family Turdidae |
-| *tunda* | Complete | thrashing *(single)* | (thrashing) A beating, especially a severe one |
+| *abrir* | Base | open, unlock | (open) *verb* · To make or become accessible or clear for passage by moving from a shut position |
+| *arroz* | Intermediate | rice | (rice) *noun* · Cereal plants, Oryza sativa of the grass family whose seeds are used as food |
+| *borra* | Intermediate | flock | (flock) *noun* · Coarse tufts of wool or cotton used in bedding |
+| *ceder* | Intermediate | cede, yield | (cede) *verb* · To give up; yield to another |
+| *citar* | Intermediate | cite, summon | (cite) *verb* · To quote; to repeat, as a passage from a book, or the words of another |
+| *cuota* | Intermediate | quota, installment, fee | (quota) *noun* · A proportional part or share |
+| *damas* | Intermediate | draughts | (draughts) *noun* · A board game for two players in which the players each have a set number of pieces |
+| *danés* | Intermediate | Danish, Dane | (Dane) A person from Denmark or of Danish descent |
+| *error* | Base | error | (error) *noun* · The difference between a measured or calculated value and a true one |
+| *firme* | Base | firm, unwavering | (firm) *adjective* · Steadfast, secure, solid |
+| *flora* | Intermediate | flora | (flora) *noun* · Plants considered as a group, especially those of a particular country, region, time, etc |
+| *furia* | Intermediate | fury | (fury) *noun* · Extreme anger |
+| *gorro* | Intermediate | cap, beanie | (cap) *noun* · A close-fitting hat, either brimless or peaked |
+| *macho* | Intermediate | male, blond | (male) *adjective* · Belonging to the sex which typically produces sperm |
+| *meter* | Intermediate | stuff | (stuff) *verb* · To fill a space with in a compressed manner |
+| *mitad* | Base | half | (half) *noun* · One of two usually roughly equal parts into which anything may be divided, or considered as divided |
+| *nieto* | Intermediate | grandchild, grandson | (grandchild) *noun* · A child of someone's child |
+| *peaje* | Intermediate | toll | (toll) *noun* · A fee for using any kind of material processing service |
+| *pieza* | Base | piece, ordinary, room | (piece) *noun* · A part of a larger whole, usually in such a form that it is able to be separated from other parts |
+| *plaga* | Intermediate | plague | (plague) *noun* · An epidemic or pandemic caused by any pestilence, but especially that caused by the above disease |
+| *plazo* | Base | deadline, term, installment | (deadline) *noun* · A time limit in the form of a date on or before which something must be completed |
+| *poema* | Intermediate | poem | (poem) *noun* · A literary piece written in verse |
+| *pulso* | Intermediate | pulse | (pulse) *noun* · Normally regular beat felt when arteries near the skin are depressed |
+| *rango* | Intermediate | rank, range | (rank) *noun* · One's position in a list sorted by a shared property such as physical location |
+| *revés* | Intermediate | back, reverse, backhand | (back) *noun* · A support or resource in reserve |
+| *rezar* | Intermediate | pray, read | (pray) *verb* · To petition a higher being |
+| *riego* | Intermediate | irrigation | (irrigation) *noun* · The act or process of irrigating, or the state of being irrigated |
+| *rural* | Base | rural | (rural) *adjective* · Relating to the countryside or to agriculture |
+| *sexto* | Intermediate | sixth | (sixth) *adjective* · The ordinal form of the number six |
+| *soñar* | Intermediate | dream | (dream) *verb* · To see imaginary events in one's mind while sleeping |
+| *tarea* | Base | task, homework | (task) *noun* · A piece of work done as part of one’s duties |
+| *trato* | Base | treatment, deal | (treatment) *noun* · The process or manner of treating someone or something |
+| *tumba* | Intermediate | tomb | (tomb) *noun* · A small building, or a room within one, for the remains of the dead, with walls, a roof, and a door |
+| *vodka* | Intermediate | vodka | (vodka) *noun* · A clear distilled alcoholic liquor made from grain mash |
+| *yerno* | Intermediate | son-in-law | (son-in-law) *noun* · The husband of one's child |
+| *aleta* | Advanced | fin, flipper, blade | (fin) *noun* · A similar appendage of a cetacean or other marine animal |
+| *arilo* | Complete | aril, aryl | (aril) *noun* · A tissue surrounding the seed in certain fruits such as pomegranates |
+| *balar* | Complete | bleat | (bleat) *verb* · Of a sheep, goat, or calf: to make its characteristic cry |
+| *bemol* | Complete | flat | (flat) *adjective* · Lowered by one semitone |
+| *beodo* | Complete | drunk, drunkard | (drunk) *adjective* · Intoxicated as a result of excessive alcohol consumption, usually by drinking alcoholic beverages |
+| *bucle* | Advanced | curl, loop, bouclé | (curl) *noun* · A curving piece or lock of hair |
+| *carpo* | Complete | carpus | (carpus) *noun* · The group of bones that make up the wrist |
+| *dócil* | Advanced | docile | (docile) *adjective* · Ready to accept instruction or direction |
+| *galio* | Complete | gallium | (gallium) *noun* · A chemical element with an atomic number of 31 |
+| *misio* | Complete | Mysian, poor | (Mysian) *adjective* · Of or relating to Mysia, its people, their language, or their culture |
+| *noria* | Advanced | noria, Ferris wheel | (noria) *noun* · A treadwheel with attached buckets, used to raise and deposit water |
+| *pavón* | Advanced | peacock | (peacock) *noun* · A peafowl, either male or female |
+| *timar* | Complete | scam, swindle | (scam) *verb* · To defraud or embezzle |
+| *tunco* | Complete | pig | (pig) *noun* · Any of several mammalian species of the family Suidae |
+| *velón* | Complete | candle | (candle) *noun* · A light source consisting of a wick embedded in a solid |

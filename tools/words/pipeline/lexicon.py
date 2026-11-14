@@ -9,7 +9,8 @@ No word is ever named here or in a list to keep it out: the editions' own labels
 
 - **Refused** (not even a guess): a word whose first sense is coarse in most of the editions that
   have it, or most of whose first entry's senses are coarse in one, or whose first sense every
-  edition labels harsh; a form whose every lemma (or Hunspell stem) is refused.
+  edition labels harsh; a form whose every lemma (or Hunspell stem) is refused; and a key form
+  any of whose written forms is refused (a guess is typed without accents).
 - **Never a solution**: besides the refused, a word with a coarse or derogatory sense anywhere, in
   any edition (*palla*, *colpo* and *rosso* stay guesses, never a word to find), or whose first
   sense is intimate.
@@ -86,6 +87,7 @@ class LanguageWords:
     spelling_keys: set  # the accepted keys the spelling dictionary (Hunspell, SCOWL) has
     refused: int  # keys of this length no guess may be, by the editions' labels (counted, never listed)
     unlisted: int  # lemmas kept out by the labels (counted, never listed)
+    set_aside: dict = dataclasses.field(default_factory=dict)  # not a kind of solution: display -> (zipf, pos)
 
 
 class Wiktionary:
@@ -298,6 +300,15 @@ def labelled(wikt, language: str, word: str) -> bool:
     return cache[key]
 
 
+def word_kind(wikt, language: str, word: str) -> str | None:
+    """A lemma's part of speech, when it is one a solution may have: its first entry's with a
+    meaning of its own (`config.SOLUTION_KINDS`), or None."""
+    for e in headword_entries(wikt, language, word):
+        if lemma_senses(e) and e.pos in SOLUTION_POS:
+            return e.pos if e.pos in config.SOLUTION_KINDS else None
+    return None
+
+
 def common_lists() -> list[str]:
     return sorted(p.name for p in config.LISTS.glob("common_*.txt"))
 
@@ -349,6 +360,7 @@ def _source_forms(language: str, length: int) -> tuple[dict, dict, dict]:
     return by_key, origin, stems
 
 
+NOT_A_KIND = "not a noun, an adjective or a verb first (an adverb, a pronoun, a preposition...)"
 LABELLED = "a coarse, derogatory or intimate sense (the editions' labels; counted, never listed)"
 
 
@@ -392,25 +404,32 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
 
     # What no guess may be: a refused lemma; a form whose every lemma is refused, or whose every
     # Hunspell stem is (an inflection the editions do not list is judged with its stem).
-    def refused_form(display: str) -> bool:
+    def refused_by_wiktionary(display: str) -> bool:
         if refused(wikt, language, display):
             return True
         targets = lemma_of.get(display, [])
-        if targets and all(refused(wikt, language, t) for t in targets):
+        return bool(targets) and all(refused(wikt, language, t) for t in targets)
+
+    def refused_form(display: str) -> bool:
+        if refused_by_wiktionary(display):
             return True
         from_stems = stems.get(display, ())
         return bool(from_stems) and all(
             s != display and refused(wikt, language, s) for s in from_stems
         )
 
+    # A guess is typed as its key form, with no accents: a key is refused when any written form of
+    # it is refused by Wiktionary's own entries, not only when all are (a refused noun's key is not
+    # saved by an accented verb form that shares its letters, a past tense of a sailors' verb). A
+    # form judged only by its Hunspell stem refuses a key when every form of it is refused: a stem
+    # is a weaker witness (*abajó*'s stem must not take *abajo* away).
     refused_keys = 0
     displays = {}
     for key, forms in by_key.items():
-        kept = sorted(d for d in forms if not refused_form(d))
-        if kept:
-            displays[key] = kept
-        else:
+        if any(refused_by_wiktionary(d) for d in forms) or all(refused_form(d) for d in forms):
             refused_keys += 1
+        else:
+            displays[key] = sorted(forms)
     accepted = set(displays)
     spelling_keys &= accepted
     kept = {d for forms in displays.values() for d in forms}
@@ -421,6 +440,7 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
     _, one_spelling = scowl.read() if language == "en" else (None, set())
 
     excluded: dict = {}
+    set_aside: dict = {}
     unlisted = 0
     candidates: dict = {}
     for key, forms in sorted(displays.items()):
@@ -435,6 +455,9 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
                 continue
             if not pos:
                 reason = "not a common word's part of speech (a name, an interjection, an affix...)"
+            elif pos[0] not in config.SOLUTION_KINDS:
+                reason = NOT_A_KIND
+                set_aside[display] = (zipf.get(display, 0.0), pos[0])
             elif mostly_a_form(entries):
                 reason = "an inflected form (every entry opens with one)"
             elif is_dated([e for e in entries if e.pos in SOLUTION_POS]):
@@ -473,6 +496,7 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
         spelling_keys,
         refused_keys,
         unlisted,
+        set_aside,
     )
 
 

@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Definition |
 |---|---|---|
-| *aceto* | Intermediate | Prodotto della fermentazione acetica di liquidi alcolici |
-| *aglio* | Intermediate | Pianta della famiglia delle Liliacee |
-| *ballo* | Intermediate | Movimento essenzialmente dei piedi e quindi del corpo a ritmo di musica o del canto |
-| *barba* | Intermediate | Il complesso dei peli presenti sul mento e sulle guance dell'uomo |
-| *bruno* | Intermediate | Di colore simile al nero |
-| *buffo* | Intermediate | Impacciato, che ispira ironia |
-| *colpa* | Base | Ogni azione che non rispetta una disposizione di legge o di comportamento |
-| *curva* | Intermediate | Funzione continua da un intervallo reale in uno spazio topologico |
-| *dolce* | Base | Che ha un sapore delicato |
-| *entro* | Base | Non oltre un certo momento |
-| *forma* | Base | Struttura morfologica di una parola |
-| *golfo* | Intermediate | Tratto di mare o di oceano delimitato da terraferma |
-| *idolo* | Intermediate | Oggetto di culto |
-| *letto* | Base | Mobile composto da un fusto |
-| *liceo* | Base | Fabbricato scolastico adibito all'omonimo tipo di scuola |
-| *mento* | Intermediate | Parte inferiore del viso, situata sotto la bocca |
-| *monte* | Base | Rilievo della superficie terrestre di origine tettonica |
-| *passo* | Base | Movimento dei piedi o di altri oggetti semoventi in avanti oppure all' indietro |
-| *pasto* | Intermediate | Consumo di cibi a mezzogiorno o sera, rispettivamente pranzo e cena |
-| *pista* | Intermediate | Percorso ove si svolgono competizioni sportive o simili |
-| *posta* | Base | Servizio pubblico o privato col fine di mandare e ricevere lettere |
-| *prova* | Base | Verifica di alcuni requisiti |
-| *sagra* | Intermediate | Solenne festa religiosa |
-| *salto* | Intermediate | Movimento per cui il corpo si solleva rapidamente da terra per poi ricadervi |
-| *siero* | Intermediate | Parte acquosa del latte |
-| *suolo* | Intermediate | Superficie della terra sulla quale si cammina |
-| *suora* | Intermediate | Colei che fa parte di un ordine religioso |
-| *tappo* | Intermediate | Oggetto tondo o cilindrico che ha lo scopo di chiudere un recipiente |
-| *terme* | Intermediate | Uno stabilimento o una località con acque termali |
-| *tigre* | Intermediate | Grande felino con la pelliccia arancione e bianca a strisce nere |
-| *tizio* | Base | Individuo qualsiasi |
-| *umano* | Base | Relativo all'uomo |
-| *usare* | Base | Utilizzare qualcosa per uno scopo |
-| *vanto* | Intermediate | Lode dei propri pregi o delle proprie attitudini |
-| *vario* | Intermediate | Di forme e modi e qualità diverse; svariato |
-| *acume* | Advanced | Penetrante finezza e sottigliezza dell'intelletto |
-| *boero* | Complete | Che riguarda i coloni olandesi emigrati in Sudafrica nel diciassettesimo secolo |
-| *etano* | Complete | Alcano composto da 2 atomi di carbonio e 6 atomi di idrogeno . La sua formula bruta è C₂H₆ |
-| *frana* | Advanced | Distacco dal fianco di una montagna o collina |
-| *garbo* | Advanced | Comportamento aggraziato ed educato, anche nel compiere qualcosa |
-| *merlo* | Advanced | Uccello dei Turdidi, tutto nero, tranne il becco giallo arancio, come lo orbite |
-| *mosto* | Advanced | Risultato della spremitura dell'uva |
-| *pegno* | Advanced | Bene mobile che un debitore consegna a un creditore per garantire il pagamento di un debito |
-| *poppa* | Advanced | Mammella, seno |
-| *ritto* | Complete | Collocato verticalmente |
-| *rozzo* | Advanced | Grezzo, non lavorato |
-| *ruspa* | Advanced | Macchina composta da trattore e rimorchio che spiana, raccoglie e solleva la terra con una tramoggia |
-| *siepe* | Advanced | Fila di piante disposte fittamente col fine di recintare, limitare oppure ornare giardini e viali |
-| *suino* | Advanced | Relativo ai suini |
-| *tacca* | Advanced | Taglio effettuato sulla parte esterna di un oggetto |
+| *aceto* | Intermediate | *sostantivo* · Prodotto della fermentazione acetica di liquidi alcolici |
+| *aglio* | Intermediate | *sostantivo* · Pianta della famiglia delle Liliacee |
+| *barba* | Intermediate | *sostantivo* · Il complesso dei peli presenti sul mento e sulle guance dell'uomo |
+| *bocca* | Base | *sostantivo* · Orifizio attraverso cui gli animali si cibano ed è anche la prima parte dell'apparato digerente |
+| *cacao* | Intermediate | *sostantivo* · Una polvere ricavata dalla pianta omonima, è utilizzato soprattutto per i dolci |
+| *caldo* | Base | *aggettivo* · Dall'alta temperatura |
+| *corea* | Intermediate | *sostantivo* · Danza dell'antica Grecia, accompagnata da un coro |
+| *ditta* | Intermediate | *sostantivo* · Azienda, impresa commerciale |
+| *donna* | Base | *sostantivo* · Adulto femminile della specie umana |
+| *esame* | Base | *sostantivo* · Valutazione finale alla quale un individuo è soggetto per ottenere una promozione se è uno studente |
+| *fango* | Intermediate | *sostantivo* · Poltiglia formata da un miscuglio di terra e acqua |
+| *fuoco* | Base | *sostantivo* · Effetto della combustione |
+| *idolo* | Intermediate | *sostantivo* · Oggetto di culto |
+| *lento* | Intermediate | *aggettivo* · Che si muove con lentezza |
+| *lucro* | Intermediate | *sostantivo* · Profitto, guadagno solitamente ottenuto illecitamente |
+| *lutto* | Intermediate | *sostantivo* · Sentimento di intenso dolore che si prova in genere per la perdita di una persona cara |
+| *mondo* | Base | *sostantivo* · Insieme delle cose e degli esseri creati |
+| *norma* | Base | *sostantivo* · Regola di comportamento di una comunità |
+| *pietà* | Intermediate | *sostantivo* · Sentimento di compassione, comprensione o solidarietà per una persona infelice o sofferente |
+| *pista* | Intermediate | *sostantivo* · Percorso ove si svolgono competizioni sportive o simili |
+| *prete* | Intermediate | *sostantivo* · Chi svolge funzioni religiose all'interno della chiesa cattolica |
+| *radio* | Base | *sostantivo* · Osso che assieme all'ulna costituisce lo scheletro dell'avambraccio |
+| *ritmo* | Intermediate | *sostantivo* · Successione ordinata di movimenti nel tempo |
+| *serio* | Base | *aggettivo* · Poco propenso alla burla |
+| *sesto* | Intermediate | *aggettivo* · Corrisponde al numero cardinale 6, è preceduto dal quinto e precede il settimo |
+| *sfida* | Base | *sostantivo* · Richiesta di competere agonisticamente contro qualcuno |
+| *suora* | Intermediate | *sostantivo* · Colei che fa parte di un ordine religioso |
+| *tonno* | Intermediate | *sostantivo* · Grosso pesce osseo commestibile che vive nei mari non molto caldi, con coda a forma di forca |
+| *torto* | Intermediate | *aggettivo* · Che ha ricevuto un movimento di contorcimento |
+| *umano* | Base | *aggettivo* · Relativo all'uomo |
+| *valle* | Base | *sostantivo* · Depressione nella orografia del terreno originata da preesistenza di ghiacciai |
+| *vespa* | Intermediate | *sostantivo* · Insetto alato dell'ordine degli Imenotteri Vespidi |
+| *viale* | Intermediate | *sostantivo* · Strada urbana generalmente larga e alberata |
+| *vizio* | Intermediate | *sostantivo* · Eccesso dell'animo nei diletti, nel piacere |
+| *zecca* | Intermediate | *sostantivo* · Ente atto al conio della moneta circolante e per collezionisti |
+| *acume* | Advanced | *sostantivo* · Penetrante finezza e sottigliezza dell'intelletto |
+| *boria* | Complete | *sostantivo* · Atteggiamento di vanità; vanitoso sbandieramento dei propri pregi e meriti reali o immaginari |
+| *fatuo* | Complete | *aggettivo* · Superficiale, spiritualmente insignificante |
+| *germe* | Advanced | *sostantivo* · Termine usato spesso come sinonimo di microrganismo e in particolare di batterio |
+| *mosto* | Advanced | *sostantivo* · Risultato della spremitura dell'uva |
+| *nandù* | Complete | *sostantivo* · Nome dato agli uccelli della famiglia dei Reidi diffusi nelle pampas di Brasile, Uruguay e Argentina |
+| *picca* | Advanced | *sostantivo* · Lunga asta con punta di ferro |
+| *putto* | Complete | *sostantivo* · Bambino, fanciullo |
+| *rozzo* | Advanced | *aggettivo* · Grezzo, non lavorato |
+| *ruspa* | Advanced | *sostantivo* · Macchina composta da trattore e rimorchio che spiana, raccoglie e solleva la terra con una tramoggia |
+| *samba* | Advanced | *sostantivo* · Danza originaria del Brasile |
+| *sosia* | Advanced | *sostantivo* · Individuo eccezionalmente somigliante ad un altro |
+| *sputo* | Advanced | *sostantivo* · Grumo di saliva emesso dalla bocca |
+| *talco* | Advanced | *sostantivo* · Minerale bianco a cristalli tabulari |
+| *tallo* | Complete | *sostantivo* · Corpo vegetativo di alghe, funghi e licheni |

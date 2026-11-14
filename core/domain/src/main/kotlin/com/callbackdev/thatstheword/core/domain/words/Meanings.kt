@@ -14,12 +14,15 @@ import com.callbackdev.thatstheword.core.model.Word
  * @property translations into the interface language, best first: none in the game's own language,
  *   and none where they were unreliable (the meaning is shown alone then).
  * @property meaning a short definition in the interface language, or null.
+ * @property partOfSpeech the word's part of speech in the interface language, beside its meaning
+ *   (*sostantivo*, *noun*, *sustantivo*), or null.
  */
 data class WordMeaning(
     val written: List<String>,
     val lemma: String?,
     val translations: List<String>,
     val meaning: String?,
+    val partOfSpeech: String? = null,
 ) {
     /** Whether there is anything to say beyond the written form. */
     val known: Boolean get() = translations.isNotEmpty() || meaning != null
@@ -41,12 +44,15 @@ fun Lexicon.meaning(word: Word, interfaceLanguage: Language): WordMeaning {
         .firstOrNull { (entry, _) -> entry.translations.isNotEmpty() || entry.meaning != null }
         ?: (null to null)
     val translations = if (interfaceLanguage == language) emptyList() else entry?.translations.orEmpty()
+    val meaning = entry?.meaning?.takeUnless { repeats(it, translations) }
     return WordMeaning(
         written = written.map { it.display }.distinct(),
         // A lemma of a form is named only when it is not one of the word's own written forms.
         lemma = lemma?.takeIf { it !in written.map { form -> form.display } },
         translations = translations,
-        meaning = entry?.meaning?.takeUnless { repeats(it, translations) },
+        meaning = meaning,
+        // Said with the meaning it belongs to, never alone.
+        partOfSpeech = entry?.partOfSpeech?.takeIf { meaning != null },
     )
 }
 

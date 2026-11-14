@@ -64,7 +64,20 @@ _ANAPHORA = re.compile(
 )
 # A clause a long gloss may be shortened to at a comma must stand alone: not a qualifier opening
 # with a preposition («di cavalli o altri quadrupedi, procedere…»).
-_QUALIFIER = re.compile(r"^(?:of|for|in|on|with|by|di|del|della|dei|degli|delle|per|con|de|para|por|en)\b", re.I)
+_QUALIFIER = re.compile(
+    r"^(?:of|for|in|on|with|by|among|within|di|del|dello|della|dei|degli|delle|nel|nello|nella|"
+    r"nei|negli|nelle|nell'|sul|sullo|sulla|sui|sugli|sulle|per|con|tra|fra|de|para|por|en|entre)\b",
+    re.I,
+)
+# A word that makes a qualifier a definition after all («In grado di volare», «En que se…»).
+_VERBISH = re.compile(r"\b(?:che|chi|cui|que|quien|which|who|that|grado|able|capable|is|are|es|son|è|sono)\b", re.I)
+_RELATIVE = re.compile(
+    r"\b(?:che|cui|quale|quali|dove|which|who|whom|whose|where|que|cual|cuales|donde|cuyo|cuya)\b", re.I
+)
+_DETERMINERS = frozenset("a an the il lo la i gli le un uno una el los las unos unas".split())
+_SUBSCRIPTS = re.compile(r"[₀-₉⁰-⁹]")
+# A gloss that quotes another dictionary or an etymology («'Cuchilla…', princ. S. XV»).
+_QUOTED = re.compile(r"^['‘’\"“”«]")
 # A finer sense that moves away from the first one rather than refining it.
 _DRIFT_TAGS = frozenset({"figuratively", "metaphoric", "broadly", "by-extension", "humorous", "slang", "rare"})
 # A label in brackets before the definition (*(zoology)*): the definition is what follows.
@@ -85,6 +98,10 @@ _FUNCTION_WORDS = frozenset(
     "a an the to of in on at by for or and with from as "
     "il lo la i gli le un una di da del dello della dei degli delle in su per con tra fra e o "
     "el los las unos unas de del al en con por para y o".split()
+    # and the prepositions and conjunctions a phrase cannot end on
+    + "into than between about over under within whose which that "
+    "verso senza sopra sotto dopo prima che cui "
+    "entre sobre hacia hasta desde sin contra tras que cuyo".split()
 )
 _ARTICLES = {
     "en": ("to ", "a ", "an ", "the "),
@@ -99,6 +116,7 @@ class Gloss:
     meaning: str | None
     meaning_via: str | None  # the translation the meaning was read through, if any
     candidates: list  # every candidate with its sources, for the report
+    pos: str | None = None  # the part of speech of the entry the meaning was read in
 
     @property
     def agreed(self) -> bool:
@@ -136,30 +154,41 @@ def leaks(text: str, words, stems: bool = True) -> bool:
 
 
 def _tidy(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip(" ;:,")
+    # A space left before a stop where a bracket was taken away («alphabet (Γγ), preceded»).
+    return re.sub(r"\s+([;:,.])", r"\1", re.sub(r"\s+", " ", text)).strip(" ;:,")
 
 
 def fit(text: str, avoid=(), stems: bool = True) -> str | None:
     """A gloss as a meaning the app may show, or None (the rules are the module's)."""
     if not text:
         return None
-    text = _tidy(_LEADING_LABEL.sub("", _NOTE.sub("", text)))
+    # An edition's cross-reference numbers («lanza₁») and loose spaces before a stop say nothing.
+    text = _SUBSCRIPTS.sub("", text)
+    text = re.sub(r"\s+([;:,.])", r"\1", _tidy(_LEADING_LABEL.sub("", _NOTE.sub("", text))))
     if not text or _JUNK.search(text) or _POINTER.search(text) or text.endswith(":"):
         return None
-    if "…" in text or "..." in text or _ANAPHORA.search(text):
+    if "…" in text or "..." in text or _ANAPHORA.search(text) or _QUOTED.match(text):
         return None
     bare = _tidy(_BRACKETS.sub(" ", text))
-    first = _tidy(_SENTENCE_END.split(_tidy(bare.split(";")[0]))[0])
-    variants = [text, bare, _tidy(bare.split(";")[0]), _tidy(_SENTENCE_END.split(bare)[0])]
+    clause = _tidy(bare.split(";")[0])
+    sentence = _tidy(_SENTENCE_END.split(bare)[0])
+    first = _tidy(_SENTENCE_END.split(clause)[0])
+    # The first clause or sentence first, when it defines on its own: «Firm in standing or
+    # position», not the four that follow it; then the whole gloss.
+    variants = [v for v in (first, clause, sentence) if _content_words(v) >= config.MEANING_MIN_WORDS + 1]
+    variants += [text, bare, clause, sentence]
     # At its first comma, last: what comes before it, when it is a phrase of its own (*città*,
     # «centro abitato di grandi dimensioni»); a later comma would split a list. Never an ellipsis.
     if len(first) > config.MEANING_MAX and not _QUALIFIER.match(first) and "," in first:
         head = _tidy(first.split(",")[0])
         last = head.split()[-1].lower() if head.split() else ""
-        if _content_words(head) >= config.MEANING_MIN_WORDS + 1 and last not in _FUNCTION_WORDS:
+        # Not a head that opens a clause the comma would leave unfinished («sul quale un
+        # signore», «69: a fairly soft»).
+        open_clause = ":" in head or _unfinished_relative(head)
+        if _content_words(head) >= config.MEANING_MIN_WORDS + 1 and last not in _FUNCTION_WORDS and not open_clause:
             variants.append(head)
     for v in dict.fromkeys(variants):
-        v = v.rstrip(".").strip()
+        v = v.rstrip(".").strip(" ;:,")
         if not v or len(v) > config.MEANING_MAX:
             continue
         if v.count("(") != v.count(")") or v.count("[") != v.count("]") or v.count('"') % 2:
@@ -171,10 +200,28 @@ def fit(text: str, avoid=(), stems: bool = True) -> str | None:
         content = [w for w in words if w.lower().strip(".,;:()'\"«»") not in _FUNCTION_WORDS]
         if len(content) < config.MEANING_MIN_WORDS:
             continue
+        # A fragment: a qualifier with nothing after it («Nella specie dei mammiferi»), or a
+        # phrase whose end was a bracket taken away («…en el medievo entre»).
+        if _QUALIFIER.match(v) and "," not in v and not _VERBISH.search(v):
+            continue
+        if words and words[-1].lower().strip(".,;:") in _FUNCTION_WORDS:
+            continue
         if leaks(v, avoid, stems):
             continue
         return v[0].upper() + v[1:]
     return None
+
+
+def _unfinished_relative(head: str) -> bool:
+    """Whether a head ends inside a relative clause that has its subject and not yet its verb: «sul
+    quale un signore» (the comma opened an aside before the verb), not «dove si accentrano attività
+    amministrative» nor «che ama»."""
+    words = head.split()
+    marks = [i for i, w in enumerate(words) if i > 0 and _RELATIVE.fullmatch(w.strip(",.;:").lower())]
+    if not marks:
+        return False
+    rest = words[marks[-1] + 1 :]
+    return 0 < len(rest) <= 3 and rest[0].lower() in _DETERMINERS
 
 
 def _content_words(text: str) -> int:
@@ -291,8 +338,10 @@ def aligned_senses(entries, g: str, word: str) -> set:
             elif numbers:
                 out.update((id(e), n - 1) for n in numbers if 0 < n <= len(e.senses))
             elif row[2] and own:
+                # Two words in common at least: one shared word names the wrong sense too often
+                # (*back*, «a support or resource in reserve», for *dorso*).
                 best = max(own, key=lambda x: _overlap(row[2], x[1].get("g", "")))
-                if _overlap(row[2], best[1].get("g", "")):
+                if _overlap(row[2], best[1].get("g", "")) >= 2:
                     out.add((id(e), best[0]))
     return out
 
@@ -311,6 +360,12 @@ def own_extract(lang: str) -> str:
 def definition(
     wikt, lang: str, word: str, pos: tuple = (), prefer=frozenset(), avoid=(), only_preferred: bool = False
 ) -> str | None:
+    return definition_with_pos(wikt, lang, word, pos, prefer, avoid, only_preferred)[0]
+
+
+def definition_with_pos(
+    wikt, lang: str, word: str, pos: tuple = (), prefer=frozenset(), avoid=(), only_preferred: bool = False
+) -> tuple:
     """A word's own definition, in its own edition (the English edition for English): from the
     senses `prefer` names first, then from an entry of the same part of speech (*bowel*, a noun,
     reads *intestino* the noun), then the rest.
@@ -326,12 +381,12 @@ def definition(
     # Of homographs (*cuna*, a cradle, and *cuna*, a language), the first entry is the word.
     first = [x for x in readable if entries and x[0] is entries[0] and x not in preferred]
     readable = preferred if only_preferred else preferred + first
-    for _, _, s in readable:
+    for e, _, s in readable:
         text = fit(s.get("g", ""), avoid, stems)
         if text and not names_refused(wikt, lang, text):
-            return text
+            return text, e.pos
     if only_preferred:
-        return None
+        return None, None
     # The Italian edition sometimes writes a headword's sense only as its translation table's
     # label: the first table's, the first sense's.
     for e in entries[:1]:
@@ -339,8 +394,8 @@ def definition(
         if first and first[2] and not first[2].startswith("#"):
             text = fit(_PARENS.sub(" ", first[2]), avoid, stems)
             if text and not names_refused(wikt, lang, text):
-                return text
-    return None
+                return text, e.pos
+    return None, None
 
 
 def _first_definition(wikt, lang: str, word: str, pos: tuple = ()) -> str | None:
@@ -396,6 +451,12 @@ class Glossary:
         for t in english:
             out |= aligned_senses(entries, "en", t)
         return out
+
+    def has_pos(self, u: str, word: str, pos: tuple) -> bool:
+        """Whether a translation has an entry of the word's part of speech in its own edition: it
+        comes first, so a noun is not explained through a verb (*clout*, influence, read through
+        *rattoppare*), nor a verb through a noun (*count* through *conde*)."""
+        return not pos or any(e.pos in pos for e in self.wikt.entries(own_extract(u), u, word))
 
     def native_translations(self, g: str, u: str, word: str, pos: tuple = ()) -> set:
         """The words the word's own edition translates it with, in the senses the English edition's
@@ -479,19 +540,21 @@ class Glossary:
                 )
             )
         if g == u:
-            return Gloss([], definition(self.wikt, g, word, pos, self.native_senses(g, word, pos)), None, [])
+            text, used = definition_with_pos(self.wikt, g, word, pos, self.native_senses(g, word, pos))
+            return Gloss([], text, None, [], used)
         # A translation no guess may be is never shown (the labels, `lexicon.refused`).
         ranked = [c for c in self.candidates(g, u, word) if not lexicon.refused(self.wikt, u, c["word"])]
         # The translations the word's own edition gives for the sense it is (`native_senses`) come
         # first: *avión* reads *aeroplane* before *martin*, the bird of its other entry.
         native = self.native_translations(g, u, word, pos)
-        ranked.sort(key=lambda c: 0 if c["word"] in native else 1)
+        ranked.sort(key=lambda c: (0 if c["word"] in native else 1, 0 if self.has_pos(u, c["word"], pos) else 1))
         agreed = [c["word"] for c in ranked if len(c["sources"]) >= 2][:3]
         single = [c["word"] for c in ranked if reliable_candidate(c)][:1]
         reliable = agreed or single
         avoid = (word,)
         meaning = None
         via = None
+        used = None
         # Through the translation, in the sense whose table holds the word; with no reliable one,
         # through what one source gives for the word's first sense (the meaning is shown, the
         # translation is not: it stays unreliable).
@@ -502,7 +565,7 @@ class Glossary:
             # music).
             entries = self.wikt.entries(own_extract(u), u, t)
             aligned = aligned_senses(entries, g, word)
-            meaning = definition(self.wikt, u, t, pos, aligned, avoid, only_preferred=n > 0)
+            meaning, used = definition_with_pos(self.wikt, u, t, pos, aligned, avoid, only_preferred=n > 0)
             if meaning:
                 via = t
                 break
@@ -513,7 +576,7 @@ class Glossary:
                 for _, s in _readable_senses(e)[:1]:
                     text = fit(s.get("g", ""), avoid)
                     if text and not names_only(text) and not names_refused(self.wikt, u, text):
-                        meaning = text
+                        meaning, used = text, e.pos
                 if meaning:
                     break
-        return Gloss(reliable, meaning, via, ranked)
+        return Gloss(reliable, meaning, via, ranked, used)

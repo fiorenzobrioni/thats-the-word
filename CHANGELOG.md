@@ -96,3 +96,5 @@ All notable changes to That's The Word are documented here. The format follows
   explained so is not hidden.
 - No coarse or offensive word is hidden, and the coarsest are not accepted as guesses at all; the
   game keeps no list of such words: the dictionaries' own labels decide.
+- The word to find is always a noun, an adjective or a verb, and its meaning says which, as a
+  dictionary does.

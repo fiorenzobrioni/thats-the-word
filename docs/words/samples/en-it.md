@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *align* | Intermediate | allineare | (allineare) Posizionare o disporre lungo una stessa linea retta |
-| *blend* | Intermediate | mescolare, amalgamare | (mescolare) Mettere insieme |
-| *bless* | Intermediate | benedire | (benedire) Invocare la protezione di Dio su qualcuno o qualcosa |
-| *booth* | Intermediate | bancarella, stand | (bancarella) Banco utilizzato dai venditori ambulanti |
-| *boxer* | Intermediate | pugile | (pugile) Chi pratica il pugilato |
-| *build* | Base | costruire, edificare | (costruire) Fabbricare un edificio o un oggetto formato da più parti |
-| *drake* | Intermediate | papero | (papero) Maschio giovane dell'oca domestica |
-| *drive* | Base | guidare, impulso, condurre | (guidare) Condurre, muovere un veicolo o un animale |
-| *flesh* | Intermediate | carne | (carne) L'insieme dei tessuti muscolari |
-| *force* | Base | forza, forzare, costringere | (forza) Grandezza fisica vettoriale che si manifesta nell'interazione di due o più corpi |
-| *grind* | Intermediate | macinare *(single)* | (macinare) Frantumare in farina |
-| *haunt* | Intermediate | frequentare, ritrovo, infestare | (frequentare) Andare abitualmente in un certo luogo |
-| *heart* | Base | cuore | (cuore) Organo muscolare |
-| *label* | Intermediate | etichetta, etichettare, bollare | (etichetta) Cartellino che si applica su un oggetto per indicarne il contenuto o il proprietario |
-| *lemon* | Intermediate | limone | (limone) Pianta, proveniente dall'Asia, delle Rutacee che produce questo frutto |
-| *manly* | Intermediate | virile | (virile) Che possiede caratteristiche associate al sesso maschile |
-| *metal* | Base | metallo | (metallo) Elemento chimico semplice e lucente, buon conduttore di elettricità e calore, duttile e malleabile |
-| *minor* | Base | minore, lieve, minorenne | (minore) Più piccolo, corto, basso, leggero, rispetto ad altre |
-| *mouse* | Intermediate | topo, mouse, sorcio | (topo) Piccolo mammifero onnivoro, detto anche topo comune |
-| *nasty* | Intermediate | sozzo, zozzo | (sozzo) Sporco in maniera disdicevole |
-| *paste* | Intermediate | pasta, colla, incollare | (pasta) Impasto di farina di grano duro e acqua talvolta arricchito con altri ingredienti |
-| *plead* | Intermediate | patrocinare *(single)* | (patrocinare) Promuovere, con o senza appoggi finanziari, un'attività artistica, culturale o ricreativa |
-| *psalm* | Intermediate | salmo | (salmo) Canto o inno di carattere religioso, in preghiera, lode o ringraziamento a Dio |
-| *remix* | Intermediate | remix | (remix) Versione alternativa di un brano musicale originale |
-| *shale* | Intermediate | scisto | (scisto) Roccia metamorfica costituita da minerali disposti in fibre o lamelle |
-| *shame* | Base | vergogna, infamia, peccato | (vergogna) Sentimento di colpa |
-| *sport* | Base | sport | (sport) Insieme di competizioni individuali o collettive di natura fisica |
-| *stake* | Intermediate | palo, partecipazione, picchetto | (palo) Grosso bastone di legno dritto e verticale sul quale ci si può arrampicare |
-| *strap* | Intermediate | spallina, cinghia, cinturino | (spallina) Imbottitura della spalla |
-| *thing* | Base | cosa | (cosa) Oggetto che è in relazione con un soggetto che lo detiene |
-| *track* | Base | traccia, binario, sentiero | (traccia) Orma impressa sul suolo |
-| *trail* | Intermediate | traccia, pista, trascinare | (traccia) Seconda persona singolare, imperativo di tracciare |
-| *virus* | Intermediate | virus | (virus) Programma informatico illegale in grado di alterare il funzionamento di un computer |
-| *vista* | Intermediate | prospettiva, veduta, vista | (prospettiva) Rappresentazione in piano di una figura dello spazio |
-| *woman* | Base | donna | (donna) Adulto femminile della specie umana |
-| *biker* | Advanced | motociclista | (motociclista) Chi predilige la guida di motociclette |
-| *bolus* | Complete | bolo | (bolo) Impasto di cibo masticato |
-| *comma* | Advanced | virgola | (virgola) Segno della più breve pausa nella scrittura |
-| *crass* | Advanced | grossolano | (grossolano) Che è fatto in modo poco diligente |
-| *gaudy* | Advanced | sgargiante, appariscente, pacchiano | (sgargiante) Qualcosa che colpisce per la sua vivacità, esuberanza o eccessiva appariscenza |
-| *gruff* | Advanced | burbero | (burbero) Di individuo che ha un carattere intrattabile |
-| *gusto* | Advanced | — | (entusiasmo) Sentimento di appassionato interesse nei confronti di un ideale o di una causa |
-| *lapse* | Advanced | lapsus *(single)* | (lapsus) Errore involontario compiuto nel parlare o nello scrivere |
-| *madly* | Advanced | follemente | (follemente) In modo folle, pazzamente |
-| *samba* | Advanced | samba | (samba) Danza originaria del Brasile |
-| *snare* | Advanced | trappola, tagliola | (trappola) Meccanismo utilizzato per catturare animali dannosi o inseguiti per la polpa o la pelliccia |
-| *stomp* | Advanced | calpestare *(single)* | (calpestare) Passare su un oggetto con i piedi, sia in modo accidentale che intenzionale |
-| *trill* | Advanced | trillo *(single)* | (trillo) Verso del canarino o del cardellino |
-| *trite* | Advanced | banale | (banale) Non originale |
-| *usury* | Complete | usura | (usura) Interesse in denaro esagerato ed illegale |
+| *amber* | Intermediate | ambra, ambrato | (ambra) *sostantivo* · Resina fossile |
+| *booth* | Intermediate | bancarella, stand | (bancarella) *sostantivo* · Banco utilizzato dai venditori ambulanti |
+| *bored* | Intermediate | annoiato, scocciato | (annoiato) *aggettivo* · Che è scocciato |
+| *buddy* | Intermediate | amico | (amico) *sostantivo* · Persona verso cui si prova un intenso e contraccambiato sentimento di affetto ed attaccamento |
+| *bunch* | Base | grappolo | (grappolo) *sostantivo* · Insieme di frutti legati fra loro attorno al raspo |
+| *charm* | Intermediate | attrattiva, fascino, incanto | (attrattiva) *sostantivo* · Capacità di attrarre |
+| *enjoy* | Base | godere, gioire, divertirsi | (godere) *verbo* · Assaporare qualcosa |
+| *event* | Base | evento, avvenimento, fatto | (evento) *sostantivo* · Avvenimento, fatto o cosa che diviene |
+| *glove* | Intermediate | guanto | (guanto) *sostantivo* · Ciò che ricopre la mano |
+| *grain* | Intermediate | chicco *(single)* | (chicco) *sostantivo* · Nome comune con cui è conosciuta la cariosside |
+| *grief* | Intermediate | dolore | (dolore) *sostantivo* · Sentimento di profonda tristezza |
+| *issue* | Base | questione, emissione, pubblicazione | (questione) *sostantivo* · Difficoltà da superare con una soluzione |
+| *least* | Base | minimo | (minimo) *aggettivo* · Superlativo di piccolo |
+| *limit* | Base | limite, limitare, delimitare | (limite) *sostantivo* · Linea di confine |
+| *manor* | Intermediate | tenuta *(single)* | (tenuta) *sostantivo* · Mantenimento di stabilità di qualcosa |
+| *match* | Base | fiammifero, incontro, partita | (fiammifero) *sostantivo* · Strumento per produrre il fuoco |
+| *metal* | Base | metallo | (metallo) *sostantivo* · Elemento chimico semplice e lucente, buon conduttore di elettricità e calore, duttile e malleabile |
+| *needy* | Intermediate | bisognoso | (bisognoso) Persona che ha bisogno di sostegno, aiuto, anche economicamente |
+| *obese* | Intermediate | obeso | (obeso) *aggettivo* · Che presenta un eccesso patologico di grassi nell'organismo, dovuto a squilibri alimentari |
+| *offer* | Base | offerta, proposta, offrire | (offerta) *sostantivo* · Azione di dare denaro od altro a chi ne ha bisogno |
+| *panic* | Intermediate | panico, spaventarsi | (panico) *aggettivo* · Riguardante Pan, divinità agreste della mitologia greca |
+| *peach* | Intermediate | pesca, pesco | (pesca) *sostantivo* · Frutto del pesco |
+| *prove* | Base | dimostrare *(single)* | (dimostrare) *verbo* · Attestare la verità |
+| *reach* | Base | portata, raggiungere | (portata) *verbo* · Pietanza, piatto |
+| *robot* | Intermediate | robot, automa | (robot) *sostantivo* · Macchina antropomorfa creata artificialmente |
+| *shake* | Intermediate | scossa, scuotere, frullato | (scuotere) *verbo* · Provocare agitazione ed intensa trepidazione in qualcuno |
+| *spare* | Intermediate | ricambio, risparmiare | (ricambio) Cessione di qualcosa in cambio di un'altra di pari importanza |
+| *speak* | Base | parlare | (parlare) *verbo* · Pronunciare parole esprimendo i propri pensieri |
+| *spill* | Intermediate | rovesciare | (rovesciare) *verbo* · Far cadere, detto specialmente di un liquido |
+| *sweep* | Intermediate | scopare, spazzare, scopata | (scopare) *verbo* · Pulire con una scopa |
+| *sworn* | Intermediate | — | (giurato) *aggettivo* · Membro di una giuria |
+| *total* | Base | totale, intero | (totale) *sostantivo* · Ammontare di un'addizione |
+| *vague* | Intermediate | vago, impreciso, indistinto | (vago) *aggettivo* · Incerto, indeterminato oppure non definito |
+| *vomit* | Intermediate | vomitare, vomito | (vomitare) *verbo* · Emettere cibo non digerito dalla bocca |
+| *watch* | Base | guardia, orologio, guardare | (guardia) *sostantivo* · L'atto del custodire, vigilare |
+| *bolus* | Complete | bolo | (bolo) *sostantivo* · Impasto di cibo masticato |
+| *bream* | Complete | breme *(single)* | *sostantivo* · Abramide comune: pesce d'acqua dolce della famiglia dei Cyprinidae |
+| *coupe* | Advanced | coupé *(single)* | (coupé) *sostantivo* · Auto sportiva a due porte |
+| *crass* | Advanced | grossolano | (grossolano) *aggettivo* · Che è fatto in modo poco diligente |
+| *crave* | Advanced | bramare | (bramare) *verbo* · Desiderare con intensa passione qualcosa o qualcuno |
+| *croft* | Advanced | podere *(single)* | (podere) *sostantivo* · Grande tenuta signorile in campagna |
+| *gleam* | Advanced | barlume | (barlume) *sostantivo* · Luce di debole intensità |
+| *gules* | Complete | rosso | (rosso) *sostantivo* · Smalto araldico di colore rosso intenso |
+| *lemur* | Complete | lemure | (lemure) *sostantivo* · Nell'antica Roma, ombra di un morto che ricompariva sulla terra per angosciare i vivi |
+| *scant* | Advanced | scarso, esiguo | (scarso) *aggettivo* · Che non basta |
+| *snipe* | Advanced | beccaccia *(single)* | (beccaccia) *sostantivo* · Uccello dei Caradriformi dal becco lungo, che vive nelle macchie e nei fossi |
+| *spate* | Advanced | piena *(single)* | (piena) *sostantivo* · Forte aumento della portata di un corso d'acqua |
+| *stork* | Advanced | cicogna | (cicogna) *sostantivo* · Uccello dell'ordine dei Ciconiformi |
+| *untie* | Complete | disfare, sciogliere, slegare | (disfare) *verbo* · Sciogliere, slegare |
+| *vulva* | Advanced | vulva | (vulva) *sostantivo* · Apertura esterna degli organi genitali esterni femminili |

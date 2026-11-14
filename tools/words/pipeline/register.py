@@ -35,9 +35,12 @@ _COARSE_NOTE = re.compile(
     re.I,
 )
 # A note that names the label to deny it, or to speak of a language's history.
+# A note that names the label to deny it, or to speak of a language's history, or of a form that
+# is only substandard: a Spanish «vulgarismo» is a word of the street, not an obscenity
+# (*abajar*, to go down).
 _NOT_A_LABEL = re.compile(
     r"\bnon volgar|lat[ií]n vulgar|latino volgare|antiguamente vulgar|incorrecto o vulgar|"
-    r"desprovist|of an offen[cs]e|of an offensive|criminal offen",
+    r"vulgarism|volgarism|desprovist|of an offen[cs]e|of an offensive|criminal offen",
     re.I,
 )
 _DEROGATORY_NOTE = re.compile(r"despectiv|dispregiativ|spregiativ|derogativ|derogator|pejorativ|peggiorativ", re.I)

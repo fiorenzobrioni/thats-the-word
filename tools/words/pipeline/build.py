@@ -24,6 +24,9 @@ class Built:
     common_missing: dict  # language -> common words not accepted
     lengths: dict = dataclasses.field(default_factory=dict)  # (language, length) -> LanguageWords
     measured: dict = dataclasses.field(default_factory=dict)  # (language, length) -> the solutions' glossaries' bytes
+    # (language, length) -> what keeping solutions to nouns, adjectives and verbs leaves out: the
+    # words that would otherwise have been solutions, and those of them in the daily's levels
+    kinds_cost: dict = dataclasses.field(default_factory=dict)
 
 
 NO_MEANING = "no whole definition of two lines in Italian, English and Spanish"
@@ -45,7 +48,8 @@ class Glosses:
 
 
 def keep_described(lw: lexicon.LanguageWords, glosses: Glosses) -> None:
-    """Keeps as solutions only the words with a meaning in every interface language (§6.4)."""
+    """Keeps as solutions only the words with a meaning in every interface language (§6.4), and
+    of them the most frequent `config.MAX_SOLUTIONS` of the length."""
     missing = set()
     for s in lw.solutions:
         for u in config.LANGUAGES:
@@ -53,6 +57,17 @@ def keep_described(lw: lexicon.LanguageWords, glosses: Glosses) -> None:
                 missing.add(s.key)
                 break
     lexicon.without(lw, missing, NO_MEANING)
+    cap = config.MAX_SOLUTIONS.get(lw.length)
+    if cap is not None and len(lw.solutions) > cap:
+        ranked = sorted(lw.solutions, key=lambda s: (-s.zipf, s.key))
+        lexicon.without(lw, {s.key for s in ranked[cap:]}, f"beyond the {cap:,} most frequent of its length")
+
+
+def record(g: str, u: str, gloss, pos: str | None) -> list:
+    """A glossary record: the translations, the meaning, the word it was read through, and the
+    part of speech in the interface language, when the meaning was read in the word's own."""
+    label = config.PART_OF_SPEECH[u].get(pos) if pos and gloss.meaning and gloss.pos == pos else None
+    return [gloss.translations, gloss.meaning or "", gloss.meaning_via or "", label or ""]
 
 
 def asset(*parts: str) -> pathlib.Path:
@@ -112,16 +127,26 @@ def run(log=print, wikt=None) -> Built:
     glosses = Glosses(glossary.Glossary(wikt))
     files: dict = {}
     words, tables, schedules, dropped, common_missing = {}, {}, {}, {}, {}
-    lengths, measured = {}, {}
+    lengths, measured, kinds_cost = {}, {}, {}
     days = schedule.days_needed()
     for g in config.LANGUAGES:
         for length in config.LENGTHS:
             lw = lexicon.build(g, wikt, length, log)
             keep_described(lw, glosses)
             lengths[(g, length)] = lw
+            kept_out = [
+                (z, d) for d, (z, kind) in lw.set_aside.items()
+                if z >= config.MIN_ZIPF
+                and all(glosses.get(g, u, d, (kind,)).meaning for u in config.LANGUAGES)
+            ]
+            kinds_cost[(g, length)] = (
+                len(kept_out),
+                sum(1 for z, _ in kept_out if config.level_of(g, z) in config.DAILY_LEVELS),
+                [d for _, d in sorted(kept_out, key=lambda x: (-x[0], x[1]))[:8]],
+            )
             measured[(g, length)] = sum(
                 len(pack.table("glossary", g, 0, {
-                    s.display: [x.translations, x.meaning or "", x.meaning_via or ""]
+                    s.display: record(g, u, x, s.pos)
                     for s in lw.solutions
                     for x in [glosses.get(g, u, s.display, (s.pos,))]
                 }, folding.LANGUAGE_CODE[u]))
@@ -167,11 +192,11 @@ def run(log=print, wikt=None) -> Built:
                 x = glosses.get(g, u, d, pos_of.get(d, ()))
                 table[d] = x
                 if x.translations or x.meaning:
-                    records[d] = [x.translations, x.meaning or "", x.meaning_via or ""]
+                    records[d] = record(g, u, x, lexicon.word_kind(wikt, g, d))
             tables[(g, u)] = table
             files[asset(g, f"gloss-{u}.bin")] = pack.table("glossary", g, 0, records, folding.LANGUAGE_CODE[u])
             log(f"{g}->{u}: {len(records)} of {len(described)} words described")
-    built = Built(files, words, tables, schedules, dropped, common_missing, lengths, measured)
+    built = Built(files, words, tables, schedules, dropped, common_missing, lengths, measured, kinds_cost)
     files.update(report.render(built))
     return built
 

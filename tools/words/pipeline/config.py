@@ -32,6 +32,23 @@ HUNSPELL = {"it": ("it_IT",), "es": ("es_ES", "es_MX", "es_AR")}
 # fair even in Complete.
 MIN_ZIPF = 1.5
 
+# What a solution is, by its first entry's part of speech: a noun, an adjective or a verb (the
+# owner's choice, §15, 14 Nov 2026). An adverb, a pronoun or a preposition stays a guess: its
+# definition is grammar (*anche*, *which*, *desde*), not a thing to find.
+SOLUTION_KINDS = ("noun", "adj", "verb")
+
+# At most this many solutions a length, the most frequent kept (the owner's numbers): the rest of
+# the words with a meaning stay guesses.
+MAX_SOLUTIONS = {3: 600, 4: 1800, 5: 2500, 6: 2500, 7: 2000, 8: 1500}
+
+# The part of speech shown beside a meaning, in the interface language (the glossary's fourth
+# field): written by the pipeline like the meanings, as the word's own entry has it.
+PART_OF_SPEECH = {
+    "it": {"noun": "sostantivo", "adj": "aggettivo", "verb": "verbo"},
+    "en": {"noun": "noun", "adj": "adjective", "verb": "verb"},
+    "es": {"noun": "sustantivo", "adj": "adjetivo", "verb": "verbo"},
+}
+
 # The four levels' lower bounds, as Zipf frequencies (§6.3): Base, Intermediate, Advanced; Complete
 # takes what is left. The same in the three languages, so that a level means the same frequency
 # everywhere: Base from 4.5 (a word met about thirty times in a million, among a learner's first

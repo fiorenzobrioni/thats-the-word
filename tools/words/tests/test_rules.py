@@ -127,6 +127,18 @@ class GlossaryRulesTest(unittest.TestCase):
         horse = "di cavalli o altri quadrupedi, procedere a passo di ambio, muovendo alternativamente le zampe ora dell'uno ora dell'altro lato"
         self.assertIsNone(glossary.fit(horse))
         self.assertEqual(glossary.fit("En este instante, en este momento"), "En este instante, en este momento")
+        self.assertEqual(glossary.fit("Firm in standing or position; not tottering or shaking; fixed"), "Firm in standing or position")
+        self.assertIsNone(glossary.fit("Nella specie dei mammiferi, il momento in cui la madre espelle il feto dal proprio corpo dopo la gestazione completa"))
+        self.assertIsNone(glossary.fit("Pelea que se practicaba en el medievo entre"))
+        regno = "territorio o nazione sul quale un signore, generalmente detto re, esercita la propria sovranità secondo le leggi"
+        self.assertIsNone(glossary.fit(regno))
+        città = "centro abitato di grandi dimensioni dove si accentrano attività amministrative, sociali, economiche, culturali e religiose"
+        self.assertEqual(glossary.fit(città), "Centro abitato di grandi dimensioni dove si accentrano attività amministrative")
+        self.assertEqual(glossary.fit("Persona que combate con la espada₁"), "Persona que combate con la espada")
+        self.assertEqual(glossary.fit("Volver más pequeño,"), "Volver más pequeño")
+        self.assertEqual(glossary.fit("The third letter (Γγ), preceded by beta"), "The third letter, preceded by beta")
+        self.assertEqual(glossary.fit("The third letter of the alphabet (Γγ), preceded by beta and followed by delta, in the Greek alphabet used today"), "The third letter of the alphabet")
+        self.assertIsNone(glossary.fit("'Cuchilla ensartada para segar la hierba', princ. S. XV (Corominas)"))
         self.assertIsNone(glossary.fit("una definizione già tagliata…"))
         for text in ("x " * 200, "a, b, c, " * 40):
             out = glossary.fit(text)
@@ -149,7 +161,7 @@ class GlossaryRulesTest(unittest.TestCase):
         self.assertIsNone(glossary.fit("un piccolo gattino di casa", ("gatto",)))
         self.assertIsNone(glossary.fit("il verso del gatto domestico", ("gatto",)))
         self.assertEqual(glossary.fit("il verso del cane domestico", ("gatto",)), "Il verso del cane domestico")
-        self.assertEqual(glossary.fit("(zoology) small domestic feline (Felis catus)"), "Small domestic feline (Felis catus)")
+        self.assertEqual(glossary.fit("(zoology) small domestic feline (Felis catus)"), "Small domestic feline")
 
     def test_register_reads_labels_not_words(self):
         self.assertEqual(register.of_tags(["vulgar", "slang"]), {register.COARSE})
@@ -157,6 +169,7 @@ class GlossaryRulesTest(unittest.TestCase):
         self.assertEqual(register.of_tags(["Malsonante"]), {register.COARSE})
         self.assertEqual(register.of_tags(["usualmente despectivo"]), {register.DEROGATORY})
         self.assertEqual(register.of_tags(["non volgare"]), set())
+        self.assertEqual(register.of_tags(["vulgarismo"]), set())  # substandard, not obscene
         self.assertEqual(register.of_categories(["ES:Palabras provenientes del latín vulgar"]), set())
         self.assertEqual(register.of_categories(["Parole volgari-IT"]), {register.COARSE})
         self.assertEqual(register.of_categories(["English ethnic slurs"]), {register.COARSE})

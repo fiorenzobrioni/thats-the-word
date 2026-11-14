@@ -57,6 +57,13 @@ reuse. Wiktionary's editions label their senses, each in its own way.
    frozen from then.
 7. **The daily schedules were written anew once**, before 1.0, with these rules (the owner's
    answer); they are append-only again from now.
+8. **A key form is refused when any of its written forms is** refused by Wiktionary's own
+   entries (a guess is typed without accents); a form refused only through its Hunspell stem
+   refuses a key when all its forms are.
+9. **A solution is a noun, an adjective or a verb**, at most `config.MAX_SOLUTIONS` a length; its
+   meaning carries **its part of speech** in the interface language, a fourth field of the
+   glossary's record (ADR 0003's format otherwise unchanged; a reader of three fields reads the
+   files as before). The owner's ideas (PLANNING §15, 14 Nov 2026, «Three ideas»).
 
 ## Consequences
 
@@ -65,6 +72,6 @@ reuse. Wiktionary's editions label their senses, each in its own way.
   Spanish and the other languages, or of a short first gloss: Open 24 asks the owner how large the
   pool should be.
 - The files keep ADR 0003's formats (the slot of eight bytes from seven letters, decided then);
-  26.2 MB for the three languages and six lengths, 2.7 MB of them five letters'.
+  26.9 MB for the three languages and six lengths, 2.7 MB of them five letters'.
 - What the labels miss is not caught: a word the editions do not label is a word of the game.
   The rule is read and changed in `register.py` and `lexicon.py`, never by listing a word.

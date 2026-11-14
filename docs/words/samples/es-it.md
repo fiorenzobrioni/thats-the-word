@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *abrir* | Base | aprire, dischiudere | (aprire) Creare un varco |
-| *ayuda* | Base | aiuto | (aiuto) Soccorso effettuato verso qualcuno che si trovi in difficoltà o in pericolo |
-| *bajar* | Base | abbassare, scendere, scaricare | (abbassare) Portare in basso |
-| *bolso* | Intermediate | borsetta *(single)* | (borsetta) Piccola borsa per donna |
-| *breve* | Base | breve | (breve) Di non lunga durata |
-| *cacho* | Intermediate | pezzo *(single)* | (pezzo) Parte collegabile ad un'altra in qualcosa di costruibile |
-| *cruel* | Intermediate | crudele | (crudele) Che è cattivissimo e senza rimorsi |
-| *dueño* | Base | proprietario | (proprietario) Chi detiene la legittima proprietà di un bene |
-| *débil* | Intermediate | debole | (debole) Che ha scarsa energia |
-| *enojo* | Intermediate | collera *(single)* | (collera) Sentimento di ira o sdegno che si manifesta con atti o parole violente |
-| *flujo* | Intermediate | colata *(single)* | (colata) Tecnica di lavorazione metallurgica |
-| *gorro* | Intermediate | berretto | (berretto) Copricapo di varie fogge, quasi sempre con una tesa davanti al viso |
-| *guiar* | Intermediate | guidare | (guidare) Condurre, muovere un veicolo o un animale |
-| *himno* | Intermediate | inno | (inno) Canzone o brano di lode, encomio o gioia |
-| *honor* | Base | onore | (onore) Identità morale di un individuo |
-| *junta* | Base | riunione *(single)* | (riunione) Incontro tra due o più individui |
-| *libra* | Intermediate | libbra, lira | (libbra) Unità di misura |
-| *licor* | Intermediate | liquore | (liquore) Bevanda alcolica aromatizzata |
-| *mando* | Base | controller *(single)* | (controller) Dispositivo elettronico che ne fa funzionare un altro |
-| *menor* | Base | minore *(single)* | (minore) Più piccolo, corto, basso, leggero, rispetto ad altre |
-| *miedo* | Base | paura, timore | (timore) Moderazione della paura, talvolta con autocontrollo e consapevolezza |
-| *mixto* | Intermediate | cerino *(single)* | (cerino) Piccolo fiammifero incerato |
-| *piano* | Intermediate | pianoforte | (pianoforte) Strumento musicale |
-| *pizza* | Intermediate | pizza | (pizza) Focaccia di pasta composta principalmente da olio |
-| *playa* | Base | spiaggia | (spiaggia) Parte di costa bassa emersa o sommersa |
-| *ramón* | Intermediate | bagolaro *(single)* | (bagolaro) Albero delle Ulmacee |
-| *sacar* | Base | estrarre | (estrarre) Tirare fuori da qualcosa |
-| *serie* | Base | serie | (serie) Un insieme di cose che si susseguono e sono in relazione tra loro |
-| *trece* | Intermediate | tredici | (tredici) Numero naturale che segue il dodici e precede il quattordici |
-| *valla* | Intermediate | ostacolo, barriera, palizzata | (ostacolo) Qualunque oggetto o individuo che crea impedimento |
-| *venta* | Base | vendita | (vendita) Cessione di un oggetto in cambio di denaro |
-| *vicio* | Intermediate | vizio | (vizio) Eccesso dell'animo nei diletti, nel piacere |
-| *virus* | Intermediate | virus | (virus) Programma informatico illegale in grado di alterare il funzionamento di un computer |
-| *vodka* | Intermediate | vodka | (vodka) Acquavite di grano di origine russa |
-| *época* | Base | epoca | (epoca) Periodo storico lungo |
-| *coque* | Advanced | coke *(single)* | (coke) Residuo della distillazione secca del carbon fossile |
-| *dátil* | Complete | dattero | (dattero) Frutto zuccheroso della palma, il più delle volte seccato al sole |
-| *edema* | Advanced | edema *(single)* | (edema) Accumulo di liquidi negli spazi interstiziali dell'organismo, accompagnato da tumefazione |
-| *guiño* | Advanced | ammiccamento | (ammiccamento) Azione di chiusura e riapertura della palpebra per inumidire l'occhio |
-| *harén* | Advanced | harem *(single)* | (harem) Nel mondo musulmano, parte della casa riservata alle donne |
-| *himen* | Complete | imene | (imene) Membrana che occlude parzialmente l'orifizio vaginale nella donna vergine |
-| *ingle* | Advanced | inguine | (inguine) Lunga depressione stretta del corpo umano che separa il tronco dalle gambe |
-| *molar* | Advanced | molare | (molare) Ciascuno dei dodici denti posteriori a quattro cuspidi presenti nei mammiferi |
-| *polis* | Advanced | polis *(single)* | (polis) Forma di governo greca che includeva i cittadini nell'amministrazione della città |
-| *ripio* | Complete | ciottolo *(single)* | (ciottolo) Sasso levigato da un corso d'acqua |
-| *rombo* | Complete | rombo | (rombo) Quadrilatero equilatero |
-| *tarro* | Advanced | barattolo | (barattolo) Contenitore di modeste dimensioni |
-| *ungir* | Complete | ungere | (ungere) Spalmare, spargere di olio o sostanza grassa |
-| *vibra* | Advanced | atmosfera *(single)* | (atmosfera) Fluido allo stato gassoso che avvolge un pianeta, una stella o più in generale un corpo celeste |
-| *ámbar* | Advanced | ambra *(single)* | (ambra) Resina fossile |
+| *abuso* | Intermediate | abuso | (abuso) *sostantivo* · Uso esagerato di qualcosa |
+| *bajar* | Base | abbassare, scendere, scaricare | (abbassare) *verbo* · Portare in basso |
+| *barba* | Intermediate | barba | (barba) *sostantivo* · Il complesso dei peli presenti sul mento e sulle guance dell'uomo |
+| *boxeo* | Intermediate | pugilato | (pugilato) *sostantivo* · Sport da combattimento nato nell'antica Grecia nel settimo secolo avanti Cristo |
+| *buque* | Intermediate | nave | (nave) *sostantivo* · Mezzo di trasporto marittimo di notevoli dimensioni |
+| *campo* | Base | campagna, campo | (campagna) *sostantivo* · Territorio agricolo al di fuori dei centri abitati |
+| *dañar* | Intermediate | dannare *(single)* | (dannare) *verbo* · Condannare all'inferno |
+| *falda* | Intermediate | gonna | (gonna) *sostantivo* · Indumento femminile che copre il corpo dalla cintura in giù |
+| *fatal* | Intermediate | fatale *(single)* | (fatale) *aggettivo* · Che é frutto del destino |
+| *feroz* | Intermediate | feroce | (feroce) *aggettivo* · Molto aggressivo |
+| *garza* | Intermediate | airone | (airone) *sostantivo* · Grosso uccello acquatico dell'ordine dei Pelecaniformi |
+| *hacha* | Intermediate | ascia, scure, accetta | (ascia) *sostantivo* · Attrezzo dei carpentieri per sgrossare il legname |
+| *honor* | Base | onore | (onore) *sostantivo* · Identità morale di un individuo |
+| *huida* | Intermediate | fuga | (fuga) *sostantivo* · Partenza improvvisa e rapida da un luogo per timore di un evento sfavorevole, dannoso o letale |
+| *junio* | Base | giugno | (giugno) *sostantivo* · Sesto mese dell'anno nel calendario giuliano e gregoriano, lungo trenta giorni |
+| *lavar* | Intermediate | lavare | (lavare) *verbo* · Pulire qualcosa utilizzando l' acqua ed anche il sapone |
+| *local* | Base | locale | (locale) *aggettivo* · Proprio e particolare di una zona |
+| *manda* | Intermediate | voto *(single)* | (voto) *sostantivo* · Scelta espressa in un'elezione di chi deve ricoprire un incarico |
+| *manto* | Intermediate | mantello, gousset | (mantello) *sostantivo* · Soprabito da indossare sulle spalle |
+| *meter* | Intermediate | mettere | (mettere) *verbo* · Posizionare oggetti, animali o persone in un luogo |
+| *mismo* | Base | stesso | (stesso) *aggettivo* · Tale e quale |
+| *mixto* | Intermediate | misto *(single)* | (misto) *aggettivo* · Di ciò che è mescolato con altri elementi |
+| *móvil* | Base | mobile, telefonino | (mobile) *aggettivo* · In grado di muoversi |
+| *ninja* | Intermediate | ninja *(single)* | (ninja) *sostantivo* · Spia del Giappone feudale |
+| *oeste* | Base | ovest, occidente, ponente | (ovest) *sostantivo* · Il punto cardinale opposto a est, verso occidente |
+| *rango* | Intermediate | rango | (rango) *sostantivo* · Posizione sociale di un individuo all'interno di una società |
+| *recto* | Intermediate | diritto | (diritto) *aggettivo* · Che procede in linea retta |
+| *resta* | Intermediate | sottrazione | (sottrazione) *sostantivo* · Furto di qualcosa |
+| *rural* | Base | rurale *(single)* | (rurale) *aggettivo* · Relativo alla campagna |
+| *salto* | Intermediate | salto | (salto) *sostantivo* · Movimento per cui il corpo si solleva rapidamente da terra per poi ricadervi |
+| *santo* | Base | santo | (santo) *aggettivo* · Che merita di essere venerato |
+| *sitio* | Base | posto, sito, assedio | (posto) *sostantivo* · Luogo geografico delimitato artificialmente, naturalmente o solo idealmente |
+| *tener* | Base | avere, tenere | (avere) *verbo* · Linguaggio commerciale |
+| *tesis* | Intermediate | tema *(single)* | (tema) *sostantivo* · Argomento meritevole di approfondimento e dibattito |
+| *torno* | Base | tornio | (tornio) *sostantivo* · Macchina meccanica o elettromeccanica per la lavorazione di tondini in legno o metallo |
+| *axila* | Advanced | ascella *(single)* | (ascella) *sostantivo* · Regione anatomica situata in corrispondenza della radice dell’arto superiore |
+| *bosón* | Complete | bosone *(single)* | (bosone) *sostantivo* · Particella formante uno stato quantico composito totalmente simmetrico |
+| *cieno* | Complete | fango *(single)* | (fango) *sostantivo* · Poltiglia formata da un miscuglio di terra e acqua |
+| *curia* | Advanced | curia *(single)* | (curia) *sostantivo* · Il complesso di organi ed autorità che costituiscono l'apparato amministrativo della Santa Sede |
+| *feraz* | Complete | fertile *(single)* | (fertile) *aggettivo* · Pianta o terreno in grado di produrre molti frutti |
+| *lijar* | Complete | scartavetrare *(single)* | (scartavetrare) *verbo* · Levigare una superficie usando la carta vetrata |
+| *moler* | Advanced | macinare | (macinare) *verbo* · Frantumare in farina |
+| *motón* | Complete | carrucola *(single)* | (carrucola) *sostantivo* · Macchina rotante semplice che solleva carichi |
+| *nafta* | Advanced | gasolio *(single)* | (gasolio) *sostantivo* · Miscela di idrocarburi ottenuta dalla raffinazione del petrolio |
+| *penar* | Complete | patire *(single)* | (patire) *verbo* · Provare dolore per qualcosa che non si riesce a soddisfare |
+| *rapto* | Advanced | rapimento | (rapimento) *sostantivo* · Sequestro di persona |
+| *sidra* | Advanced | sidro | (sidro) *sostantivo* · Liquore o bevanda alcolica ricavata dalla fermentazione del succo di mela o di altra frutta |
+| *tanda* | Advanced | attività *(single)* | (attività) *sostantivo* · Caratteristica, condizione di chi o di ciò che è attivo |
+| *tilde* | Advanced | tilde | (tilde) *sostantivo* · Segno che indica un valore approssimato |
+| *tinte* | Advanced | tintura *(single)* | (tintura) *sostantivo* · Conferimento di un colore diverso ad un oggetto, per mezzo di soluzioni coloranti |

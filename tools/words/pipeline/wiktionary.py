@@ -35,7 +35,7 @@ EDITION = {"en.it": "en", "en.es": "en", "en.en": "en", "it": "it", "es": "es"}
 GAME_LANGUAGES = ("it", "en", "es")
 
 # A reduced entry's version: a change here invalidates the cache.
-REDUCED_VERSION = 4
+REDUCED_VERSION = 5
 
 
 def reduced_path(name: str) -> pathlib.Path:

@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *altar* | Intermediate | altare | alto piedistallo circolare, rappresentato generalmente con delle fiamme |
-| *brace* | Intermediate | grappa, controvento | (grappa) bevanda fortemente alcolica ricavata dalla distillazione delle vinacce |
-| *brain* | Base | cervello, encefalo | persona razionale, capo |
-| *buyer* | Intermediate | acquirente, compratore | (acquirente) chi si procura beni e servizi in cambio di pagamento |
-| *canal* | Intermediate | canale | (canale) condotto costruito dall'uomo su cui, nei mesi estivi, scorre l'acqua, proveniente in genere da un fiume , al fine di irrigare i campi coltivati |
-| *chill* | Intermediate | raffreddare, gelo, freddo | colpo di freddo |
-| *chunk* | Intermediate | pezzo | (pezzo) parte collegabile ad un'altra in qualcosa di costruibile |
-| *fifty* | Intermediate | cinquanta | (cinquanta) numero seguente al quarantanove e antecedente al cinquantuno; è pari a cinque volte dieci e due volte il quadrato di cinque |
-| *flank* | Intermediate | fianco, fiancheggiare | (fianco) parte laterale di qualcosa |
-| *harsh* | Intermediate | duro, rigido, aspro | (nei modi) duro, rigido, scabro |
-| *heart* | Base | cuore | dimora dei sentimenti, dei moti |
-| *human* | Base | umano, essere umano | umano, essere umano |
-| *lines* | Base | — | — |
-| *madam* | Intermediate | signora, madama | (madama) per la società sportiva italiana Juventus |
-| *manly* | Intermediate | virile | virile, maschio, da uomo |
-| *moral* | Intermediate | morale, etico | morale, etico, onesto, serio, virtuoso. |
-| *moves* | Base | — | — |
-| *never* | Base | mai, giammai | (mai) nessuna volta |
-| *pains* | Intermediate | — | — |
-| *piles* | Intermediate | mucchio di *(single)* | — |
-| *pixel* | Intermediate | pixel | (pixel) unità minima di composizione di un'immagine in formato digitale, rappresentata fisicamente da un piccolo elemento semiconduttore sensibile alla luce |
-| *price* | Base | prezzo, stimare, valore | fissare il prezzo di |
-| *proxy* | Intermediate | delega, mandatario | (delega) conferimento di un incarico ad un esperto in materia |
-| *rocks* | Intermediate | macigni *(single)* | — |
-| *scrub* | Intermediate | strofinare | (strofinare) passare un oggetto o una superficie con un panno, in modo reiterato, con un certo vigore |
-| *shoot* | Base | sparare, germoglio, girare | colpo di pistola |
-| *sorry* | Base | scusa, dispiaciuto, spiacente | scusa, mi/ci dispiace |
-| *sunny* | Intermediate | soleggiato, soleggiata | (soleggiato) ben illuminato dal sole |
-| *swear* | Base | giurare | utilizzare un linguaggio offensivo o profano |
-| *syrup* | Intermediate | sciroppo | (sciroppo) soluzione dolce e viscosa di acqua, zucchero e frutta o spezie |
-| *tales* | Intermediate | racconti *(single)* | — |
-| *unity* | Intermediate | unità | (unità) un singolo, un individuo "preso" da solo |
-| *utter* | Intermediate | assoluto, completo, totale | (assoluto) privo di collegamenti |
-| *vegan* | Intermediate | vegano | (vegano) (di) persona il cui regime alimentare è composto unicamente da prodotti vegetali |
-| *while* | Base | mentre | momento, po' di tempo |
-| *braid* | Advanced | treccia | (treccia) acconciatura femminile formata da tre ciocche di capelli avviluppate |
-| *brash* | Advanced | sfacciato *(single)* | (sfacciato) privo di ritegno |
-| *bugle* | Advanced | bugola *(single)* | — |
-| *coset* | Complete | classe laterale *(single)* | — |
-| *crass* | Advanced | grossolano | (grossolano) che è fatto in modo poco diligente |
-| *crumb* | Advanced | frammento, briciola, mollica | (frammento) parte alquanto più piccola di un tutto |
-| *flyby* | Complete | volo ravvicinato *(single)* | — |
-| *gulch* | Advanced | burrone, gola | (burrone) precipizio molto profondo, in fondo al quale scorre un torrente |
-| *inane* | Advanced | sciocco *(single)* | (sciocco) chi non ha giudizio |
-| *merle* | Advanced | — | — |
-| *shard* | Advanced | frammento | (frammento) parte alquanto più piccola di un tutto |
-| *stead* | Advanced | — | — |
-| *strut* | Advanced | pavoneggiarsi | (pavoneggiarsi) darsi un sacco d’arie |
-| *telex* | Complete | telex | (telex) servizio per lo scambio di messaggi di testo in codice con telescriventi collegate con centrali di commutazione, diffuso prevalentemente in passato |
-| *widen* | Advanced | allargare, allargarsi | — |
+| *amber* | Intermediate | ambra, ambrato | (ambra) *sostantivo* · Resina fossile |
+| *booth* | Intermediate | bancarella, stand | (bancarella) *sostantivo* · Banco utilizzato dai venditori ambulanti |
+| *bored* | Intermediate | annoiato, scocciato | (annoiato) *aggettivo* · Che è scocciato |
+| *buddy* | Intermediate | amico | (amico) *sostantivo* · Persona verso cui si prova un intenso e contraccambiato sentimento di affetto ed attaccamento |
+| *bunch* | Base | grappolo | (grappolo) *sostantivo* · Insieme di frutti legati fra loro attorno al raspo |
+| *charm* | Intermediate | attrattiva, fascino, incanto | (attrattiva) *sostantivo* · Capacità di attrarre |
+| *enjoy* | Base | godere, gioire, divertirsi | (godere) *verbo* · Assaporare qualcosa |
+| *event* | Base | evento, avvenimento, fatto | (evento) *sostantivo* · Avvenimento, fatto o cosa che diviene |
+| *glove* | Intermediate | guanto | (guanto) *sostantivo* · Ciò che ricopre la mano |
+| *grain* | Intermediate | chicco *(single)* | (chicco) *sostantivo* · Nome comune con cui è conosciuta la cariosside |
+| *grief* | Intermediate | dolore | (dolore) *sostantivo* · Sentimento di profonda tristezza |
+| *issue* | Base | questione, emissione, pubblicazione | (questione) *sostantivo* · Difficoltà da superare con una soluzione |
+| *least* | Base | minimo | (minimo) *aggettivo* · Superlativo di piccolo |
+| *limit* | Base | limite, limitare, delimitare | (limite) *sostantivo* · Linea di confine |
+| *manor* | Intermediate | tenuta *(single)* | (tenuta) *sostantivo* · Mantenimento di stabilità di qualcosa |
+| *match* | Base | fiammifero, incontro, partita | (fiammifero) *sostantivo* · Strumento per produrre il fuoco |
+| *metal* | Base | metallo | (metallo) *sostantivo* · Elemento chimico semplice e lucente, buon conduttore di elettricità e calore, duttile e malleabile |
+| *needy* | Intermediate | bisognoso | (bisognoso) Persona che ha bisogno di sostegno, aiuto, anche economicamente |
+| *obese* | Intermediate | obeso | (obeso) *aggettivo* · Che presenta un eccesso patologico di grassi nell'organismo, dovuto a squilibri alimentari |
+| *offer* | Base | offerta, proposta, offrire | (offerta) *sostantivo* · Azione di dare denaro od altro a chi ne ha bisogno |
+| *panic* | Intermediate | panico, spaventarsi | (panico) *aggettivo* · Riguardante Pan, divinità agreste della mitologia greca |
+| *peach* | Intermediate | pesca, pesco | (pesca) *sostantivo* · Frutto del pesco |
+| *prove* | Base | dimostrare *(single)* | (dimostrare) *verbo* · Attestare la verità |
+| *reach* | Base | portata, raggiungere | (portata) *verbo* · Pietanza, piatto |
+| *robot* | Intermediate | robot, automa | (robot) *sostantivo* · Macchina antropomorfa creata artificialmente |
+| *shake* | Intermediate | scossa, scuotere, frullato | (scuotere) *verbo* · Provocare agitazione ed intensa trepidazione in qualcuno |
+| *spare* | Intermediate | ricambio, risparmiare | (ricambio) Cessione di qualcosa in cambio di un'altra di pari importanza |
+| *speak* | Base | parlare | (parlare) *verbo* · Pronunciare parole esprimendo i propri pensieri |
+| *spill* | Intermediate | rovesciare | (rovesciare) *verbo* · Far cadere, detto specialmente di un liquido |
+| *sweep* | Intermediate | scopare, spazzare, scopata | (scopare) *verbo* · Pulire con una scopa |
+| *sworn* | Intermediate | — | (giurato) *aggettivo* · Membro di una giuria |
+| *total* | Base | totale, intero | (totale) *sostantivo* · Ammontare di un'addizione |
+| *vague* | Intermediate | vago, impreciso, indistinto | (vago) *aggettivo* · Incerto, indeterminato oppure non definito |
+| *vomit* | Intermediate | vomitare, vomito | (vomitare) *verbo* · Emettere cibo non digerito dalla bocca |
+| *watch* | Base | guardia, orologio, guardare | (guardia) *sostantivo* · L'atto del custodire, vigilare |
+| *bolus* | Complete | bolo | (bolo) *sostantivo* · Impasto di cibo masticato |
+| *bream* | Complete | breme *(single)* | *sostantivo* · Abramide comune: pesce d'acqua dolce della famiglia dei Cyprinidae |
+| *coupe* | Advanced | coupé *(single)* | (coupé) *sostantivo* · Auto sportiva a due porte |
+| *crass* | Advanced | grossolano | (grossolano) *aggettivo* · Che è fatto in modo poco diligente |
+| *crave* | Advanced | bramare | (bramare) *verbo* · Desiderare con intensa passione qualcosa o qualcuno |
+| *croft* | Advanced | podere *(single)* | (podere) *sostantivo* · Grande tenuta signorile in campagna |
+| *gleam* | Advanced | barlume | (barlume) *sostantivo* · Luce di debole intensità |
+| *gules* | Complete | rosso | (rosso) *sostantivo* · Smalto araldico di colore rosso intenso |
+| *lemur* | Complete | lemure | (lemure) *sostantivo* · Nell'antica Roma, ombra di un morto che ricompariva sulla terra per angosciare i vivi |
+| *scant* | Advanced | scarso, esiguo | (scarso) *aggettivo* · Che non basta |
+| *snipe* | Advanced | beccaccia *(single)* | (beccaccia) *sostantivo* · Uccello dei Caradriformi dal becco lungo, che vive nelle macchie e nei fossi |
+| *spate* | Advanced | piena *(single)* | (piena) *sostantivo* · Forte aumento della portata di un corso d'acqua |
+| *stork* | Advanced | cicogna | (cicogna) *sostantivo* · Uccello dell'ordine dei Ciconiformi |
+| *untie* | Complete | disfare, sciogliere, slegare | (disfare) *verbo* · Sciogliere, slegare |
+| *vulva* | Advanced | vulva | (vulva) *sostantivo* · Apertura esterna degli organi genitali esterni femminili |

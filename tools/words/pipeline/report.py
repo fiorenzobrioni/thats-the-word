@@ -1,9 +1,12 @@
 """The words' report and the pages a person reads (PLANNING.md §6.7, §11 Phase 1).
 
 Written by the pipeline, never by hand: `docs/words/README.md` (the sources, the counts, the
-levels, the coverage of the nine pairs, the sizes), `docs/words/samples/` (50 words per pair, to
-be read before the owner's go), and `docs/words/review/` (the words a person decides on: every
-solution with an offensive or vulgar sense somewhere, and what each filter kept out).
+levels, the lengths measured, the coverage of the nine pairs, the sizes), `docs/words/samples/`
+(50 words per pair, to be read before the owner's go), and `docs/words/review/` (what each filter
+kept out of the solutions).
+
+A word kept out by the editions' labels (coarse, derogatory, intimate) or refused as a guess is
+counted and never written: the report, like the repository, names none (§15, 14 Nov 2026).
 """
 
 import collections
@@ -52,8 +55,9 @@ def _readme(built) -> str:
     w("# The words: the report\n")
     w("Written by `tools/words/build.py` (PLANNING.md §6, §11 Phase 1): do not edit it by hand. It answers")
     w("VISION's questions 3 (the licences), 4 (the meanings' quality) and 5 (the size) with numbers;")
-    w("the samples a person reads before the owner's go are in [`samples/`](samples/), and the words a")
-    w("person decides on (the deny lists) in [`review/`](review/).\n")
+    w("the samples a person reads before the owner's go are in [`samples/`](samples/), and what each")
+    w("filter kept out of the solutions in [`review/`](review/). No list of words to avoid exists: the")
+    w("editions' own labels keep a word out, and a word they keep out is counted here, never named.\n")
 
     w("## The sources (VISION Q3)\n")
     w("Every source is fetched at the version below and checked against its SHA-256 before a build;")
@@ -72,16 +76,19 @@ def _readme(built) -> str:
 
     w("## The words\n")
     w(f"Five letters, {config.ATTEMPTS} attempts (VISION §8). **Accepted** is every form a guess may be;")
-    w("**solutions** are the lemmas a game may hide (§6.2); the **glossary** describes the solutions and")
-    w("every lemma a guess may be or belong to.\n")
-    w("| | Accepted | from the spelling dictionary | from Wiktionary only | Solutions | Glossary words |")
-    w("|---|---|---|---|---|---|")
+    w("**refused** is what the spelling dictionaries or Wiktionary hold that no guess may be, because")
+    w("an edition labels its first sense, or most of its senses, coarse or derogatory (an inflection")
+    w("with its lemma); **solutions** are the lemmas a game may hide (§6.2), each with a whole")
+    w("definition in the three languages; the **glossary** describes the solutions and every lemma a")
+    w("guess may be or belong to.\n")
+    w("| | Accepted | from the spelling dictionary | from Wiktionary only | Refused | Solutions | Glossary words |")
+    w("|---|---|---|---|---|---|---|")
     for g in config.LANGUAGES:
         lw = built.words[g]
-        spelling = lw.accepted_by_source.get("Hunspell", lw.accepted_by_source.get("SCOWL", 0))
+        spelling = len(lw.spelling_keys)
         wikt_only = len(lw.accepted) - spelling
         described = len(built.glosses[(g, g)])
-        w(f"| {NAMES[g]} | {len(lw.accepted):,} | {spelling:,} | {wikt_only:,} | {len(lw.solutions):,} | {described:,} |")
+        w(f"| {NAMES[g]} | {len(lw.accepted):,} | {spelling:,} | {wikt_only:,} | {lw.refused:,} | {len(lw.solutions):,} | {described:,} |")
     w("")
     w("**The common words that must be accepted** (`tools/words/lists/common_*.txt`, 200 a language,")
     w("lemmas and inflected forms): ")
@@ -94,10 +101,12 @@ def _readme(built) -> str:
 
     w("### What keeps a lemma out of the solutions\n")
     w("Each lemma of the right length is checked in this order; the first reason that holds keeps it")
-    w("out. The lists are in [`review/`](review/).\n")
+    w("out. The labels come first, so a word they keep out is in no other list. The lists are in")
+    w("[`review/`](review/).\n")
     reasons = sorted({r for g in config.LANGUAGES for r in built.words[g].excluded})
     w("| Reason | " + " | ".join(NAMES[g] for g in config.LANGUAGES) + " |")
     w("|---|" + "---|" * len(config.LANGUAGES))
+    w(f"| {lexicon.LABELLED} | " + " | ".join(f"{built.words[g].unlisted:,}" for g in config.LANGUAGES) + " |")
     for r in reasons:
         w(f"| {r} | " + " | ".join(f"{len(built.words[g].excluded.get(r, [])):,}" for g in config.LANGUAGES) + " |")
     w("")
@@ -125,11 +134,65 @@ def _readme(built) -> str:
         w(f"- **{NAMES[g]}**. " + "; ".join(line) + ".")
     w("")
 
+    w("## The lengths (for 1.1 and 1.2)\n")
+    w("Every length the later versions may play (VISION §8: Bridge in 1.1, variable length in 1.2),")
+    w("built with the same rules and shipped in the app already (§15, 14 Nov 2026); five letters are")
+    w("1.0's game and have its daily schedule. The glossary column is the solutions' meanings and")
+    w("translations in the three interface languages (the glossary files hold them with every guess's")
+    w("lemma, all lengths together).\n")
+    w("| | Letters | Accepted | Refused | Solutions | Daily pool (Base and Intermediate) | Solutions' glossaries |")
+    w("|---|---|---|---|---|---|---|")
+    for g in config.LANGUAGES:
+        for length in config.LENGTHS:
+            lw = built.lengths[(g, length)]
+            pool = sum(1 for s in lw.solutions if s.level in config.DAILY_LEVELS)
+            shipped = " (1.0's game)" if length == config.LENGTH else ("" if length in config.SHIPPED_LENGTHS else " (not shipped)")
+            w(f"| {NAMES[g]} | {length}{shipped} | {len(lw.accepted):,} | {lw.refused:,} | {len(lw.solutions):,} | {pool:,} | {_kb(built.measured[(g, length)])} |")
+    w("")
+
+    w("## Three of the owner's ideas, measured\n")
+    w("Asked by the owner on 14 Nov 2026 (PLANNING §15, «Three ideas»).\n")
+    w(f"**A solution is a noun, an adjective or a verb**, by its first entry ({', '.join(config.SOLUTION_KINDS)}). What it")
+    w("leaves out: the words that would otherwise have been solutions (a whole meaning in the three")
+    w("languages, in wordfreq's list), with those of the daily's levels; the most frequent named.\n")
+    w("| | Letters | Left out | of them daily | The most frequent |")
+    w("|---|---|---|---|---|")
+    for g in config.LANGUAGES:
+        for length in config.LENGTHS:
+            n, daily, top = built.kinds_cost[(g, length)]
+            w(f"| {NAMES[g]} | {length} | {n:,} | {daily:,} | {', '.join(f'*{d}*' for d in top)} |")
+    w("")
+    w("**At most so many solutions a length**, the most frequent kept ("
+      + ", ".join(f"{k} letters {v:,}" for k, v in config.MAX_SOLUTIONS.items()) + "). What it leaves out:\n")
+    w("| | " + " | ".join(f"{n} letters" for n in config.LENGTHS) + " |")
+    w("|---|" + "---|" * len(config.LENGTHS))
+    for g in config.LANGUAGES:
+        cells = []
+        for length in config.LENGTHS:
+            lw = built.lengths[(g, length)]
+            cap = config.MAX_SOLUTIONS.get(length)
+            cells.append(f"{len(lw.excluded.get(f'beyond the {cap:,} most frequent of its length', [])):,}" if cap else "–")
+        w(f"| {NAMES[g]} | " + " | ".join(cells) + " |")
+    w("")
+    w("**The part of speech beside the meaning**, in the interface language (sostantivo, noun,")
+    w("sustantivo...), when the meaning was read in an entry of the word's own part of speech. The")
+    w("share of five-letter solutions whose meaning carries it:\n")
+    w("| Game → interface | With the part of speech |")
+    w("|---|---|")
+    for g in config.LANGUAGES:
+        sols = built.words[g].solutions
+        for u in config.LANGUAGES:
+            table = built.glosses[(g, u)]
+            n = sum(1 for s in sols if table[s.display].pos == s.pos)
+            w(f"| {NAMES[g]} → {NAMES[u]} | {_pct(n, len(sols))} |")
+    w("")
+
     w("## The meanings and translations (VISION Q4)\n")
     w("On the solutions, for each pair (game language → interface language): a **translation** is")
     w("shown when two sources agree on it, or when one translation table gives it for the word's first")
-    w("sense (one translation only, marked *single* in the samples); a **meaning** is a definition in")
-    w("the interface language (§6.4). The daily pool is the words most players meet.\n")
+    w("sense (one translation only, marked *single* in the samples); a **meaning** is a whole")
+    w(f"definition in the interface language (§6.4), at most {config.MEANING_MAX} characters, never cut: every solution")
+    w("has one in the three languages. The daily pool is the words most players meet.\n")
     w("| Game → interface | Solutions | Translation | of which agreed | Meaning | Either | Daily pool: translation | Daily pool: meaning |")
     w("|---|---|---|---|---|---|---|---|")
     for g in config.LANGUAGES:
@@ -144,9 +207,23 @@ def _readme(built) -> str:
                 w(f"| {NAMES[g]} → {NAMES[u]} | {len(sols):,} | {_pct(tr, len(sols))} | {_pct(agreed, len(sols))} | {_pct(me, len(sols))} | {_pct(either, len(sols))} | {_pct(ptr, len(pool))} | {_pct(pme, len(pool))} |")
     w("")
 
+    w("How long the solutions' meanings are, in characters:\n")
+    w("| Interface | Shortest | Median | Longest |")
+    w("|---|---|---|---|")
+    for u in config.LANGUAGES:
+        sizes = sorted(
+            len(built.glosses[(g, u)][s.display].meaning)
+            for g in config.LANGUAGES
+            for s in built.words[g].solutions
+        )
+        if sizes:
+            w(f"| {NAMES[u]} | {sizes[0]} | {sizes[len(sizes) // 2]} | {sizes[-1]} |")
+    w("")
+
     w("## The daily schedules\n")
     w(f"Per language, {len(next(iter(built.schedules.values()))):,} dailies: ten years from the epoch,")
-    w(f"{config.EPOCH.isoformat()} (§15 Open 10). Append-only: a rebuild keeps every entry and only adds.")
+    w(f"{config.EPOCH.isoformat()} (§15 Open 10). Append-only: a rebuild keeps every entry and only adds")
+    w("(written anew once, before 1.0, with these rules: §15, 14 Nov 2026).")
     w("Each word comes once before any comes twice, so a word returns after the whole pool has passed.\n")
     w("| | Dailies | Pool | A word returns after | Words that left the solutions |")
     w("|---|---|---|---|---|")
@@ -180,6 +257,11 @@ def _samples(built, g: str, u: str) -> str:
     rest = sorted(s.display for s in sols if s.level not in config.DAILY_LEVELS)
     picked = sorted(rng.sample(pool, min(35, len(pool)))) + sorted(rng.sample(rest, min(15, len(rest))))
     level = {s.display: config.LEVEL_NAMES[s.level] for s in sols}
+    kind = {s.display: s.pos for s in sols}
+
+    def labelled_meaning(x, d):
+        label = config.PART_OF_SPEECH[u].get(kind[d]) if x.pos == kind[d] else None
+        return (f"*{label}* · " if label and x.meaning else "") + (x.meaning or "")
     table = built.glosses[(g, u)]
     out = [f"# {NAMES[g]} words, read in {NAMES[u]}\n"]
     out.append("Written by `tools/words/build.py`: 50 solutions drawn at random (35 from the daily pool, 15")
@@ -191,7 +273,7 @@ def _samples(built, g: str, u: str) -> str:
         out.append("|---|---|---|")
         for d in picked:
             x = table[d]
-            out.append(f"| *{d}* | {level[d]} | {_cell(x.meaning) or '—'} |")
+            out.append(f"| *{d}* | {level[d]} | {_cell(labelled_meaning(x, d)) or '—'} |")
     else:
         out.append("| Word | Level | Translation | Meaning |")
         out.append("|---|---|---|---|")
@@ -200,7 +282,7 @@ def _samples(built, g: str, u: str) -> str:
             tr = ", ".join(x.translations)
             if tr and not x.agreed:
                 tr += " *(single)*"
-            meaning = x.meaning or ""
+            meaning = labelled_meaning(x, d)
             if meaning and x.meaning_via:
                 meaning = f"({x.meaning_via}) {meaning}"
             out.append(f"| *{d}* | {level[d]} | {_cell(tr) or '—'} | {_cell(meaning) or '—'} |")
@@ -209,19 +291,12 @@ def _samples(built, g: str, u: str) -> str:
 
 def _review(built, g: str) -> str:
     lw = built.words[g]
-    out = [f"# {NAMES[g]}: the words a person decides on\n"]
-    out.append("Written by `tools/words/build.py`. A word moved out of the solutions by hand goes in")
-    out.append(f"`tools/words/lists/deny_{g}.txt`, with a comment saying why; then rebuild.\n")
-    out.append("## Solutions with an offensive or vulgar sense somewhere\n")
-    out.append("Kept, because neither their first sense nor half of their senses is (the rule in")
-    out.append("`lexicon.is_offensive`). Read them: a daily is the same for everyone.\n")
-    out.append("| Word | Level | The sense |")
-    out.append("|---|---|---|")
-    for s in lw.solutions:
-        if s.display in lw.flagged:
-            out.append(f"| *{s.display}* | {config.LEVEL_NAMES[s.level]} | {_cell(lw.flagged[s.display])[:120]} |")
-    out.append("")
-    out.append("## Kept out\n")
+    out = [f"# {NAMES[g]}: what each filter kept out of the solutions\n"]
+    out.append("Written by `tools/words/build.py`, in the order the filters are read; a word is in the first")
+    out.append("list whose reason holds. There is no list to edit: change a rule in `tools/words/pipeline/`,")
+    out.append("rebuild, and read this page again.\n")
+    out.append(f"**{lexicon.LABELLED[0].upper()}{lexicon.LABELLED[1:]}**: {lw.unlisted:,} lemmas; and {lw.refused:,} written")
+    out.append("forms refused as guesses. Neither is written anywhere.\n")
     for reason, words in lw.excluded.items():
         out.append(f"<details><summary>{reason}: {len(words):,}</summary>\n")
         out.append(", ".join(words))

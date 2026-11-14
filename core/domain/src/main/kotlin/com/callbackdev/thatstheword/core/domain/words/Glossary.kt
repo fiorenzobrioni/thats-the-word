@@ -42,6 +42,11 @@ data class GlossEntry(
     val meaning: String?,
     /** The translation the meaning was read through, when it was (PLANNING.md §6.4), or null. */
     val meaningVia: String?,
+    /**
+     * The word's part of speech, written in the interface language (*sostantivo*, *noun*), when the
+     * meaning was read in an entry of the word's own part of speech (PLANNING.md §6.4); or null.
+     */
+    val partOfSpeech: String? = null,
 )
 
 /**
@@ -60,6 +65,7 @@ class Glossary(file: WordsFile) {
             translations = TextTable.items(record.getOrElse(0) { "" }),
             meaning = record.getOrNull(1)?.takeIf { it.isNotEmpty() },
             meaningVia = record.getOrNull(2)?.takeIf { it.isNotEmpty() },
+            partOfSpeech = record.getOrNull(3)?.takeIf { it.isNotEmpty() },
         )
     }
 }

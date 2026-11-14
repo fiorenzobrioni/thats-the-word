@@ -1,6 +1,7 @@
 # ADR 0003: The words, their sources and their files (Phase 1)
 
-- Status: accepted (the owner's go on the meanings, the deny lists and the daily pool, 12 Nov 2026)
+- Status: accepted (the owner's go on the meanings, the deny lists and the daily pool, 12 Nov 2026);
+  decisions 4 and 7 amended by ADR 0005 (no lists, the meanings' rules, 14 Nov 2026)
 - Date: 2026-11-12
 
 ## Context

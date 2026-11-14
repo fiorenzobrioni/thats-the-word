@@ -7,7 +7,7 @@
 
 The first run downloads about 1 GB into the cache (`~/.cache/thats-the-word/words`, or
 `$THATSTHEWORD_WORDS_CACHE`) and reduces Wiktionary once (about ten minutes); a build after that
-takes two or three minutes and needs about 5 GB of memory.
+takes about five minutes (every length from 3 to 8) and needs about 7.5 GB of memory.
 """
 
 import argparse

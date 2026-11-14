@@ -175,3 +175,15 @@ def forms(dic: pathlib.Path, aff: pathlib.Path, keep=lambda form: True) -> set[s
             if keep(form):
                 out.add(form)
     return out
+
+
+def forms_by_stem(dic: pathlib.Path, aff: pathlib.Path, keep=lambda form: True) -> dict[str, set[str]]:
+    """Every form, with the dictionary's stems it comes from: a form is refused as a guess when every
+    stem it comes from is (PLANNING.md §6.2), so an inflection is judged with its lemma."""
+    affixes = read_aff(aff)
+    out: dict[str, set[str]] = {}
+    for word, flags in read_dic(dic, affixes):
+        for form in expand(word, flags, affixes):
+            if keep(form):
+                out.setdefault(form, set()).add(word)
+    return out

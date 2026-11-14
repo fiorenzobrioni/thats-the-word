@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *abril* | Base | April | April |
-| *altar* | Intermediate | altar | altar (flat-topped structure used for religious rites) |
-| *botón* | Intermediate | button, key | button (clothing, mechanical) |
-| *bueno* | Base | good, fine, okay | good (of good quality) |
-| *carne* | Base | flesh, meat | flesh, the soft part of a body which covers the bones |
-| *casta* | Intermediate | caste, breed | caste |
-| *ciclo* | Intermediate | cycle | cycle |
-| *clima* | Base | climate | climate, weather |
-| *común* | Base | common, toilet | common, ordinary |
-| *costo* | Base | cost | cost |
-| *dólar* | Intermediate | dollar | dollar (designation for specific currency) |
-| *fauna* | Intermediate | fauna | (fauna) Animals considered as a group; especially those of a particular country, region, time, biological group, etc. |
-| *flujo* | Intermediate | flux, flow, stream | flow |
-| *grasa* | Intermediate | fat, grease | fat or grease used in cooking |
-| *grito* | Intermediate | cry, scream, yell | a cry, a yell, a scream, a growl |
-| *huido* | Intermediate | — | deserter |
-| *jamón* | Intermediate | ham | ham (the thigh and buttock of an animal slaughtered for meat) |
-| *japón* | Base | — | Japanese |
-| *maría* | Base | marijuana *(single)* | magpie (bird) |
-| *molde* | Intermediate | mold, cast | mold, cast |
-| *multa* | Intermediate | fine | fine (a fee levied as punishment for breaking the law) |
-| *oeste* | Base | west | west |
-| *patas* | Intermediate | — | devil; Satan |
-| *piola* | Intermediate | clever, smart, awesome | thin rope |
-| *pollo* | Intermediate | chicken, twink, chick | chicken (meat) |
-| *prima* | Intermediate | bonus, premium | bonus |
-| *reina* | Base | queen, king | queen |
-| *rubio* | Intermediate | blond | blond |
-| *suizo* | Intermediate | Swiss | Swiss |
-| *tapar* | Intermediate | cover, plug, cap | to cover |
-| *tapia* | Intermediate | — | enclosing wall |
-| *tarta* | Intermediate | tart, pie, cake | pie, tart |
-| *valer* | Intermediate | be worth, worth | to be worth |
-| *vocal* | Intermediate | vowel, vocal | vowel |
-| *zorro* | Intermediate | fox | fox (carnivore) |
-| *calza* | Advanced | chock *(single)* | stocking, sock |
-| *cista* | Complete | — | — |
-| *fémur* | Advanced | femur | femur |
-| *jaque* | Advanced | check | check |
-| *jerbo* | Complete | lesser jerboa *(single)* | gerbil |
-| *lacón* | Complete | — | pork shoulder |
-| *malla* | Advanced | mesh, tights, swimsuit | mesh, net |
-| *meato* | Complete | meatus | meatus |
-| *molón* | Complete | rock | stone block, rock |
-| *negus* | Complete | Negus | Negus (supreme Ethiopian ruler) |
-| *palmo* | Advanced | span | span, handspan (an informal unit of length based on a hand's width) |
-| *saeta* | Advanced | arrow, hand | arrow |
-| *taina* | Complete | backkick *(single)* | (backkick) A kick directed backwards. |
-| *zonal* | Advanced | — | — |
-| *átame* | Complete | athame | athame, athamé |
+| *abrir* | Base | open, unlock | (open) *verb* · To make or become accessible or clear for passage by moving from a shut position |
+| *arroz* | Intermediate | rice | (rice) *noun* · Cereal plants, Oryza sativa of the grass family whose seeds are used as food |
+| *borra* | Intermediate | flock | (flock) *noun* · Coarse tufts of wool or cotton used in bedding |
+| *ceder* | Intermediate | cede, yield | (cede) *verb* · To give up; yield to another |
+| *citar* | Intermediate | cite, summon | (cite) *verb* · To quote; to repeat, as a passage from a book, or the words of another |
+| *cuota* | Intermediate | quota, installment, fee | (quota) *noun* · A proportional part or share |
+| *damas* | Intermediate | draughts | (draughts) *noun* · A board game for two players in which the players each have a set number of pieces |
+| *danés* | Intermediate | Danish, Dane | (Dane) A person from Denmark or of Danish descent |
+| *error* | Base | error | (error) *noun* · The difference between a measured or calculated value and a true one |
+| *firme* | Base | firm, unwavering | (firm) *adjective* · Steadfast, secure, solid |
+| *flora* | Intermediate | flora | (flora) *noun* · Plants considered as a group, especially those of a particular country, region, time, etc |
+| *furia* | Intermediate | fury | (fury) *noun* · Extreme anger |
+| *gorro* | Intermediate | cap, beanie | (cap) *noun* · A close-fitting hat, either brimless or peaked |
+| *macho* | Intermediate | male, blond | (male) *adjective* · Belonging to the sex which typically produces sperm |
+| *meter* | Intermediate | stuff | (stuff) *verb* · To fill a space with in a compressed manner |
+| *mitad* | Base | half | (half) *noun* · One of two usually roughly equal parts into which anything may be divided, or considered as divided |
+| *nieto* | Intermediate | grandchild, grandson | (grandchild) *noun* · A child of someone's child |
+| *peaje* | Intermediate | toll | (toll) *noun* · A fee for using any kind of material processing service |
+| *pieza* | Base | piece, ordinary, room | (piece) *noun* · A part of a larger whole, usually in such a form that it is able to be separated from other parts |
+| *plaga* | Intermediate | plague | (plague) *noun* · An epidemic or pandemic caused by any pestilence, but especially that caused by the above disease |
+| *plazo* | Base | deadline, term, installment | (deadline) *noun* · A time limit in the form of a date on or before which something must be completed |
+| *poema* | Intermediate | poem | (poem) *noun* · A literary piece written in verse |
+| *pulso* | Intermediate | pulse | (pulse) *noun* · Normally regular beat felt when arteries near the skin are depressed |
+| *rango* | Intermediate | rank, range | (rank) *noun* · One's position in a list sorted by a shared property such as physical location |
+| *revés* | Intermediate | back, reverse, backhand | (back) *noun* · A support or resource in reserve |
+| *rezar* | Intermediate | pray, read | (pray) *verb* · To petition a higher being |
+| *riego* | Intermediate | irrigation | (irrigation) *noun* · The act or process of irrigating, or the state of being irrigated |
+| *rural* | Base | rural | (rural) *adjective* · Relating to the countryside or to agriculture |
+| *sexto* | Intermediate | sixth | (sixth) *adjective* · The ordinal form of the number six |
+| *soñar* | Intermediate | dream | (dream) *verb* · To see imaginary events in one's mind while sleeping |
+| *tarea* | Base | task, homework | (task) *noun* · A piece of work done as part of one’s duties |
+| *trato* | Base | treatment, deal | (treatment) *noun* · The process or manner of treating someone or something |
+| *tumba* | Intermediate | tomb | (tomb) *noun* · A small building, or a room within one, for the remains of the dead, with walls, a roof, and a door |
+| *vodka* | Intermediate | vodka | (vodka) *noun* · A clear distilled alcoholic liquor made from grain mash |
+| *yerno* | Intermediate | son-in-law | (son-in-law) *noun* · The husband of one's child |
+| *aleta* | Advanced | fin, flipper, blade | (fin) *noun* · A similar appendage of a cetacean or other marine animal |
+| *arilo* | Complete | aril, aryl | (aril) *noun* · A tissue surrounding the seed in certain fruits such as pomegranates |
+| *balar* | Complete | bleat | (bleat) *verb* · Of a sheep, goat, or calf: to make its characteristic cry |
+| *bemol* | Complete | flat | (flat) *adjective* · Lowered by one semitone |
+| *beodo* | Complete | drunk, drunkard | (drunk) *adjective* · Intoxicated as a result of excessive alcohol consumption, usually by drinking alcoholic beverages |
+| *bucle* | Advanced | curl, loop, bouclé | (curl) *noun* · A curving piece or lock of hair |
+| *carpo* | Complete | carpus | (carpus) *noun* · The group of bones that make up the wrist |
+| *dócil* | Advanced | docile | (docile) *adjective* · Ready to accept instruction or direction |
+| *galio* | Complete | gallium | (gallium) *noun* · A chemical element with an atomic number of 31 |
+| *misio* | Complete | Mysian, poor | (Mysian) *adjective* · Of or relating to Mysia, its people, their language, or their culture |
+| *noria* | Advanced | noria, Ferris wheel | (noria) *noun* · A treadwheel with attached buckets, used to raise and deposit water |
+| *pavón* | Advanced | peacock | (peacock) *noun* · A peafowl, either male or female |
+| *timar* | Complete | scam, swindle | (scam) *verb* · To defraud or embezzle |
+| *tunco* | Complete | pig | (pig) *noun* · Any of several mammalian species of the family Suidae |
+| *velón* | Complete | candle | (candle) *noun* · A light source consisting of a wick embedded in a solid |

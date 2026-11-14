@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *aglio* | Intermediate | ajo | (Allium sativum) Ajo. |
-| *balia* | Intermediate | — | — |
-| *bimbo* | Intermediate | bebe *(single)* | (bebe) Variante de bebé. |
-| *buono* | Base | bueno | (bueno) Que tiene bondad en su corazón. |
-| *calce* | Intermediate | cal *(single)* | (cal) Óxido de calcio; sustancia blanca, ligera, cáustica y alcalina, que en estado natural se halla siempre combinada con alguna otra. |
-| *cinta* | Intermediate | alambrada *(single)* | — |
-| *clero* | Intermediate | clero *(single)* | (clero) Conjunto de los clérigos, así de órdenes mayores como menores, incluso los de la primera tonsura. |
-| *cotto* | Intermediate | cocido | (cocido) Cocinado, hervido en agua. |
-| *crudo* | Intermediate | crudo | (crudo) Se dice del alimento que no ha sido sometido a la acción del fuego o del calor, para obtener un alimento más fácil de digerir. |
-| *danza* | Intermediate | baile *(single)* | (baile) Acción o efecto de bailar. |
-| *degno* | Intermediate | digno | (digno) Que le corresponde justamente algo. |
-| *dente* | Intermediate | diente | (diente) Estructura compleja de varias capas de tejido, la más externa de las cuales es de apariencia ósea, que la mayoría de los vertebrados tienen en la mandíbula… |
-| *esodo* | Intermediate | éxodo *(single)* | (éxodo) Salida o migración repentina de un gran número de gente. |
-| *felpa* | Intermediate | felpa | (felpa) Tejido suave y esponjoso obtenido al entretejer un hilo suplementario de trama sobre la urdimbre, dejando pelos por la cara del haz. |
-| *fitto* | Intermediate | — | — |
-| *guida* | Base | guía | (guía) Cualquier cosa, material o inmaterial, que sirve para orientarse (indicar la dirección, el camino, la manera corrrecta, etc.). |
-| *lieve* | Intermediate | leve | Leve, ligero o liviano |
-| *media* | Base | media *(single)* | (media) Mitad de alguna cosa o período ya mentado. |
-| *mensa* | Intermediate | refectorio *(single)* | (refectorio) Comedor donde comen los monjes de los monasterios. Está comunicado con la cocina; tiene, generalmente, forma rectangular, y se halla situado en la galería… |
-| *menta* | Intermediate | menta | (menta) (Mentha spp.) Cualquiera de varias especies de plantas herbáceas perennes de la familia de las lamiáceas, rizomáticas, de tallo erecto, hojas opuestas… |
-| *meteo* | Intermediate | — | — |
-| *monta* | Intermediate | — | — |
-| *monte* | Base | montaña, monte | (montaña) Conjunto de rocas piedras y tierra que forman una elevación grande sobre el terreno. |
-| *odore* | Intermediate | olor | (olor) Conjunto de sensaciones captadas por el sentido del olfato, cuando en la nariz entran las emanaciones transportadas por el aire o por algún líquido. |
-| *pausa* | Base | pausa | (pausa) Pequeña parada o interrupción cuando se está haciendo algo. |
-| *piena* | Base | — | Forma femenina de pieno. |
-| *possa* | Base | — | — |
-| *preda* | Intermediate | presa *(single)* | (presa) Acción de prender o tomar una cosa. |
-| *preso* | Base | — | — |
-| *selva* | Intermediate | bosque *(single)* | (bosque) Terreno cubierto por árboles y otra vegetación. |
-| *tempo* | Base | tiempo | (tiempo) Magnitud física básica que permite medir la duración de eventos o de procesos de cambio. Su unidad en el Sistema Internacional de Unidades es el segundo. El… |
-| *terra* | Base | tierra | (tierra) Superficie del planeta Tierra que no se encuentra cubierta por agua. |
-| *torre* | Base | torre | Roque o torre. |
-| *viale* | Intermediate | avenida *(single)* | (avenida) Calle ancha e importante, frecuentemente de doble mano. |
-| *zecca* | Intermediate | garrapata, ceca | (garrapata) Ácaro que se alimenta de la sangre de mamíferos, a los que trepa usualmente por las patas. Tiene patas con uñas con las que se pega a la piel de sus huéspedes… |
-| *alano* | Complete | alano *(single)* | (alano) Grupo étnico de origen iranio relacionado con los sármatas, pastores nómadas muy belicosos de diferentes procedencias, que hablaban la lengua irania y… |
-| *asola* | Complete | ojal | (ojal) Orificio en una tela por donde pasa un botón. |
-| *bacco* | Advanced | — | — |
-| *caule* | Complete | — | — |
-| *ebete* | Advanced | necio *(single)* | (necio) Que no sabe algo que debería saber. |
-| *gerla* | Complete | — | — |
-| *loppa* | Complete | — | — |
-| *losco* | Advanced | sospechoso *(single)* | (sospechoso) Que da motivo para sospechar. |
-| *patio* | Advanced | — | — |
-| *scafa* | Complete | — | — |
-| *seltz* | Complete | — | — |
-| *sugna* | Complete | — | — |
-| *tinca* | Complete | tenca | (tenca) (Tinca tinca) Pez osteíctio de agua dulce, de cuerpo alargado de entre 20 y 30 cm de largo, color ligeramente verdoso o pardo en el lomo y blanquecino en el… |
-| *turpe* | Complete | — | — |
-| *vampa* | Complete | — | — |
+| *aereo* | Base | avión, aéreo, aeroplano | (avión) *adjetivo* · Persona astuta, despierta, mentalmente ágil |
+| *badia* | Intermediate | abadía | (abadía) *sustantivo* · Monasterio regido por un abad o abadesa |
+| *bocca* | Base | boca | (boca) *sustantivo* · Abertura anterior del tubo digestivo de los animales, por el cual se ingieren los alimentos |
+| *burro* | Intermediate | mantequilla, manteca | (mantequilla) *sustantivo* · Producto alimenticio obtenido a partir de la crema de leche |
+| *cacao* | Intermediate | cacao | (cacao) *sustantivo* · Árbol de la familia de las malváceas |
+| *cieco* | Intermediate | ciego | (ciego) *adjetivo* · Que no ve por defecto en los ojos o en el encéfalo |
+| *cifra* | Intermediate | cifra | (cifra) *sustantivo* · Dígito numérico |
+| *corpo* | Base | cuerpo | (cuerpo) *sustantivo* · Parte material de un ser humano o de un animal |
+| *costa* | Base | costa, litoral | (costa) *sustantivo* · Región de tierra seca fronteriza con el mar o, por extensión, con una masa de agua |
+| *croce* | Base | cruz | (cruz) *sustantivo* · Figura formada por dos líneas o barras perpendiculares |
+| *culto* | Intermediate | culto *(single)* | (culto) *sustantivo* · Manifestación de respeto y amor hacia lo sagrado |
+| *dorso* | Intermediate | lomo | (lomo) *sustantivo* · Parte de la espalda debajo de los omóplatos y hasta el comienzo de las nalgas |
+| *falla* | Intermediate | agujero *(single)* | (agujero) *sustantivo* · Orificio de forma aproximadamente circular |
+| *fiera* | Intermediate | feria | (feria) *sustantivo* · Conjunto de instalaciones recreativas que se montan |
+| *globo* | Intermediate | globo | (globo) *sustantivo* · Cuerpo esférico |
+| *lampo* | Intermediate | destello *(single)* | (destello) *sustantivo* · Acción de destellar |
+| *mania* | Intermediate | manía | (manía) *sustantivo* · Entusiasmo excesivo, interés intenso o deseo irresistible |
+| *manzo* | Intermediate | buey *(single)* | (buey) *sustantivo* · Vacuno macho castrado y domado |
+| *media* | Base | media *(single)* | (media) *sustantivo* · Mitad de alguna cosa o período ya mentado |
+| *metro* | Intermediate | metro, subte | (subte) *sustantivo* · Sistema ferroviario subterráneo de transporte de pasajeros |
+| *netto* | Intermediate | líquido *(single)* | (líquido) *adjetivo* · Estado fundamental de la materia |
+| *parco* | Base | parque | (parque) Terreno o sitio cercado y con plantas |
+| *pesca* | Intermediate | melocotón, durazno, pesca | (melocotón) *sustantivo* · Árbol frutal de la familia de las rosáceas |
+| *poema* | Intermediate | poema | (poema) *sustantivo* · Composición artística, tradicionalmente en verso, cuyo material es el lenguaje |
+| *polso* | Intermediate | muñeca | (muñeca) *sustantivo* · Articulación del cuerpo que une el brazo con la mano |
+| *porco* | Intermediate | cerdo, chancho, cochino | (cerdo) *sustantivo* · Carne del cerdo |
+| *salto* | Intermediate | salto, brinco | (brinco) *sustantivo* · Movimiento de elevarse rápidamente del suelo al impulsarse con los pies |
+| *stage* | Intermediate | pasantía *(single)* | (pasantía) *sustantivo* · Breve paso por algún oficio o profesión, generalmente como tiempo de evaluación o prueba |
+| *stato* | Base | estado | (estado) *sustantivo* · Situación en que está una persona o una cosa |
+| *sushi* | Intermediate | sushi *(single)* | (sushi) *sustantivo* · Comida originaria de Japón a base de arroz cocido con vinagre |
+| *treno* | Base | tren | (tren) *sustantivo* · Medio de transporte y locomoción |
+| *utero* | Intermediate | vientre *(single)* | (vientre) *sustantivo* · Sección inferior y anterior del tronco de los vertebrados, por debajo del pecho |
+| *viale* | Intermediate | avenida *(single)* | (avenida) *sustantivo* · Calle ancha e importante, frecuentemente de doble mano |
+| *zitto* | Intermediate | callado *(single)* | (callado) *adjetivo* · Que no habla mucho |
+| *zucca* | Intermediate | calabaza, zapallo | (calabaza) *sustantivo* · Una cualquiera de varias plantas de la familia de las cucurbitáceas, originarias del Nuevo Mundo |
+| *ameno* | Advanced | ameno *(single)* | (ameno) *adjetivo* · Que tiene el don de deleitar apaciblemente |
+| *anodo* | Complete | ánodo *(single)* | (ánodo) *sustantivo* · Electrodo en el que se produce una reacción de oxidación |
+| *atrio* | Advanced | atrio *(single)* | (atrio) *sustantivo* · Espacio sin techo y por lo general rodeado de pórticos |
+| *baldo* | Advanced | bravo, intrépido, valiente | (bravo) *adjetivo* · Que tiene coraje para enfrentar una situación o momento adversos |
+| *censo* | Advanced | censo *(single)* | (censo) *sustantivo* · Lista de los ciudadanos de una población o país |
+| *coppo* | Complete | alicatado *(single)* | (alicatado) *sustantivo* · Revestimiento de los muros con azulejos |
+| *draga* | Complete | draga *(single)* | (draga) *sustantivo* · Máquina que se emplea para ahondar y limpiar los puertos de mar |
+| *edule* | Complete | comestible *(single)* | (comestible) *adjetivo* · Que puede comerse |
+| *fobia* | Advanced | fobia *(single)* | (fobia) *sustantivo* · Profunda aversión hacia alguna cosa |
+| *landa* | Advanced | pantano *(single)* | (pantano) *sustantivo* · Hondonada donde se recogen y naturalmente se detienen las aguas, con fondo más o menos cenagoso |
+| *lardo* | Advanced | tocino | (tocino) *sustantivo* · Tejido graso, ubicado bajo la piel del cerdo y otros mamíferos, que se consume como alimento |
+| *merlo* | Advanced | mirlo | (mirlo) *sustantivo* · Ave de la familia de los túrdidos |
+| *nimbo* | Complete | nimbo | (nimbo) *sustantivo* · Nube de altura media que produce precipitaciones |
+| *ovaia* | Complete | ovario | (ovario) *sustantivo* · Órgano sexual femenino en que se producen los óvulos y diversas hormonas |
+| *stelo* | Advanced | tallo | (tallo) *sustantivo* · Parte de las plantas que sostiene las hojas, flores y frutos |

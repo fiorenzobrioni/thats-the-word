@@ -17,11 +17,42 @@ from . import config, folding, glossary, lexicon, pack, report, schedule, source
 @dataclasses.dataclass
 class Built:
     files: dict  # path -> bytes
-    words: dict  # language -> LanguageWords
+    words: dict  # language -> LanguageWords, of the shipped length
     glosses: dict  # (g, u) -> {display: Gloss}
     schedules: dict  # language -> list of keys
     dropped: dict  # language -> schedule words no longer solutions
     common_missing: dict  # language -> common words not accepted
+    lengths: dict = dataclasses.field(default_factory=dict)  # (language, length) -> LanguageWords
+    measured: dict = dataclasses.field(default_factory=dict)  # (language, length) -> the solutions' glossaries' bytes
+
+
+NO_MEANING = "no whole definition of two lines in Italian, English and Spanish"
+
+
+class Glosses:
+    """The glossary's answers, each asked once: a solution's three meanings decide whether it is
+    one, and the same answers are what the files keep."""
+
+    def __init__(self, gl: glossary.Glossary):
+        self.gl = gl
+        self.cache: dict = {}
+
+    def get(self, g: str, u: str, display: str, pos: tuple = ()) -> glossary.Gloss:
+        key = (g, u, display)
+        if key not in self.cache:
+            self.cache[key] = self.gl.gloss(g, u, display, pos)
+        return self.cache[key]
+
+
+def keep_described(lw: lexicon.LanguageWords, glosses: Glosses) -> None:
+    """Keeps as solutions only the words with a meaning in every interface language (§6.4)."""
+    missing = set()
+    for s in lw.solutions:
+        for u in config.LANGUAGES:
+            if not glosses.get(lw.language, u, s.display, (s.pos,)).meaning:
+                missing.add(s.key)
+                break
+    lexicon.without(lw, missing, NO_MEANING)
 
 
 def asset(*parts: str) -> pathlib.Path:
@@ -78,50 +109,66 @@ def run(log=print, wikt=None) -> Built:
             ". Run `build.py fetch --repin " + " ".join(wrong) + "` to take the current ones."
         )
     wikt = wikt or lexicon.Wiktionary(log=log)
-    gl = glossary.Glossary(wikt)
+    glosses = Glosses(glossary.Glossary(wikt))
     files: dict = {}
-    words, glosses, schedules, dropped, common_missing = {}, {}, {}, {}, {}
+    words, tables, schedules, dropped, common_missing = {}, {}, {}, {}, {}
+    lengths, measured = {}, {}
     days = schedule.days_needed()
     for g in config.LANGUAGES:
-        lw = lexicon.build(g, wikt, config.LENGTH, log)
-        words[g] = lw
-        common = lexicon.read_list(f"common_{g}.txt")
-        common_missing[g] = [w for w in common if folding.fold(w, g) not in lw.accepted]
-
-        files[asset(g, f"accepted-{config.LENGTH}.bin")] = pack.accepted(g, config.LENGTH, lw.accepted)
-        files[asset(g, f"solutions-{config.LENGTH}.bin")] = pack.solutions(g, config.LENGTH, lw.solutions)
-        files[asset(g, f"forms-{config.LENGTH}.bin")] = pack.table("forms", g, config.LENGTH, forms_records(lw))
-
-        daily_path = asset(g, "daily.bin")
-        existing = pack.read_daily(daily_path.read_bytes(), g) if daily_path.exists() else []
-        pool = [s.key for s in lw.solutions if s.level in config.DAILY_LEVELS]
-        planned = schedule.extend(g, existing, pool, days)
-        schedule.check_append_only(existing, planned)
-        schedules[g] = planned
-        solution_keys = {s.key for s in lw.solutions}
-        dropped[g] = sorted({k for k in planned if k not in solution_keys})
-        files[daily_path] = pack.daily(g, config.LENGTH, planned)
-
-        described = glossary_words(lw)
-        # A word of the schedule that left the solutions keeps its glossary entry.
-        display_of = {s.key: s.display for s in lw.solutions}
-        for k in dropped[g]:
-            described.append(display_of.get(k, lw.displays.get(k, [k])[0]))
-        described = sorted(set(described))
-        for u in config.LANGUAGES:
-            table = {}
-            records = {}
-            for d in described:
-                x = gl.gloss(g, u, d)
-                table[d] = x
-                if x.translations or x.meaning:
-                    records[d] = [x.translations, x.meaning or "", x.meaning_via or ""]
-            glosses[(g, u)] = table
-            files[asset(g, f"gloss-{u}.bin")] = pack.table(
-                "glossary", g, 0, records, folding.LANGUAGE_CODE[u]
+        for length in config.LENGTHS:
+            lw = lexicon.build(g, wikt, length, log)
+            keep_described(lw, glosses)
+            lengths[(g, length)] = lw
+            measured[(g, length)] = sum(
+                len(pack.table("glossary", g, 0, {
+                    s.display: [x.translations, x.meaning or "", x.meaning_via or ""]
+                    for s in lw.solutions
+                    for x in [glosses.get(g, u, s.display, (s.pos,))]
+                }, folding.LANGUAGE_CODE[u]))
+                for u in config.LANGUAGES
             )
-            log(f"{g}->{u}: {len(records)} of {len(described)} words described")
-    built = Built(files, words, glosses, schedules, dropped, common_missing)
+            log(f"{g}-{length}: {len(lw.solutions)} solutions described in the three languages")
+        for length in config.SHIPPED_LENGTHS:
+            lw = lengths[(g, length)]
+            words[g] = lw
+            common = lexicon.read_list(f"common_{g}.txt")
+            common_missing[g] = [w for w in common if folding.fold(w, g) not in lw.accepted]
+
+            files[asset(g, f"accepted-{length}.bin")] = pack.accepted(g, length, lw.accepted)
+            files[asset(g, f"solutions-{length}.bin")] = pack.solutions(g, length, lw.solutions)
+            files[asset(g, f"forms-{length}.bin")] = pack.table("forms", g, length, forms_records(lw))
+
+            daily_path = asset(g, "daily.bin")
+            existing = pack.read_daily(daily_path.read_bytes(), g) if daily_path.exists() else []
+            pool = [s.key for s in lw.solutions if s.level in config.DAILY_LEVELS]
+            planned = schedule.extend(g, existing, pool, days)
+            schedule.check_append_only(existing, planned)
+            schedules[g] = planned
+            solution_keys = {s.key for s in lw.solutions}
+            dropped[g] = sorted({k for k in planned if k not in solution_keys})
+            files[daily_path] = pack.daily(g, length, planned)
+
+            described = glossary_words(lw)
+            # A word of the schedule that left the solutions keeps its glossary entry.
+            display_of = {s.key: s.display for s in lw.solutions}
+            for k in dropped[g]:
+                described.append(display_of.get(k, lw.displays.get(k, [k])[0]))
+            described = sorted(set(described))
+            pos_of = {s.display: (s.pos,) for s in lw.solutions}
+            for u in config.LANGUAGES:
+                table = {}
+                records = {}
+                for d in described:
+                    x = glosses.get(g, u, d, pos_of.get(d, ()))
+                    table[d] = x
+                    if x.translations or x.meaning:
+                        records[d] = [x.translations, x.meaning or "", x.meaning_via or ""]
+                tables[(g, u)] = table
+                files[asset(g, f"gloss-{u}.bin")] = pack.table(
+                    "glossary", g, 0, records, folding.LANGUAGE_CODE[u]
+                )
+                log(f"{g}->{u}: {len(records)} of {len(described)} words described")
+    built = Built(files, words, tables, schedules, dropped, common_missing, lengths, measured)
     files.update(report.render(built))
     return built
 

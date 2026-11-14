@@ -91,3 +91,8 @@ All notable changes to That's The Word are documented here. The format follows
   letter you type or delete; the first game's sentences say their numbers as each language does.
 - A faster first launch: the start, the first run, the start page and the game come compiled
   with the app, rather than learnt by the phone over its first days.
+- Every word the game hides is explained in all three languages, each in a definition of a line or
+  two that is never cut short, and of the sense you are most likely to know. A word that cannot be
+  explained so is not hidden.
+- No coarse or offensive word is hidden, and the coarsest are not accepted as guesses at all; the
+  game keeps no list of such words: the dictionaries' own labels decide.

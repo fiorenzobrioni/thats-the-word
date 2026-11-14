@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *acuto* | Intermediate | acute, sharp, high note | acute |
-| *alibi* | Intermediate | alibi | (alibi) The plea or mode of defense under which a person on trial for a crime proves or attempts to prove being in another place when the alleged act was committed. |
-| *alice* | Intermediate | anchovy | anchovy |
-| *alone* | Intermediate | halo, glow | halo |
-| *amore* | Base | love | love |
-| *apice* | Intermediate | apex, height | apex |
-| *cacca* | Intermediate | poop *(single)* | poo |
-| *colle* | Intermediate | hill, pass, col | hill |
-| *collo* | Base | neck, collar, package | neck (all senses) |
-| *corpo* | Base | body, corps | body (the physical structure of a human or animal) |
-| *elite* | Intermediate | elite *(single)* | (elite) A special group or social class of people who have a superior social or economic status and attendant power, advantages, or privileges in society; a member of… |
-| *fiato* | Intermediate | breath | breath |
-| *finta* | Base | feint, dummy | affectation, simulation |
-| *fiore* | Intermediate | flower, bloom | flower, bloom, blossom |
-| *frate* | Intermediate | friar, monk | brother |
-| *lunga* | Base | — | long |
-| *mania* | Intermediate | mania, bug | habit (if strange) |
-| *marca* | Intermediate | brand, make, stamp | brand, make or trademark (of a commercial product) |
-| *nervo* | Intermediate | nerve, vein | nerve |
-| *ormai* | Base | now, point, then | by now, by this time, now, at this point, by then |
-| *panno* | Intermediate | cloth | cloth |
-| *pesca* | Intermediate | fishing, peach | peach (fruit) |
-| *pista* | Intermediate | track, clue, trail | track, trail, scent, clue |
-| *podio* | Intermediate | balcony *(single)* | podium |
-| *poema* | Intermediate | poem | poem (literary piece written in verse) |
-| *scavo* | Intermediate | excavation | excavation |
-| *scure* | Intermediate | axe | axe |
-| *sette* | Base | seven | seven |
-| *spada* | Intermediate | sword | sword |
-| *sposo* | Intermediate | bridegroom, groom, husband | bridegroom, groom, husband (when in reference to the wedding day or the period of time immediately after the wedding) |
-| *stato* | Base | state, status | state (physical property of matter as solid, liquid, gas or plasma) |
-| *tizio* | Base | guy, man, someone | man, someone, guy, what's-his-name |
-| *torto* | Intermediate | crooked, wrong | twisted, bent, crooked |
-| *zolfo* | Intermediate | sulfur, brimstone | sulfur, sulphur |
-| *zucca* | Intermediate | pumpkin, squash, gourd | pumpkin |
-| *beota* | Complete | Boeotian | Boeotian |
-| *cesio* | Complete | caesium | caesium |
-| *coque* | Complete | — | only used in uovo alla coque (“soft-boiled egg”) |
-| *etere* | Advanced | ether | ether (all senses) |
-| *landa* | Advanced | moor | moor |
-| *lilla* | Advanced | lilac | the lilac (Syringa) |
-| *lippa* | Complete | tipcat | tipcat (game in which a wooden piece is struck with a stick) |
-| *melma* | Advanced | slime | slime |
-| *pioda* | Complete | — | a smooth rock face |
-| *poppa* | Advanced | breast, stern | breast, boob |
-| *ramen* | Advanced | ramen | (ramen) Soup noodles of wheat, with various ingredients (Japanese-Chinese style). |
-| *sabot* | Complete | — | — |
-| *spola* | Advanced | spool, bobbin | shuttle (in weaving and in transportation) |
-| *turma* | Complete | — | — |
-| *verza* | Complete | — | Savoy cabbage |
+| *aceto* | Intermediate | vinegar | (vinegar) A sour liquid formed by the fermentation of alcohol used as a condiment or preservative |
+| *aglio* | Intermediate | garlic | (garlic) A plant, Allium sativum, related to the onion, having a pungent bulb much used in cooking |
+| *aiuto* | Base | help, aid | (help) Action given to provide assistance; aid |
+| *altro* | Base | other, another, else | (other) Not the one or ones previously referred to |
+| *amore* | Base | love | (love) A profound and caring affection towards someone |
+| *brodo* | Intermediate | broth, soup | (broth) Water in which food (meat, vegetable, etc.) has been boiled |
+| *cento* | Base | hundred | (hundred) A numerical value equal to 100 (10²), occurring after ninety-nine; ten times ten |
+| *ciclo* | Base | cycle, round, series | (cycle) A complete rotation of anything |
+| *colla* | Intermediate | glue | (glue) A hard gelatin made by boiling bones and hides, used in solution as an adhesive |
+| *cuoco* | Intermediate | cook | (cook) A person who prepares food |
+| *entro* | Base | by, within | (by) Not later than (the given time); not later than the end of (the given time interval); before |
+| *epoca* | Base | age, epoch, era | (age) A great period in the history of the Earth |
+| *erede* | Intermediate | heir, inheritor | (heir) Someone who inherits, or is designated to inherit, the property of another |
+| *finto* | Intermediate | fake, false, artificial | (fake) Not real; false, fraudulent |
+| *invio* | Intermediate | delivery, dispatch, sending | (delivery) The act of conveying something |
+| *leone* | Base | lion | (lion) A big cat, Panthera leo, native to Africa, India and formerly much of Europe |
+| *libro* | Base | book, phloem, omasum | (book) A collection of sheets of paper bound together to hinge at one edge |
+| *messe* | Intermediate | crop, harvest, reaping | (crop) Plant grown for any economic purpose |
+| *morte* | Base | death, demise | (death) The cessation of life and all associated processes |
+| *notte* | Base | night | (night) A period of time often defined in the legal system as beginning 30 minutes after sunset |
+| *opera* | Base | work, opera, help | (work) A literary, artistic, or intellectual production; a creative work |
+| *panno* | Intermediate | cloth | (cloth) A piece of cloth used for a particular purpose |
+| *parte* | Base | part, deal | (part) A fraction of a whole |
+| *punto* | Base | point, jot, period | (point) A specific location or place, seen as a spatial position |
+| *radar* | Intermediate | radar | (radar) Often preceded by a descriptive word: a system using one of the above detection methods |
+| *salva* | Intermediate | salvo | (salvo) A concentrated fire from pieces of artillery, as in endeavoring to make a break in a fortification |
+| *santo* | Base | holy, saint | (holy) Revered in a religion |
+| *sette* | Base | seven | (seven) A numerical value equal to 7; the number following six and preceding eight |
+| *soldo* | Intermediate | coin *(single)* | (coin) A piece of currency |
+| *tempo* | Base | time, weather, period | (time) The inevitable progression into the future with the passing of present and past events |
+| *terme* | Intermediate | spa | (spa) A health resort near a mineral spring or hot spring |
+| *tondo* | Intermediate | round, tondo, circular | (round) Circular or cylindrical; having a circular cross-section in one direction |
+| *unità* | Base | unity, unit | (unity) Oneness: the state or fact of being one undivided entity |
+| *vista* | Base | eyesight, sight, vision | (eyesight) Vision or the faculty of sight |
+| *zecca* | Intermediate | mint, tick | (mint) A building or institution where money (originally, only coins) is produced under government licence |
+| *afoso* | Complete | sultry, muggy | (sultry) Hot and humid; sweltering |
+| *boria* | Complete | arrogance, conceit, swagger | (arrogance) The state of being arrogant |
+| *brace* | Advanced | ember | (ember) A piece of coal or wood glowing by heat; a hot coal |
+| *brama* | Advanced | longing, yearning | (longing) An earnest and deep, not greatly passionate, but rather melancholic desire |
+| *bruto* | Advanced | brute, raw | (brute) Characteristic of unthinking animals; senseless, unreasoning (of humans) |
+| *curdo* | Advanced | Kurdish, Kurd | (Kurdish) Of, from, or pertaining to Kurdistan, the Kurdish people or the Kurdish language family |
+| *edile* | Advanced | aedile, building, construction | (aedile) An elected official who was responsible for the maintenance of public buildings |
+| *garbo* | Advanced | gentleness, grace, kindness | (gentleness) The state of being gentle |
+| *mambo* | Advanced | mambo | (mambo) A voodoo priestess (in Haiti) |
+| *panca* | Advanced | bench, pew | (bench) A long seat with or without a back, found for example in parks and schools |
+| *rupia* | Complete | rupee | (rupee) Any of the monetary currencies used in modern India |
+| *sorso* | Advanced | sip | (sip) A small mouthful of drink |
+| *spago* | Advanced | string, twine | (string) A long, thin and flexible structure made from threads twisted together |
+| *tedio* | Complete | boredom, tedium | (boredom) The state of being bored |
+| *zappa* | Advanced | hoe | (hoe) Any of several implements or machines usually called by their more specific names |

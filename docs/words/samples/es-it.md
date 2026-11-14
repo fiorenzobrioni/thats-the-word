@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *araña* | Intermediate | ragno | (ragno) animale senza vertebre, con il corpo suddiviso in due sezioni, contraddistinto dal fatto di produrre i fili delle ragnatele |
-| *asado* | Intermediate | arrosto | (arrosto) carne arrostita e più genericamente ogni vivanda arrostita |
-| *ayuno* | Intermediate | digiuno | (digiuno) che non mangia da tempo |
-| *banco* | Base | banco, banca, panca | (banco) tavola generalmente in legno che viene usata come sedile per una o più persone |
-| *belga* | Intermediate | belga *(single)* | (belga) relativo al Belgio |
-| *cifra* | Intermediate | cifra | (cifra) segno che indica un numero da zero a nove; la composizione di più cifre fornisce un numero |
-| *circo* | Intermediate | circo *(single)* | (circo) ippodromo allungato per le corse di carri e le corse di cavalli nell'antica Roma |
-| *clase* | Base | classe | (classe) grande gruppo di persone, che si differenzia in particolare in base al rapporto con i mezzi di produzione |
-| *cueva* | Intermediate | grotta | (grotta) caverna, cavità in un monte o nelle viscere della terra particolarmente sviluppata in lunghezza |
-| *cómic* | Intermediate | — | — |
-| *drama* | Intermediate | dramma *(single)* | (dramma) scritto teatrale tragico |
-| *fruta* | Intermediate | frutta, frutto | (frutta) insieme di frutti |
-| *jamás* | Base | mai | (mai) nessuna volta |
-| *láser* | Intermediate | laser *(single)* | — |
-| *mando* | Base | controller *(single)* | (controller) dispositivo elettronico che ne fa funzionare un altro |
-| *nadar* | Intermediate | nuotare | (nuotare) spostarsi con le proprie forze sulla superficie dell'acqua, o sotto di essa, con un movimento volontario |
-| *nieta* | Intermediate | nipote *(single)* | (nipote) figlio di un figlio (abiatico) |
-| *ninja* | Intermediate | ninja *(single)* | (ninja) spia del Giappone feudale |
-| *noche* | Base | notte, sera | (notte) periodo compreso tra il tramonto e l'alba |
-| *notar* | Intermediate | — | — |
-| *obvio* | Base | ovvio | (ovvio) che si presenta spontaneamente e facilmente al pensiero o all'immaginazione, come cosa naturale, ordinaria, evidente |
-| *omega* | Intermediate | omega *(single)* | (omega) ventiquattresima lettera dell'alfabeto greco rappresentata dal simbolo Ω, ω, corrispondente alla lettera O, o dell'alfabeto latino |
-| *pared* | Base | muro, parete | (muro) ostacolo o separatore più alto che largo, costruito comunemente di mattoni o cemento |
-| *perro* | Base | cane | (cane) animale domestico usato per la caccia, difesa, compagnia, soccorso, pet therapy ed altre attività; la sua classificazione scientifica è Canis lupus familiaris |
-| *pesar* | Base | pesare | (pesare) calcolare il peso di una persona o di un oggetto |
-| *peste* | Intermediate | peste | (peste) malattia infettiva e contagiosa, in passato oggetto di numerose epidemie, causata dal batterio Yersinia pestis; si trasmette all'uomo dai roditori (ratti e… |
-| *posta* | Intermediate | — | — |
-| *relax* | Intermediate | rilassamento *(single)* | (rilassamento) dei muscoli |
-| *sabio* | Intermediate | saggio | (saggio) (di persona) fornito di accortezza ed esperienza |
-| *salto* | Intermediate | salto | (salto) movimento per cui il corpo si solleva rapidamente da terra per poi ricadervi |
-| *tapar* | Intermediate | coprire | (coprire) sovrastare qualcosa con un oggetto fino ad impedirne la vista. |
-| *trato* | Base | trattamento | (trattamento) applicazione di determinati metodi e processi per ottenere determinati effetti |
-| *vendo* | Intermediate | vendo *(single)* | — |
-| *virus* | Intermediate | virus | (virus) particella infettiva di dimensioni inferiori a quelle di un batterio, formata esclusivamente da acidi nucleici e proteine, che danneggia cellule eucariotiche… |
-| *vuelo* | Base | volo | (volo) capacità di alcuni animali e degli aeromobili di muoversi e librarsi in aria, sfruttando una forza diretta dal basso verso l'alto detta portanza |
-| *abrio* | Advanced | — | — |
-| *canso* | Advanced | — | — |
-| *efebo* | Complete | — | — |
-| *flote* | Advanced | — | — |
-| *focha* | Complete | folaga *(single)* | (folaga) uccello dei Gruiformi; la sua classificazione scientifica è Fulica |
-| *gamma* | Advanced | gamma *(single)* | (gamma) scala musicale |
-| *grada* | Advanced | — | — |
-| *greda* | Complete | — | — |
-| *laude* | Advanced | — | — |
-| *lepra* | Advanced | lebbra | (lebbra) morbo di Hansen |
-| *manco* | Advanced | con una mano *(single)* | — |
-| *purga* | Advanced | — | — |
-| *voraz* | Advanced | vorace *(single)* | (vorace) che inghiotte e fa sparire |
-| *yagua* | Complete | — | — |
-| *ánade* | Complete | anatrella, anatra | (anatrella) diminutivo di anatra |
+| *abrir* | Base | aprire, dischiudere | (aprire) Creare un varco |
+| *ayuda* | Base | aiuto | (aiuto) Soccorso effettuato verso qualcuno che si trovi in difficoltà o in pericolo |
+| *bajar* | Base | abbassare, scendere, scaricare | (abbassare) Portare in basso |
+| *bolso* | Intermediate | borsetta *(single)* | (borsetta) Piccola borsa per donna |
+| *breve* | Base | breve | (breve) Di non lunga durata |
+| *cacho* | Intermediate | pezzo *(single)* | (pezzo) Parte collegabile ad un'altra in qualcosa di costruibile |
+| *cruel* | Intermediate | crudele | (crudele) Che è cattivissimo e senza rimorsi |
+| *dueño* | Base | proprietario | (proprietario) Chi detiene la legittima proprietà di un bene |
+| *débil* | Intermediate | debole | (debole) Che ha scarsa energia |
+| *enojo* | Intermediate | collera *(single)* | (collera) Sentimento di ira o sdegno che si manifesta con atti o parole violente |
+| *flujo* | Intermediate | colata *(single)* | (colata) Tecnica di lavorazione metallurgica |
+| *gorro* | Intermediate | berretto | (berretto) Copricapo di varie fogge, quasi sempre con una tesa davanti al viso |
+| *guiar* | Intermediate | guidare | (guidare) Condurre, muovere un veicolo o un animale |
+| *himno* | Intermediate | inno | (inno) Canzone o brano di lode, encomio o gioia |
+| *honor* | Base | onore | (onore) Identità morale di un individuo |
+| *junta* | Base | riunione *(single)* | (riunione) Incontro tra due o più individui |
+| *libra* | Intermediate | libbra, lira | (libbra) Unità di misura |
+| *licor* | Intermediate | liquore | (liquore) Bevanda alcolica aromatizzata |
+| *mando* | Base | controller *(single)* | (controller) Dispositivo elettronico che ne fa funzionare un altro |
+| *menor* | Base | minore *(single)* | (minore) Più piccolo, corto, basso, leggero, rispetto ad altre |
+| *miedo* | Base | paura, timore | (timore) Moderazione della paura, talvolta con autocontrollo e consapevolezza |
+| *mixto* | Intermediate | cerino *(single)* | (cerino) Piccolo fiammifero incerato |
+| *piano* | Intermediate | pianoforte | (pianoforte) Strumento musicale |
+| *pizza* | Intermediate | pizza | (pizza) Focaccia di pasta composta principalmente da olio |
+| *playa* | Base | spiaggia | (spiaggia) Parte di costa bassa emersa o sommersa |
+| *ramón* | Intermediate | bagolaro *(single)* | (bagolaro) Albero delle Ulmacee |
+| *sacar* | Base | estrarre | (estrarre) Tirare fuori da qualcosa |
+| *serie* | Base | serie | (serie) Un insieme di cose che si susseguono e sono in relazione tra loro |
+| *trece* | Intermediate | tredici | (tredici) Numero naturale che segue il dodici e precede il quattordici |
+| *valla* | Intermediate | ostacolo, barriera, palizzata | (ostacolo) Qualunque oggetto o individuo che crea impedimento |
+| *venta* | Base | vendita | (vendita) Cessione di un oggetto in cambio di denaro |
+| *vicio* | Intermediate | vizio | (vizio) Eccesso dell'animo nei diletti, nel piacere |
+| *virus* | Intermediate | virus | (virus) Programma informatico illegale in grado di alterare il funzionamento di un computer |
+| *vodka* | Intermediate | vodka | (vodka) Acquavite di grano di origine russa |
+| *época* | Base | epoca | (epoca) Periodo storico lungo |
+| *coque* | Advanced | coke *(single)* | (coke) Residuo della distillazione secca del carbon fossile |
+| *dátil* | Complete | dattero | (dattero) Frutto zuccheroso della palma, il più delle volte seccato al sole |
+| *edema* | Advanced | edema *(single)* | (edema) Accumulo di liquidi negli spazi interstiziali dell'organismo, accompagnato da tumefazione |
+| *guiño* | Advanced | ammiccamento | (ammiccamento) Azione di chiusura e riapertura della palpebra per inumidire l'occhio |
+| *harén* | Advanced | harem *(single)* | (harem) Nel mondo musulmano, parte della casa riservata alle donne |
+| *himen* | Complete | imene | (imene) Membrana che occlude parzialmente l'orifizio vaginale nella donna vergine |
+| *ingle* | Advanced | inguine | (inguine) Lunga depressione stretta del corpo umano che separa il tronco dalle gambe |
+| *molar* | Advanced | molare | (molare) Ciascuno dei dodici denti posteriori a quattro cuspidi presenti nei mammiferi |
+| *polis* | Advanced | polis *(single)* | (polis) Forma di governo greca che includeva i cittadini nell'amministrazione della città |
+| *ripio* | Complete | ciottolo *(single)* | (ciottolo) Sasso levigato da un corso d'acqua |
+| *rombo* | Complete | rombo | (rombo) Quadrilatero equilatero |
+| *tarro* | Advanced | barattolo | (barattolo) Contenitore di modeste dimensioni |
+| *ungir* | Complete | ungere | (ungere) Spalmare, spargere di olio o sostanza grassa |
+| *vibra* | Advanced | atmosfera *(single)* | (atmosfera) Fluido allo stato gassoso che avvolge un pianeta, una stella o più in generale un corpo celeste |
+| *ámbar* | Advanced | ambra *(single)* | (ambra) Resina fossile |

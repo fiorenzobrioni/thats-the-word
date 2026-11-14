@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Definition |
 |---|---|---|
-| *acuto* | Intermediate | che è affilato |
-| *alibi* | Intermediate | mezzo di difesa con cui l'imputato cerca di dimostrare di essere stato altrove durante lo svolgimento di un reato |
-| *beato* | Intermediate | persona serena che si trova in uno stato di felicità |
-| *bimbo* | Intermediate | bambino |
-| *calce* | Intermediate | materiale da costruzione di derivazione calcarea |
-| *calma* | Intermediate | senso di quiete, di pace, di tranquillità |
-| *cosmo* | Intermediate | termine usato dai greci per indicare l'universo, cioè l'insieme dei corpi celesti e il continuum spaziotemporale in cui essi sono contenuti |
-| *epico* | Intermediate | relativo alla poesia epica |
-| *esame* | Base | valutazione finale alla quale un individuo è soggetto per ottenere una promozione se è uno studente, o l'abilitazione alla professione se è un lavoratore |
-| *farsa* | Intermediate | breve commedia buffa, perlopiù in un atto; oggi, con valore normalmente spreg., commedia grossolana, con poche o nessuna ambizione artistica. |
-| *fiato* | Intermediate | aria emessa dai polmoni attraverso la bocca e il naso durante il movimento di espirazione |
-| *gemma* | Intermediate | abbozzo di un germoglio, rivestito di squame, dal quale si svilupperà il fusto della pianta |
-| *legna* | Intermediate | principale combustibile naturale ricavato dal tronco dell'albero. |
-| *luigi* | Base | moneta francese d'oro, coniata per la prima volta per ordine di Luigi XIII nel 1640 |
-| *manto* | Intermediate | ampio mantello, solitamente di materiale pregiato come pelliccia o velluto, indossato da personalità importanti in solenni cerimonie |
-| *marea* | Intermediate | alterno innalzamento ed abbassamento regolare del livello del mare causato soprattutto dalla Luna ma anche dal Sole |
-| *mosso* | Intermediate | che ha movimento |
-| *mucca* | Intermediate | vacca da latte |
-| *nullo* | Intermediate | che non ha valore |
-| *onere* | Intermediate | impegno gravoso |
-| *pompa* | Intermediate | macchina idraulica operatrice impiegata per la movimentazione di liquidi |
-| *porno* | Intermediate | abbreviazione di pornografico |
-| *ratio* | Intermediate | ramingo, errabondo |
-| *rocco* | Intermediate | torre |
-| *sarda* | Intermediate | nativa o abitante della Sardegna |
-| *sound* | Intermediate | suono che accompagna una canzone |
-| *spesa* | Base | pagamento, esborso di denaro a fronte dell'acquisto di un bene o di un servizio |
-| *sport* | Base | insieme di competizioni individuali o collettive di natura fisica, svolte in cambio o meno di compenso, per impegnare e mettere in atto caratteristiche… |
-| *tasto* | Intermediate | pulsante la cui pressione mette in funzione un meccanismo o manda un segnale elettrico |
-| *tondo* | Intermediate | che ha forma rotonda |
-| *verbo* | Intermediate | parola |
-| *verde* | Base | di colore intermedio tra l'azzurro ed il giallo caratteristico dell'erba e delle foglie nel periodo vegetativo dell'erba e della maggior parte delle foglie |
-| *vespa* | Intermediate | insetto alato dell'ordine degli Imenotteri Vespidi; la sua classificazione scientifica è Vespula germanica |
-| *virus* | Intermediate | particella infettiva di dimensioni inferiori a quelle di un batterio, formata esclusivamente da acidi nucleici e proteine, che danneggia cellule eucariotiche… |
-| *zuppa* | Intermediate | minestra costituita da un brodo (vegetale, di pesce o di carne) nel quale sono spesso ammollati dei pezzi di pane raffermo o tostato o fritto |
-| *acero* | Advanced | genere di piante arboree della famiglia delle Aceracee, tipiche delle regioni dell'emisfero nord, con fusto alto, foglie palmate, fiori verdognoli e frutti… |
-| *beige* | Advanced | di colore tra l'avorio e il nocciola |
-| *cigno* | Advanced | grosso uccello acquatico degli anseriformi, caratterizzato da piumaggio bianco e da un caratteristico lungo collo flessuoso, piedi palmati e largo becco giallo… |
-| *falce* | Advanced | attrezzo usato per tagliare l'erba o il grano |
-| *gonzo* | Advanced | (di individuo) che è sempliciotto |
-| *hertz* | Advanced | nel Sistema Internazionale di misura, l'unità di misura derivata della frequenza, pari al reciproco di un secondo; un (periodo o ciclo di qualsiasi evento… |
-| *ionio* | Advanced | — |
-| *lagno* | Complete | — |
-| *malga* | Advanced | pascolo caratteristico delle Alpi orientali italiane, e parzialmente di quelle centrali, dove brucano i bovini o gli ovini , nel periodo estivo |
-| *malto* | Advanced | orzo fatto essiccare |
-| *proto* | Advanced | — |
-| *ptosi* | Complete | spostamento patologico di un organo verso il basso |
-| *ruspa* | Advanced | macchina composta da trattore e rimorchio che spiana, raccoglie e solleva la terra con una tramoggia |
-| *sfuso* | Complete | — |
-| *tozzo* | Advanced | grosso e largo in modo non proporzionato all'altezza |
+| *aceto* | Intermediate | Prodotto della fermentazione acetica di liquidi alcolici |
+| *aglio* | Intermediate | Pianta della famiglia delle Liliacee |
+| *ballo* | Intermediate | Movimento essenzialmente dei piedi e quindi del corpo a ritmo di musica o del canto |
+| *barba* | Intermediate | Il complesso dei peli presenti sul mento e sulle guance dell'uomo |
+| *bruno* | Intermediate | Di colore simile al nero |
+| *buffo* | Intermediate | Impacciato, che ispira ironia |
+| *colpa* | Base | Ogni azione che non rispetta una disposizione di legge o di comportamento |
+| *curva* | Intermediate | Funzione continua da un intervallo reale in uno spazio topologico |
+| *dolce* | Base | Che ha un sapore delicato |
+| *entro* | Base | Non oltre un certo momento |
+| *forma* | Base | Struttura morfologica di una parola |
+| *golfo* | Intermediate | Tratto di mare o di oceano delimitato da terraferma |
+| *idolo* | Intermediate | Oggetto di culto |
+| *letto* | Base | Mobile composto da un fusto |
+| *liceo* | Base | Fabbricato scolastico adibito all'omonimo tipo di scuola |
+| *mento* | Intermediate | Parte inferiore del viso, situata sotto la bocca |
+| *monte* | Base | Rilievo della superficie terrestre di origine tettonica |
+| *passo* | Base | Movimento dei piedi o di altri oggetti semoventi in avanti oppure all' indietro |
+| *pasto* | Intermediate | Consumo di cibi a mezzogiorno o sera, rispettivamente pranzo e cena |
+| *pista* | Intermediate | Percorso ove si svolgono competizioni sportive o simili |
+| *posta* | Base | Servizio pubblico o privato col fine di mandare e ricevere lettere |
+| *prova* | Base | Verifica di alcuni requisiti |
+| *sagra* | Intermediate | Solenne festa religiosa |
+| *salto* | Intermediate | Movimento per cui il corpo si solleva rapidamente da terra per poi ricadervi |
+| *siero* | Intermediate | Parte acquosa del latte |
+| *suolo* | Intermediate | Superficie della terra sulla quale si cammina |
+| *suora* | Intermediate | Colei che fa parte di un ordine religioso |
+| *tappo* | Intermediate | Oggetto tondo o cilindrico che ha lo scopo di chiudere un recipiente |
+| *terme* | Intermediate | Uno stabilimento o una località con acque termali |
+| *tigre* | Intermediate | Grande felino con la pelliccia arancione e bianca a strisce nere |
+| *tizio* | Base | Individuo qualsiasi |
+| *umano* | Base | Relativo all'uomo |
+| *usare* | Base | Utilizzare qualcosa per uno scopo |
+| *vanto* | Intermediate | Lode dei propri pregi o delle proprie attitudini |
+| *vario* | Intermediate | Di forme e modi e qualità diverse; svariato |
+| *acume* | Advanced | Penetrante finezza e sottigliezza dell'intelletto |
+| *boero* | Complete | Che riguarda i coloni olandesi emigrati in Sudafrica nel diciassettesimo secolo |
+| *etano* | Complete | Alcano composto da 2 atomi di carbonio e 6 atomi di idrogeno . La sua formula bruta è C₂H₆ |
+| *frana* | Advanced | Distacco dal fianco di una montagna o collina |
+| *garbo* | Advanced | Comportamento aggraziato ed educato, anche nel compiere qualcosa |
+| *merlo* | Advanced | Uccello dei Turdidi, tutto nero, tranne il becco giallo arancio, come lo orbite |
+| *mosto* | Advanced | Risultato della spremitura dell'uva |
+| *pegno* | Advanced | Bene mobile che un debitore consegna a un creditore per garantire il pagamento di un debito |
+| *poppa* | Advanced | Mammella, seno |
+| *ritto* | Complete | Collocato verticalmente |
+| *rozzo* | Advanced | Grezzo, non lavorato |
+| *ruspa* | Advanced | Macchina composta da trattore e rimorchio che spiana, raccoglie e solleva la terra con una tramoggia |
+| *siepe* | Advanced | Fila di piante disposte fittamente col fine di recintare, limitare oppure ornare giardini e viali |
+| *suino* | Advanced | Relativo ai suini |
+| *tacca* | Advanced | Taglio effettuato sulla parte esterna di un oggetto |

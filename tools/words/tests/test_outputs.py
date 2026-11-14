@@ -62,26 +62,33 @@ class OutputsTest(unittest.TestCase):
             missing = [w for w in common if folding.pack(folding.fold(w, g), g) not in acc]
             self.assertEqual(missing, [], g)
 
-    def test_the_deny_lists_keep_their_words_out(self):
+    def test_every_solution_has_a_whole_short_meaning_in_the_three_languages(self):
+        # PLANNING.md §6.4, §15 (14 Nov 2026): a definition of two lines at most, never cut.
         for g in config.LANGUAGES:
-            sols = solutions(g)
-            for word in lexicon.read_list(f"deny_{g}.txt"):
-                key = folding.fold(word, g)
-                self.assertFalse(folding.pack(key, g) in sols, f"{g}: {word} is a solution")
+            forms = pack.read_table(read(g, f"forms-{config.LENGTH}.bin"))
+            glossaries = {u: pack.read_table(read(g, f"gloss-{u}.bin")) for u in config.LANGUAGES}
+            for value in solutions(g):
+                key = folding.unpack(value, config.LENGTH, g)
+                record = forms.get(key)
+                display = (record[0] if isinstance(record[0], str) else record[0][0]) if record else key
+                for u in config.LANGUAGES:
+                    entry = glossaries[u].get(display)
+                    self.assertIsNotNone(entry, f"{g} {display} in {u}")
+                    meaning = entry[1]
+                    self.assertTrue(meaning, f"{g} {display}: no meaning in {u}")
+                    self.assertLessEqual(len(meaning), config.MEANING_MAX, f"{g} {display} in {u}")
 
-    def test_every_solution_has_a_glossary_entry_in_its_own_language_or_english(self):
+    def test_no_meaning_is_cut(self):
         for g in config.LANGUAGES:
-            own = pack.read_table(read(g, f"gloss-{g}.bin"))
-            english = pack.read_table(read(g, "gloss-en.bin"))
-            forms = pack.read_table(read(g, "forms-5.bin"))
-            described = 0
-            sols = solutions(g)
-            for value in sols:
-                key = folding.unpack(value, 5, g)
-                displays = [item[0] if isinstance(item, list) else item for item in forms.get(key, [key])]
-                if any(d in own or d in english for d in displays):
-                    described += 1
-            self.assertGreater(described / len(sols), 0.95, g)
+            for u in config.LANGUAGES:
+                for word, fields in pack.read_table(read(g, f"gloss-{u}.bin")).items():
+                    meaning = fields[1] if len(fields) > 1 else ""
+                    self.assertNotIn("…", meaning, f"{g} {word} in {u}")
+                    self.assertLessEqual(len(meaning), config.MEANING_MAX, f"{g} {word} in {u}")
+
+    def test_no_list_of_words_to_avoid_is_kept(self):
+        # The editions' labels keep a word out (`register.py`); no file names one (§15, 14 Nov 2026).
+        self.assertEqual(sorted(p.name for p in config.LISTS.iterdir() if not p.name.startswith("common_")), [])
 
 
 if __name__ == "__main__":

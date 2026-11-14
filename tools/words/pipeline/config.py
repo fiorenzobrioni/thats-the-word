@@ -14,8 +14,16 @@ ASSETS = ROOT / "core" / "words" / "src" / "main" / "assets" / "words"
 REPORT = ROOT / "docs" / "words"
 
 LANGUAGES = ("it", "en", "es")
+# The length 1.0 plays, and the only one whose files ship (PLANNING.md §6.6).
 LENGTH = 5
 ATTEMPTS = 6
+# The lengths the pipeline builds and measures: 1.1's Bridge (*gatto / cat / gato*) and 1.2's
+# variable length (VISION §8: 4 to 7 letters) need them. Each is built and counted in the report
+# with the same rules, so a later version adds a length by shipping it, not by writing the rules
+# again (§15, 14 Nov 2026). Only `SHIPPED_LENGTHS` become files in the app: the others would weigh
+# on 1.0 for nothing, and a daily schedule is frozen only when its mode ships.
+LENGTHS = (3, 4, 5, 6, 7, 8)
+SHIPPED_LENGTHS = (LENGTH,)
 
 # The Spanish dictionaries read: Spain's, Mexico's and the Río de la Plata's (its voseo).
 HUNSPELL = {"it": ("it_IT",), "es": ("es_ES", "es_MX", "es_AR")}
@@ -50,8 +58,21 @@ DAILY_LEVELS = (0, 1)
 DAILY_SEED = "thats-the-word daily schedule, 12 Nov 2026"
 EPOCH = datetime.date(2026, 11, 1)
 SCHEDULE_YEARS = 10
-# How long a meaning may be, in characters: the end card shows a line or two.
-MEANING_MAX = 160
+# A meaning (§6.4), as the end card, the hint and the notebook show it: at most two lines on a
+# phone (about 100 characters at the default text size), never cut with an ellipsis: a definition
+# too long is shortened only where a clause or a sentence ends, else another sense is read, else
+# the word has none (§15, 14 Nov 2026). A single word is a synonym or a translation, not a
+# definition (*lungi*, «lontano»; *pooch*, «a dog»); two words of meaning can define (*tizio*,
+# «individuo qualsiasi»), articles and prepositions not counted.
+MEANING_MAX = 100
+MEANING_MIN_WORDS = 2
+# A meaning is read in a word's first sense and the finer senses under it (at most this many),
+# or in the sense a translation table names: a later, rarer sense read in the first one's place
+# showed *oveja* as mutton and *media* as a shipping loss (§15, 14 Nov 2026).
+MEANING_SENSES = 5
+# With no reliable translation, the meaning may still be read through the first candidates one
+# source gives for the word's first sense (the translation itself is not shown).
+MEANING_THROUGH_SINGLE = 2
 
 # Whether a translation that one translation table alone gives, in the word's first sense, is shown
 # (§6.4). Two agreeing sources are always enough.

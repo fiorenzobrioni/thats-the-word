@@ -18,24 +18,73 @@ independent sources, so that one edition's slip is never shown alone:
 4. through English, for Italian and Spanish: the English words the English edition glosses the word
    with, and their translation tables, in the sense whose row holds the word.
 
-The meaning in U is the U edition's gloss of the word when it is a definition rather than a bare
-word; otherwise the meaning comes **through the translation**: the first translation's own
-definition, in its own edition. A word with no reliable translation shows its meaning alone, when
-it has one (VISION §9).
+The meaning in U comes **through the translation**: the translation's own definition, in its own
+edition and of the word's part of speech, read first in the sense whose translation table holds
+the word (*heart*'s organ, whose table has *cuore*, before its courage), so the three languages
+describe one sense; else it is the U edition's gloss of the word, when that defines rather than
+names (the English edition glosses most Italian words with their translations).
+A word with no reliable translation shows its meaning alone, when it has one (VISION §9).
+
+A meaning (§15, 14 Nov 2026) is a whole definition of at most `config.MEANING_MAX` characters and
+`config.MEANING_MIN_WORDS` words of meaning or more, never cut with an ellipsis: a gloss too long is
+shortened where a clause (`;`) or a sentence ends, its asides in brackets dropped, or, last, at its
+first comma when what comes before is a phrase of its own (three words of meaning at least, not a
+qualifier opening with a preposition); else the next sense
+is read among the finer senses of the first one (not a figurative one), in the first of a word's
+homographs, or the sense a translation table names: never a later, rarer sense in the first one's
+place, and never a gloss that leans on the sense before it («Bulbo de esta planta»). It never comes from a sense the editions label coarse,
+derogatory or intimate, never holds a word no guess may be, never names a foreign word itself (or its stem: the definition is also a
+hint), and never points elsewhere instead of defining («synonym of»).
 """
 
 import dataclasses
 import re
+import unicodedata
 
 from . import config, lexicon
 
 _PARENS = re.compile(r"\s*\([^()]*\)\s*")
+_BRACKETS = re.compile(r"\s*[\(\[][^()\[\]]*[\)\]]\s*")
+# A gloss that points to another word instead of defining this one.
+_POINTER = re.compile(
+    r"^(?:synonym of|alternative (?:form|spelling) of|see\b|used other than|sinonimo di|"
+    r"sinónimo de|variante\b|variant of|forma alternativa|vedi\b|vedasi\b|véase\b|v\.\s|"
+    # A gloss that describes a form, not a meaning («Participio pasado del verbo…»).
+    r"(?:past |present )?participle of|plural of|feminine of|participio|plurale di|femminile di|"
+    r"maschile di|plural de|femenino de|masculino de|grafía|grafia)",
+    re.I,
+)
+# A gloss that leans on the sense before it («Bulbo de esta planta», «A serving of this beverage»):
+# alone, it says nothing.
+_ANAPHORA = re.compile(
+    r"\b(?:of|from|to) (?:this|these|such)\b|^(?:this|these|such)\b(?!\s+as\b)|"
+    r"\b(?:de|del|a) (?:esta|este|estas|estos|dicha|dicho|dichas|dichos)\b|"
+    r"\b(?:di|da|a) (?:questa|questo|queste|questi)\b|\bsuddett\w*",
+    re.I,
+)
+# A clause a long gloss may be shortened to at a comma must stand alone: not a qualifier opening
+# with a preposition («di cavalli o altri quadrupedi, procedere…»).
+_QUALIFIER = re.compile(r"^(?:of|for|in|on|with|by|di|del|della|dei|degli|delle|per|con|de|para|por|en)\b", re.I)
+# A finer sense that moves away from the first one rather than refining it.
+_DRIFT_TAGS = frozenset({"figuratively", "metaphoric", "broadly", "by-extension", "humorous", "slang", "rare"})
+# A label in brackets before the definition (*(zoology)*): the definition is what follows.
+_LEADING_LABEL = re.compile(r"^\s*[\(\[][^()\[\]]*[\)\]]\s*")
+# Where a sentence ends inside a gloss: a full stop after a word, before a capital.
+_SENTENCE_END = re.compile(r"(?<=\w\w)[.!?]\s+(?=[A-ZÁÉÍÓÚÑÀÈÌÒÙ¿¡«\"])")
 _NOTE = re.compile(
     r"\(\s*(approfondimento|tassonomia|citazioni|etimologia|link|vedi|definizione)[^)]*\)", re.I
 )
 _JUNK = re.compile(r"definizione mancante|se vuoi, aggiungila|definición faltante|^\W*$", re.I)
+# The editions' grammar marks, left at a gloss's end («casa f sing»).
 _GRAMMAR = frozenset(
     {"f", "m", "sing", "pl", "inv", "s", "agg", "n", "v", "tr", "intr", "pron", "avv", "loc", "sm", "sf"}
+)
+# Words that carry no meaning of their own: a definition needs others («A dog» names, «Large shield»
+# and «Che è pieno» define).
+_FUNCTION_WORDS = frozenset(
+    "a an the to of in on at by for or and with from as "
+    "il lo la i gli le un una di da del dello della dei degli delle in su per con tra fra e o "
+    "el los las unos unas de del al en con por para y o".split()
 )
 _ARTICLES = {
     "en": ("to ", "a ", "an ", "the "),
@@ -66,20 +115,79 @@ def edition_extract(edition: str, lang: str) -> str:
     return edition
 
 
-def clean(text: str, headword: str = "") -> str | None:
+def _fold(text: str) -> str:
+    return "".join(c for c in unicodedata.normalize("NFD", text.lower()) if not unicodedata.combining(c))
+
+
+def leaks(text: str, words, stems: bool = True) -> bool:
+    """Whether a text names one of the words, or (with `stems`) the stem of a word of five letters
+    or more (all but its last letter: *gatto* in *gattino*), so a definition shown as a hint gives
+    nothing away."""
+    tokens = re.findall(r"[^\W\d_]+", _fold(text))
+    for word in words:
+        folded = _fold(word)
+        if not folded:
+            continue
+        stem = folded[:-1] if stems and len(folded) >= 5 else None
+        for t in tokens:
+            if t == folded or (stem and t.startswith(stem)):
+                return True
+    return False
+
+
+def _tidy(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip(" ;:,")
+
+
+def fit(text: str, avoid=(), stems: bool = True) -> str | None:
+    """A gloss as a meaning the app may show, or None (the rules are the module's)."""
     if not text:
         return None
-    text = _NOTE.sub("", text)
-    text = re.sub(r"\s+", " ", text).strip(" ;:,")
-    if _JUNK.search(text):
+    text = _tidy(_LEADING_LABEL.sub("", _NOTE.sub("", text)))
+    if not text or _JUNK.search(text) or _POINTER.search(text) or text.endswith(":"):
         return None
-    words = [w for w in re.split(r"[\s.,;:]+", text.lower()) if w]
-    if not [w for w in words if w not in _GRAMMAR and w != headword.lower()]:
+    if "…" in text or "..." in text or _ANAPHORA.search(text):
         return None
-    if len(text) > config.MEANING_MAX:
-        cut = text[: config.MEANING_MAX].rsplit(" ", 1)[0].rstrip(" ,;:")
-        text = cut + "…"
-    return text
+    bare = _tidy(_BRACKETS.sub(" ", text))
+    first = _tidy(_SENTENCE_END.split(_tidy(bare.split(";")[0]))[0])
+    variants = [text, bare, _tidy(bare.split(";")[0]), _tidy(_SENTENCE_END.split(bare)[0])]
+    # At its first comma, last: what comes before it, when it is a phrase of its own (*città*,
+    # «centro abitato di grandi dimensioni»); a later comma would split a list. Never an ellipsis.
+    if len(first) > config.MEANING_MAX and not _QUALIFIER.match(first) and "," in first:
+        head = _tidy(first.split(",")[0])
+        last = head.split()[-1].lower() if head.split() else ""
+        if _content_words(head) >= config.MEANING_MIN_WORDS + 1 and last not in _FUNCTION_WORDS:
+            variants.append(head)
+    for v in dict.fromkeys(variants):
+        v = v.rstrip(".").strip()
+        if not v or len(v) > config.MEANING_MAX:
+            continue
+        if v.count("(") != v.count(")") or v.count("[") != v.count("]") or v.count('"') % 2:
+            continue
+        words = [w for w in v.split() if re.search(r"\w", w)]
+        while words and words[-1].lower().strip(".,;") in _GRAMMAR:
+            words.pop()
+        v = " ".join(words) if words and v.split()[-1].lower().strip(".,;") in _GRAMMAR else v
+        content = [w for w in words if w.lower().strip(".,;:()'\"«»") not in _FUNCTION_WORDS]
+        if len(content) < config.MEANING_MIN_WORDS:
+            continue
+        if leaks(v, avoid, stems):
+            continue
+        return v[0].upper() + v[1:]
+    return None
+
+
+def _content_words(text: str) -> int:
+    return sum(
+        1
+        for w in text.split()
+        if re.search(r"\w", w) and w.lower().strip(".,;:()'\"«»") not in _FUNCTION_WORDS | _GRAMMAR
+    )
+
+
+def clean(text: str, headword: str = "") -> str | None:
+    """A gloss as a meaning (`fit`), the headword avoided."""
+    return fit(text, (headword,) if headword else ())
 
 
 def _candidate(text: str, lang: str) -> str | None:
@@ -105,28 +213,138 @@ def _split_gloss(gloss: str, lang: str) -> list[str]:
     return out
 
 
-def _first_definition(wikt, lang: str, word: str, pos: tuple = ()) -> str | None:
-    """A word's own definition, in its own edition (the English edition for English), from an
-    entry of the same part of speech first (*bowel*, a noun, reads *intestino* the noun)."""
-    extract = "en.en" if lang == "en" else lang
-    entries = wikt.entries(extract, lang, word)
-    ordered = (
-        [e for e in entries if e.pos in pos]
-        + [e for e in entries if e.pos in lexicon.SOLUTION_POS and e.pos not in pos]
-        + [e for e in entries if e.pos not in lexicon.SOLUTION_POS]
-    )
-    for e in ordered:
-        for s in lexicon.lemma_senses(e):
-            text = clean(s.get("g", ""), word)
-            if text:
-                return text
-    # The Italian edition sometimes writes a headword's sense only as its translation table's label.
-    for e in ordered:
+def _ordered(entries, pos: tuple = ()) -> list:
+    """A word's entries of the part of speech asked, when it has one (*libro*, a noun, is never
+    read through *book*, the verb); otherwise its common parts of speech first."""
+    same = [e for e in entries if e.pos in pos]
+    if same:
+        return same
+    return [e for e in entries if e.pos in lexicon.SOLUTION_POS] + [
+        e for e in entries if e.pos not in lexicon.SOLUTION_POS
+    ]
+
+
+def names_only(text: str) -> bool:
+    """Whether a gloss only names the word in other words (*aiuto*, «help, assistance, aid»): a
+    translation, not a definition. Every part of it, between commas, is three words at most."""
+    parts = [p for p in re.split(r"[,;]", _BRACKETS.sub(" ", text)) if p.strip()]
+    return all(len(p.split()) <= 3 for p in parts)
+
+
+def _readable_senses(entry, prefer=frozenset()) -> list:
+    """An entry's own senses a meaning may come from, by their position in the entry: its first
+    sense and the finer senses under it (a word's first sense is its commonest, and a later one
+    read in its place shows *oveja* as mutton), and the senses `prefer` names; none the editions
+    label, none of a form."""
+    if entry.pos in lexicon.NOT_WORDS:
+        return []
+    own = [
+        (i, s)
+        for i, s in enumerate(entry.senses)
+        if not (s.get("f") or s.get("a") or lexicon._FORM_TAGS & set(s.get("t", ())))
+    ]
+    if not own:
+        return []
+    head = own[0][1].get("h") or own[0][1].get("g")
+    family = [
+        x
+        for x in own
+        if x is own[0]
+        or (x[1].get("h") and x[1].get("h") == head and not _DRIFT_TAGS & set(x[1].get("t", ())))
+    ]
+    chosen = family[: config.MEANING_SENSES] + [x for x in own if (id(entry), x[0]) in prefer and x not in family]
+    return [(i, s) for i, s in chosen if not s.get("r")]
+
+
+def _overlap(a: str, b: str) -> int:
+    words = lambda t: {w for w in re.findall(r"[^\W\d_]{3,}", _fold(t))}  # noqa: E731
+    return len(words(a) & words(b))
+
+
+_SENSE_NUMBERS = re.compile(r"^#?\s*(\d+)(?:\s*[-–]\s*(\d+))?((?:\s*,\s*\d+)*)\s*$")
+
+
+def _numbered(label: str) -> list[int]:
+    """The senses a label names by number, from 1 («#1–2», «#3»), as the Spanish edition writes."""
+    m = _SENSE_NUMBERS.match(label.strip())
+    if not m:
+        return []
+    first = int(m.group(1))
+    last = int(m.group(2)) if m.group(2) else first
+    rest = [int(x) for x in re.findall(r"\d+", m.group(3) or "")]
+    return list(range(first, last + 1)) + rest
+
+
+def aligned_senses(entries, g: str, word: str) -> set:
+    """The senses, as (entry, position), whose translation table holds the word of language g: a
+    table hung from a sense names it; a label of numbers names them («#1–2»); any other label is
+    matched to the sense it shares the most words with."""
+    out = set()
+    for e in entries:
+        own = [(i, s) for i, s in enumerate(e.senses) if not s.get("f")]
         for row in e.translations:
-            label = clean(_PARENS.sub(" ", row[2]) if len(row) > 2 else "", word)
-            if label and not label.startswith("#") and len(label.split()) >= 2:
-                return label
+            if row[0] != g or row[1] != word:
+                continue
+            numbers = _numbered(row[2]) if row[2] else []
+            if len(row) > 3 and row[3] >= 0:
+                out.add((id(e), row[3]))
+            elif numbers:
+                out.update((id(e), n - 1) for n in numbers if 0 < n <= len(e.senses))
+            elif row[2] and own:
+                best = max(own, key=lambda x: _overlap(row[2], x[1].get("g", "")))
+                if _overlap(row[2], best[1].get("g", "")):
+                    out.add((id(e), best[0]))
+    return out
+
+
+def names_refused(wikt, lang: str, text: str) -> bool:
+    """Whether a meaning holds a word no guess of its language may be: such a word is written
+    nowhere, a definition included."""
+    return any(lexicon.refused(wikt, lang, t) for t in re.findall(r"[^\W\d_]+", text.lower()))
+
+
+def own_extract(lang: str) -> str:
+    """The extract where a language's words are defined in that language."""
+    return "en.en" if lang == "en" else lang
+
+
+def definition(
+    wikt, lang: str, word: str, pos: tuple = (), prefer=frozenset(), avoid=(), only_preferred: bool = False
+) -> str | None:
+    """A word's own definition, in its own edition (the English edition for English): from the
+    senses `prefer` names first, then from an entry of the same part of speech (*bowel*, a noun,
+    reads *intestino* the noun), then the rest.
+
+    Without `avoid`, the word is defined in its own language, shown once the game is over (no hint
+    reads it: hints are for a foreign word): a definition may then share the word's stem (*voter*,
+    «someone who votes»), not name the word itself."""
+    entries = _ordered(wikt.entries(own_extract(lang), lang, word), pos)
+    stems = bool(avoid)
+    avoid = tuple(avoid) or (word,)
+    readable = [(e, i, s) for e in entries for i, s in _readable_senses(e, prefer)]
+    preferred = [x for x in readable if (id(x[0]), x[1]) in prefer]
+    # Of homographs (*cuna*, a cradle, and *cuna*, a language), the first entry is the word.
+    first = [x for x in readable if entries and x[0] is entries[0] and x not in preferred]
+    readable = preferred if only_preferred else preferred + first
+    for _, _, s in readable:
+        text = fit(s.get("g", ""), avoid, stems)
+        if text and not names_refused(wikt, lang, text):
+            return text
+    if only_preferred:
+        return None
+    # The Italian edition sometimes writes a headword's sense only as its translation table's
+    # label: the first table's, the first sense's.
+    for e in entries[:1]:
+        first = e.translations[0] if e.translations else None
+        if first and first[2] and not first[2].startswith("#"):
+            text = fit(_PARENS.sub(" ", first[2]), avoid, stems)
+            if text and not names_refused(wikt, lang, text):
+                return text
     return None
+
+
+def _first_definition(wikt, lang: str, word: str, pos: tuple = ()) -> str | None:
+    return definition(wikt, lang, word, pos)
 
 
 TABLE_SOURCES = frozenset({"G-edition table", "U-edition tables", "through English"})
@@ -161,6 +379,40 @@ class Glossary:
                             index.setdefault(row[1], []).append((word, row[2] == first_label))
             self._reverse[key] = index
         return self._reverse[key]
+
+    def native_senses(self, g: str, word: str, pos: tuple = ()) -> set:
+        """For a word defined in its own edition (Italian, Spanish): the senses whose translation
+        table holds the English edition's first gloss of it. An edition orders its homographs by
+        their origin, not by use (*avión*, the bird, before *avión*, the aeroplane); the English
+        edition's first sense says which one is the word."""
+        if g == "en":
+            return set()
+        english: list = []
+        for e in _ordered(self.wikt.entries(f"en.{g}", g, word), pos)[:1]:
+            for s in lexicon.lemma_senses(e)[:1]:
+                english = list(s.get("k", ())) + _split_gloss(s.get("g", ""), "en")
+        out: set = set()
+        entries = self.wikt.entries(own_extract(g), g, word)
+        for t in english:
+            out |= aligned_senses(entries, "en", t)
+        return out
+
+    def native_translations(self, g: str, u: str, word: str, pos: tuple = ()) -> set:
+        """The words the word's own edition translates it with, in the senses the English edition's
+        first gloss names (`native_senses`); none when it names none."""
+        senses = self.native_senses(g, word, pos)
+        if not senses:
+            return set()
+        out = set()
+        for e in self.wikt.entries(own_extract(g), g, word):
+            for row in e.translations:
+                if row[0] != u:
+                    continue
+                numbers = _numbered(row[2]) if row[2] else []
+                at = [row[3]] if len(row) > 3 and row[3] >= 0 else [n - 1 for n in numbers]
+                if any((id(e), i) in senses for i in at):
+                    out.add(row[1])
+        return out
 
     def candidates(self, g: str, u: str, word: str) -> list:
         """Every translation proposed for the word, with the sources that propose it.
@@ -219,33 +471,49 @@ class Glossary:
         ranked = sorted(found.values(), key=lambda c: (-len(c["sources"]), c["rank"], c["word"]))
         return ranked
 
-    def gloss(self, g: str, u: str, word: str) -> Gloss:
-        if g == u:
-            return Gloss([], _first_definition(self.wikt, g, word), None, [])
-        ranked = self.candidates(g, u, word)
-        agreed = [c["word"] for c in ranked if len(c["sources"]) >= 2][:3]
-        single = [c["word"] for c in ranked if reliable_candidate(c)][:1]
-        reliable = agreed or single
-        meaning = None
-        via = None
-        # The U edition's gloss, when it defines rather than names.
-        for e in self.wikt.entries(edition_extract(u, g), g, word):
-            for s in lexicon.lemma_senses(e):
-                text = clean(s.get("g", ""), word)
-                if text and (u == "en" or len(text.split()) >= 3):
-                    meaning = text
-                    break
-            if meaning:
-                break
-        if meaning is None and reliable:
+    def gloss(self, g: str, u: str, word: str, pos: tuple = ()) -> Gloss:
+        if not pos:
             pos = tuple(
                 dict.fromkeys(
                     e.pos for e in lexicon.headword_entries(self.wikt, g, word) if lexicon.lemma_senses(e)
                 )
             )
-            for t in reliable:
-                meaning = _first_definition(self.wikt, u, t, pos)
+        if g == u:
+            return Gloss([], definition(self.wikt, g, word, pos, self.native_senses(g, word, pos)), None, [])
+        # A translation no guess may be is never shown (the labels, `lexicon.refused`).
+        ranked = [c for c in self.candidates(g, u, word) if not lexicon.refused(self.wikt, u, c["word"])]
+        # The translations the word's own edition gives for the sense it is (`native_senses`) come
+        # first: *avión* reads *aeroplane* before *martin*, the bird of its other entry.
+        native = self.native_translations(g, u, word, pos)
+        ranked.sort(key=lambda c: 0 if c["word"] in native else 1)
+        agreed = [c["word"] for c in ranked if len(c["sources"]) >= 2][:3]
+        single = [c["word"] for c in ranked if reliable_candidate(c)][:1]
+        reliable = agreed or single
+        avoid = (word,)
+        meaning = None
+        via = None
+        # Through the translation, in the sense whose table holds the word; with no reliable one,
+        # through what one source gives for the word's first sense (the meaning is shown, the
+        # translation is not: it stays unreliable).
+        through = reliable or [c["word"] for c in ranked if c["first"]][: config.MEANING_THROUGH_SINGLE]
+        for n, t in enumerate(through):
+            # The first translation is read in its own first sense when no table names one; a
+            # later one only in a sense its table names (*canna* is never read through *porro*'s
+            # music).
+            entries = self.wikt.entries(own_extract(u), u, t)
+            aligned = aligned_senses(entries, g, word)
+            meaning = definition(self.wikt, u, t, pos, aligned, avoid, only_preferred=n > 0)
+            if meaning:
+                via = t
+                break
+        # Else the U edition's own gloss of the word, in its first sense, when it defines rather
+        # than names (the English edition glosses most Italian words with their translations).
+        if meaning is None:
+            for e in _ordered(self.wikt.entries(edition_extract(u, g), g, word), pos):
+                for _, s in _readable_senses(e)[:1]:
+                    text = fit(s.get("g", ""), avoid)
+                    if text and not names_only(text) and not names_refused(self.wikt, u, text):
+                        meaning = text
                 if meaning:
-                    via = t
                     break
         return Gloss(reliable, meaning, via, ranked)

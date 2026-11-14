@@ -19,7 +19,7 @@ import gzip
 import json
 import pathlib
 
-from . import sources
+from . import register, sources
 
 EXTRACTS = {
     "en.it": "wiktionary.en.it",
@@ -34,29 +34,8 @@ EDITION = {"en.it": "en", "en.es": "en", "en.en": "en", "it": "it", "es": "es"}
 
 GAME_LANGUAGES = ("it", "en", "es")
 
-# Categories that name a word as offensive, whatever its tags say.
-_BAD_CATEGORY = (
-    "offensive",
-    "vulgar",
-    "slur",
-    "derogatory",
-    "pejorative",
-    "swear",
-    "profanit",
-    "obscen",
-    "insult",
-    "ethnic",
-    "volgar",
-    "offensiv",
-    "spregiativ",
-    "malsonante",
-    "despectiv",
-    "insultos",
-    "groser",
-)
-
 # A reduced entry's version: a change here invalidates the cache.
-REDUCED_VERSION = 3
+REDUCED_VERSION = 4
 
 
 def reduced_path(name: str) -> pathlib.Path:
@@ -73,15 +52,9 @@ def _category_names(obj) -> list[str]:
     return names
 
 
-def _bad(names) -> bool:
-    for name in names:
-        low = name.lower()
-        if any(b in low for b in _BAD_CATEGORY):
-            return True
-    return False
-
-
-def _translation(t, edition):
+def _translation(t, edition, sense_no=-1):
+    """A translation row: its language, its word, the sense it translates (the table's label), and
+    the position of that sense in the entry when the table hangs from one (-1 otherwise)."""
     code = t.get("lang_code") or t.get("code")
     if code not in GAME_LANGUAGES or code == edition and edition != "en":
         return None
@@ -91,11 +64,7 @@ def _translation(t, edition):
     sense = t.get("sense")
     if sense is None and t.get("sense_index") is not None:
         sense = "#" + str(t.get("sense_index"))
-    row = [code, word, sense or ""]
-    tags = t.get("tags")
-    if tags:
-        row.append(tags)
-    return row
+    return [code, word, sense or "", sense_no]
 
 
 def reduce_entry(d: dict, extract: str) -> dict | None:
@@ -107,7 +76,7 @@ def reduce_entry(d: dict, extract: str) -> dict | None:
         return None
     edition = EDITION[extract]
     senses = []
-    bad = _bad(_category_names(d))
+    entry_register = register.of_categories(_category_names(d))
     translations = []
     for t in d.get("translations", ()) or ():
         row = _translation(t, edition)
@@ -117,9 +86,10 @@ def reduce_entry(d: dict, extract: str) -> dict | None:
         glosses = s.get("glosses") or s.get("raw_glosses") or []
         gloss = glosses[-1] if glosses else ""
         tags = sorted(set((s.get("tags") or []) + (s.get("raw_tags") or [])))
-        if _bad(_category_names(s)):
-            bad = True
         sense = {"g": gloss}
+        labels = register.of_tags(tags) | register.of_categories(_category_names(s))
+        if labels:
+            sense["r"] = register.code(labels)
         if len(glosses) > 1:
             sense["h"] = glosses[0]
         if tags:
@@ -139,7 +109,7 @@ def reduce_entry(d: dict, extract: str) -> dict | None:
         if s.get("sense_index") is not None:
             sense["i"] = str(s.get("sense_index"))
         for t in s.get("translations", ()) or ():
-            row = _translation(t, edition)
+            row = _translation(t, edition, len(senses))
             if row:
                 translations.append(row)
         senses.append(sense)
@@ -157,8 +127,8 @@ def reduce_entry(d: dict, extract: str) -> dict | None:
         out["tr"] = translations
     if forms:
         out["fm"] = sorted(set(forms))
-    if bad:
-        out["bad"] = 1
+    if entry_register:
+        out["r"] = register.code(entry_register)
     return out
 
 

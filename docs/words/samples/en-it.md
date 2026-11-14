@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *altar* | Intermediate | altare | alto piedistallo circolare, rappresentato generalmente con delle fiamme |
-| *brace* | Intermediate | grappa, controvento | (grappa) bevanda fortemente alcolica ricavata dalla distillazione delle vinacce |
-| *brain* | Base | cervello, encefalo | persona razionale, capo |
-| *buyer* | Intermediate | acquirente, compratore | (acquirente) chi si procura beni e servizi in cambio di pagamento |
-| *canal* | Intermediate | canale | (canale) condotto costruito dall'uomo su cui, nei mesi estivi, scorre l'acqua, proveniente in genere da un fiume , al fine di irrigare i campi coltivati |
-| *chill* | Intermediate | raffreddare, gelo, freddo | colpo di freddo |
-| *chunk* | Intermediate | pezzo | (pezzo) parte collegabile ad un'altra in qualcosa di costruibile |
-| *fifty* | Intermediate | cinquanta | (cinquanta) numero seguente al quarantanove e antecedente al cinquantuno; è pari a cinque volte dieci e due volte il quadrato di cinque |
-| *flank* | Intermediate | fianco, fiancheggiare | (fianco) parte laterale di qualcosa |
-| *harsh* | Intermediate | duro, rigido, aspro | (nei modi) duro, rigido, scabro |
-| *heart* | Base | cuore | dimora dei sentimenti, dei moti |
-| *human* | Base | umano, essere umano | umano, essere umano |
-| *lines* | Base | — | — |
-| *madam* | Intermediate | signora, madama | (madama) per la società sportiva italiana Juventus |
-| *manly* | Intermediate | virile | virile, maschio, da uomo |
-| *moral* | Intermediate | morale, etico | morale, etico, onesto, serio, virtuoso. |
-| *moves* | Base | — | — |
-| *never* | Base | mai, giammai | (mai) nessuna volta |
-| *pains* | Intermediate | — | — |
-| *piles* | Intermediate | mucchio di *(single)* | — |
-| *pixel* | Intermediate | pixel | (pixel) unità minima di composizione di un'immagine in formato digitale, rappresentata fisicamente da un piccolo elemento semiconduttore sensibile alla luce |
-| *price* | Base | prezzo, stimare, valore | fissare il prezzo di |
-| *proxy* | Intermediate | delega, mandatario | (delega) conferimento di un incarico ad un esperto in materia |
-| *rocks* | Intermediate | macigni *(single)* | — |
-| *scrub* | Intermediate | strofinare | (strofinare) passare un oggetto o una superficie con un panno, in modo reiterato, con un certo vigore |
-| *shoot* | Base | sparare, germoglio, girare | colpo di pistola |
-| *sorry* | Base | scusa, dispiaciuto, spiacente | scusa, mi/ci dispiace |
-| *sunny* | Intermediate | soleggiato, soleggiata | (soleggiato) ben illuminato dal sole |
-| *swear* | Base | giurare | utilizzare un linguaggio offensivo o profano |
-| *syrup* | Intermediate | sciroppo | (sciroppo) soluzione dolce e viscosa di acqua, zucchero e frutta o spezie |
-| *tales* | Intermediate | racconti *(single)* | — |
-| *unity* | Intermediate | unità | (unità) un singolo, un individuo "preso" da solo |
-| *utter* | Intermediate | assoluto, completo, totale | (assoluto) privo di collegamenti |
-| *vegan* | Intermediate | vegano | (vegano) (di) persona il cui regime alimentare è composto unicamente da prodotti vegetali |
-| *while* | Base | mentre | momento, po' di tempo |
-| *braid* | Advanced | treccia | (treccia) acconciatura femminile formata da tre ciocche di capelli avviluppate |
-| *brash* | Advanced | sfacciato *(single)* | (sfacciato) privo di ritegno |
-| *bugle* | Advanced | bugola *(single)* | — |
-| *coset* | Complete | classe laterale *(single)* | — |
-| *crass* | Advanced | grossolano | (grossolano) che è fatto in modo poco diligente |
-| *crumb* | Advanced | frammento, briciola, mollica | (frammento) parte alquanto più piccola di un tutto |
-| *flyby* | Complete | volo ravvicinato *(single)* | — |
-| *gulch* | Advanced | burrone, gola | (burrone) precipizio molto profondo, in fondo al quale scorre un torrente |
-| *inane* | Advanced | sciocco *(single)* | (sciocco) chi non ha giudizio |
-| *merle* | Advanced | — | — |
-| *shard* | Advanced | frammento | (frammento) parte alquanto più piccola di un tutto |
-| *stead* | Advanced | — | — |
-| *strut* | Advanced | pavoneggiarsi | (pavoneggiarsi) darsi un sacco d’arie |
-| *telex* | Complete | telex | (telex) servizio per lo scambio di messaggi di testo in codice con telescriventi collegate con centrali di commutazione, diffuso prevalentemente in passato |
-| *widen* | Advanced | allargare, allargarsi | — |
+| *align* | Intermediate | allineare | (allineare) Posizionare o disporre lungo una stessa linea retta |
+| *blend* | Intermediate | mescolare, amalgamare | (mescolare) Mettere insieme |
+| *bless* | Intermediate | benedire | (benedire) Invocare la protezione di Dio su qualcuno o qualcosa |
+| *booth* | Intermediate | bancarella, stand | (bancarella) Banco utilizzato dai venditori ambulanti |
+| *boxer* | Intermediate | pugile | (pugile) Chi pratica il pugilato |
+| *build* | Base | costruire, edificare | (costruire) Fabbricare un edificio o un oggetto formato da più parti |
+| *drake* | Intermediate | papero | (papero) Maschio giovane dell'oca domestica |
+| *drive* | Base | guidare, impulso, condurre | (guidare) Condurre, muovere un veicolo o un animale |
+| *flesh* | Intermediate | carne | (carne) L'insieme dei tessuti muscolari |
+| *force* | Base | forza, forzare, costringere | (forza) Grandezza fisica vettoriale che si manifesta nell'interazione di due o più corpi |
+| *grind* | Intermediate | macinare *(single)* | (macinare) Frantumare in farina |
+| *haunt* | Intermediate | frequentare, ritrovo, infestare | (frequentare) Andare abitualmente in un certo luogo |
+| *heart* | Base | cuore | (cuore) Organo muscolare |
+| *label* | Intermediate | etichetta, etichettare, bollare | (etichetta) Cartellino che si applica su un oggetto per indicarne il contenuto o il proprietario |
+| *lemon* | Intermediate | limone | (limone) Pianta, proveniente dall'Asia, delle Rutacee che produce questo frutto |
+| *manly* | Intermediate | virile | (virile) Che possiede caratteristiche associate al sesso maschile |
+| *metal* | Base | metallo | (metallo) Elemento chimico semplice e lucente, buon conduttore di elettricità e calore, duttile e malleabile |
+| *minor* | Base | minore, lieve, minorenne | (minore) Più piccolo, corto, basso, leggero, rispetto ad altre |
+| *mouse* | Intermediate | topo, mouse, sorcio | (topo) Piccolo mammifero onnivoro, detto anche topo comune |
+| *nasty* | Intermediate | sozzo, zozzo | (sozzo) Sporco in maniera disdicevole |
+| *paste* | Intermediate | pasta, colla, incollare | (pasta) Impasto di farina di grano duro e acqua talvolta arricchito con altri ingredienti |
+| *plead* | Intermediate | patrocinare *(single)* | (patrocinare) Promuovere, con o senza appoggi finanziari, un'attività artistica, culturale o ricreativa |
+| *psalm* | Intermediate | salmo | (salmo) Canto o inno di carattere religioso, in preghiera, lode o ringraziamento a Dio |
+| *remix* | Intermediate | remix | (remix) Versione alternativa di un brano musicale originale |
+| *shale* | Intermediate | scisto | (scisto) Roccia metamorfica costituita da minerali disposti in fibre o lamelle |
+| *shame* | Base | vergogna, infamia, peccato | (vergogna) Sentimento di colpa |
+| *sport* | Base | sport | (sport) Insieme di competizioni individuali o collettive di natura fisica |
+| *stake* | Intermediate | palo, partecipazione, picchetto | (palo) Grosso bastone di legno dritto e verticale sul quale ci si può arrampicare |
+| *strap* | Intermediate | spallina, cinghia, cinturino | (spallina) Imbottitura della spalla |
+| *thing* | Base | cosa | (cosa) Oggetto che è in relazione con un soggetto che lo detiene |
+| *track* | Base | traccia, binario, sentiero | (traccia) Orma impressa sul suolo |
+| *trail* | Intermediate | traccia, pista, trascinare | (traccia) Seconda persona singolare, imperativo di tracciare |
+| *virus* | Intermediate | virus | (virus) Programma informatico illegale in grado di alterare il funzionamento di un computer |
+| *vista* | Intermediate | prospettiva, veduta, vista | (prospettiva) Rappresentazione in piano di una figura dello spazio |
+| *woman* | Base | donna | (donna) Adulto femminile della specie umana |
+| *biker* | Advanced | motociclista | (motociclista) Chi predilige la guida di motociclette |
+| *bolus* | Complete | bolo | (bolo) Impasto di cibo masticato |
+| *comma* | Advanced | virgola | (virgola) Segno della più breve pausa nella scrittura |
+| *crass* | Advanced | grossolano | (grossolano) Che è fatto in modo poco diligente |
+| *gaudy* | Advanced | sgargiante, appariscente, pacchiano | (sgargiante) Qualcosa che colpisce per la sua vivacità, esuberanza o eccessiva appariscenza |
+| *gruff* | Advanced | burbero | (burbero) Di individuo che ha un carattere intrattabile |
+| *gusto* | Advanced | — | (entusiasmo) Sentimento di appassionato interesse nei confronti di un ideale o di una causa |
+| *lapse* | Advanced | lapsus *(single)* | (lapsus) Errore involontario compiuto nel parlare o nello scrivere |
+| *madly* | Advanced | follemente | (follemente) In modo folle, pazzamente |
+| *samba* | Advanced | samba | (samba) Danza originaria del Brasile |
+| *snare* | Advanced | trappola, tagliola | (trappola) Meccanismo utilizzato per catturare animali dannosi o inseguiti per la polpa o la pelliccia |
+| *stomp* | Advanced | calpestare *(single)* | (calpestare) Passare su un oggetto con i piedi, sia in modo accidentale che intenzionale |
+| *trill* | Advanced | trillo *(single)* | (trillo) Verso del canarino o del cardellino |
+| *trite* | Advanced | banale | (banale) Non originale |
+| *usury* | Complete | usura | (usura) Interesse in denaro esagerato ed illegale |

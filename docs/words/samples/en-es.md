@@ -7,53 +7,53 @@ Read each line and mark what is wrong; the owner's go on their quality closes PL
 
 | Word | Level | Translation | Meaning |
 |---|---|---|---|
-| *align* | Intermediate | alinearse *(single)* | (alinearse) Incluirse en una línea o una fila con otras personas. |
-| *amend* | Intermediate | enmendar | (enmendar) Arreglar, corregir los fallos o defectos. |
-| *apple* | Base | manzana | (manzana) Fruta comestible del manzano, un pomo crujiente, de intenso y agradable aroma y sabor de dulce a subácido, recubierto de una piel delgada de color verde, rojo… |
-| *attic* | Intermediate | desván, ático, buhardilla | (desván) Parte más alta de la casa, que tiene por cubierta el tejado y que generalmente sirve para guardar objetos desusados. |
-| *being* | Base | ser, existencia | Participio presente y gerundio del verbo (to) be. |
-| *blank* | Intermediate | en blanco, espacio en blanco, bala de salva | Sin llenar, Vacío. |
-| *chant* | Intermediate | canto | (canto) Serie de sonidos modulados de modo armonioso o rítmico por la voz humana. |
-| *cited* | Intermediate | citado *(single)* | (citado) Participio de citar. |
-| *cross* | Base | cruz, cruzar, pasar | Cruza o cruce de animales. |
-| *dried* | Intermediate | seco, paso | Seco, en polvo. |
-| *ended* | Base | — | — |
-| *equip* | Intermediate | equipar | — |
-| *faded* | Intermediate | — | Marchito, descolorido, apagado. |
-| *fraud* | Intermediate | fraude | (fraude) Engaño o abuso en una relación comercial por el que alguno obtiene beneficio ilegítimo |
-| *grape* | Intermediate | uva | (uva) Fruto de la vid, una baya globosa o elipsoide, de piel delgada de color verde claro a púrpura y pulpa dulce a subácida, más clara que la piel, que se presenta… |
-| *gross* | Intermediate | grosero, gruesa | (de una cantidad) Excluyendo cualquier deducción; incluyendo todos los importes asociados. |
-| *habit* | Intermediate | hábito, costumbre | Característica, forma, disposición, aspecto. |
-| *laser* | Intermediate | láser *(single)* | (láser) Dispositivo que utiliza la emisión inducida para generar un haz de luz coherente tanto espacial como temporalmente. |
-| *mafia* | Intermediate | mafia | (mafia) Organización criminal de origen siciliano, con estructura organizacional y códigos de honor estrictos. |
-| *panda* | Intermediate | panda *(single)* | (panda) Cada uno de los lados o galerías de un claustro de monasterio, donde se distribuyen las distintas dependencias (sala capitular, refectorio, etc.) |
-| *penny* | Intermediate | penique *(single)* | (penique) Unidad monetaria británica, equivalente a una centésima parte de la libra esterlina desde 1971, y a la doceava parte de un chelín antes de esa fecha. |
-| *pitch* | Intermediate | tono | Un esfuerzo para vender o promover algo. |
-| *prime* | Base | principal, cebar, excelente | (principal) Primero en rango, importancia o jerarquía dentro de un conjunto. |
-| *quiet* | Base | callado, tranquilo, callar | (callado) Que no habla mucho. |
-| *scene* | Base | escena, escenario, ámbito | (escena) El sitio o tablado donde representan los actores. |
-| *skirt* | Intermediate | falda, bordear, pollera | (falda) Prenda de uso mayoritariamente femenino, que cubre de la cintura hacia abajo envolviendo el cuerpo sin costura entre las piernas. Forma parte del hábito… |
-| *steam* | Base | vapor | (vapor) Sustancia en estado gaseoso a una temperatura tal que el aumento de la presión puede provocar que se condense en líquido o sólido sin variar su temperatura, a… |
-| *straw* | Intermediate | paja, popote | Pajilla, caña para beber, popote(México). |
-| *sugar* | Base | azucarar, azúcar | Expresa enfado, disgusto o molestia. |
-| *today* | Base | hoy | (hoy) En el día en curso. |
-| *tweet* | Intermediate | tuitear | (tuitear) Publicar tuits en la red social Twitter. |
-| *twins* | Intermediate | — | — |
-| *unfit* | Intermediate | impropio *(single)* | (impropio) Lo que está falto de las cualidades que le convendrían, según las circunstancias. |
-| *valve* | Intermediate | válvula, llave | (válvula) Membrana que permite la circulación de un fluido en un único sentido por los vasos y órganos del cuerpo. |
-| *vegan* | Intermediate | vegano | (vegano) Originario, relativo a, o propio de La Vega, localidad y provincia de República Dominicana. |
-| *dally* | Advanced | — | — |
-| *decal* | Advanced | pegatina | (pegatina) Adhesivo de papel con imágenes o texto impreso que se utiliza como decoración, información o forma de publicidad. |
-| *footy* | Advanced | pambol | (pambol) Deporte jugado con los pies cuyo objetivo es hacer avanzar una pelota a uno de los extremos del campo de juego e intentar ubicarla dentro de la meta contraria… |
-| *fussy* | Advanced | quisquilloso | (quisquilloso) Persona susceptible, fácil de ofenderse. |
-| *grout* | Advanced | fragüe *(single)* | — |
-| *honed* | Advanced | — | — |
-| *jemmy* | Complete | — | — |
-| *nidus* | Complete | — | — |
-| *puree* | Advanced | pasar *(single)* | (pasar) Llevar de un lugar a otro. |
-| *pygmy* | Advanced | pigmeo *(single)* | (pigmeo) Relativo a cierto pueblo fabuloso y de cada uno de sus individuos, los cuales, según la antigua poesía griega, no tenían más de un codo de alto, si bien eran… |
-| *recto* | Complete | anverso *(single)* | (anverso) En las monedas y medallas, haz que se considera principal por llevar el busto de una persona o por otro motivo. Generalmente es el lado en donde no está… |
-| *sixes* | Advanced | — | — |
-| *tilde* | Complete | virgulilla, tilde | (virgulilla) Marca gráfica, especialmente la usada en la escritura, que consiste en un trazo pequeño añadido a una letra, con diferentes usos, pero por lo general para… |
-| *tilth* | Complete | — | — |
-| *vying* | Advanced | — | — |
+| *agony* | Intermediate | agonía | (agonía) Angustia y congoja del moribundo |
+| *alive* | Base | vivo | (vivo) Se dice de lo que tiene vida, en oposición a lo que está muerto |
+| *amber* | Intermediate | ámbar | (ámbar) Resina vegetal fosilizada proveniente principalmente de restos de coníferas y algunas angiospermas |
+| *angry* | Base | enojado, enfadado, furioso | (enojado) Valentón, iracundo |
+| *badge* | Intermediate | distintivo, piocha, gafete | (distintivo) Señal, marca o insignia que se pone para identificar a alguien o algo |
+| *batch* | Intermediate | lote | (lote) Conjunto de cosas con características en común |
+| *brief* | Base | breve, conciso, resumen | (breve) Que tiene poca extensión u ocupa poco espacio |
+| *cache* | Intermediate | cachear *(single)* | (cachear) Registrar manualmente a una persona por sobre sus vestidos para determinar si porta objetos ilegales |
+| *cider* | Intermediate | sidra | (sidra) Bebida alcohólica obtenida por la fermentación del jugo de manzanas |
+| *crazy* | Base | loco, orate | (loco) Que no está en su sano juicio, que se comporta de forma irracional |
+| *death* | Base | muerte | (muerte) Fin de la vida, en especial de una persona |
+| *elite* | Intermediate | élite *(single)* | (élite) Minoría selecta y rectora |
+| *fetch* | Intermediate | traer *(single)* | (traer) Mover alguna cosa hacia sí, esto es, hacia la persona que habla |
+| *grant* | Base | otorgar, conceder, subvención | (otorgar) Acceder, aceptar o decir que sí a algo solicitado o preguntado |
+| *havoc* | Intermediate | caos, estrago, devastación | (caos) Estado general de confusión y desorden |
+| *manor* | Intermediate | finca *(single)* | (finca) Propiedad inmueble, ya sea urbana o rústica |
+| *mercy* | Intermediate | misericordia | (misericordia) Inclinación a perdonar o a sentir compasión por quienes sufren |
+| *might* | Base | fuerza | (fuerza) Lo que es capaz de realizar grandes cambios en una persona o en una cosa |
+| *mouth* | Base | boca | (boca) Abertura anterior del tubo digestivo de los animales, por el cual se ingieren los alimentos |
+| *ninth* | Intermediate | noveno | (noveno) Que ocupa el puesto siguiente al octavo en una serie ordenada. Ordinal del nueve |
+| *plain* | Intermediate | llanura, planicie, sencillo | (llanura) Extensión de terreno llano |
+| *quote* | Base | cotizar *(single)* | (cotizar) Asignar valor económico o precio a algún objeto |
+| *salon* | Intermediate | salón *(single)* | (salón) Sala grande |
+| *sense* | Base | sentido, sensación, acepción | (sentido) Cada una de las dos orientaciones opuestas contenidas en la dirección de una línea recta |
+| *shade* | Intermediate | sombra, matiz, tono | (sombra) Ausencia de luz |
+| *smart* | Base | elegante, escocer, listo | (elegante) Que se distingue por la gracia y el refinamiento de su aspecto |
+| *spike* | Intermediate | punta, pincho, clavo | (punta) Extremo afilado de un objeto |
+| *spoke* | Base | radio, rayo | (radio) Segmento de recta que tiene por extremos el punto centro y un punto cualquiera de la circunferencia |
+| *stamp* | Intermediate | timbre, sello | (timbre) En particular, timbre que indica el franqueo de una carta o paquete |
+| *stand* | Base | puesto, soportar, tolerar | Apoyarse sobre los pies en posición erguida |
+| *tasty* | Intermediate | sabroso | (sabroso) Que tiene buen sabor |
+| *tiger* | Intermediate | tigre | (tigre) Felino asiático de gran tamaño |
+| *usage* | Intermediate | uso, costumbre | (uso) Acción o efecto de usar o de usarse |
+| *waist* | Intermediate | cintura | (cintura) Parte del cuerpo humano inmediatamente por debajo de la última costilla flotante |
+| *write* | Base | escribir | (escribir) Utilizar letras o signos grabados sobre una superficie para representar las palabras |
+| *croft* | Advanced | coto *(single)* | (coto) Terreno acotado |
+| *croup* | Complete | grupa | (grupa) Ancas de un caballo |
+| *evade* | Advanced | evadir | (evadir) Esquivar o saltear un obstáculo |
+| *farce* | Advanced | farsa *(single)* | (farsa) Comedia bufa y chabacana. Pieza dramática breve. :*Sinónimo: sátira |
+| *felon* | Advanced | delincuente *(single)* | (delincuente) Persona que comete un delito o crimen |
+| *gourd* | Advanced | pipián *(single)* | (pipián) Planta cucurbitácea originaria de Mesoamérica, similar al zapallo |
+| *groan* | Advanced | gemir | (gemir) Expresar su sufrimiento, pena o dolor por medio de sonidos quejumbrosos y lastimeros |
+| *grump* | Complete | gruñón | (gruñón) Propenso a musitar o emitir gruñidos u otros sonidos no verbales expresando su enfado |
+| *gummy* | Advanced | gomoso | (gomoso) Semejante a la goma o que la contiene |
+| *macho* | Advanced | macho *(single)* | (macho) Propio de los individuos de sexo masculino |
+| *pixie* | Advanced | duende *(single)* | (duende) Pequeña criatura mitológica de pequeño tamaño |
+| *plait* | Complete | pliegue *(single)* | (pliegue) Parte en que una superficie se dobla, donde no está lisa o extendida |
+| *prune* | Advanced | podar | (podar) Cortar las ramas superfluas de los árboles |
+| *synod* | Advanced | sínodo *(single)* | (sínodo) Reunión o asamblea deliberativa de eclesiásticos |
+| *trill* | Advanced | trino | (trino) Gorjeo de los pájaros |

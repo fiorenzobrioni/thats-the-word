@@ -29,12 +29,12 @@ class AssetWordFilesTest {
 
     @Test
     fun `every language's files open, with the counts of the words' report`() {
-        assertThat(lexicon(Language.ITALIAN).accepted.size).isEqualTo(8_314)
-        assertThat(lexicon(Language.ENGLISH).accepted.size).isEqualTo(22_919)
-        assertThat(lexicon(Language.SPANISH).accepted.size).isEqualTo(13_281)
-        assertThat(lexicon(Language.ITALIAN).solutions.size).isEqualTo(1_691)
-        assertThat(lexicon(Language.ENGLISH).solutions.size).isEqualTo(3_612)
-        assertThat(lexicon(Language.SPANISH).solutions.size).isEqualTo(2_484)
+        assertThat(lexicon(Language.ITALIAN).accepted.size).isEqualTo(8_260)
+        assertThat(lexicon(Language.ENGLISH).accepted.size).isEqualTo(22_528)
+        assertThat(lexicon(Language.SPANISH).accepted.size).isEqualTo(13_105)
+        assertThat(lexicon(Language.ITALIAN).solutions.size).isEqualTo(717)
+        assertThat(lexicon(Language.ENGLISH).solutions.size).isEqualTo(1_355)
+        assertThat(lexicon(Language.SPANISH).solutions.size).isEqualTo(1_068)
     }
 
     @Test

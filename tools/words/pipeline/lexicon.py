@@ -3,13 +3,26 @@
 Read from the reduced sources: Hunspell's forms (Italian, Spanish) or SCOWL's (English), widened
 by every single word Wiktionary has in the language; Wiktionary's senses say which written forms
 are lemmas, which are forms of another, and which are kept out of the solutions by their tags.
+
+No word is ever named here or in a list to keep it out: the editions' own labels decide
+(`register.py`), in every edition that has the word.
+
+- **Refused** (not even a guess): a word whose first sense is coarse in most of the editions that
+  have it, or most of whose first entry's senses are coarse in one, or whose first sense every
+  edition labels harsh; a form whose every lemma (or Hunspell stem) is refused; and a key form
+  any of whose written forms is refused (a guess is typed without accents).
+- **Never a solution**: besides the refused, a word with a coarse or derogatory sense anywhere, in
+  any edition (*palla*, *colpo* and *rosso* stay guesses, never a word to find), or whose first
+  sense is intimate.
 """
 
 import dataclasses
 import pathlib
 import re
 
-from . import config, folding, frequency, hunspell, scowl, sources, wiktionary
+import functools
+
+from . import config, folding, frequency, hunspell, register, scowl, sources, wiktionary
 
 # Wiktionary's parts of speech a solution may have. A name, an abbreviation, an affix, a phrase,
 # a symbol, an interjection, an article or a contraction never is.
@@ -25,12 +38,6 @@ NOT_WORDS = frozenset(
 _FORM_TAGS = frozenset(
     {"form-of", "alt-of", "compound-of", "contraction", "misspelling", "abbreviation", "initialism",
      "acronym", "clipping"}
-)
-
-# Tags that keep a word out of the solutions whenever any of its senses has one.
-OFFENSIVE_TAGS = frozenset(
-    {"offensive", "vulgar", "derogatory", "slur", "pejorative", "ethnic", "obscene", "sexual",
-     "swear-word", "disparaging"}
 )
 
 # Tags that keep a word out when every one of its lemma senses has one: a solution must be a word
@@ -52,7 +59,7 @@ class Entry:
     senses: list
     translations: list
     forms: list
-    bad: bool
+    register: str  # the entry's own labels (its categories), as `register` writes them
     extract: str
 
 
@@ -77,8 +84,10 @@ class LanguageWords:
     solutions: list
     excluded: dict  # reason -> sorted displays
     accepted_by_source: dict
-    flagged: dict  # solution display -> its first offensive or vulgar sense, for a person to read
     spelling_keys: set  # the accepted keys the spelling dictionary (Hunspell, SCOWL) has
+    refused: int  # keys of this length no guess may be, by the editions' labels (counted, never listed)
+    unlisted: int  # lemmas kept out by the labels (counted, never listed)
+    set_aside: dict = dataclasses.field(default_factory=dict)  # not a kind of solution: display -> (zipf, pos)
 
 
 class Wiktionary:
@@ -92,7 +101,7 @@ class Wiktionary:
             for d in wiktionary.entries(extract):
                 e = Entry(
                     d["w"], d["l"], d.get("p", ""), d.get("s", []), d.get("tr", []),
-                    d.get("fm", []), bool(d.get("bad")), extract,
+                    d.get("fm", []), d.get("r", ""), extract,
                 )
                 self.index.setdefault((extract, e.lang), {}).setdefault(e.word, []).append(e)
                 count += 1
@@ -153,19 +162,73 @@ def mostly_a_form(entries) -> bool:
     return forms > 0 and lemmas == 0
 
 
-def is_offensive(entries) -> bool:
-    """Whether a word's first meaning, or half of its meanings, is offensive or vulgar.
+def sense_labels(sense: dict) -> set:
+    return set(sense.get("r", ""))
 
-    A sense marked so somewhere among many does not make a word offensive (*apple*, *bacon* and
-    *rosso* have one each); a word whose first sense is, or most of whose senses are, is kept out.
-    What this misses or keeps wrongly, the deny list settles, read by a person.
-    """
-    senses = [s for e in entries for s in lemma_senses(e)]
-    if not senses:
+
+_HARSH = frozenset({register.COARSE, register.DEROGATORY})
+
+
+def _first_lemma_sense(entries):
+    for e in entries:
+        senses = lemma_senses(e)
+        if senses:
+            return e, senses
+    return None, []
+
+
+def _first_entry(entries):
+    """An edition's first entry of a word that is a word (not a name, an affix...)."""
+    for e in entries:
+        if e.senses and e.pos not in NOT_WORDS:
+            return e
+    return None
+
+
+def _first_labels(entries) -> set:
+    """The labels of an edition's first sense of a word, as the edition orders it: a form's
+    («plural of tooth») included, so a slang sense listed after it is not taken for the first."""
+    e = _first_entry(entries)
+    if e is None:
+        return set()
+    first = sense_labels(e.senses[0])
+    if len(e.senses) == 1:
+        first |= set(e.register)
+    return first
+
+
+def mostly_coarse(entries) -> bool:
+    """Whether more than half of the senses of an edition's first entry of a word are coarse (a
+    word that is mostly an obscenity, whatever its first sense). The first entry only: a word's
+    other entries (an interjection, a homograph) are other words, and derogatory senses do not
+    count (*orso* has two, a bear stays a bear)."""
+    e = _first_entry(entries)
+    if e is None:
         return False
-    marked = [bool(OFFENSIVE_TAGS & set(s.get("t", ()))) for s in senses]
-    first = [lemma_senses(e) for e in entries if lemma_senses(e)][0][0]
-    return bool(OFFENSIVE_TAGS & set(first.get("t", ()))) or sum(marked) * 2 >= len(marked)
+    coarse = sum(1 for s in e.senses if register.COARSE in sense_labels(s))
+    return coarse * 2 > len(e.senses)
+
+
+def refused_in(entries) -> bool:
+    """Whether one edition's entries make a word one no guess may be: its first sense is coarse, or
+    most of its first entry's senses are. `refused` weighs the editions together."""
+    return register.COARSE in _first_labels(entries) or mostly_coarse(entries)
+
+
+def harsh_anywhere(entries) -> bool:
+    """Whether any sense, or the entry itself, is coarse or derogatory: such a word is never a
+    solution (the owner's choice, §15, 14 Nov 2026: *rosso*, *palla* and *colpo* go too)."""
+    for e in entries:
+        if set(e.register) & _HARSH:
+            return True
+        if any(sense_labels(s) & _HARSH for s in e.senses):
+            return True
+    return False
+
+
+def intimate_first(entries) -> bool:
+    _, senses = _first_lemma_sense(entries)
+    return bool(senses) and register.INTIMATE in sense_labels(senses[0])
 
 
 def is_dated(entries) -> bool:
@@ -184,6 +247,72 @@ def headword_entries(wikt: Wiktionary, language: str, word: str) -> list:
     return []
 
 
+def editions(wikt, language: str, word: str) -> list:
+    """A word's entries, edition by edition: every extract that has it as a word of its language
+    (the English edition, its own, and the third, which glosses it in its own language)."""
+    out = []
+    for extract in wiktionary.EXTRACTS:
+        entries = wikt.entries(extract, language, word)
+        if entries:
+            out.append(entries)
+    return out
+
+
+def _verdicts(wikt) -> dict:
+    cache = getattr(wikt, "_register_verdicts", None)
+    if cache is None:
+        cache = {}
+        wikt._register_verdicts = cache
+    return cache
+
+
+def refused(wikt, language: str, word: str) -> bool:
+    """Whether a lemma is no word of the game, by any edition's labels (and the same for the word
+    written in lower case: a sentence's first word is no different)."""
+    key = ("refused", language, word)
+    cache = _verdicts(wikt)
+    if key not in cache:
+        groups = [g for g in editions(wikt, language, word) if any(e.senses for e in g)]
+        first_coarse = sum(1 for entries in groups if register.COARSE in _first_labels(entries))
+        cache[key] = (
+            # Most editions put a coarse sense first (one edition's order is not a verdict: the
+            # Spanish edition opens *bombear*, to pump, with its slang);
+            first_coarse * 2 > len(groups)
+            # or one edition's first entry is mostly coarse;
+            or any(mostly_coarse(entries) for entries in groups)
+            # or every edition puts a derogatory sense first.
+            or (bool(groups) and all(_first_labels(entries) & _HARSH for entries in groups)
+                and any(register.DEROGATORY in _first_labels(entries) for entries in groups))
+        )
+    return cache[key]
+
+
+def labelled(wikt, language: str, word: str) -> bool:
+    """Whether a lemma may not be a solution by the labels: refused, coarse or derogatory in any
+    sense of any edition, or intimate in its first sense in one."""
+    key = ("labelled", language, word)
+    cache = _verdicts(wikt)
+    if key not in cache:
+        groups = editions(wikt, language, word)
+        cache[key] = refused(wikt, language, word) or any(
+            harsh_anywhere(entries) or intimate_first(entries) for entries in groups
+        )
+    return cache[key]
+
+
+def word_kind(wikt, language: str, word: str) -> str | None:
+    """A lemma's part of speech, when it is one a solution may have: its first entry's with a
+    meaning of its own (`config.SOLUTION_KINDS`), or None."""
+    for e in headword_entries(wikt, language, word):
+        if lemma_senses(e) and e.pos in SOLUTION_POS:
+            return e.pos if e.pos in config.SOLUTION_KINDS else None
+    return None
+
+
+def common_lists() -> list[str]:
+    return sorted(p.name for p in config.LISTS.glob("common_*.txt"))
+
+
 def read_list(name: str) -> list[str]:
     path = config.LISTS / name
     if not path.exists():
@@ -194,34 +323,49 @@ def read_list(name: str) -> list[str]:
     return out
 
 
-def _source_forms(language: str, length: int) -> tuple[dict, dict]:
-    """Written forms of the right length from the spelling sources, by key, and their source."""
-    by_key: dict = {}
-    origin: dict = {}
-
-    def add(form, source):
-        if form[:1].isupper() or _ROMAN.match(form):
-            return
-        key = folding.fold(form, language)
-        if key is None or len(key) != length:
-            return
-        by_key.setdefault(key, set()).add(form.lower())
-        origin.setdefault(source, set()).add(key)
-
+@functools.cache
+def spelling_forms(language: str) -> dict:
+    """Every written form the spelling dictionaries give, of any length the game may use, with the
+    stems it comes from (none for English: SCOWL lists forms, not stems)."""
+    longest = max(config.LENGTHS) + 3
     if language == "en":
         accepted, _ = scowl.read()
-        for form in accepted:
-            add(form, "SCOWL")
-    else:
-        for name in config.HUNSPELL[language]:
-            keep = lambda f: "'" not in f and len(f) <= length + 3  # noqa: E731
-            for form in hunspell.forms(sources.path(f"{name}.dic"), sources.path(f"{name}.aff"), keep):
-                add(form, "Hunspell")
-    return by_key, origin
+        return {form: set() for form in accepted}
+    out: dict = {}
+    for name in config.HUNSPELL[language]:
+        keep = lambda f: "'" not in f and len(f) <= longest  # noqa: E731
+        found = hunspell.forms_by_stem(sources.path(f"{name}.dic"), sources.path(f"{name}.aff"), keep)
+        for form, stems in found.items():
+            out.setdefault(form, set()).update(stems)
+    return out
+
+
+def _source_forms(language: str, length: int) -> tuple[dict, dict, dict]:
+    """Written forms of the right length from the spelling sources, by key, their source, and the
+    stems each comes from."""
+    by_key: dict = {}
+    origin: dict = {}
+    stems: dict = {}
+    source = "SCOWL" if language == "en" else "Hunspell"
+    for form, from_stems in spelling_forms(language).items():
+        if form[:1].isupper() or _ROMAN.match(form):
+            continue
+        key = folding.fold(form, language)
+        if key is None or len(key) != length:
+            continue
+        low = form.lower()
+        by_key.setdefault(key, set()).add(low)
+        origin.setdefault(source, set()).add(key)
+        stems.setdefault(low, set()).update(from_stems)
+    return by_key, origin, stems
+
+
+NOT_A_KIND = "not a noun, an adjective or a verb first (an adverb, a pronoun, a preposition...)"
+LABELLED = "a coarse, derogatory or intimate sense (the editions' labels; counted, never listed)"
 
 
 def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> LanguageWords:
-    by_key, origin = _source_forms(language, length)
+    by_key, origin, stems = _source_forms(language, length)
     spelling_keys = set(by_key)
 
     # Wiktionary's single words widen the accepted set, but never with a name or an abbreviation.
@@ -239,14 +383,11 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
             wikt_keys.add(key)
     origin["Wiktionary"] = wikt_keys
 
-    accepted = set(by_key)
-    displays = {k: sorted(v) for k, v in by_key.items()}
-
     # Lemmas and the forms of a lemma. The English edition says it when it has the word (its tags
     # are the most regular); the language's own edition only when the English one has no entry.
     lemma_of: dict = {}
     lemmas = set()
-    for key, forms in displays.items():
+    for key, forms in by_key.items():
         for display in forms:
             entries = headword_entries(wikt, language, display)
             if any(lemma_senses(e) for e in entries):
@@ -261,11 +402,46 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
                             targets.append(t)
             lemma_of[display] = targets
 
+    # What no guess may be: a refused lemma; a form whose every lemma is refused, or whose every
+    # Hunspell stem is (an inflection the editions do not list is judged with its stem).
+    def refused_by_wiktionary(display: str) -> bool:
+        if refused(wikt, language, display):
+            return True
+        targets = lemma_of.get(display, [])
+        return bool(targets) and all(refused(wikt, language, t) for t in targets)
+
+    def refused_form(display: str) -> bool:
+        if refused_by_wiktionary(display):
+            return True
+        from_stems = stems.get(display, ())
+        return bool(from_stems) and all(
+            s != display and refused(wikt, language, s) for s in from_stems
+        )
+
+    # A guess is typed as its key form, with no accents: a key is refused when any written form of
+    # it is refused by Wiktionary's own entries, not only when all are (a refused noun's key is not
+    # saved by an accented verb form that shares its letters, a past tense of a sailors' verb). A
+    # form judged only by its Hunspell stem refuses a key when every form of it is refused: a stem
+    # is a weaker witness (*abajó*'s stem must not take *abajo* away).
+    refused_keys = 0
+    displays = {}
+    for key, forms in by_key.items():
+        if any(refused_by_wiktionary(d) for d in forms) or all(refused_form(d) for d in forms):
+            refused_keys += 1
+        else:
+            displays[key] = sorted(forms)
+    accepted = set(displays)
+    spelling_keys &= accepted
+    kept = {d for forms in displays.values() for d in forms}
+    lemmas &= kept
+    lemma_of = {d: [t for t in ts if not refused(wikt, language, t)] for d, ts in lemma_of.items() if d in kept}
+
     zipf = frequency.zipf_table(language)
     _, one_spelling = scowl.read() if language == "en" else (None, set())
-    deny = set(read_list(f"deny_{language}.txt"))
 
     excluded: dict = {}
+    set_aside: dict = {}
+    unlisted = 0
     candidates: dict = {}
     for key, forms in sorted(displays.items()):
         for display in forms:
@@ -274,14 +450,16 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
             entries = headword_entries(wikt, language, display)
             pos = [e.pos for e in entries if lemma_senses(e) and e.pos in SOLUTION_POS]
             reason = None
+            if labelled(wikt, language, display):
+                unlisted += 1
+                continue
             if not pos:
                 reason = "not a common word's part of speech (a name, an interjection, an affix...)"
-            elif display in deny or key in deny:
-                reason = "the deny list"
+            elif pos[0] not in config.SOLUTION_KINDS:
+                reason = NOT_A_KIND
+                set_aside[display] = (zipf.get(display, 0.0), pos[0])
             elif mostly_a_form(entries):
                 reason = "an inflected form (every entry opens with one)"
-            elif is_offensive(entries):
-                reason = "offensive or vulgar (Wiktionary's tags)"
             elif is_dated([e for e in entries if e.pos in SOLUTION_POS]):
                 reason = "archaic, obsolete, rare or regional in every sense"
             elif language == "it" and not folding.within_italian_alphabet(key):
@@ -300,30 +478,31 @@ def build(language: str, wikt: Wiktionary, length: int = 5, log=print) -> Langua
             if current is None or z > current.zipf:
                 candidates[key] = Solution(key, display, z, pos[0])
     solutions = sorted(candidates.values(), key=lambda s: s.key)
-    flagged = {}
-    for s in solutions:
-        for e in headword_entries(wikt, language, s.display):
-            bad = [x for x in lemma_senses(e) if OFFENSIVE_TAGS & set(x.get("t", ()))]
-            if bad and s.display not in flagged:
-                flagged[s.display] = bad[0].get("g", "")
     for s in solutions:
         s.level = config.level_of(language, s.zipf)
-        # wordfreq counts a word and the name it spells as one (*lewis*, *cisco*). Where a list says
-        # the name is the more common (SCOWL's sizes, for English), the frequency says nothing of
-        # the word: Advanced at least, never a daily.
+        # wordfreq counts a word and the name it spells as one (*cisco*). Where a list says the
+        # name is the more common (SCOWL's sizes, for English), the frequency says nothing of the
+        # word: Advanced at least, never a daily.
         if language == "en" and scowl.name_outranks(s.display):
             s.level = max(s.level, 2)
             s.name_homograph = True
     for reason in excluded:
         excluded[reason] = sorted(set(excluded[reason]))
-    log(f"{language}: {len(accepted)} accepted, {len(lemmas)} lemmas, {len(solutions)} solutions")
+    log(f"{language}-{length}: {len(accepted)} accepted ({refused_keys} refused), {len(lemmas)} lemmas, "
+        f"{len(solutions)} candidate solutions")
     return LanguageWords(
         language, length, accepted, displays, lemma_of, lemmas, solutions, excluded,
-        {k: len(v) for k, v in origin.items()},
-        flagged,
+        {k: len(v & accepted) for k, v in origin.items()},
         spelling_keys,
+        refused_keys,
+        unlisted,
+        set_aside,
     )
 
 
-def lists_dir() -> pathlib.Path:
-    return config.LISTS
+def without(lw: LanguageWords, keys: set, reason: str) -> None:
+    """Moves solutions out, for a reason found after the lexicon (a meaning missing)."""
+    out = [s for s in lw.solutions if s.key in keys]
+    lw.solutions = [s for s in lw.solutions if s.key not in keys]
+    if out:
+        lw.excluded[reason] = sorted(set(lw.excluded.get(reason, [])) | {s.display for s in out})

@@ -18,9 +18,12 @@ same build and release setup, and the same visual language, from which a game de
 it must (more motion, tiles, sound). Its build and structure are Tetto's (itself Tempo's and
 Passo's).
 
-**State (13 Nov 2026): Phases 0, 1 and 2 are done, Phases 3, 4, 5, 6, 7, 7b and 8 are built**: the words (`tools/words/`,
-their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) have the
-owner's go; the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
+**State (14 Nov 2026): Phases 0, 1 and 2 are done, Phases 1b, 3, 4, 5, 6, 7, 7b and 8 are built**: the words (`tools/words/`,
+their files in `core/words/src/main/assets/words/`, their report `docs/words/README.md`) were
+rebuilt in Phase 1b with no list of words kept anywhere (the editions' labels decide,
+`tools/words/pipeline/register.py`, ADR 0005) and a whole meaning of two lines in the three
+languages for every solution, every length from 3 to 8 built and shipped (five letters are 1.0's game); the owner's go
+on the new samples and the daily pool's size is awaited (PLANNING §15, Open 23 to 26); the game engine (`:core:domain`) reads them through `:core:words`, every PLANNING §4.9
 case tested; the game screen (`:feature:game`) plays a daily, a replay or a free word,
 saved in Room (`:core:data`) after every move, its feedback the owner's choice (ink and amber); the
 start page (`:feature:home`) shows today's word in each language, the streak, the calendar of the
@@ -166,7 +169,10 @@ phase that brings its first code.
   started on; its word is the frozen schedule's at `date − epoch + 1`. The epoch is 1 November
   2026 (`DailyCalendar.EPOCH`, the owner's): never moved.
 - **The words are generated, never hand-edited** (PLANNING §6): `tools/words/` writes every file
-  from pinned, free, credited sources, the same bytes on a second run. **The daily schedule is
+  from pinned, free, credited sources, the same bytes on a second run. **No list of words to
+  avoid exists anywhere in the repository** (the owner, PLANNING §15, 14 Nov 2026): the editions'
+  labels keep a word out (`register.py`), the report counts and never names what they keep out,
+  and no file, test, comment or document writes such a word. **The daily schedule is
   append-only**: no entry already published is ever changed. Every source's licence is
   GPL-3.0-compatible and recorded in `licenses/README.md` and in the app's About.
 - **The database is a contract.** The Room schema is exported and committed; every migration has

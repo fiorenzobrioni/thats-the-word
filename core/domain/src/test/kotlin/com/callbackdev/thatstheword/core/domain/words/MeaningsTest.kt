@@ -32,7 +32,7 @@ class MeaningsTest {
                 "canto" to listOf(listOf(), listOf(), listOf()),
                 "cantare" to listOf(listOf("to sing"), listOf("To produce musical sounds."), listOf()),
                 "pésca" to listOf(listOf("fishing"), listOf(), listOf()),
-                "zuppa" to listOf(listOf(), listOf("A soup of bread."), listOf("soup")),
+                "zuppa" to listOf(listOf(), listOf("A soup of bread."), listOf("soup"), listOf("noun")),
                 "torta" to listOf(listOf("cake", "pie"), listOf("Pie, cake."), listOf()),
             ),
         ),
@@ -50,6 +50,13 @@ class MeaningsTest {
             città,
         ).isEqualTo(WordMeaning(listOf("città", "citta"), null, listOf("city", "town"), "A large town."))
         assertThat(città.known).isTrue()
+    }
+
+    @Test
+    fun `the part of speech comes with its meaning, and a file without it reads as before`() {
+        // PLANNING.md §6.4: the glossary's fourth field, written in the interface language.
+        assertThat(lexicon.meaning(word("zuppa", ITALIAN), ENGLISH).partOfSpeech).isEqualTo("noun")
+        assertThat(lexicon.meaning(word("citta", ITALIAN), ENGLISH).partOfSpeech).isNull()
     }
 
     @Test

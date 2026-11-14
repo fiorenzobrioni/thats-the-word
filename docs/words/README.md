@@ -2,8 +2,9 @@
 
 Written by `tools/words/build.py` (PLANNING.md §6, §11 Phase 1): do not edit it by hand. It answers
 VISION's questions 3 (the licences), 4 (the meanings' quality) and 5 (the size) with numbers;
-the samples a person reads before the owner's go are in [`samples/`](samples/), and the words a
-person decides on (the deny lists) in [`review/`](review/).
+the samples a person reads before the owner's go are in [`samples/`](samples/), and what each
+filter kept out of the solutions in [`review/`](review/). No list of words to avoid exists: the
+editions' own labels keep a word out, and a word they keep out is counted here, never named.
 
 ## The sources (VISION Q3)
 
@@ -46,14 +47,17 @@ each licence is compatible with the app's GPL-3.0-or-later, and each source is c
 ## The words
 
 Five letters, 6 attempts (VISION §8). **Accepted** is every form a guess may be;
-**solutions** are the lemmas a game may hide (§6.2); the **glossary** describes the solutions and
-every lemma a guess may be or belong to.
+**refused** is what the spelling dictionaries or Wiktionary hold that no guess may be, because
+an edition labels its first sense, or most of its senses, coarse or derogatory (an inflection
+with its lemma); **solutions** are the lemmas a game may hide (§6.2), each with a whole
+definition in the three languages; the **glossary** describes the solutions and every lemma a
+guess may be or belong to.
 
-| | Accepted | from the spelling dictionary | from Wiktionary only | Solutions | Glossary words |
-|---|---|---|---|---|---|
-| Italian | 8,314 | 6,101 | 2,213 | 1,691 | 3,383 |
-| English | 22,919 | 6,584 | 16,335 | 3,612 | 6,457 |
-| Spanish | 13,281 | 9,003 | 4,278 | 2,484 | 5,569 |
+| | Accepted | from the spelling dictionary | from Wiktionary only | Refused | Solutions | Glossary words |
+|---|---|---|---|---|---|---|
+| Italian | 8,258 | 6,065 | 2,193 | 56 | 687 | 26,914 |
+| English | 22,528 | 6,516 | 16,012 | 391 | 1,295 | 37,209 |
+| Spanish | 13,083 | 8,909 | 4,174 | 198 | 1,010 | 32,301 |
 
 **The common words that must be accepted** (`tools/words/lists/common_*.txt`, 200 a language,
 lemmas and inflected forms): 
@@ -62,19 +66,21 @@ Italian 200 of 200; English 200 of 200; Spanish 200 of 200.
 ### What keeps a lemma out of the solutions
 
 Each lemma of the right length is checked in this order; the first reason that holds keeps it
-out. The lists are in [`review/`](review/).
+out. The labels come first, so a word they keep out is in no other list. The lists are in
+[`review/`](review/).
 
 | Reason | Italian | English | Spanish |
 |---|---|---|---|
-| an inflected form (every entry opens with one) | 43 | 123 | 56 |
-| archaic, obsolete, rare or regional in every sense | 180 | 1,372 | 258 |
-| not a common word's part of speech (a name, an interjection, an affix...) | 20 | 138 | 67 |
-| not in the spelling dictionary | 252 | 1,690 | 777 |
-| offensive or vulgar (Wiktionary's tags) | 30 | 266 | 91 |
-| outside the Italian alphabet's 21 letters | 143 | 0 | 0 |
-| spelled two ways (British and American) | 0 | 82 | 0 |
-| the deny list | 1 | 3 | 3 |
-| too rare (not in wordfreq's list) | 433 | 5,359 | 1,769 |
+| a coarse, derogatory or intimate sense (the editions' labels; counted, never listed) | 86 | 309 | 209 |
+| an inflected form (every entry opens with one) | 35 | 115 | 50 |
+| archaic, obsolete, rare or regional in every sense | 160 | 1,293 | 239 |
+| no whole definition of two lines in Italian, English and Spanish | 900 | 2,048 | 1,286 |
+| not a common word's part of speech (a name, an interjection, an affix...) | 20 | 135 | 65 |
+| not a noun, an adjective or a verb first (an adverb, a pronoun, a preposition...) | 67 | 243 | 75 |
+| not in the spelling dictionary | 246 | 1,650 | 748 |
+| outside the Italian alphabet's 21 letters | 142 | 0 | 0 |
+| spelled two ways (British and American) | 0 | 77 | 0 |
+| too rare (not in wordfreq's list) | 426 | 5,283 | 1,742 |
 
 ## The levels
 
@@ -83,46 +89,138 @@ plays its own words and those of the levels before it.
 
 | | Base | Intermediate | Advanced | Complete | Daily pool (Base and Intermediate) |
 |---|---|---|---|---|---|
-| Italian | 270 | 506 | 484 | 431 | 776 |
-| English | 434 | 868 | 1,036 | 1,274 | 1,302 |
-| Spanish | 301 | 608 | 705 | 870 | 909 |
+| Italian | 154 | 255 | 175 | 103 | 409 |
+| English | 254 | 457 | 392 | 192 | 711 |
+| Spanish | 184 | 328 | 293 | 205 | 512 |
 
 Examples, the most common of each level:
 
-- **Italian**. Base: *anche*, *stato*, *tutti*, *tutto*, *fatto*, *prima*; Intermediate: *abito*, *bomba*, *cassa*, *email*, *mappa*, *poeta*; Advanced: *colon*, *mecca*, *pappa*, *salmo*, *solco*, *colei*; Complete: *clava*, *gorgo*, *truce*, *uscio*, *anice*, *asola*.
-- **English**. Base: *about*, *their*, *there*, *which*, *would*, *other*; Intermediate: *faced*, *pride*, *rough*, *smell*, *topic*, *pants*; Advanced: *jenny*, *teddy*, *molly*, *silva*, *brock*, *monte*; Complete: *adder*, *algal*, *allay*, *bream*, *coder*, *degas*.
-- **Spanish**. Base: *sobre*, *entre*, *desde*, *hasta*, *hacer*, *ahora*; Intermediate: *extra*, *turno*, *vacío*, *ciclo*, *conde*, *falso*; Advanced: *dotar*, *jaque*, *malla*, *pizca*, *sesgo*, *soler*; Complete: *apnea*, *bemol*, *ojiva*, *picón*, *talud*, *visir*.
+- **Italian**. Base: *stato*, *fatto*, *parte*, *tempo*, *volta*, *mondo*; Intermediate: *abito*, *bomba*, *cassa*, *mappa*, *poeta*, *ovest*; Advanced: *pappa*, *salmo*, *osare*, *panca*, *tuffo*, *corvo*; Complete: *clava*, *gorgo*, *uscio*, *anice*, *asola*, *bignè*.
+- **English**. Base: *would*, *first*, *think*, *right*, *being*, *going*; Intermediate: *pride*, *rough*, *pants*, *sharp*, *chart*, *mount*; Advanced: *willy*, *cling*, *icing*, *jihad*, *lapse*, *mural*; Complete: *adder*, *bream*, *coder*, *rivet*, *tardy*, *twirl*.
+- **Spanish**. Base: *hacer*, *parte*, *mejor*, *mismo*, *gente*, *mundo*; Intermediate: *extra*, *vacío*, *ciclo*, *conde*, *falso*, *norma*; Advanced: *jaque*, *apego*, *aleta*, *chavo*, *ebrio*, *hongo*; Complete: *apnea*, *bemol*, *visir*, *brida*, *cuate*, *gnomo*.
+
+## The lengths (for 1.1 and 1.2)
+
+Every length the later versions may play (VISION §8: Bridge in 1.1, variable length in 1.2),
+built with the same rules and shipped in the app already (§15, 14 Nov 2026); five letters are
+1.0's game and have its daily schedule. The glossary column is the solutions' meanings and
+translations in the three interface languages (the glossary files hold them with every guess's
+lemma, all lengths together).
+
+| | Letters | Accepted | Refused | Solutions | Daily pool (Base and Intermediate) | Solutions' glossaries |
+|---|---|---|---|---|---|---|
+| Italian | 3 | 541 | 1 | 41 | 29 | 10 KB |
+| Italian | 4 | 2,617 | 13 | 281 | 196 | 68 KB |
+| Italian | 5 (1.0's game) | 8,258 | 56 | 687 | 409 | 165 KB |
+| Italian | 6 | 20,398 | 87 | 988 | 480 | 240 KB |
+| Italian | 7 | 47,567 | 206 | 1,566 | 622 | 383 KB |
+| Italian | 8 | 87,072 | 272 | 1,500 | 636 | 368 KB |
+| English | 3 | 2,516 | 39 | 258 | 192 | 60 KB |
+| English | 4 | 9,371 | 168 | 915 | 616 | 221 KB |
+| English | 5 (1.0's game) | 22,528 | 391 | 1,295 | 711 | 310 KB |
+| English | 6 | 42,762 | 672 | 1,770 | 779 | 426 KB |
+| English | 7 | 67,571 | 1,099 | 1,887 | 768 | 461 KB |
+| English | 8 | 90,890 | 1,378 | 1,500 | 647 | 372 KB |
+| Spanish | 3 | 841 | 16 | 81 | 60 | 19 KB |
+| Spanish | 4 | 3,900 | 80 | 427 | 249 | 103 KB |
+| Spanish | 5 (1.0's game) | 13,083 | 198 | 1,010 | 512 | 242 KB |
+| Spanish | 6 | 31,040 | 420 | 1,451 | 584 | 346 KB |
+| Spanish | 7 | 61,703 | 619 | 1,809 | 660 | 439 KB |
+| Spanish | 8 | 98,549 | 804 | 1,500 | 642 | 368 KB |
+
+## Three of the owner's ideas, measured
+
+Asked by the owner on 14 Nov 2026 (PLANNING §15, «Three ideas»).
+
+**A solution is a noun, an adjective or a verb**, by its first entry (noun, adj, verb). What it
+leaves out: the words that would otherwise have been solutions (a whole meaning in the three
+languages, in wordfreq's list), with those of the daily's levels; the most frequent named.
+
+| | Letters | Left out | of them daily | The most frequent |
+|---|---|---|---|---|
+| Italian | 3 | 18 | 18 | *che*, *non*, *per*, *gli*, *tra*, *suo*, *due*, *uno* |
+| Italian | 4 | 8 | 7 | *come*, *ogni*, *meno*, *però*, *tale*, *otto*, *nove*, *item* |
+| Italian | 5 | 17 | 17 | *tutto*, *molto*, *senza*, *altro*, *quale*, *oltre*, *quasi*, *nulla* |
+| Italian | 6 | 24 | 23 | *questo*, *perché*, *quello*, *ancora*, *quanto*, *stesso*, *contro*, *troppo* |
+| Italian | 7 | 14 | 11 | *durante*, *davvero*, *infatti*, *quattro*, *davanti*, *milione*, *perfino*, *apposta* |
+| Italian | 8 | 21 | 15 | *qualcosa*, *qualcuno*, *soltanto*, *entrambi*, *incontro*, *chiunque*, *quindici*, *medesimo* |
+| English | 3 | 17 | 16 | *you*, *not*, *but*, *all*, *his*, *who*, *its*, *our* |
+| English | 4 | 27 | 25 | *that*, *this*, *from*, *your*, *what*, *more*, *than*, *well* |
+| English | 5 | 20 | 17 | *their*, *which*, *never*, *every*, *three*, *again*, *among*, *seven* |
+| English | 6 | 27 | 21 | *really*, *around*, *always*, *almost*, *anyone*, *nearly*, *nobody*, *highly* |
+| English | 7 | 24 | 22 | *through*, *between*, *another*, *without*, *someone*, *already*, *nothing*, *million* |
+| English | 8 | 18 | 16 | *anything*, *recently*, *multiple*, *somebody*, *possibly*, *thousand*, *normally*, *formerly* |
+| Spanish | 3 | 13 | 13 | *que*, *los*, *por*, *las*, *sin*, *qué*, *dos*, *uno* |
+| Spanish | 4 | 20 | 20 | *pero*, *todo*, *bien*, *nada*, *algo*, *cada*, *otro*, *poco* |
+| Spanish | 5 | 19 | 19 | *entre*, *desde*, *hasta*, *ahora*, *menos*, *nadie*, *tarde*, *cerca* |
+| Spanish | 6 | 8 | 8 | *además*, *mañana*, *cuatro*, *apenas*, *detrás*, *ciento*, *veinte*, *quince* |
+| Spanish | 7 | 15 | 15 | *siempre*, *durante*, *alguien*, *nuestro*, *todavía*, *tampoco*, *ustedes*, *treinta* |
+| Spanish | 8 | 5 | 5 | *nosotros*, *adelante*, *nosotras*, *cuarenta*, *despacio* |
+
+**At most so many solutions a length**, the most frequent kept (3 letters 600, 4 letters 1,800, 5 letters 2,500, 6 letters 2,500, 7 letters 2,000, 8 letters 1,500). What it leaves out:
+
+| | 3 letters | 4 letters | 5 letters | 6 letters | 7 letters | 8 letters |
+|---|---|---|---|---|---|---|
+| Italian | 0 | 0 | 0 | 0 | 0 | 199 |
+| English | 0 | 0 | 0 | 0 | 0 | 315 |
+| Spanish | 0 | 0 | 0 | 0 | 0 | 338 |
+
+**The part of speech beside the meaning**, in the interface language (sostantivo, noun,
+sustantivo...), when the meaning was read in an entry of the word's own part of speech. The
+share of five-letter solutions whose meaning carries it:
+
+| Game → interface | With the part of speech |
+|---|---|
+| Italian → Italian | 100% |
+| Italian → English | 99% |
+| Italian → Spanish | 98% |
+| English → Italian | 96% |
+| English → English | 100% |
+| English → Spanish | 94% |
+| Spanish → Italian | 99% |
+| Spanish → English | 98% |
+| Spanish → Spanish | 99% |
 
 ## The meanings and translations (VISION Q4)
 
 On the solutions, for each pair (game language → interface language): a **translation** is
 shown when two sources agree on it, or when one translation table gives it for the word's first
-sense (one translation only, marked *single* in the samples); a **meaning** is a definition in
-the interface language (§6.4). The daily pool is the words most players meet.
+sense (one translation only, marked *single* in the samples); a **meaning** is a whole
+definition in the interface language (§6.4), at most 100 characters, never cut: every solution
+has one in the three languages. The daily pool is the words most players meet.
 
 | Game → interface | Solutions | Translation | of which agreed | Meaning | Either | Daily pool: translation | Daily pool: meaning |
 |---|---|---|---|---|---|---|---|
-| Italian → Italian | 1,691 | (the same language) | | 87% | 87% | | 96% |
-| Italian → English | 1,691 | 86% | 80% | 98% | 98% | 94% | 99% |
-| Italian → Spanish | 1,691 | 69% | 39% | 64% | 69% | 82% | 79% |
-| English → Italian | 3,612 | 65% | 46% | 61% | 67% | 88% | 87% |
-| English → English | 3,612 | (the same language) | | 100% | 100% | | 100% |
-| English → Spanish | 3,612 | 68% | 41% | 64% | 70% | 87% | 88% |
-| Spanish → Italian | 2,484 | 67% | 36% | 61% | 67% | 85% | 83% |
-| Spanish → English | 2,484 | 85% | 77% | 97% | 97% | 93% | 99% |
-| Spanish → Spanish | 2,484 | (the same language) | | 92% | 92% | | 96% |
+| Italian → Italian | 687 | (the same language) | | 100% | 100% | | 100% |
+| Italian → English | 687 | 99% | 98% | 100% | 100% | 100% | 100% |
+| Italian → Spanish | 687 | 99% | 61% | 100% | 100% | 100% | 100% |
+| English → Italian | 1,295 | 98% | 80% | 100% | 100% | 98% | 100% |
+| English → English | 1,295 | (the same language) | | 100% | 100% | | 100% |
+| English → Spanish | 1,295 | 99% | 71% | 100% | 100% | 99% | 100% |
+| Spanish → Italian | 1,010 | 99% | 58% | 100% | 100% | 100% | 100% |
+| Spanish → English | 1,010 | 99% | 97% | 100% | 100% | 100% | 100% |
+| Spanish → Spanish | 1,010 | (the same language) | | 100% | 100% | | 100% |
+
+How long the solutions' meanings are, in characters:
+
+| Interface | Shortest | Median | Longest |
+|---|---|---|---|
+| Italian | 8 | 44 | 100 |
+| English | 8 | 46 | 100 |
+| Spanish | 9 | 51 | 100 |
 
 ## The daily schedules
 
-Per language, 3,654 dailies: ten years from the provisional epoch,
-2026-11-12 (§15 Open 10). Append-only: a rebuild keeps every entry and only adds.
+Per language, 3,654 dailies: ten years from the epoch,
+2026-11-01 (§15 Open 10). Append-only: a rebuild keeps every entry and only adds
+(written anew once, before 1.0, with these rules: §15, 14 Nov 2026).
 Each word comes once before any comes twice, so a word returns after the whole pool has passed.
 
 | | Dailies | Pool | A word returns after | Words that left the solutions |
 |---|---|---|---|---|
-| Italian | 3,654 | 776 | about 2.1 years | none |
-| English | 3,654 | 1,302 | about 3.6 years | none |
-| Spanish | 3,654 | 909 | about 2.5 years | none |
+| Italian | 3,654 | 409 | about 1.1 years | none |
+| English | 3,654 | 711 | about 1.9 years | none |
+| Spanish | 3,654 | 512 | about 1.4 years | none |
 
 ## The size (VISION Q5)
 
@@ -130,13 +228,28 @@ The files, stored uncompressed in the APK so they are read in place (§6.6, ADR 
 
 | File | Italian | English | Spanish |
 |---|---|---|---|
-| `accepted-5.bin` | 32 KB | 90 KB | 52 KB |
+| `accepted-3.bin` | 2 KB | 10 KB | 3 KB |
+| `accepted-4.bin` | 10 KB | 37 KB | 15 KB |
+| `accepted-5.bin` | 32 KB | 88 KB | 51 KB |
+| `accepted-6.bin` | 80 KB | 167 KB | 121 KB |
+| `accepted-7.bin` | 372 KB | 528 KB | 482 KB |
+| `accepted-8.bin` | 680 KB | 710 KB | 770 KB |
 | `daily.bin` | 14 KB | 14 KB | 14 KB |
-| `forms-5.bin` | 124 KB | 219 KB | 242 KB |
-| `gloss-en.bin` | 133 KB | 484 KB | 212 KB |
-| `gloss-es.bin` | 191 KB | 361 KB | 405 KB |
-| `gloss-it.bin` | 192 KB | 313 KB | 250 KB |
-| `solutions-5.bin` | 7 KB | 14 KB | 10 KB |
-| **Total** | **692 KB** | **1,496 KB** | **1,185 KB** |
+| `forms-3.bin` | 4 KB | 21 KB | 7 KB |
+| `forms-4.bin` | 31 KB | 74 KB | 53 KB |
+| `forms-5.bin` | 123 KB | 215 KB | 239 KB |
+| `forms-6.bin` | 337 KB | 467 KB | 680 KB |
+| `forms-7.bin` | 838 KB | 871 KB | 1,524 KB |
+| `forms-8.bin` | 1,478 KB | 1,249 KB | 2,710 KB |
+| `gloss-en.bin` | 1,756 KB | 1,966 KB | 1,770 KB |
+| `gloss-es.bin` | 872 KB | 1,363 KB | 1,359 KB |
+| `gloss-it.bin` | 973 KB | 1,302 KB | 923 KB |
+| `solutions-3.bin` | 180 B | 1 KB | 340 B |
+| `solutions-4.bin` | 1 KB | 4 KB | 2 KB |
+| `solutions-5.bin` | 3 KB | 5 KB | 4 KB |
+| `solutions-6.bin` | 4 KB | 7 KB | 6 KB |
+| `solutions-7.bin` | 12 KB | 15 KB | 14 KB |
+| `solutions-8.bin` | 12 KB | 12 KB | 12 KB |
+| **Total** | **7,636 KB** | **9,125 KB** | **10,761 KB** |
 
-All three languages: **3.3 MB** in the APK.
+All three languages: **26.9 MB** in the APK.

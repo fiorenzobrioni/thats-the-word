@@ -93,7 +93,7 @@ class FrequencyTest(unittest.TestCase):
 class FormsRecordsTest(unittest.TestCase):
     def words(self, displays, solutions, lemma_of=None):
         return lexicon.LanguageWords(
-            "it", 5, set(displays), displays, lemma_of or {}, set(), solutions, {}, {}, {}, set(displays)
+            "it", 5, set(displays), displays, lemma_of or {}, set(), solutions, {}, {}, set(displays), 0, 0
         )
 
     def test_a_solutions_own_written_form_comes_first(self):

@@ -61,7 +61,13 @@ data class HintUi(val kind: HintKind, val text: String? = null, val letter: Char
  * it is a form of, its translations and its meaning in the interface language.
  */
 @Immutable
-data class MeaningUi(val written: String, val lemma: String?, val translations: String?, val meaning: String?) {
+data class MeaningUi(
+    val written: String,
+    val lemma: String?,
+    val translations: String?,
+    val meaning: String?,
+    val partOfSpeech: String? = null,
+) {
     val known: Boolean get() = translations != null || meaning != null
 
     companion object {
@@ -70,6 +76,7 @@ data class MeaningUi(val written: String, val lemma: String?, val translations: 
             lemma = meaning.lemma,
             translations = meaning.translations.takeIf { it.isNotEmpty() }?.joinToString(", "),
             meaning = meaning.meaning,
+            partOfSpeech = meaning.partOfSpeech,
         )
     }
 }

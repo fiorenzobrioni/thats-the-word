@@ -44,6 +44,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.callbackdev.thatstheword.core.designsystem.icons.GameIcons
@@ -231,6 +232,16 @@ private fun SolutionMeaning(meaning: MeaningUi) {
                 textAlign = TextAlign.Center,
             )
         }
+        meaning.partOfSpeech?.let {
+            // As a dictionary writes it: the part of speech in italics, before the definition.
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodySmall,
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
         meaning.meaning?.let {
             Text(
                 text = it,
@@ -300,6 +311,14 @@ private fun TriedWord(word: TriedWordUi, onToggle: (Int) -> Unit) {
                 )
             }
             meaning.translations?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+            meaning.partOfSpeech?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontStyle = FontStyle.Italic,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             meaning.meaning?.let {
                 Text(
                     text = it,

@@ -27,8 +27,10 @@ longer length never changes them; a reader takes it from the header's length.
   A record is UTF-8 fields separated by U+001F; its first field is its key; a field holding a
   list separates its items by U+001E.
   A forms record holds a field a written form (the form, then its lemmas), a solution's own
-  written form first; a glossary record holds the translations, the meaning and the word the
-  meaning was read through.
+  written form first; a glossary record holds the translations, the meaning, the word the
+  meaning was read through and the part of speech in the interface language (empty when the
+  meaning was not read in the word's own part of speech; a reader of the first three fields
+  reads the files unchanged).
 """
 
 import hashlib

@@ -29,12 +29,33 @@ class AssetWordFilesTest {
 
     @Test
     fun `every language's files open, with the counts of the words' report`() {
-        assertThat(lexicon(Language.ITALIAN).accepted.size).isEqualTo(8_314)
-        assertThat(lexicon(Language.ENGLISH).accepted.size).isEqualTo(22_919)
-        assertThat(lexicon(Language.SPANISH).accepted.size).isEqualTo(13_281)
-        assertThat(lexicon(Language.ITALIAN).solutions.size).isEqualTo(1_691)
-        assertThat(lexicon(Language.ENGLISH).solutions.size).isEqualTo(3_612)
-        assertThat(lexicon(Language.SPANISH).solutions.size).isEqualTo(2_484)
+        assertThat(lexicon(Language.ITALIAN).accepted.size).isEqualTo(8_258)
+        assertThat(lexicon(Language.ENGLISH).accepted.size).isEqualTo(22_528)
+        assertThat(lexicon(Language.SPANISH).accepted.size).isEqualTo(13_083)
+        assertThat(lexicon(Language.ITALIAN).solutions.size).isEqualTo(687)
+        assertThat(lexicon(Language.ENGLISH).solutions.size).isEqualTo(1_295)
+        assertThat(lexicon(Language.SPANISH).solutions.size).isEqualTo(1_010)
+    }
+
+    @Test
+    fun `every length from 3 to 8 ships, each solution accepted and explained in the three languages`() {
+        // PLANNING.md §6.6 (§15, 14 Nov 2026): 1.1's and 1.2's lengths are in the app already, read
+        // by the same decoder; one glossary per interface language describes them all.
+        for (language in Language.entries) {
+            for (length in 3..8) {
+                val lexicon = Lexicon(files, language, length)
+                val words = lexicon.solutions.at(Level.COMPLETE)
+                assertThat(words).isNotEmpty()
+                assertThat(words.size).isEqualTo(lexicon.solutions.size)
+                for (word in words) {
+                    assertThat(word.length).isEqualTo(length)
+                    assertThat(word in lexicon.accepted).isTrue()
+                    for (speaks in Language.entries) {
+                        assertThat(lexicon.gloss(word, speaks)?.meaning).isNotNull()
+                    }
+                }
+            }
+        }
     }
 
     @Test
